@@ -24,6 +24,7 @@
     "rimraf": "^6.0.1"
   },
   "dependencies": {
+    "backend": "file:",
     "express": "^4.21.0"
   }
 }
