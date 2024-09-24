@@ -37,7 +37,7 @@ usersRouter.post('/register', registerValidator, wrapAsync(registerController))
 
 usersRouter.post('/login', loginValidator, wrapAsync(loginController)) //tạm thời chưa được
 
-usersRouter.post('/logout', accessTokenValidator, refreshTokenValidator, wrapAsync(logoutController))
+usersRouter.post('/logout', accessTokenValidator, refreshTokenValidator, wrapAsync(logoutController)) // login xong thì mới được
 
 usersRouter.get('/verify-email', emailVerifyTokenValidator, wrapAsync(emailVerifyTokenController))
 

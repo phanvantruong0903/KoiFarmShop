@@ -17,5 +17,5 @@ export default function Login() {
     localStorage.setItem("refreshToken", refreshToken); //lưu refresh_token vào localStorage
     navigate("/"); //xem xong thì bật dòng này để chuyển hướng về trang chủ
   }, [params]); //useEffect sẽ chạy lại khi params thay đổi
-  return <div>Login</div>;
+  return <div>Login</div>; // vo dung vi nó đã chuyển hướng trang rồi
 }
