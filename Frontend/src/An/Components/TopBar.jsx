@@ -6,7 +6,7 @@ import { RxAvatar } from "react-icons/rx";
 export default function TopBar() {
   return (
     <Navbar bg="light" expand="lg">
-      <Container>
+    
         <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -22,7 +22,7 @@ export default function TopBar() {
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
-      </Container>
+   
     </Navbar>
   );
 }

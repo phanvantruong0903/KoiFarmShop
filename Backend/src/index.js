@@ -3,10 +3,14 @@ import { config } from 'dotenv'
 import usersRouter from './routes/users.routes.js'
 import databaseService from './services/database.service.js'
 import { defaultErrorHandler } from './middlewares/error.middlewares.js'
-
+import cors from 'cors'
 config()
 const app = express()
-
+app.use(cors(
+  {
+    origin: 'http://localhost:3000'
+  }
+))
 const PORT = process.env.PORT || 4000
 app.use(express.json())
 databaseService.connect().then(() => {

@@ -1,11 +1,11 @@
 import { Suspense,lazy } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 import Spinner from "./An/Components/Spinner";
 import DashBoard from "./An/Pages/DashBoard";
 import Home from "./Home";
 import Login from "./Login";
-
+import LoginPage from "./An/Pages/Login";
 
 const Staff = lazy(() => import('../src/An/Pages/Staff'));
 const Manager = lazy(() => import('../src/An/Pages/Manager'));
@@ -15,8 +15,12 @@ const ManagerLayOut = lazy(() => import("../src/An/Layouts/ManagerLayOut"));
 
 const router = createBrowserRouter([
   {
+    path: "/login",
+    element: <LoginPage />, // Nguyen route setup tam thoi de v
+  },
+  {
     path: "/",
-    element: <Home />, // Nguyen route setup tam thoi de v
+    element: <Home />, // Home component
   },
   {
     path: "/login/oauth",
@@ -44,6 +48,7 @@ const router = createBrowserRouter([
           },
         ],
       },
+      
       {
         path: "manager",
         element: (

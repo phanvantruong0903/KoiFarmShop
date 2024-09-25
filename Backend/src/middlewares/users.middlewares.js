@@ -238,6 +238,8 @@ export const accessTokenValidator = validate(
             //value của Authorization là chuỗi "Bearer <access_token>"
             //ta sẽ tách chuỗi đó ra để lấy access_token bằng cách split
             const accessToken = value.split(' ')[1]
+
+            
             //nếu nó có truyền lên , mà lại là chuỗi rỗng thì ta sẽ throw error
             if (!accessToken) {
               //throw new Error(USERS_MESSAGES.ACCESS_TOKEN_IS_REQUIRED)  //này trả ra 422(k hay)
