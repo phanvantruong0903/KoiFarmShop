@@ -84,7 +84,6 @@ class UsersService {
         _id: user_id,
         username: `user${user_id.toString()}`,
         email_verify_token,
-        date_of_birth: new Date(payload.date_of_birth),
         password: hashPassword(payload.password)
       })
     )
@@ -104,9 +103,8 @@ class UsersService {
         iat
       })
     )
-    //giả gửi mail, nếu đc thì làm visa (aws, ses)
+
     //chỗ này để gửi mail
-    //test gửi mail
     let transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -298,7 +296,7 @@ class UsersService {
   }
 
   async updateMe(user_id, payload) {
-    const _payload = payload.date_of_birth ? { ...payload, date_of_birth: new Date(payload.date_of_birth) } : payload
+    const _payload = payload
 
     //cập nhật _payload lên db
     const user = await databaseService.users.findOneAndUpdate(
@@ -470,7 +468,7 @@ class UsersService {
         name: userInfor.name,
         password: password,
         confirm_password: password,
-        date_of_birth: new Date().toISOString()
+        picture: userInfor.picture
       })
       return {
         ...data,
