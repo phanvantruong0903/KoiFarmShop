@@ -25,6 +25,5 @@ app.use('/users', usersRouter)
 app.use(defaultErrorHandler)
 
 app.listen(PORT, () => {
-  console.log(`Project này đang chạy trên post ${PORT}`)
-
+  console.log(`Project này đang chạy trên port ${PORT}`)
 })

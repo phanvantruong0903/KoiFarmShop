@@ -75,10 +75,10 @@ const confirmPasswordSchema = {
 
 const nameSchema = {
   notEmpty: {
-    errorMessage: USERS_MESSAGES.NAME_IS_REQUIRED
+    errorMessage: USERS_MESSAGES.FULL_NAME_IS_REQUIRED
   },
   isString: {
-    errorMessage: USERS_MESSAGES.NAME_MUST_BE_A_STRING
+    errorMessage: USERS_MESSAGES.FULL_NAME_MUST_BE_A_STRING
   },
   trim: true,
   isLength: {
@@ -86,17 +86,7 @@ const nameSchema = {
       min: 1,
       max: 100
     },
-    errorMessage: USERS_MESSAGES.NAME_LENGTH_MUST_BE_FROM_1_TO_100
-  }
-}
-
-const dateOfBirthSchema = {
-  isISO8601: {
-    options: {
-      strict: true,
-      strictSeparator: true
-    },
-    errorMessage: USERS_MESSAGES.DATE_OF_BIRTH_BE_ISO8601
+    errorMessage: USERS_MESSAGES.FULL_NAME_LENGTH_MUST_BE_FROM_1_TO_100
   }
 }
 
@@ -220,8 +210,7 @@ export const registerValidator = validate(
         }
       },
       password: passwordSchema,
-      confirm_password: confirmPasswordSchema,
-      date_of_birth: dateOfBirthSchema
+      confirm_password: confirmPasswordSchema
     },
     ['body']
   )
@@ -470,11 +459,6 @@ export const updateMeValidator = validate(
       name: {
         optional: true, //đc phép có hoặc k
         ...nameSchema, //phân rã nameSchema ra
-        notEmpty: undefined //ghi đè lên notEmpty của nameSchema
-      },
-      date_of_birth: {
-        optional: true, //đc phép có hoặc k
-        ...dateOfBirthSchema, //phân rã nameSchema ra
         notEmpty: undefined //ghi đè lên notEmpty của nameSchema
       },
       bio: {
