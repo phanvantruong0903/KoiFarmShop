@@ -21,7 +21,7 @@ export function AuthProvider({ children }) {
     return false;
   }
   const  register = (name, email,password, confirm_password,date_of_birth ) =>{
-    return axios.post("http://localhost:4000/users/register", {name, email,password,confirm_password,date_of_birth});
+    return axios.post("http://localhost:4000/users/register", {name, email,password,confirm_password});
   }
   // Function to sign out
   const logout = () => {
