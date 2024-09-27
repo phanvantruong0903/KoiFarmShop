@@ -1,9 +1,9 @@
 export const USERS_MESSAGES = {
   VALIDATION_ERROR: "Validation error",
-  //name
-  NAME_IS_REQUIRED: "Name is required",
-  NAME_MUST_BE_A_STRING: "Name must be a string",
-  NAME_LENGTH_MUST_BE_FROM_1_TO_100: "Name length must be from 1 to 100",
+  //FULL_NAME
+  FULL_NAME_IS_REQUIRED: "FullName is required",
+  FULL_NAME_MUST_BE_A_STRING: "FullName must be a string",
+  FULL_NAME_LENGTH_MUST_BE_FROM_1_TO_100: "FullName length must be from 1 to 100",
   //email
   EMAIL_ALREADY_EXISTS: "Email already exists",
   EMAIL_IS_REQUIRED: "Email is required",
