@@ -92,9 +92,8 @@ export default function Koishowa() {
     <>
       <div
         style={{
-          backgroundImage: `url("src/assets/pngtree-white-watercolor-painting-texture-abstract-background-with-stained-watercolor-elements-image_13620175.png")`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
+          backgroundColor: "rgb(71,1,19)",
+          color: "#f1be7c",
         }}
       >
         <div>
@@ -103,7 +102,7 @@ export default function Koishowa() {
         <Container>
           <div>
             <div style={{ paddingTop: "110px", textAlign: "center" }}>
-              <h1>CÁ KOI OGON</h1>
+              <h1>CÁ KOI SHOWA</h1>
 
               <hr />
             </div>
@@ -114,6 +113,7 @@ export default function Koishowa() {
                   padding: "20px",
                   borderRadius: "10px",
                   border: "2px solid rgba(0, 0, 0, 0.1)",
+                  backgroundColor: "rgb(59, 48, 48)",
                 }}
               >
                 <h2>Nội Dung Bài Viết</h2>
@@ -121,7 +121,7 @@ export default function Koishowa() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll1}
-                      style={{ color: "blue", cursor: "pointer" }}
+                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
                     >
                       1. Giới thiệu về Cá Koi Showa
                     </span>
@@ -129,7 +129,7 @@ export default function Koishowa() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll2}
-                      style={{ color: "blue", cursor: "pointer" }}
+                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
                     >
                       2. Các giống cá Koi Showa Nhật và cách xách định
                     </span>
@@ -137,7 +137,7 @@ export default function Koishowa() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll3}
-                      style={{ color: "blue", cursor: "pointer" }}
+                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
                     >
                       3. Đặc điểm của cá koi showa
                     </span>
@@ -145,7 +145,7 @@ export default function Koishowa() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll4}
-                      style={{ color: "blue", cursor: "pointer" }}
+                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
                     >
                       4.Cách chọn cá Koi Showa đẹp
                     </span>
@@ -153,7 +153,10 @@ export default function Koishowa() {
                       <li style={{ paddingTop: "10px" }}>
                         <span
                           onClick={handleScroll41}
-                          style={{ color: "blue", cursor: "pointer" }}
+                          style={{
+                            color: "rgb(251, 139, 36)",
+                            cursor: "pointer",
+                          }}
                         >
                           4.1 Dựa vào hình dáng:
                         </span>
@@ -161,7 +164,10 @@ export default function Koishowa() {
                       <li style={{ paddingTop: "10px" }}>
                         <span
                           onClick={handleScroll42}
-                          style={{ color: "blue", cursor: "pointer" }}
+                          style={{
+                            color: "rgb(251, 139, 36)",
+                            cursor: "pointer",
+                          }}
                         >
                           4.2 Dựa vào màu sắc:
                         </span>
@@ -171,7 +177,7 @@ export default function Koishowa() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll5}
-                      style={{ color: "blue", cursor: "pointer" }}
+                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
                     >
                       5. Cách chăm sóc cá Koi showa
                     </span>
@@ -179,7 +185,7 @@ export default function Koishowa() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll6}
-                      style={{ color: "blue", cursor: "pointer" }}
+                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
                     >
                       6. Phong thủy cá koi Showa
                     </span>
@@ -187,7 +193,7 @@ export default function Koishowa() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll7}
-                      style={{ color: "blue", cursor: "pointer" }}
+                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
                     >
                       7. Tại sao nên mua cá Platinum Koi tại Siêu thị Cá Koi VN?
                     </span>
@@ -195,7 +201,10 @@ export default function Koishowa() {
                       <li style={{ paddingTop: "10px" }}>
                         <span
                           onClick={handleScroll71}
-                          style={{ color: "blue", cursor: "pointer" }}
+                          style={{
+                            color: "rgb(251, 139, 36)",
+                            cursor: "pointer",
+                          }}
                         >
                           7.1 Giá cá koi Platinum F1
                         </span>
@@ -203,7 +212,10 @@ export default function Koishowa() {
                       <li style={{ paddingTop: "10px" }}>
                         <span
                           onClick={handleScroll72}
-                          style={{ color: "blue", cursor: "pointer" }}
+                          style={{
+                            color: "rgb(251, 139, 36)",
+                            cursor: "pointer",
+                          }}
                         >
                           7.2 Giá cá koi Platinum Nhật chuẩn
                         </span>
@@ -213,7 +225,7 @@ export default function Koishowa() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll8}
-                      style={{ color: "blue", cursor: "pointer" }}
+                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
                     >
                       8. Tại sao nên mua Showa Koi tại siêu thị cá Koi VN:
                     </span>

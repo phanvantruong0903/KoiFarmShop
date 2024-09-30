@@ -12,26 +12,25 @@ export default function Navbar() {
   const [activeItem, setActiveItem] = useState(null);
   return (
     <div className="navbar">
-      <div>
-        <h2
+      <div style={{ paddingRight: "150px" }}>
+        <img
+          src="src/assets/logo.png"
           style={{
-            paddingRight: "100px",
-            fontWeight: "1000",
-            marginTop: "10px",
+            width: "100px",
+            borderRadius: "50px",
+            marginTop: "-9px",
           }}
-        >
-          KoiStoreVN
-        </h2>
+        />
       </div>
       <div>
         <Link
-          to="/home"
+          to="/"
           style={{
-            color: "#F2E8C6",
-            fontWeight: "400",
+            fontWeight: "bold",
             fontSize: "25px",
             textDecoration: "none",
             paddingRight: "10px",
+            color: "black",
           }}
         >
           Trang Chủ
@@ -47,15 +46,15 @@ export default function Navbar() {
           <Dropdown.Toggle
             id="dropdown-basic"
             style={{
-              color: "#F2E8C6",
-              fontWeight: "400",
+              fontWeight: "bold",
               fontSize: "25px",
+              color: "black",
               paddingRight: "10px",
             }}
           >
             <Link
               to="/gioithieu"
-              style={{ textDecoration: "none", color: "#F2E8C6" }}
+              style={{ textDecoration: "none", color: "black" }}
             >
               {" "}
               Giới Thiệu
@@ -121,8 +120,7 @@ export default function Navbar() {
           <Dropdown.Toggle
             id="dropdown-basic"
             style={{
-              color: "#F2E8C6",
-              fontWeight: "400",
+              fontWeight: "bold",
               fontSize: "25px",
               paddingRight: "10px",
             }}
@@ -306,8 +304,7 @@ export default function Navbar() {
           <Dropdown.Toggle
             id="dropdown-basic"
             style={{
-              color: "#F2E8C6",
-              fontWeight: "400",
+              fontWeight: "bold",
               fontSize: "25px",
               paddingRight: "10px",
             }}
@@ -376,8 +373,7 @@ export default function Navbar() {
           <Dropdown.Toggle
             id="dropdown-basic"
             style={{
-              color: "#F2E8C6",
-              fontWeight: "400",
+              fontWeight: "bold",
               fontSize: "25px",
               paddingRight: "10px",
             }}
@@ -439,11 +435,11 @@ export default function Navbar() {
           <Link
             to="/lienhe"
             style={{
-              color: "#F2E8C6",
-              fontWeight: "400",
+              fontWeight: "bold",
               fontSize: "25px",
               paddingLeft: "10px",
               textDecoration: "none",
+              color: "black",
             }}
           >
             Liên Hệ

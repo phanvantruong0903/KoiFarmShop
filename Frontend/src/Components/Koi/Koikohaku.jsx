@@ -1,6 +1,7 @@
 import Navbar from "../Navbar/Navbar";
 import { useState } from "react";
 import { Container } from "react-bootstrap";
+import CardGrid from "../Cardgrid";
 import Footer from "../Footer";
 export default function Koikohaku() {
   const [menu, setMenu] = useState("home");
@@ -686,59 +687,8 @@ export default function Koikohaku() {
           </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            backgroundImage: `url("src/assets/pexels-quang-nguyen-vinh-222549-2131828.jpg")`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          <div
-            style={{
-              width: "100%",
-              margin: "100px",
-              color: "white",
-              display: "flex",
-            }}
-          >
-            <div
-              style={{
-                width: "100%",
-                color: "black",
-                fontSize: "20px",
-                marginTop: "70px",
-                marginLeft: "20px",
-              }}
-            >
-              <h1 style={{ color: "white" }}>Điểm nổi bật của KoiStoreVN</h1>
-
-              <ul style={{ fontSize: "16px", color: "white" }}>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  Cá nhập khẩu chất lượng cao, nhập trực tiếp tại các trang trại
-                  Cá Koi Nhật Bản
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  Khách hàng yên tâm nuôi cá vì luôn có chuyên gia đồng hành
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  Đa dạng sản phẩm, dịch vụ chăm sóc Cá Koi và Hồ Cá Koi
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  KoiStoreVN tự hào là đơn vị đầu tiên tại miền bắc được chuyển
-                  giao công nghệ mô hình trại SAKAI (Sakai fish farm, Hiroshima,
-                  Japan)
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  Trại gồm 120 hồ lớn chuẩn theo mô hình trại SAKAI
-                </li>
-              </ul>
-            </div>
-          </div>
+        <div>
+          <CardGrid />
         </div>
         <div>
           <Footer />

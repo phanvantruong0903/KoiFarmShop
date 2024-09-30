@@ -12,6 +12,10 @@ import Koigoshiki from "./Components/Koi/Koigoshiki";
 import Koibenigoi from "./Components/Koi/Koibenigoi";
 import Gioithieu from "./Components/Gioithieu";
 import Gioithieusankygui from "./Components/Gioithieusankygui";
+import Koiasagi from "./Components/Koi/Koiasagi";
+import Koishusui from "./Components/Koi/Koishusui";
+import Lienhe from "./Components/Lienhe";
+import Kienthuckoi from "./Components/Kienthuckoi";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,40 +26,48 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
-    path: "/koikohaku",
+    path: "/kohaku",
     element: <Koikohaku />,
   },
   {
-    path: "/koiogon",
+    path: "/ogon",
     element: <Koiogon />,
   },
   {
-    path: "/koishowa",
+    path: "/showa",
     element: <Koishowa />,
   },
   {
-    path: "/koitancho",
+    path: "/tancho",
     element: <Koitancho />,
   },
   {
-    path: "/koibekko",
+    path: "/bekko",
     element: <Koibekko />,
   },
   {
-    path: "/koidoitsu",
+    path: "/doitsu",
     element: <Koidoitsu />,
   },
   {
-    path: "/koiginrin",
+    path: "/ginrin",
     element: <Koiginrin />,
   },
   {
-    path: "/koigoshiki",
+    path: "/goshiki",
     element: <Koigoshiki />,
   },
   {
-    path: "/koibenigoi",
+    path: "/benigoi",
     element: <Koibenigoi />,
+  },
+  {
+    path: "/asagi",
+    element: <Koiasagi />,
+  },
+  {
+    path: "/shusui",
+    element: <Koishusui />,
   },
   {
     path: "/gioithieu",
@@ -64,6 +76,14 @@ const router = createBrowserRouter([
   {
     path: "/gioithieusankygui",
     element: <Gioithieusankygui />,
+  },
+  {
+    path: "/lienhe",
+    element: <Lienhe />,
+  },
+  {
+    path: "/kienthuckoi",
+    element: <Kienthuckoi />,
   },
 ]);
 

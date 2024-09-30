@@ -1,3 +1,4 @@
+import Footer from "./Footer";
 import Navbar from "./Navbar/Navbar";
 import { Container } from "react-bootstrap";
 export default function Gioithieusankygui() {
@@ -232,6 +233,9 @@ export default function Gioithieusankygui() {
             </div>
           </div>
         </Container>
+        <div>
+          <Footer />
+        </div>
       </div>
     </>
   );

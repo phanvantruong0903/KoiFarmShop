@@ -6,6 +6,7 @@ import Navbar from "./Components/Navbar/Navbar";
 import Footer from "./Components/Footer";
 import CardGrid from "./Components/Cardgrid";
 import "../src/Home.css";
+import Slideshow from "./Components/Slideshow";
 
 export default function Home() {
   const isAuthenticated = localStorage.getItem("accessToken");
@@ -68,26 +69,18 @@ export default function Home() {
         <Navbar menu={menu} setMenu={setMenu} />
       </div>
 
-      <div style={{ width: "100%", height: "500px" }}>
-        <img
-          src="src/assets/85_f8a22c47-d947-45bb-bb1f-4fb8f32fdeed.webp"
-          style={{
-            margin: "0",
-            padding: "0",
-            width: "100%",
-            height: "100%",
-            marginTop: "100px",
-          }}
-        />
+      <div style={{ width: "100%", height: "100%", mar: "1000px" }}>
+        <Slideshow />
       </div>
 
       <div
         className="animated-section hidden"
         style={{
           display: "flex",
-          backgroundImage: `url("src/assets/red-background-high-quality-free-photo-1.jpg")`,
+          backgroundImage: `url("src/assets/Red Modern Travel Presentation (5).png")`,
           backgroundSize: "cover",
           backgroundPosition: "center",
+          width: "100%",
         }}
       >
         <div
@@ -96,38 +89,66 @@ export default function Home() {
             margin: "100px",
             color: "white",
             display: "flex",
+            fontSize: "20px",
           }}
         >
           <div
             style={{
               width: "100%",
-              color: "white",
+              color: "black",
               fontSize: "20px",
-              marginTop: "70px",
+              marginTop: "50px",
+              fontWeight: "400",
+              marginLeft: "5px",
+              paddingRight: "800px",
             }}
           >
             <h1>Giới Thiệu về KoiVNStore</h1>
-            <p style={{ fontWeight: "bold" }}>
-              Cá koi Nhật Bản là cá koi thuần chủng được nhập trực tiếp từ các
-              trang trại cá koi Nhật Bản về Việt Nam.
-            </p>
-            <p style={{ fontSize: "16px" }}>
-              Koi là một loại cá chép đã được thuần hóa, lai tạo và được nuôi
-              khá phổ biến tại Nhật Bản để làm cảnh...
-            </p>
-          </div>
-          <div>
-            <img
-              src="src/assets/img_6.jpg"
-              style={{ width: "100%", marginLeft: "20px" }}
-            />
+            IKoi Store là một cửa hàng chuyên cung cấp cá koi và các sản phẩm
+            liên quan đến hồ cá. Với sứ mệnh mang lại cho khách hàng những giống
+            cá koi chất lượng cao và dịch vụ tốt nhất, IKoi Store đã nhanh chóng
+            trở thành điểm đến tin cậy cho những người yêu thích nuôi cá koi tại
+            Việt Nam.
+            <br />
+            <span style={{ fontWeight: "bold" }}>Sản Phẩm Cung Cấp :</span>
+            <ul>
+              <li>
+                <span style={{ fontWeight: "bold" }}>Cá Koi: </span>
+                <br />
+                Đa dạng về giống loài, màu sắc và kích thước, phù hợp với nhu
+                cầu của từng khách hàng.
+              </li>
+              <li>
+                {" "}
+                <span style={{ fontWeight: "bold" }}>Hồ Cá: </span>
+                <br />
+                Thiết kế và thi công hồ cá koi theo yêu cầu, đảm bảo thẩm mỹ và
+                chất lượng.
+              </li>
+              <li>
+                {" "}
+                <span style={{ fontWeight: "bold" }}>Thiết Bị Hồ Cá: </span>
+                <br />
+                Cung cấp các thiết bị lọc nước, máy sưởi, và đèn chiếu sáng
+                chuyên dụng cho hồ cá koi.
+              </li>
+              <li>
+                {" "}
+                <span style={{ fontWeight: "bold" }}>
+                  Thức Ăn và Dinh Dưỡng:{" "}
+                </span>
+                <br />
+                Các loại thức ăn chất lượng cao giúp cá koi phát triển khỏe
+                mạnh.
+              </li>
+            </ul>
           </div>
         </div>
       </div>
 
       <div
         style={{
-          backgroundImage: `url("src/assets/red-background-high-quality-free-photo-1.jpg")`,
+          backgroundImage: `url("src/assets/3.png")`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -139,7 +160,7 @@ export default function Home() {
         className="animated-section hidden"
         style={{
           display: "flex",
-          backgroundImage: `url("src/assets/seamless-japanese-cherry-blossoms-and-branches-pattern-background-sakura-flower-illustration-seamless-backgrounds-and-wallpapers-for-fabric-packaging-decorative-print-textile-free-vector.jpg")`,
+          backgroundImage: `url("src/assets/Red Modern Travel Presentation.png")`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -157,57 +178,31 @@ export default function Home() {
               width: "100%",
               color: "black",
               fontSize: "15px",
-              marginTop: "70px",
+              marginTop: "80px",
             }}
           >
-            <h1>Nuôi Cá Koi Nên Đồng Hành Cùng Chuyên Gia</h1>
-            <p style={{ fontSize: "16px" }}>
-              “Cá Koi không chỉ là cá chép cảnh mà nó còn là cá phong thủy, mang
-              đến tài lộc, may mắn...
-            </p>
-          </div>
-          <div style={{ width: "50%" }}>
-            <img
-              src="src/assets/Koi.jpg"
-              style={{ width: "100%", marginLeft: "20px", height: "370px" }}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div
-        className="animated-section hidden"
-        style={{
-          display: "flex",
-          backgroundImage: `url("src/assets/pexels-quang-nguyen-vinh-222549-2131828.jpg")`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div
-          style={{
-            width: "100%",
-            margin: "100px",
-            color: "white",
-            display: "flex",
-          }}
-        >
-          <div
-            style={{
-              width: "100%",
-              color: "black",
-              fontSize: "20px",
-              marginTop: "70px",
-              marginLeft: "20px",
-            }}
-          >
-            <h1 style={{ color: "white" }}>Điểm nổi bật của KoiStoreVN</h1>
-            <ul style={{ fontSize: "16px", color: "white" }}>
-              <li style={{ marginTop: "10px" }}>
-                Cá nhập khẩu chất lượng cao...
-              </li>
-              {/* Other list items */}
-            </ul>
+            <div style={{ display: "flex", justifyContent: "start" }}>
+              <div style={{ margin: "0", padding: "0" }}>
+                <h1>Nuôi Cá Koi Nên Đồng Hành Cùng Chuyên Gia</h1>
+                <p style={{ fontSize: "20px", paddingRight: "700px" }}>
+                  “Cá Koi không chỉ là cá chép cảnh mà nó còn là cá phong thủy,
+                  mang đến tài lộc, may mắn. Cá koi có đời sống khá dài, với đa
+                  số khách hàng của tôi, nó là một phần cuộc sống.Cá koi có đời
+                  sống khá dài, với đa số khách hàng của tôi, nó là một phần
+                  cuộc sống.Vì thế khi bạn chọn As Koi Farm, là bạn đã chọn
+                  những chuyên gia tận tâm đứng đầu về kinh nghiệm, kiến thức
+                  nuôi thả cá koi cùng đồng hành. <br />
+                  Bằng kinh nghiệm của mình tôi chắc chắn rằng điều đó cực kỳ
+                  quan trọng trong quá trình nuôi thả của bạn sau này.”Cá koi có
+                  đời sống khá dài, với đa số khách hàng của tôi, nó là một phần
+                  cuộc sống.Vì thế khi bạn chọn Koi Farm, là bạn đã chọn những
+                  chuyên gia tận tâm đứng đầu về kinh nghiệm, kiến thức nuôi thả
+                  cá koi cùng đồng hành. Bằng kinh nghiệm của mình tôi chắc chắn
+                  rằng điều đó cực kỳ quan trọng trong quá trình nuôi thả của
+                  bạn sau này.”
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
