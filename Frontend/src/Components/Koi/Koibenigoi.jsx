@@ -76,20 +76,22 @@ export default function Koibenigoi() {
   };
   return (
     <>
-      <div
-        style={{
-          backgroundColor: "rgb(71,1,19)",
-          color: "#f1be7c",
-        }}
-      >
+      <div>
         <div>
           <Navbar menu={menu} setMenu={setMenu} />
         </div>
         <Container>
           <div>
             <div style={{ paddingTop: "110px", textAlign: "center" }}>
-              <h1>CÁ KOI BENIGOI</h1>
-
+              <img
+                src="src/assets/Red_Modern_Travel_Presentation__6_-removebg-preview.png"
+                style={{ paddingLeft: "1000px", marginTop: "-15px" }}
+              />
+              <h1
+                style={{ marginTop: "-330px", fontWeight: "800", color: "red" }}
+              >
+                CÁ KOI BENIGOI
+              </h1>
               <hr />
             </div>
             <div>
@@ -99,7 +101,8 @@ export default function Koibenigoi() {
                   padding: "20px",
                   borderRadius: "10px",
                   border: "2px solid rgba(0, 0, 0, 0.1)",
-                  backgroundColor: "rgb(59, 48, 48)",
+                  border: "1px solid #797979",
+                  color: "black",
                 }}
               >
                 <h2>Nội Dung Bài Viết</h2>
@@ -107,7 +110,11 @@ export default function Koibenigoi() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll1}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       1. Giới thiệu cá Koi Benigoi
                     </span>
@@ -115,7 +122,11 @@ export default function Koibenigoi() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll2}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       2. Cách nhận biết cá Koi Benigoi
                     </span>
@@ -123,7 +134,11 @@ export default function Koibenigoi() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll3}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       3. Cách nhận biết cá Koi Benigoi
                     </span>
@@ -132,8 +147,9 @@ export default function Koibenigoi() {
                         <span
                           onClick={handleScroll31}
                           style={{
-                            color: "rgb(251, 139, 36)",
+                            color: "blue",
                             cursor: "pointer",
+                            fontWeight: "600",
                           }}
                         >
                           3.1 Hình dáng
@@ -144,8 +160,9 @@ export default function Koibenigoi() {
                         <span
                           onClick={handleScroll32}
                           style={{
-                            color: "rgb(251, 139, 36)",
+                            color: "blue",
                             cursor: "pointer",
+                            fontWeight: "600",
                           }}
                         >
                           3.2 Màu sắc
@@ -156,8 +173,9 @@ export default function Koibenigoi() {
                         <span
                           onClick={handleScroll33}
                           style={{
-                            color: "rgb(251, 139, 36)",
+                            color: "blue",
                             cursor: "pointer",
+                            fontWeight: "600",
                           }}
                         >
                           3.3 Tiêu chí để chọn koi Goshiki nhỏ
@@ -168,7 +186,11 @@ export default function Koibenigoi() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll4}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       4. Cách chăm sóc Cá Koi Goshiki
                     </span>
@@ -176,7 +198,11 @@ export default function Koibenigoi() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll5}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       5. Ý nghĩa đối với phong thủy
                     </span>
@@ -184,7 +210,11 @@ export default function Koibenigoi() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll6}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       6. Giá cá koi Goshiki bao nhiêu?
                     </span>
@@ -192,7 +222,11 @@ export default function Koibenigoi() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll7}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       7. Tại sao nên mua Goshiki Koi tại Siêu thị Cá koi VN?
                     </span>
@@ -201,7 +235,15 @@ export default function Koibenigoi() {
               </div>
 
               <div>
-                <h2>Nội dung chi tiết</h2>
+                <h2
+                  style={{
+                    fontWeight: "bold",
+                    color: "red",
+                    textAlign: "center",
+                  }}
+                >
+                  Nội dung chi tiết
+                </h2>
                 <p>
                   Xuất xứ từ Nhật với vẻ đẹp thuần khiết và những ưu điểm nổi
                   trội, Cá Koi Goshiki đảm bảo sẽ đem đến cho các bạn những trải
@@ -212,7 +254,9 @@ export default function Koibenigoi() {
                 </p>
               </div>
               <div id="1">
-                <h3>1. Giới thiệu về cá koi Goshiki </h3>
+                <h3 style={{ color: "red" }}>
+                  1. Giới thiệu về cá koi Goshiki{" "}
+                </h3>
                 <div>
                   <p>
                     Trong tiếng Nhật, Goshiki có nghĩa là "ngũ sắc". Khi kết hợp
@@ -270,7 +314,7 @@ export default function Koibenigoi() {
               </div>
 
               <div id="2">
-                <h3>2. Cách nhận biết Goshiki Koi</h3>
+                <h3 style={{ color: "red" }}>2. Cách nhận biết Goshiki Koi</h3>
                 <div>
                   <p>
                     Để trở thành một con cá koi Goshiki đẹp, nó cần phải có nét
@@ -303,7 +347,7 @@ export default function Koibenigoi() {
                 </div>
               </div>
               <div id="3">
-                <h3>3. Cách chọn mua cá Koi Ginrin</h3>
+                <h3 style={{ color: "red" }}>3. Cách chọn mua cá Koi Ginrin</h3>
                 <div>
                   <p>
                     Những người đã có kinh nghiệm với việc nuôi và chơi Koi sẽ
@@ -364,7 +408,9 @@ export default function Koibenigoi() {
                 </div>
               </div>
               <div id="4">
-                <h3>4. Cách chăm sóc Cá Koi Goshiki</h3>
+                <h3 style={{ color: "red" }}>
+                  4. Cách chăm sóc Cá Koi Goshiki
+                </h3>
                 <div>
                   <p>
                     Cá Koi Goshiki là dòng cá đẹp xuất xứ từ Nhật bản mang lại
@@ -416,7 +462,7 @@ export default function Koibenigoi() {
                 </div>
               </div>
               <div id="5">
-                <h3>5. Ý nghĩa đối với phong thủy </h3>
+                <h3 style={{ color: "red" }}>5. Ý nghĩa đối với phong thủy </h3>
                 <div>
                   <p>
                     Trong văn hóa Nhật Bản, Koi Goshiki được coi là mang lại sự
@@ -432,7 +478,9 @@ export default function Koibenigoi() {
                 </div>
               </div>
               <div id="6">
-                <h3>6. Giá cá koi Goshiki bao nhiêu? </h3>
+                <h3 style={{ color: "red" }}>
+                  6. Giá cá koi Goshiki bao nhiêu?{" "}
+                </h3>
                 <div>
                   <p>
                     Hiện tại Siêu thị Cá Koi Vn đang cung cấp dòng cá koi
@@ -457,7 +505,9 @@ export default function Koibenigoi() {
                 </div>
               </div>
               <div id="7">
-                <h3>7. Tại sao nên mua Goshiki Koi tại Siêu thị Cá koi VN?</h3>
+                <h3 style={{ color: "red" }}>
+                  7. Tại sao nên mua Goshiki Koi tại Siêu thị Cá koi VN?
+                </h3>
                 <div>
                   <p>
                     Cá Koi Goshiki và cá koi Karashi không chỉ là loài cá đẹp mà

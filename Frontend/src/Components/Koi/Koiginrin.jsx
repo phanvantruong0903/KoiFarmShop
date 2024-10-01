@@ -55,19 +55,22 @@ export default function Koiginrin() {
   };
   return (
     <>
-      <div
-        style={{
-          backgroundColor: "rgb(71,1,19)",
-          color: "#f1be7c",
-        }}
-      >
+      <div>
         <div>
           <Navbar menu={menu} setMenu={setMenu} />
         </div>
         <Container>
           <div>
             <div style={{ paddingTop: "110px", textAlign: "center" }}>
-              <h1>CÁ KOI GINRIN</h1>
+              <img
+                src="src/assets/Red_Modern_Travel_Presentation__6_-removebg-preview.png"
+                style={{ paddingLeft: "1000px", marginTop: "-15px" }}
+              />
+              <h1
+                style={{ marginTop: "-330px", fontWeight: "800", color: "red" }}
+              >
+                CÁ KOI GINRIN
+              </h1>
               <hr />
             </div>
             <div>
@@ -77,7 +80,8 @@ export default function Koiginrin() {
                   padding: "20px",
                   borderRadius: "10px",
                   border: "2px solid rgba(0, 0, 0, 0.1)",
-                  backgroundColor: "rgb(59, 48, 48)",
+                  border: "1px solid #797979",
+                  color: "black",
                 }}
               >
                 <h2>Nội Dung Bài Viết</h2>
@@ -85,7 +89,11 @@ export default function Koiginrin() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll1}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       1. Giới thiệu về cá Koi Ginrin
                     </span>
@@ -93,7 +101,11 @@ export default function Koiginrin() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll2}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       2. Cách nhận biết cá Koi Ginrin
                     </span>
@@ -101,7 +113,11 @@ export default function Koiginrin() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll3}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       3. Cách chọn mua cá Koi Ginrin
                     </span>
@@ -109,7 +125,11 @@ export default function Koiginrin() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll4}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       4. Cách chăm sóc Koi Ginrin
                     </span>
@@ -117,7 +137,11 @@ export default function Koiginrin() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll5}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       5. Giá cá koi Ginrin bao nhiêu?
                     </span>
@@ -125,7 +149,11 @@ export default function Koiginrin() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll6}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       6. Tại sao nên mua cá Koi Ginrin tại Siêu thị Cá Koi VN
                     </span>
@@ -134,7 +162,15 @@ export default function Koiginrin() {
               </div>
 
               <div>
-                <h2>Nội dung chi tiết</h2>
+                <h2
+                  style={{
+                    fontWeight: "bold",
+                    color: "red",
+                    textAlign: "center",
+                  }}
+                >
+                  Nội dung chi tiết
+                </h2>
                 <p>
                   Cá Koi Ginrin nổi bật với chiếc vảy phản chiếu màu bạc lấp
                   lánh thu hút người chơi ngay lần đầu tiên. Bài viết này chúng
@@ -144,7 +180,7 @@ export default function Koiginrin() {
                 </p>
               </div>
               <div id="1">
-                <h3>1. Giới thiệu về cá Koi Ginrin</h3>
+                <h3 style={{ color: "red" }}>1. Giới thiệu về cá Koi Ginrin</h3>
                 <p>
                   Cá Koi Ginrin có nguồn gốc chủ yếu từ Nhật Bản và được lai tạo
                   bởi một nhà bác học tên Eizaburo Hoshino vào khoảng năm 1929.
@@ -165,7 +201,7 @@ export default function Koiginrin() {
               </div>
 
               <div id="2">
-                <h3>2.Cách nhận biết cá Koi Ginrin</h3>
+                <h3 style={{ color: "red" }}>2.Cách nhận biết cá Koi Ginrin</h3>
                 <div>
                   <ul>
                     <li>Koi Ginrin size 15 – 45</li>
@@ -192,7 +228,7 @@ export default function Koiginrin() {
                 </div>
               </div>
               <div id="3">
-                <h3>3. Cách chọn mua cá Koi Ginrin</h3>
+                <h3 style={{ color: "red" }}>3. Cách chọn mua cá Koi Ginrin</h3>
                 <div>
                   <p>
                     Với sự lấp lánh kiêu sa của những chú cá Koi Ginrin đẹp mắt
@@ -239,7 +275,7 @@ export default function Koiginrin() {
                 </div>
               </div>
               <div id="4">
-                <h3>4. Cách chăm sóc Koi Ginrin</h3>
+                <h3 style={{ color: "red" }}>4. Cách chăm sóc Koi Ginrin</h3>
                 <div>
                   <p>
                     Để chăm sóc cá Koi Ginrin phát triển khỏe mạnh và toàn diện
@@ -286,7 +322,9 @@ export default function Koiginrin() {
               </div>
 
               <div id="5">
-                <h3>5. Giá cá koi Ginrin bao nhiêu?</h3>
+                <h3 style={{ color: "red" }}>
+                  5. Giá cá koi Ginrin bao nhiêu?
+                </h3>
                 <div>
                   <p>
                     Hiện tại Siêu thị Cá Koi Vn đang cung cấp dòng cá koi Ginrin
@@ -306,7 +344,9 @@ export default function Koiginrin() {
                 </div>
               </div>
               <div id="6">
-                <h3>Tại sao nên mua cá Koi Ginrin tại Siêu thị Cá Koi VN</h3>
+                <h3 style={{ color: "red" }}>
+                  Tại sao nên mua cá Koi Ginrin tại Siêu thị Cá Koi VN
+                </h3>
                 <div>
                   <p>
                     Nhu cầu chơi cá Koi ngày càng nhiều trên thị trường, để chọn

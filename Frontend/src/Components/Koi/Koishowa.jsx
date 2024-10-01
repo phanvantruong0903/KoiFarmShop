@@ -90,20 +90,22 @@ export default function Koishowa() {
   };
   return (
     <>
-      <div
-        style={{
-          backgroundColor: "rgb(71,1,19)",
-          color: "#f1be7c",
-        }}
-      >
+      <div>
         <div>
           <Navbar menu={menu} setMenu={setMenu} />
         </div>
         <Container>
           <div>
             <div style={{ paddingTop: "110px", textAlign: "center" }}>
-              <h1>CÁ KOI SHOWA</h1>
-
+              <img
+                src="src/assets/Red_Modern_Travel_Presentation__6_-removebg-preview.png"
+                style={{ paddingLeft: "1000px", marginTop: "-15px" }}
+              />
+              <h1
+                style={{ marginTop: "-330px", fontWeight: "800", color: "red" }}
+              >
+                CÁ KOI SHOWA
+              </h1>
               <hr />
             </div>
             <div>
@@ -113,7 +115,9 @@ export default function Koishowa() {
                   padding: "20px",
                   borderRadius: "10px",
                   border: "2px solid rgba(0, 0, 0, 0.1)",
-                  backgroundColor: "rgb(59, 48, 48)",
+                  border: "1px solid #797979",
+                  color: "black",
+                  fontWeight: "600",
                 }}
               >
                 <h2>Nội Dung Bài Viết</h2>
@@ -121,7 +125,7 @@ export default function Koishowa() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll1}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{ color: "blue", cursor: "pointer" }}
                     >
                       1. Giới thiệu về Cá Koi Showa
                     </span>
@@ -129,7 +133,7 @@ export default function Koishowa() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll2}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{ color: "blue", cursor: "pointer" }}
                     >
                       2. Các giống cá Koi Showa Nhật và cách xách định
                     </span>
@@ -137,7 +141,7 @@ export default function Koishowa() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll3}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{ color: "blue", cursor: "pointer" }}
                     >
                       3. Đặc điểm của cá koi showa
                     </span>
@@ -145,7 +149,7 @@ export default function Koishowa() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll4}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{ color: "blue", cursor: "pointer" }}
                     >
                       4.Cách chọn cá Koi Showa đẹp
                     </span>
@@ -154,7 +158,7 @@ export default function Koishowa() {
                         <span
                           onClick={handleScroll41}
                           style={{
-                            color: "rgb(251, 139, 36)",
+                            color: "blue",
                             cursor: "pointer",
                           }}
                         >
@@ -165,7 +169,7 @@ export default function Koishowa() {
                         <span
                           onClick={handleScroll42}
                           style={{
-                            color: "rgb(251, 139, 36)",
+                            color: "blue",
                             cursor: "pointer",
                           }}
                         >
@@ -177,7 +181,7 @@ export default function Koishowa() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll5}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{ color: "blue", cursor: "pointer" }}
                     >
                       5. Cách chăm sóc cá Koi showa
                     </span>
@@ -185,7 +189,7 @@ export default function Koishowa() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll6}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{ color: "blue", cursor: "pointer" }}
                     >
                       6. Phong thủy cá koi Showa
                     </span>
@@ -193,7 +197,7 @@ export default function Koishowa() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll7}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{ color: "blue", cursor: "pointer" }}
                     >
                       7. Tại sao nên mua cá Platinum Koi tại Siêu thị Cá Koi VN?
                     </span>
@@ -202,7 +206,7 @@ export default function Koishowa() {
                         <span
                           onClick={handleScroll71}
                           style={{
-                            color: "rgb(251, 139, 36)",
+                            color: "blue",
                             cursor: "pointer",
                           }}
                         >
@@ -213,7 +217,7 @@ export default function Koishowa() {
                         <span
                           onClick={handleScroll72}
                           style={{
-                            color: "rgb(251, 139, 36)",
+                            color: "blue",
                             cursor: "pointer",
                           }}
                         >
@@ -225,7 +229,7 @@ export default function Koishowa() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll8}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{ color: "blue", cursor: "pointer" }}
                     >
                       8. Tại sao nên mua Showa Koi tại siêu thị cá Koi VN:
                     </span>
@@ -234,7 +238,15 @@ export default function Koishowa() {
               </div>
 
               <div>
-                <h2>Nội dung chi tiết</h2>
+                <h2
+                  style={{
+                    textAlign: "center",
+                    color: "red",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Nội dung chi tiết
+                </h2>
                 <p>
                   Trên thị trường hiện nay do muốn đáp ứng được nhu cầu của
                   người dân khi muốn sở hữu trong không gian của mình một bể, hồ
@@ -255,7 +267,7 @@ export default function Koishowa() {
                 </div>
               </div>
               <div id="1">
-                <h3>1. Giới thiệu về Cá Koi Showa:</h3>
+                <h3 style={{ color: "red" }}>1. Giới thiệu về Cá Koi Showa:</h3>
 
                 <p>
                   Cá koi Showa là dòng cá được lai tạo ra vào năm 1927 bởi
@@ -307,7 +319,9 @@ export default function Koishowa() {
               </div>
 
               <div id="2">
-                <h3>Các giống cá Koi Showa Nhật và cách xách định </h3>
+                <h3 style={{ color: "red" }}>
+                  Các giống cá Koi Showa Nhật và cách xách định{" "}
+                </h3>
                 <div>
                   <p>
                     Mặc dù tất cả Showa đều có vẻ ngoài làn da đen (gọi là Sumi)
@@ -395,7 +409,7 @@ export default function Koishowa() {
                 </div>
               </div>
               <div id="3">
-                <h3>3. Đặc điểm của cá koi showa</h3>
+                <h3 style={{ color: "red" }}>3. Đặc điểm của cá koi showa</h3>
                 <div>
                   <p>
                     Cá Koi Showa Sankoku là một dòng cá chép Nhật ba màu giống
@@ -509,7 +523,7 @@ export default function Koishowa() {
                 </div>
               </div>
               <div id="4">
-                <h3>4. Cách chọn cá Koi Showa đẹp</h3>
+                <h3 style={{ color: "red" }}>4. Cách chọn cá Koi Showa đẹp</h3>
 
                 <p>
                   Muốn chọn lựa được những chú cá Koi Showa đẹp thì phải dựa vào
@@ -586,7 +600,7 @@ export default function Koishowa() {
               </div>
 
               <div id="5">
-                <h3>5. Cách chăm sóc cá Koi showa:</h3>
+                <h3 style={{ color: "red" }}>5. Cách chăm sóc cá Koi showa:</h3>
                 <p>
                   Muốn đảm bảo có một bể cá, hồ cá Koi showa đẹp và nó có thể
                   sinh trưởng, phát triển tốt thì hồ cá koi cần có đủ các phụ
@@ -603,7 +617,7 @@ export default function Koishowa() {
                 </p>
               </div>
               <div id="6">
-                <h3>6. Phong thủy cá koi Showa</h3>
+                <h3 style={{ color: "red" }}>6. Phong thủy cá koi Showa</h3>
                 <p>
                   Cá koi Showa là dòng cá nổi tiếng với màu sắc đa dạng bao gồm
                   đỏ, trắng và đen. Màu sắc của cá Showa tương sinh với các mệnh
@@ -614,7 +628,7 @@ export default function Koishowa() {
                 </p>
               </div>
               <div id="7">
-                <h3>7. Cách chăm sóc cá Koi showa:</h3>
+                <h3 style={{ color: "red" }}>7. Cách chăm sóc cá Koi showa:</h3>
                 <p>
                   Hiện tại Siêu thị Cá Koi Vn đang cung cấp dòng cá koi Showa
                   chuẩn từ cá nhật đến cá F1 với giá cực kỳ ưu đãi. Có thể nói
@@ -623,7 +637,7 @@ export default function Koishowa() {
                   Giá cá koi Showa Nhật và f1 như sau
                 </p>
                 <div id="71">
-                  <h4>7.1 Giá cá koi Showa F1</h4>
+                  <h4 style={{ color: "red" }}>7.1 Giá cá koi Showa F1</h4>
                   <p>
                     Đối với những con Showa f1 có kích thước từ 18cm – 40cm, giá
                     cá koi dao động từ 150.000 – 500.000 VNĐ tùy loại. <br />
@@ -633,7 +647,9 @@ export default function Koishowa() {
                   </p>
                 </div>
                 <div id="72">
-                  <h4>7.2 Giá cá koi Showa Nhật chuẩn</h4>
+                  <h4 style={{ color: "red" }}>
+                    7.2 Giá cá koi Showa Nhật chuẩn
+                  </h4>
                   <p>
                     Một con cá Koi Showa nhật với kích thước từ 10-15cm sẽ có
                     giá từ 600.000 – 2.000.000VNĐ/con.
@@ -646,7 +662,9 @@ export default function Koishowa() {
                 </div>
               </div>
               <div id="8">
-                <h3>8. Tại sao nên mua Showa Koi tại siêu thị cá Koi VN:</h3>
+                <h3 style={{ color: "red" }}>
+                  8. Tại sao nên mua Showa Koi tại siêu thị cá Koi VN:
+                </h3>
                 <p>
                   Phong thủy theo quan niệm của người Á Đông có ý nghĩa vô cùng
                   lớn nên việc lựa chọn cá Koi showa và Cá Koi Yamabuki nó mang

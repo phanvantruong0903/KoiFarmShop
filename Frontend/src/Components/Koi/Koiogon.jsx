@@ -39,43 +39,68 @@ export default function Koiogon() {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
-  const handleScroll51 = () => {
-    const element = document.getElementById("51");
+  const handleScroll31 = () => {
+    const element = document.getElementById("31");
 
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
-  const handleScroll52 = () => {
-    const element = document.getElementById("52");
+  const handleScroll32 = () => {
+    const element = document.getElementById("32");
 
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
-  const handleScroll6 = () => {
-    const element = document.getElementById("6");
+
+  const handleScroll33 = () => {
+    const element = document.getElementById("33");
 
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
+  const handleScroll34 = () => {
+    const element = document.getElementById("34");
+
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+  const handleScroll35 = () => {
+    const element = document.getElementById("35");
+
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+  const handleScroll36 = () => {
+    const element = document.getElementById("36");
+
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <>
-      <div
-        style={{
-          backgroundColor: "rgb(71,1,19)",
-          color: "#f1be7c",
-        }}
-      >
+      <div style={{}}>
         <div>
           <Navbar menu={menu} setMenu={setMenu} />
         </div>
         <Container>
           <div>
             <div style={{ paddingTop: "110px", textAlign: "center" }}>
-              <h1>CÁ KOI PLATINUM OGON</h1>
-
+              <img
+                src="src/assets/Red_Modern_Travel_Presentation__6_-removebg-preview.png"
+                style={{ paddingLeft: "1000px", marginTop: "-15px" }}
+              />
+              <h1
+                style={{ marginTop: "-330px", fontWeight: "800", color: "red" }}
+              >
+                CÁ KOI OGON
+              </h1>
               <hr />
             </div>
             <div>
@@ -85,312 +110,505 @@ export default function Koiogon() {
                   padding: "20px",
                   borderRadius: "10px",
                   border: "2px solid rgba(0, 0, 0, 0.1)",
-                  backgroundColor: "rgb(59, 48, 48)",
+                  border: "1px solid #797979",
+                  color: "black",
+                  fontWeight: "600",
                 }}
               >
-                <h2>Nội Dung Bài Viết</h2>
+                <h2 style={{ fontWeight: "bold", color: "red" }}>
+                  Nội Dung Bài Viết
+                </h2>
                 <ul style={{ marginTop: "10px" }}>
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll1}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        cursor: "pointer",
+                        color: "blue",
+                      }}
                     >
-                      1. Giới thiệu về cá Platinum Koi
+                      1. Nguồn gốc lịch sử của giống cá Koi Ogon
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll2}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        cursor: "pointer",
+                        color: "blue",
+                      }}
                     >
-                      2. Cách nhận biết cá Koi Platinum
+                      2. Đặc điểm của Koi ogon
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll3}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        cursor: "pointer",
+                        color: "blue",
+                      }}
                     >
-                      3. Cách chọn cá Platinum Koi
-                    </span>
-                  </li>
-                  <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll4}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
-                    >
-                      4. Cách chăm sóc cá koi Platinum
-                    </span>
-                  </li>
-                  <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll5}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
-                    >
-                      5. Giá cá koi Platinum bao nhiêu?
+                      3. Những dòng cá Koi ogon phổ biến hiện nay
                     </span>
                     <ul>
                       <li style={{ paddingTop: "10px" }}>
                         <span
-                          onClick={handleScroll51}
+                          onClick={handleScroll31}
                           style={{
-                            color: "rgb(251, 139, 36)",
                             cursor: "pointer",
+                            color: "blue",
                           }}
                         >
-                          5.1 Giá cá koi Platinum F1
+                          3.1 Giá cá koi Platinum F1
                         </span>
                       </li>
                       <li style={{ paddingTop: "10px" }}>
                         <span
-                          onClick={handleScroll52}
+                          onClick={handleScroll32}
                           style={{
-                            color: "rgb(251, 139, 36)",
                             cursor: "pointer",
+                            color: "blue",
                           }}
                         >
-                          5.2 Giá cá koi Platinum Nhật chuẩn
+                          3.2 Giá cá koi Platinum Nhật chuẩn
+                        </span>
+                      </li>
+                      <li style={{ paddingTop: "10px" }}>
+                        <span
+                          onClick={handleScroll33}
+                          style={{
+                            cursor: "pointer",
+                            color: "blue",
+                          }}
+                        >
+                          3.3 Cá Koi Hi Ogon
+                        </span>
+                      </li>
+                      <li style={{ paddingTop: "10px" }}>
+                        <span
+                          onClick={handleScroll34}
+                          style={{
+                            cursor: "pointer",
+                            color: "blue",
+                          }}
+                        >
+                          3.4 Cá Koi Orenji Ogon
+                        </span>
+                      </li>
+                      <li style={{ paddingTop: "10px" }}>
+                        <span
+                          onClick={handleScroll35}
+                          style={{
+                            cursor: "pointer",
+                            color: "blue",
+                          }}
+                        >
+                          3.5 Cá Koi Mukashi Ogon
+                        </span>
+                      </li>
+                      <li style={{ paddingTop: "10px" }}>
+                        <span
+                          onClick={handleScroll36}
+                          style={{
+                            cursor: "pointer",
+                            color: "blue",
+                          }}
+                        >
+                          3.6 Cá Nezu Ogon Koi
                         </span>
                       </li>
                     </ul>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
                     <span
-                      onClick={handleScroll6}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      onClick={handleScroll4}
+                      style={{
+                        cursor: "pointer",
+                        color: "blue",
+                      }}
                     >
-                      6. Tại sao nên mua cá Platinum Koi tại Siêu thị Cá Koi VN?
+                      4. Cách nuôi cá Koi ogon khỏe mạnh, phát triển tốt
+                    </span>
+                  </li>
+                  <li style={{ paddingTop: "10px" }}>
+                    <span
+                      onClick={handleScroll5}
+                      style={{
+                        cursor: "pointer",
+                        color: "blue",
+                      }}
+                    >
+                      5. Địa chỉ bán cá Koi Ogon đẹp, uy tín
                     </span>
                   </li>
                 </ul>
               </div>
 
               <div>
-                <h2>Nội dung chi tiết</h2>
+                <h2
+                  style={{
+                    textAlign: "center",
+                    color: "red",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Nội dung chi tiết
+                </h2>
                 <p>
-                  <span style={{ fontWeight: "bold" }}>Cá Koi </span>là giống cá
-                  được ưa chuộng để làm cảnh, trang trí không gian sống trở lên
-                  hoàn hảo cho người đam mê cá cảnh. Với đa dạng giống loài, màu
-                  sắc và kích thước nổi bật trong đó là dòng{" "}
-                  <span style={{ fontWeight: "bold" }}>Cá Platinum Koi l </span>
-                  à một trong những loài cá Koi được nhiều người yêu thích bởi
-                  vẻ ngoài đặc trưng của nó. Hãy cùng Siêu thị Cá Koi VN tìm
-                  hiểu rõ hơn về loài cá này ngay trong bài viết dưới đây.
+                  <span style={{ fontWeight: "bold", color: "blue" }}>
+                    Koi Ogon
+                  </span>{" "}
+                  là dòng cá Koi được yêu thích nhất trên thế giới. Với vẻ ngoài
+                  lấp lánh tạo ra vẻ sang trọng cho không gian nuôi cá Koi. Hãy
+                  cùng chúng tôi tìm hiểu thông tin cụ thể về dòng cá này nhé!
                 </p>
               </div>
               <div id="1">
-                <h3>1. Giới thiệu về cá Platinum Koi</h3>
+                <h3 style={{ color: "red" }}>
+                  {" "}
+                  1. Giới thiệu về cá Platinum Koi
+                </h3>
                 <div style={{ textAlign: "center" }}>
                   <img
                     src="src/assets/Koi-Ogon/ca-koi-platinum-3.webp"
                     style={{ width: "50%" }}
                   />
-                  <p>Giới thiệu về cá Platinum Koi</p>
+                  <p>Giới thiệu về cá Koi Ogon</p>
                 </div>
                 <p>
-                  Cá koi bạch kim Platinum là dòng điển hình nhất của Hikarimuji
-                  Mono - là dòng Cá Koi duy nhất có một màu. Thông thường, các
-                  loài cá Koi Nhật sẽ có hai màu trở lên nhưng chỉ duy nhất có
-                  cá koi Platinum có một màu nhưng lại không đơn điệu vì toàn
-                  thân cá có phủ một lớp ánh kim loại bắt mắt. Cá koi Platinum
-                  có thân cá nhỏ hơn, phần râu khá ngắn. Vây ngực - lưng - đuôi
-                  cá khá nhỏ, khi bơi kém phần mềm mại và uyển chuyển.
+                  Koi Ogon có lịch sử từ 90 năm trước, ông Sawata Aoki tại Nhật
+                  Bản đã có ý tưởng lai tạo một giống cá Koi đặc biệt. Có thể
+                  nói sự xuất hiện của cá Koi Ogon gắn liền với lịch sử khai
+                  sinh cá Koi. Từ lúc còn nhỏ, ông nghe nói có cậu bé tìm được 1
+                  chú cá chép hoang với vẻ bề ngoài rất kì lạ, có 1 sọc vàng
+                  trên lưng, ông đã lặn lội đường xa tìm đến thuyết phục cậu bé
+                  bán cho ông chú cá cảnh.
                 </p>
-                <ul>
-                  <li>Kích thước hồ cá tối thiểu: 1000 gallon</li>
-                  <li>Mức độ chăm sóc: Dễ dàng</li>
-                  <li>Tính cách: Hòa Bình</li>
-                  <li>Điều kiện nước: 36 - 90 F, PH 6,8 - 7,2</li>
-                  <li>Kích thước tối đa: 90cm</li>
-                  <li>Chế độ ăn: Ăn tạp</li>
-                </ul>
+                <div style={{ textAlign: "center" }}>
+                  <img src="src/assets/Koi-Ogon-1/bo-5.jpg" />
+                  <p>Nguồn gốc lịch sử của giống cá Koi Ogon</p>
+                </div>
+                <p>
+                  Đây cũng là lúc hành trình nuôi cá của ông bắt đầu, ông đã
+                  nuôi dưỡng chú cá suốt 25 năm, trong suốt khoảng thời gian này
+                  ông đã quan sát, theo dõi từng giai đoạn cá đẻ trứng, nhân đàn
+                  và kiên nhẫn lai tạo nhằm tìm ra những đặc tính ở 1 chú cá mà
+                  ông mong ước. Cho đến năm 1946, ông đã lai tạo thành công chú
+                  cá Koi Yamabuki Ogon với màu vàng đặc trưng, chú cá Koi được
+                  mệnh danh là ông tiên của dòng cá Koi Ogon.
+                </p>
               </div>
 
               <div id="2">
-                <h3>2.Cách nhận biết cá Koi Platinum</h3>
+                <h3 style={{ color: "red" }}>2.Đặc điểm của Koi ogon</h3>
+                <p>
+                  Cá Koi Ogon được coi là một trong những giống cá Koi đẹp nhất
+                  và độc đáo nhất trên trái đất với ngoại hình đặc trưng là màu
+                  vàng óng ánh rực rỡ. Tên gọi "Ogon" được lấy theo từ tiếng
+                  Nhật, có nghĩa là "vàng", nhằm vinh danh cho sắc màu đặc trưng
+                  của giống cá này.
+                  <br />
+                  Màu sắc của Koi Ogon là một điểm nhấn cực kỳ ấn tượng, chúng
+                  có màu vàng sáng, chúng thường được tô điểm bằng một vài chấm
+                  đen hoặc những đường nét đen trên thân. Một số loại Koi Ogon
+                  khác có màu cam hoặc trắng. Tuy nhiên, màu sắc của chúng có
+                  thể thay đổi theo mùa và phụ thuộc vào điều kiện môi trường
+                  xung quanh. Ví dụ, nếu chúng được nuôi dưỡng trong môi trường
+                  lạnh, màu sắc của chúng sẽ trở nên nhạt đi.
+                </p>
                 <div style={{ textAlign: "center" }}>
-                  <img
-                    src="src/assets/Koi-Ogon/2.webp"
-                    style={{ width: "50%" }}
-                  />
-                  <p>Cách nhận biết cá Koi Platinum</p>
+                  <img src="src/assets/Koi-Ogon-1/image14-1661495518-730-width801height889.jpg" />
+                  <p>Đặc điểm của Koi ogon</p>
                 </div>
                 <p>
-                  Platinum Koi được xem là ngôi sao của hồ cá Koi. Màu trắng
-                  bạch kim của cá như phát sáng như “thỏi bạc” di động dưới làn
-                  nước trong xanh. Đặc điểm nhận dạng loài cá koi bạch kim
-                  Platinum khác với goromo koi chính là tính nữ, hậu môn lồi lên
-                  còn cá đực sẽ có phần hậu môn lõm vào bên trong. Mỗi lần sinh
-                  sản, loài cá này có thể sinh tới hàng nghìn trứng và thụ tinh
-                  từ 4 - 7 ngày.
-                  <br /> Mắt cá Platinum Koi khá linh hoạt, nhanh nhạy. Thân cá
-                  mập, phần hông có hơi ngắn nhưng thân thuôn dài, phần đầu và
-                  vai rộng. Loài cá này có phần râu khá dài, cứng, đầu cá hơi
-                  gù. Phân vây ngực, vây lưng và vây đuôi khá dày, đục mà ánh
-                  sáng không thể xuyên qua được.
+                  Ngoài màu sắc rực rỡ, Koi Ogon cũng được yêu thích bởi vẻ đẹp
+                  tinh tế, sang trọng và thon gọn của chúng. Thân cá Koi Ogon
+                  cũng có hình dạng khá dài, chúng có đầu tròn và mắt lớn, đuôi
+                  và vây rất rộng và phẳng. Một số loài Koi Ogon cũng có đuôi
+                  dạng hình tam giác, tạo nên sự khác biệt về ngoại hình so với
+                  các giống cá Koi khác.
+                  <br />
+                  Koi Ogon có bản tính hiền hoà và thân thiện, chúng ưa sống
+                  trong những hồ nước ngọt và thường được chăm sóc như một loài
+                  cá cảnh trong các khu vườn và sân vườn. Tuy nhiên, việc chăm
+                  sóc Koi Ogon cần có kiến thức và sự chăm sóc kỹ càng. Việc tạo
+                  dựng môi trường sống lý tưởng cho cá đòi hỏi hiểu biết về chăm
+                  sóc cá cảnh cũng như tập tính sống của cá.
                 </p>
               </div>
               <div id="3">
-                <h3>3. Cách chọn cá Platinum Koi</h3>
-                <div style={{ textAlign: "center" }}>
-                  <img
-                    src="src/assets/Koi-Ogon/3.webp"
-                    style={{ width: "50%" }}
-                  />
-                </div>
-                <p>
-                  Một trong những cách chọn cá koi bạch kim Platinum đẹp, đẳng
-                  cấp cần đáp ứng những điều kiện sau:
-                </p>
+                <h3 style={{ color: "red" }}>
+                  3. Những dòng cá Koi ogon phổ biến hiện nay
+                </h3>
                 <ul>
                   <li>
-                    Cá có màu sắc trắng bạc đẹp và đều màu, không được có các
-                    màu khác xen lẫn.
+                    <span style={{ fontWeight: "bold", color: "blue" }} id="31">
+                      3.1 Cá Koi Platinum Ogon
+                    </span>
+                    <br />
+                    Cá Koi Platinum Ogon là một trong những dòng cá Koi Ogon đẹp
+                    và đặc biệt nhất với màu trắng bạc sang trọng. Loại cá Koi
+                    này được tạo ra từ sự pha trộn giữa các dòng Koi Ogon khác
+                    nhau, tạo nên một loài cá có màu sắc đa dạng và độc đáo.
+                    <br />
+                    Với bề ngoài thanh lịch và trang nhã, Platinum Ogon được yêu
+                    thích vì sự tinh tế của nó. Thân cá Koi Platinum Ogon có màu
+                    trắng bạc óng ánh vô cùng đẹp mắt, tạo nên một vẻ ngoài tinh
+                    khôi, thanh tao và đẹp mắt. Chúng có thân hình thon gọn và
+                    đầu nhỏ, vây và đuôi rộng và dài, tạo thành một hình dáng
+                    hoàn hảo và thanh lịch.Điểm nhấn nổi bật của loài cá này là
+                    màu sắc trắng bạc đa dạng và tinh tế, tạo nên một sự độc đáo
+                    và quyến rũ. Một số loài Platinum Ogon có thể có màu sắc pha
+                    trộn với màu vàng hoặc cam, tạo nên sự sang trọng và quý
+                    phái đến từng tiểu tiết.
+                    <div style={{ textAlign: "center" }}>
+                      <img src="src/assets/Koi-Ogon-1/image14-1661495518-730-width801height889.jpg" />
+                      <p>KOI PLATINUM OGON</p>
+                    </div>
                   </li>
                   <li>
-                    Chọn cá có thân hình như một chiếc tàu ngầm, bụng cá không
-                    phệ, không ngắt quãng như dáng cá nóc. Nếu lựa chọn con mập
-                    quá thì thân cá sẽ bụng ngắn, còn nếu như chọn cá có bụng
-                    dài ngoằn thì khi cá phát triển như con lươn, sau này không
-                    khủng về độ lớn.
+                    <span style={{ fontWeight: "bold", color: "blue" }} id="32">
+                      3.2 Cá Koi Yamabuki Ogon
+                    </span>
+                    <br />
+                    Cá Koi Yamabuki Ogon là một trong những giống cá Koi Ogon
+                    phổ biến và được ưa chuộng trên khắp thế giới. Đây là một
+                    dòng cá có màu vàng kim rực rỡ với những đặc trưng màu sắc
+                    rất rõ nét và không thể nào bị nhầm lẫn được. Đây là một
+                    trong những loại cá Koi không có khuyết điểm về màu sắc.
+                    <br />
+                    Yamabuki Ogon có màu vàng đậm trên lưng cá, được phối hợp
+                    với các chấm đen hoặc sọc đen trên lưng. Màu vàng của
+                    Yamabuki Ogon được xem là đặc trưng của loài cá này và tạo
+                    nên sự nổi bật và rực rỡ cho màu sắc của chúng. Vây và đuôi
+                    của Yamabuki Ogon đều có màu vàng nhạt, tạo thành một sự
+                    phối hợp màu sắc hài hoà và đẹp mắt.
+                    <br />
+                    Yamabuki Ogon có kích thước tối đa khoảng 1 mét và tuổi thọ
+                    của chúng vào khoảng 35 năm. Là một dòng cá Koi có tính tình
+                    vô cùng hiền hoà và thân thiện. Chúng cũng rất dễ nuôi, có
+                    thể sinh sống trong các bể cá ở nhiều điều kiện khác nhau và
+                    không có quá nhiều yêu cầu về nước.
+                    <div style={{ textAlign: "center" }}>
+                      <img src="src/assets/Koi-Ogon-1/img_0095.png" />
+                      <p>KOI YAMABUIKI OGON</p>
+                    </div>
                   </li>
 
                   <li>
-                    Bạn cần phải quan sát thật kỹ dáng cá bơi, điểm bắt đầu và
-                    kết thúc của cá, lúc bơi cao và lúc bơi thấp thì dáng cá như
-                    thế nào. Quan sát thật kỹ dáng cá để bạn có thể xác định
-                    được cá khỏe hay không. Nếu như cá bơi không thẳng, không
-                    uyển chuyển thì không nên chọn.
+                    <span style={{ fontWeight: "bold", color: "blue" }} id="33">
+                      3.3 Cá Koi Hi Ogon
+                    </span>
+                    <br />
+                    Cá Koi Hi Ogon là một trong những giống cá Koi được yêu
+                    thích trên toàn thế giới với màu sắc chủ đạo là màu đỏ tươi.
+                    Tuy nhiên, nhiều người mới tập chơi cá hay gặp phải nhầm lẫn
+                    giữa Hi Ogon và Orenji Ogon – một giống cá Koi khác cũng có
+                    màu đỏ. Tuy nhiên, Hi Ogon có màu đỏ thắm, đậm hơn và phần
+                    đuôi cũng có màu sắc đậm hơn so với phần thân.
+                    <br />
+                    Tuy nhiên, khi được nuôi dưỡng đúng cách, cá Koi Hi Ogon có
+                    thể phát triển và tồn tại lâu dài, chúng có thể duy trì tuổi
+                    thọ lên tới 25-35 năm. Các triển lãm cá cảnh và cuộc thi cá
+                    Koi cũng thường trưng bày những con cá Koi Hi Ogon đẹp nhất
+                    để khán giả chiêm ngưỡng và thưởng thức.
+                    <div style={{ textAlign: "center" }}>
+                      <img src="src/assets/Koi-Ogon-1/hi-ogon.jpg" />
+                      <p>KOI HI OGON </p>
+                    </div>
                   </li>
 
                   <li>
-                    Chọn cá có phần đuôi cong, tròn, sờ vào mịn. Trường hợp đuôi
-                    không cong tròn mà kết thúc đuôi bằng hình trái tim cũng
-                    được. Nếu đuôi cá ngắn, không căng thì trong tương lai cá sẽ
-                    khó phát triển đến độ dài và sức mạnh cần thiết.
+                    <span style={{ fontWeight: "bold", color: "blue" }} id="34">
+                      3.4 Cá Koi Orenji Ogon
+                    </span>
+                    <br />
+                    Cá Koi Orenji Ogon là một trong những dòng cá Koi được yêu
+                    thích nhất với màu sắc chủ đạo là cam. Thân cá của chúng có
+                    vảy rồng óng ánh, tạo nên một vẻ ngoài vô cùng bắt mắt. Phần
+                    vây đuôi và vây lưng của cá đều có màu tuyết trắng giống với
+                    Yamabuki Ogon Koi, góp phần tạo thành một kết cấu thân cá
+                    hoàn hảo.
+                    <br />
+                    Việc nuôi cá Koi Orenji Ogon cần có kiến thức và kinh nghiệm
+                    để giám sát và quản lý hồ cá để đảm bảo chất lượng và sự
+                    tăng trưởng tối ưu nhất cho chúng. Nước trong hồ nuôi cần
+                    được kiểm soát chặt chẽ độ pH, độ kiềm và nhiệt độ thích
+                    hợp, cũng như nguồn thức ăn chất lượng cao để đảm bảo nhu
+                    cầu phát triển của cá.
+                    <div style={{ textAlign: "center" }}>
+                      <img src="src/assets/Koi-Ogon-1/orenji-ogon.jpg" />
+                      <p>KOI ORENJI OGON </p>
+                    </div>
                   </li>
-
                   <li>
-                    Chọn cá có lớp da phải sáng, sạch, nhẵn mịn và trơn bóng bởi
-                    da cá đẹp, tốt sẽ tác động đến vẻ đẹp của vảy cá, làm cho
-                    vảy cá đều đặn hơn. Tránh chọn những con cá có màu sắc mờ
-                    nhạt, da tróc vảy, trầy xước,...
+                    <span style={{ fontWeight: "bold", color: "blue" }} id="35">
+                      3.5 Cá Koi Mukashi Ogon
+                    </span>
+                    <br />
+                    Cá Koi Mukashi Ogon là một trong những dòng cá Koi có lịch
+                    sử lai tạo lâu đời và được yêu thích vì nét đẹp cổ xưa, độc
+                    đáo của chúng. Mukashi Ogon có nghĩa là "vàng xưa", bởi vì
+                    chúng có màu sắc vàng tươi và được coi như một biểu tượng
+                    của sự thịnh vượng và may mắn theo văn hóa Nhật Bản.
+                    <br />
+                    Thân cá của Mukashi Ogon có màu vàng tươi đặc trưng, tuy
+                    vậy, màu sắc lại không đồng đều trên cơ thể cá. Thường có
+                    một hoặc hai vết trắng ở phần đầu của thân, tạo thành một vẻ
+                    đẹp khác biệt và độc đáo. Ngoài ra, các vây của chú cá cũng
+                    có màu vàng tươi, tạo nên sự đồng điệu với thân cá.
+                    <div style={{ textAlign: "center" }}>
+                      <img src="src/assets/Koi-Ogon-1/mukashi-ogon.webp" />
+                      <p>KOI MUKASHI OGON </p>
+                    </div>
                   </li>
-
                   <li>
-                    Không nên chọn những con cá có dáng bơi lắc lư, lay động, cá
-                    bị hở râu, râu cá không đều, miệng cá méo, phân thân của cá
-                    bị cong,...cũng là điều mà bạn nên lưu ý.
-                  </li>
-
-                  <li>
-                    Không nên chọn những con cá có phần mang bị đỏ có thể chúng
-                    bị nhiễm sán
+                    <span style={{ fontWeight: "bold", color: "blue" }} id="36">
+                      3.6 Nezu Ogon Koi
+                    </span>
+                    <br />
+                    Cá Koi Nezu Ogon là một trong những dòng cá Koi được yêu
+                    thích với màu sắc độc đáo và khác lạ. "Nezu" có nghĩa là
+                    "chuột đồng", vì vậy tên của chú cá được đặt theo hình dáng
+                    và màu sắc của mình, giống như một chú chuột đồng.
+                    <br />
+                    Thân cá của Nezu Ogon có màu bạc nhạt đặc trưng, phần lớn
+                    thân cá được bao phủ bằng các vảy trắng long lanh tựa như
+                    phấn trắng, tạo nên một vẻ đẹp sang trọng và khác lạ. Một số
+                    vảy có thể có màu đen hoặc nâu, tạo nên một sự đồng điệu và
+                    khác biệt đối với chú cá.
+                    <div style={{ textAlign: "center" }}>
+                      <img src="src/assets/Koi-Ogon-1/nezu-ogon.jpg" />
+                      <p>KOI NEZU OGON </p>
+                    </div>
                   </li>
                 </ul>
-                <p>
-                  Người Nhật rất tôn thờ loài cá koi bạch kim Platinum. Đây là
-                  biểu tượng của ánh sáng, may mắn, sự thanh sạch và thanh cao
-                  nên rất được quan lại xưa ưa chuộng. Nhiều người mua Platinum
-                  Koi để mua quà tặng biếu nhau, tượng trưng cho cốt cách thanh
-                  tao.
-                  <br />
-                  Trong phong thủy Platinum Koi có màu bạch kim nên rất phù hợp
-                  với những người mệnh Kim. Mà trong phong thủy, Kim sinh Thủy
-                  nên người mệnh Thủy cũng hợp mệnh. Người Việt cũng ưa chuộng
-                  các con số 6,8,9 nên thường chọn số lượng con cá như vậy để
-                  nuôi. Lựa chọn cá koi Platinum hợp phong thủy trong nhà, tư
-                  tưởng sẽ mang lại những điều tích cực trong cuộc sống, công
-                  việc thuận buồm xuôi gió.
-                </p>
               </div>
               <div id="4">
-                <h3>4. Cách chăm sóc cá koi Platinum</h3>
-                <div>
-                  <div style={{ textAlign: "center" }}>
-                    <img
-                      src="src/assets/Koi-Ogon/4.webp"
-                      style={{ width: "50%" }}
-                    />
-                    <p>Cách chăm sóc cá koi Platinum Ogon</p>
-                  </div>
-                  <p></p>
-                </div>
-                <p>
-                  Khi nuôi cá Platinum Koi cũng như asagi koi, bạn cũng nên tìm
-                  hiểu cách chăm sóc cụ thể:
-                </p>
+                <h3 style={{ color: "red" }}>
+                  4. Cách nuôi cá Koi ogon khỏe mạnh, phát triển tốt
+                </h3>
+                <p>Sau đây là cách nuôi cá Koi Ogon phát triển khỏe mạnh:</p>
+                <p style={{ fontWeight: "bold" }}>Chọn hồ nuôi phù hợp</p>
                 <ul>
                   <li>
-                    Cá koi bạch kim Platinum sinh trưởng và phát triển trong một
-                    hồ cá có thể tích lớn hơn 1000 gallon nước, nền tốt và ít
-                    các loại cây thủy sinh bởi loài cá này có khả năng phá cây,
-                    gây ảnh hưởng tới chất lượng nước trong hồ. Khi nuôi cá Koi
-                    Platinum, bạn cần phải có một hệ thống lọc chuyên nghiệp để
-                    duy trì và phẩm chất của những con cá chất lượng cao này.
+                    Về diện tích, hồ nuôi tối thiểu cần có diện tích 4-5m2 và độ
+                    sâu khoảng 1,2 đến 1,5 m.
                   </li>
                   <li>
-                    Trong 3 đến 4 tuần đầu tiên khi cá mới ra đời, bạn nên cho
-                    cá ăn thức ăn tươi loại nhỏ, trùn chỉ, bobo. Sau đó, dần dần
-                    thay đổi chế độ thức ăn của cá trong những tuần tiếp theo,
-                    màu sắc của cá sẽ thay đổi từ tuần thứ 3 đến tuần thứ 12.
+                    Về vật liệu, hồ nuôi cá Koi Ogon nên được xây bằng bê tông
+                    hoặc nhựa PVC. Bề mặt hồ cần được phủ lớp chất tạo màu nhằm
+                    đảm bảo sạch sẽ và ngăn chặn sự tăng trưởng của tảo và vi
+                    khuẩn.
+                  </li>
+                  <li>
+                    Cần lựa chọn đúng hình thức bơi lội cho cá Koi Ogon, bao gồm
+                    bơi lội tại mặt nước và bơi lội tại lòng hồ.
+                  </li>
+                  <li>
+                    Trang bị các hệ thống lọc nước phù hợp, giúp nước luôn sạch
+                    sẽ và cân đối dinh dưỡng.
                   </li>
                 </ul>
-              </div>
-
-              <div id="5">
-                <h3>5. Giá cá koi Platinum bao nhiêu? </h3>
+                <p style={{ fontWeight: "bold" }}>Đảm bảo chất lượng nước</p>
+                <ul>
+                  <li>
+                    pH: Khoảng pH lý tưởng đối với cá Koi Ogon là 7.2-7.6. Nếu
+                    pH quá cao hoặc quá thấp, sẽ ảnh hưởng đến chất lượng của cá
+                    và khiến cho chúng dễ mắc bệnh.
+                  </li>
+                  <li>
+                    Ammonia: Ammonia là một chất độc hại đối với cá Koi Ogon, có
+                    thể gây ra tổn thương gan và các bệnh đường hô hấp. Nên kiểm
+                    tra nồng độ ammonia trong nước định kỳ và thay đổi nước định
+                    kỳ để ngăn chặn sự tích tụ của amoniac.
+                  </li>
+                  <li>
+                    Nitrat và Nitrit: Những chất này có thể gây ngộ độc ở cá nếu
+                    nồng độ quá cao. Kiểm tra định kỳ và xử lý nước định kỳ nhằm
+                    hạn chế sự tích tụ của chúng.
+                  </li>
+                  <li>
+                    Oxy: Nếu nồng độ oxy trong nước quá thấp, cá sẽ bị stress và
+                    dễ mắc các bệnh liên quan đến hô hấp. Để đảm bảo nồng độ oxy
+                    đủ, bạn có thể sử dụng máy bơm oxy hoặc đổ nước vào bể nhằm
+                    tăng cường hàm lượng oxy trong nước.
+                  </li>
+                </ul>
+                <p style={{ fontWeight: "bold" }}>Thức ăn</p>
+                <ul>
+                  <li>
+                    Thức ăn viên: được sản xuất từ các nguyên liệu thiên nhiên
+                    như rong biển, tôm, cá hú, cá diếc, . .. Thức ăn viên có
+                    kích cỡ khác nhau tuỳ thuộc vào kích thước cá Koi Ogon.
+                  </li>
+                  <li>
+                    Thức ăn nuôi: cá Koi Ogon cũng có thể ăn các loại thức ăn
+                    nuôi như dế, trùn, tôm, cá, . ..
+                  </li>
+                  <li>
+                    Thức ăn tự làm: nuôi cá Koi Ogon cũng có thể tự làm thức ăn
+                    bằng cách phối trộn các loại thức ăn từ tảo biển, tôm, cá
+                    hú, rau củ quả, . ..
+                  </li>
+                </ul>
                 <p>
-                  Hiện tại Siêu thị Cá Koi Vn đang cung cấp dòng cá koi Platinum
-                  chuẩn từ cá nhật đến cá F1 với giá cực kỳ ưu đãi. Có thể nói
-                  Siêu thị Cá Koi VN là một trong những đơn vị cung cấp cá koi
-                  với giá rẻ nhất thị trường, mà chất lượng cũng rất đảm bảo.
-                  Giá cá koi nhật và f1 như sau:
+                  <span style={{ fontWeight: "bold" }}>Kiểm tra sức khoẻ</span>
+                  <br />
+                  <p>
+                    Kiểm tra sức khỏe thường xuyên là vô cùng cần thiết nhằm bảo
+                    vệ sức khoẻ của cá Koi Ogon. Bạn nên theo dõi thường xuyên
+                    chú cá của mình nhằm phát hiện kịp thời các dấu hiệu của
+                    bệnh tật và tiến hành chữa trị kịp thời.
+                  </p>
                 </p>
-                <div id="51">
-                  <h4>5.1 Giá cá koi Platinum F1</h4>
+                <p>
+                  <span style={{ fontWeight: "bold" }}>
+                    Giám sát và quản lý
+                  </span>
+                  <br />
                   <p>
-                    Đối với những con Kohaku f1 có kích thước từ 18cm – 40cm,
-                    giá cá koi dao động từ 150.000 – 500.000 VNĐ tùy loại. Cao
-                    cấp hơn là những con Kohaku f1 có kích thước từ 50cm – 55cm,
-                    được chia làm loại 1, loại 2 và 3. Giá thành dao động từ
-                    1.800.000 – 3.000.000 VNĐ tùy loại.
+                    Giám sát và quản lý là một phần cực kỳ cần thiết đối với quá
+                    trình chăm sóc cá Koi Ogon. Bạn cần đảm bảo rằng các thông
+                    số nước, thức ăn và sức khoẻ của chúng được giám sát và quản
+                    lý nghiêm ngặt nhằm đảm bảo chúng phát triển tốt nhất có
+                    thể.
                   </p>
-                </div>
-                <div id="52">
-                  <h4>5.2 Giá cá koi Platinum Nhật chuẩn</h4>
-                  <p>
-                    Một con cá Koi trưởng thành Nhật Bản như Platinum koi với
-                    kích thước từ 10-15cm sẽ có giá từ 600.000 –
-                    2.000.000VNĐ/con. <br /> Ngoài ra còn có con Platinum Koi
-                    thuần chủng … được xếp vào hàng hiếm có kích thước lớn thì
-                    giá cá koi lên đến vài nghìn đến hàng chục nghìn USD. Do đó
-                    nếu bạn muốn mua hãy liên hệ với chúng tôi để được tư vấn
-                    tận tình.
-                  </p>
-                </div>
+                </p>
               </div>
-              <div id="6">
-                <h3>
-                  6. Tại sao nên mua cá Platinum Koi tại Siêu thị Cá Koi VN?
+              <div id="5">
+                <h3 style={{ color: "red" }}>
+                  5. Địa chỉ bán cá Koi Ogon đẹp, uy tín?{" "}
                 </h3>
                 <p>
-                  Hiện nay, trên thị trường có rất nhiều đơn vị cung cấp cá koi
-                  bạch kim Platinum với giá thành và chất lượng khác nhau. Điều
-                  này rất khó khăn đối với khách hàng để có thể lựa chọn được
-                  đơn vị uy tín. Siêu thị Cá Koi VN là một trong những đơn vị uy
-                  tín, chuyên cung cấp các loài cá Koi vô cùng đa dạng, phong
-                  phú được rất nhiều khách hàng tin tưởng. Siêu thị Cá Koi VN
-                  chuyên cung cấp các loài cá đa dạng đáp ứng được mọi nhu cầu
-                  của khách hàng. Bên cạnh đó, mức giá hợp lý cũng là một trong
-                  những điều khiến khách hàng yêu thích khi mua cá tại đây. Khi
-                  mua cá tại Siêu thị Cá Koi VN, bạn sẽ được hướng dẫn chi tiết
-                  cách nuôi, chăm sóc cá tốt nhất. <br />
-                  Trên đây là một số thông tin liên quan đến loài cá Platinum
-                  Koi để bạn hiểu rõ hơn về loài cá này, giúp bạn có thể tham
-                  khao khi lựa chọn cá Koi. Siêu thị cá Koi VN hy vọng những
-                  thông tin trên hữu ích đối với bạn, giúp bạn hiểu rõ hơn về
-                  loài cá Platinum Koi này.
+                  Siêu Thị Cá Koi VN là đơn vị thiết kế thi công hồ cá Koi
+                  chuyên nghiệp, uy tín hiện nay. Ngoài ra, chúng tôi còn là đơn
+                  vị chuyên cung cấp các dòng cá Koi Ogon siêu đẹp với mức giá
+                  cạnh tranh. Khách hàng sẽ hoàn toàn yên tâm khi sử dụng dịch
+                  vụ của chúng tôi:
+                  <ul>
+                    <li>
+                      Thiết kế hồ cá Koi Nhật đạt chuẩn trong thời gian nhanh
+                      nhất đúng tiến độ đã cam kết.{" "}
+                    </li>
+                    <li>
+                      Tất cả yêu cầu của khách hàng được đáp ứng đầy đủ như đã
+                      thỏa thuận.
+                    </li>
+                    <li>
+                      Hỗ trợ chăm sóc bảo dưỡng công trình, tư vấn để khách hàng
+                      sử dụng hồ cá đúng chuẩn.{" "}
+                    </li>
+                    <li>
+                      Giá thành thiết kế, thi công hồ cá Koi cạnh tranh nhất thị
+                      trường hiện nay.{" "}
+                    </li>
+                    <li>
+                      Đội ngũ kiến trúc sư, kỹ sư xây dựng giỏi và nhân viên tư
+                      vấn am hiểu chuyên môn.
+                    </li>
+                  </ul>
                 </p>
               </div>
             </div>

@@ -98,19 +98,22 @@ export default function Koitancho() {
   };
   return (
     <>
-      <div
-        style={{
-          backgroundColor: "rgb(71,1,19)",
-          color: "#f1be7c",
-        }}
-      >
+      <div style={{}}>
         <div>
           <Navbar menu={menu} setMenu={setMenu} />
         </div>
         <Container>
           <div>
             <div style={{ paddingTop: "110px", textAlign: "center" }}>
-              <h1>CÁ KOI TANCHO</h1>
+              <img
+                src="src/assets/Red_Modern_Travel_Presentation__6_-removebg-preview.png"
+                style={{ paddingLeft: "1000px", marginTop: "-15px" }}
+              />
+              <h1
+                style={{ marginTop: "-330px", fontWeight: "800", color: "red" }}
+              >
+                CÁ KOI TANCHO
+              </h1>
               <hr />
             </div>
             <div>
@@ -120,15 +123,20 @@ export default function Koitancho() {
                   padding: "20px",
                   borderRadius: "10px",
                   border: "2px solid rgba(0, 0, 0, 0.1)",
-                  backgroundColor: "rgb(59, 48, 48)",
+                  border: "1px solid #797979",
+                  color: "black",
                 }}
               >
-                <h2>Nội Dung Bài Viết</h2>
+                <h2 style={{ color: "red" }}>Nội Dung Bài Viết</h2>
                 <ul style={{ marginTop: "10px" }}>
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll1}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       1. Giới thiệu cá Koi Tancho
                     </span>
@@ -136,7 +144,11 @@ export default function Koitancho() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll2}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       2. Các loại cá koi Tancho đẹp
                     </span>
@@ -145,8 +157,9 @@ export default function Koitancho() {
                         <span
                           onClick={handleScroll21}
                           style={{
-                            color: "rgb(251, 139, 36)",
+                            color: "blue",
                             cursor: "pointer",
+                            fontWeight: "600",
                           }}
                         >
                           2.1 Tancho Kohaku
@@ -156,8 +169,9 @@ export default function Koitancho() {
                         <span
                           onClick={handleScroll22}
                           style={{
-                            color: "rgb(251, 139, 36)",
+                            color: "blue",
                             cursor: "pointer",
+                            fontWeight: "600",
                           }}
                         >
                           2.2 Tancho Sanke
@@ -167,8 +181,9 @@ export default function Koitancho() {
                         <span
                           onClick={handleScroll23}
                           style={{
-                            color: "rgb(251, 139, 36)",
+                            color: "blue",
                             cursor: "pointer",
+                            fontWeight: "600",
                           }}
                         >
                           2.3 Tancho Showa
@@ -179,7 +194,11 @@ export default function Koitancho() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll3}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       3. Phân biệt các loại cá koi Tancho có trên thị trường
                     </span>
@@ -187,7 +206,11 @@ export default function Koitancho() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll4}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       4. Cách chọn cá koi tancho
                     </span>
@@ -195,7 +218,11 @@ export default function Koitancho() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll5}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       5. Cách chăm sóc cá koi tancho
                     </span>
@@ -203,7 +230,11 @@ export default function Koitancho() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll6}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       6. Cách chăm sóc Koi Kohaku
                     </span>
@@ -212,8 +243,9 @@ export default function Koitancho() {
                         <span
                           onClick={handleScroll61}
                           style={{
-                            color: "rgb(251, 139, 36)",
+                            color: "blue",
                             cursor: "pointer",
+                            fontWeight: "600",
                           }}
                         >
                           6.1 Giá cá koi Tancho F1
@@ -223,8 +255,9 @@ export default function Koitancho() {
                         <span
                           onClick={handleScroll62}
                           style={{
-                            color: "rgb(251, 139, 36)",
+                            color: "blue",
                             cursor: "pointer",
+                            fontWeight: "600",
                           }}
                         >
                           6.2 Tại sao nên mua Tancho koi tại siêu thị Cá koi VN?
@@ -235,7 +268,11 @@ export default function Koitancho() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll7}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       7. Giá coi Koi Kohaku bao nhiêu?
                     </span>
@@ -243,7 +280,11 @@ export default function Koitancho() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll8}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       8. Tại sao nên mua Koi Kohaku tại KoiVNStore
                     </span>
@@ -252,7 +293,15 @@ export default function Koitancho() {
               </div>
 
               <div>
-                <h2>Nội dung chi tiết</h2>
+                <h2
+                  style={{
+                    fontWeight: "bold",
+                    color: "red",
+                    textAlign: "center",
+                  }}
+                >
+                  Nội dung chi tiết
+                </h2>
                 <p style={{}}>
                   Hiện nay, cá koi là dòng cá được ưa chuộng để làm cảnh cũng
                   như trang trí cho không gian sống của bạn. Cá koi có nhiều
@@ -264,7 +313,7 @@ export default function Koitancho() {
                 </p>
               </div>
               <div id="1">
-                <h3>1. Giới thiệu cá Koi Tancho </h3>
+                <h3 style={{ color: "red" }}>1. Giới thiệu cá Koi Tancho </h3>
                 <img />
                 <div>
                   <p>
@@ -286,7 +335,7 @@ export default function Koitancho() {
               </div>
 
               <div id="detailed-content">
-                <h3>2. Các loại cá koi Tancho đẹp</h3>
+                <h3 style={{ color: "red" }}>2. Các loại cá koi Tancho đẹp</h3>
                 <div>
                   Bạn có thể phân biệt cá Koi Tancho với một số những giống cá
                   koi Nhật khác bằng cách nhìn vào dấu chấm tròn trên đầu. Ba
@@ -315,24 +364,12 @@ export default function Koitancho() {
                         <p>Tancho Kohaku</p>
                       </div>
                     </li>
+
                     <li>
-                      <span id="21" style={{ fontWeight: "bold" }}>
-                        2.1 Tancho Kohaku
-                      </span>
-                      <br />
-                      <p>
-                        Cá Koi Tancho Kohaku được ví như quốc kỳ của Nhật Bản,
-                        chúng có thân và phần bụng màu trắng như tuyết, tất cả
-                        các vây cũng có màu trắng. Chỉ có duy nhất một chấm màu
-                        đỏ lớn trên đầu.
-                      </p>
-                      <div style={{ textAlign: "center" }}>
-                        <img src="src/assets/Koi-Tancho/08e242e22db6eae8b3a7-225x300.jpg" />
-                        <p>Tancho Kohaku</p>
-                      </div>
-                    </li>
-                    <li>
-                      <span id="21" style={{ fontWeight: "bold" }}>
+                      <span
+                        id="21"
+                        style={{ fontWeight: "bold", color: "red" }}
+                      >
                         2.2 Tancho Sanke
                       </span>
                       <br />
@@ -349,7 +386,10 @@ export default function Koitancho() {
                       </div>
                     </li>
                     <li>
-                      <span id="23" style={{ fontWeight: "bold" }}>
+                      <span
+                        id="23"
+                        style={{ fontWeight: "bold", color: "red" }}
+                      >
                         2.3 Tancho Showa
                       </span>
                       <br />
@@ -372,7 +412,9 @@ export default function Koitancho() {
                 </div>
               </div>
               <div id="3">
-                <h3>3. Phân biệt các loại cá koi Tancho có trên thị trường</h3>
+                <h3 style={{ color: "red" }}>
+                  3. Phân biệt các loại cá koi Tancho có trên thị trường
+                </h3>
                 <Table striped bordered hover responsive>
                   <thead>
                     <tr>
@@ -432,7 +474,7 @@ export default function Koitancho() {
                 </Table>
               </div>
               <div id="4">
-                <h3>4. Cách chọn cá koi tancho</h3>
+                <h3 style={{ color: "red" }}>4. Cách chọn cá koi tancho</h3>
                 <div>
                   <p>
                     Đối với những người chơi Tancho koi đều mong muốn cá của
@@ -472,7 +514,7 @@ export default function Koitancho() {
                 </div>
               </div>
               <div id="5">
-                <h2>5. Cách chăm sóc cá koi tancho</h2>
+                <h3 style={{ color: "red" }}>5. Cách chăm sóc cá koi tancho</h3>
                 <div>
                   <p>
                     Cá Koi Tancho được nuôi trong một môi trường từ 18 - 26 độ
@@ -493,7 +535,9 @@ export default function Koitancho() {
                 </div>
               </div>
               <div id="6">
-                <h3>6. Giá cá koi Tancho bao nhiêu?</h3>
+                <h3 style={{ color: "red" }}>
+                  6. Giá cá koi Tancho bao nhiêu?
+                </h3>
                 <div>
                   <p>
                     Vì Kohaku koi là loài thông minh có thể sống trong nhiều
@@ -535,7 +579,9 @@ export default function Koitancho() {
                 </div>
               </div>
               <div id="7">
-                <h3>7. Tại sao nên mua Tancho koi tại siêu thị Cá koi VN?</h3>
+                <h3 style={{ color: "red" }}>
+                  7. Tại sao nên mua Tancho koi tại siêu thị Cá koi VN?
+                </h3>
                 <div>
                   <p>
                     Bên cạnh đó, siêu thị Cá Koi VN có đội ngũ chuyên gia nhiều

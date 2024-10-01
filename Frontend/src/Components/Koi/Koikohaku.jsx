@@ -77,19 +77,23 @@ export default function Koikohaku() {
   };
   return (
     <>
-      <div
-        style={{
-          backgroundColor: "rgb(71,1,19)",
-          color: "#f1be7c",
-        }}
-      >
+      <div style={{}}>
         <div>
           <Navbar menu={menu} setMenu={setMenu} />
         </div>
+
         <Container>
           <div>
             <div style={{ paddingTop: "110px", textAlign: "center" }}>
-              <h1>CÁ KOI KOHAKU</h1>
+              <img
+                src="src/assets/Red_Modern_Travel_Presentation__6_-removebg-preview.png"
+                style={{ paddingLeft: "1000px", marginTop: "-15px" }}
+              />
+              <h1
+                style={{ marginTop: "-330px", fontWeight: "800", color: "red" }}
+              >
+                CÁ KOI KOHAKU
+              </h1>
               <hr />
             </div>
             <div>
@@ -99,15 +103,20 @@ export default function Koikohaku() {
                   padding: "20px",
                   borderRadius: "10px",
                   border: "2px solid rgba(0, 0, 0, 0.1)",
-                  backgroundColor: "rgb(59, 48, 48)",
+                  border: "1px solid #797979",
+                  color: "black",
                 }}
               >
-                <h2>Nội Dung Bài Viết</h2>
+                <h2 style={{ color: "red" }}>Nội Dung Bài Viết</h2>
                 <ul style={{ marginTop: "10px" }}>
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll1}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       1. Giới thiệu cá Koi Kohaku
                     </span>
@@ -115,7 +124,11 @@ export default function Koikohaku() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll2}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       2. Các đặc điểm thường gặp trên cá Koi Kohaku
                     </span>
@@ -123,7 +136,11 @@ export default function Koikohaku() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll3}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       3. Các giống Koi Kohaku phổ biến nhất
                     </span>
@@ -131,7 +148,11 @@ export default function Koikohaku() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll4}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       4. Sự khác nhau giữa Koi Kohaku Nhật, Koi Kohaku F1
                     </span>
@@ -139,7 +160,11 @@ export default function Koikohaku() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll5}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       5. Cách chọn cá Koi Kohaku
                     </span>
@@ -147,7 +172,11 @@ export default function Koikohaku() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll6}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       6. Cách chăm sóc Koi Kohaku
                     </span>
@@ -155,7 +184,11 @@ export default function Koikohaku() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll7}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       7. Giá coi Koi Kohaku bao nhiêu?
                     </span>
@@ -164,8 +197,9 @@ export default function Koikohaku() {
                         <span
                           onClick={handleScroll71}
                           style={{
-                            color: "rgb(251, 139, 36)",
+                            color: "blue",
                             cursor: "pointer",
+                            fontWeight: "600",
                           }}
                         >
                           7.1 Giá Koi Kohaku F1
@@ -175,8 +209,9 @@ export default function Koikohaku() {
                         <span
                           onClick={handleScroll72}
                           style={{
-                            color: "rgb(251, 139, 36)",
+                            color: "blue",
                             cursor: "pointer",
+                            fontWeight: "600",
                           }}
                         >
                           7.2 Giá Koi Kohaku Nhật chuẩn
@@ -187,7 +222,11 @@ export default function Koikohaku() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll8}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       8. Tại sao nên mua Koi Kohaku tại KoiVNStore
                     </span>
@@ -196,7 +235,15 @@ export default function Koikohaku() {
               </div>
 
               <div>
-                <h2>Nội dung chi tiết</h2>
+                <h2
+                  style={{
+                    fontWeight: "bold",
+                    color: "red",
+                    textAlign: "center",
+                  }}
+                >
+                  Nội dung chi tiết
+                </h2>
                 <p style={{}}>
                   <span style={{ fontWeight: "bold" }}>Cá Koi </span>là giống cá
                   được ưa chuộng để làm cảnh, trang trí không gian sống trở lên
@@ -208,7 +255,7 @@ export default function Koikohaku() {
                 </p>
               </div>
               <div id="1">
-                <h3>1. Giới Thiệu Cá Koi Kohaku</h3>
+                <h3 style={{ color: "red" }}>1. Giới Thiệu Cá Koi Kohaku</h3>
                 <img />
                 <p>
                   Kohaku hay Nishikigoi là một loài cá chép Nhật có thân hình
@@ -231,7 +278,9 @@ export default function Koikohaku() {
               </div>
 
               <div id="detailed-content">
-                <h3>2. Các đặc điểm thường gặp trên cá Koi Kohaku</h3>
+                <h3 style={{ color: "red" }}>
+                  2. Các đặc điểm thường gặp trên cá Koi Kohaku
+                </h3>
                 <img />
                 <p>
                   Các tiêu chuẩn này chỉ áp dụng cho các loài cá trưng bày tại
@@ -242,46 +291,51 @@ export default function Koikohaku() {
                 </p>
                 <ul>
                   <li>
-                    Akamuji: là một loài cá đỏ thông thường và thường xuất hiện
-                    trong quá trình sinh sản của loài Kohaku. Trước đây, ở Nhật
-                    Bản, các con cá Akamuji thường bị đánh bại để làm cá bột.
-                    Tuy nhiên, từ năm 1990, chúng trở nên phổ biến và thường
-                    được trưng bày trong thể loại Kawarimono như Benigoi hoặc
-                    Hiaka tại triển lãm. Một con cá Akamuji có các mảng trắng
-                    trên đầu vây được gọi là Aka Hajiro.
+                    <span style={{ fontWeight: "bold" }}>Akamuji: </span> là một
+                    loài cá đỏ thông thường và thường xuất hiện trong quá trình
+                    sinh sản của loài Kohaku. Trước đây, ở Nhật Bản, các con cá
+                    Akamuji thường bị đánh bại để làm cá bột. Tuy nhiên, từ năm
+                    1990, chúng trở nên phổ biến và thường được trưng bày trong
+                    thể loại Kawarimono như Benigoi hoặc Hiaka tại triển lãm.
+                    Một con cá Akamuji có các mảng trắng trên đầu vây được gọi
+                    là Aka Hajiro.
                   </li>
                   <li>
-                    Shiromuji: Shiromuji đối lập với Akamuji khi có thân hình
-                    trắng toàn phần và xuất hiện trong quá trình sinh sản của
-                    loài Kohaku. Ở Nhật Bản, các con cá Shiromuji không được coi
-                    là có giá trị. Thay vào đó, loài cá koi tương tự có vảy kim
-                    loại - bạch kim koi lại được ưa chuộng.
+                    <span style={{ fontWeight: "bold" }}>Shiromuji:</span>{" "}
+                    Shiromuji đối lập với Akamuji khi có thân hình trắng toàn
+                    phần và xuất hiện trong quá trình sinh sản của loài Kohaku.
+                    Ở Nhật Bản, các con cá Shiromuji không được coi là có giá
+                    trị. Thay vào đó, loài cá koi tương tự có vảy kim loại -
+                    bạch kim koi lại được ưa chuộng.
                   </li>
                   <li>
-                    Komoyō: Với loài cá Komoyō, kích thước của các dấu đỏ rất
-                    nhỏ, chỉ chiếm ít hơn ¼ chiều dài của chúng. Chúng không
-                    được đánh giá cao.
+                    <span style={{ fontWeight: "bold" }}>Komoyō:</span> Với loài
+                    cá Komoyō, kích thước của các dấu đỏ rất nhỏ, chỉ chiếm ít
+                    hơn ¼ chiều dài của chúng. Chúng không được đánh giá cao.
                   </li>
                   <li>
-                    Ōmoyō: Ngược lại với Komoyō, loài cá Ōmoyō có các dấu đỏ
-                    lớn, ít nhất là một phần tư chiều dài của cá. Điều này được
-                    đánh giá cao và theo lứa tuổi của cá, các dấu hiệu sẽ tách
-                    biệt để tạo ra những mô hình thú vị.
+                    <span style={{ fontWeight: "bold" }}>Ōmoyō:</span> Ngược lại
+                    với Komoyō, loài cá Ōmoyō có các dấu đỏ lớn, ít nhất là một
+                    phần tư chiều dài của cá. Điều này được đánh giá cao và theo
+                    lứa tuổi của cá, các dấu hiệu sẽ tách biệt để tạo ra những
+                    mô hình thú vị.
                   </li>
                   <li>
-                    Dangara: là một mô hình dấu hiệu tách biệt giống như bước đá
-                    trong một hồ bơi. Đây là những giá trị rất lớn trong cạnh
-                    tranh. Một sọc đơn từ đầu đến đuôi không có giá trị ở Nhật
-                    Bản, nhưng nếu nó tạo thành một mô hình zig-zag thì được gọi
-                    là inazuma. Tên này bắt nguồn từ triển lãm All Nippon Show
-                    năm 1970, khi người chiến thắng đã tạo ra một hình mẫu
-                    inazuma nổi bật. Dangara cũng có thể có hai đốm đỏ, được gọi
-                    là Hai bước.
+                    <span style={{ fontWeight: "bold" }}>Dangara:</span> là một
+                    mô hình dấu hiệu tách biệt giống như bước đá trong một hồ
+                    bơi. Đây là những giá trị rất lớn trong cạnh tranh. Một sọc
+                    đơn từ đầu đến đuôi không có giá trị ở Nhật Bản, nhưng nếu
+                    nó tạo thành một mô hình zig-zag thì được gọi là inazuma.
+                    Tên này bắt nguồn từ triển lãm All Nippon Show năm 1970, khi
+                    người chiến thắng đã tạo ra một hình mẫu inazuma nổi bật.
+                    Dangara cũng có thể có hai đốm đỏ, được gọi là Hai bước.
                   </li>
                 </ul>
               </div>
               <div id="3">
-                <h3>3. Các giống kohaku phổ biến nhất</h3>
+                <h3 style={{ color: "red" }}>
+                  3. Các giống kohaku phổ biến nhất
+                </h3>
                 <div style={{ textAlign: "center" }}>
                   <img src="src/assets/gioithieukoikohaku.webp" />
                 </div>
@@ -449,7 +503,9 @@ export default function Koikohaku() {
                 </ul>
               </div>
               <div id="4">
-                <h3>4. Sự khác nhau giữa Koi Kohaku Nhật , Koi Kohaku F1</h3>
+                <h3 style={{ color: "red" }}>
+                  4. Sự khác nhau giữa Koi Kohaku Nhật , Koi Kohaku F1
+                </h3>
                 <p style={{ fontWeight: "bold" }}>Về nguồn gốc</p>
                 <ul>
                   <li style={{ fontWeight: "bold" }}>
@@ -500,7 +556,7 @@ export default function Koikohaku() {
                 </ul>
               </div>
               <div id="5">
-                <h2>5. Cách chọn cá Koi Kohaku</h2>
+                <h2 style={{ color: "red" }}>5. Cách chọn cá Koi Kohaku</h2>
                 <p>
                   Cách chọn cá Koi Kohaku đẹp thì bạn cần phải dựa vào màu sắc
                   và dáng bơi để chọn mua cá chuẩn.
@@ -567,7 +623,7 @@ export default function Koikohaku() {
                 </div>
               </div>
               <div id="6">
-                <h3>5. Cách chăm sóc cá Koi Kohaku</h3>
+                <h3 style={{ color: "red" }}>5. Cách chăm sóc cá Koi Kohaku</h3>
                 <p>
                   Vì Kohaku koi là loài thông minh có thể sống trong nhiều thập
                   kỷ vì thế khi chăm sóc cá Koi Kohaku bạn cần lưu ý về điều
@@ -620,7 +676,9 @@ export default function Koikohaku() {
                 </ul>
               </div>
               <div id="7">
-                <h3>7. Giá cá Koi Kohaku bao nhiêu ? </h3>
+                <h3 style={{ color: "red" }}>
+                  7. Giá cá Koi Kohaku bao nhiêu ?{" "}
+                </h3>
                 <p>
                   Hiện tại Siêu thị Cá Koi Vn đang cung cấp dòng cá koi Kohaku
                   chuẩn từ cá nhật đến cá F1 với giá cực kỳ ưu đãi. Có thể nói
@@ -629,7 +687,7 @@ export default function Koikohaku() {
                   Giá cá koi nhật và f1 như sau
                 </p>
                 <div id="71">
-                  <h4>7.1 Giá Koi Kohaku F1</h4>
+                  <h4 style={{ color: "red" }}>7.1 Giá Koi Kohaku F1</h4>
                   <p>
                     Đối với những con Kohaku f1 có kích thước từ 18cm – 40cm,
                     giá cá koi dao động từ 150.000 – 500.000 VNĐ tùy loại. Cao
@@ -639,7 +697,9 @@ export default function Koikohaku() {
                   </p>
                 </div>
                 <div id="72">
-                  <h4>7.2 Giá cá koi Kohaku Nhật chuẩn</h4>
+                  <h4 style={{ color: "red" }}>
+                    7.2 Giá cá koi Kohaku Nhật chuẩn
+                  </h4>
                   <p>
                     Một con cá Koi trưởng thành Nhật Bản như Kohaku koi với kích
                     thước từ 10-15cm sẽ có giá từ 600.000 – 2.000.000VNĐ/con.
@@ -651,7 +711,9 @@ export default function Koikohaku() {
                 </div>
               </div>
               <div id="8">
-                <h3>8. Tại sao nên mua Koi Kohaku ở shop chúng tôi ? </h3>
+                <h3 style={{ color: "red" }}>
+                  8. Tại sao nên mua Koi Kohaku ở shop chúng tôi ?{" "}
+                </h3>
                 <p>
                   Hiện nay có khá nhiều đơn vị cung cấp các dòng Koi Kohaku giá
                   thành và chất lượng trên thị trường. Đặc biệt là người mới bắt
@@ -679,10 +741,10 @@ export default function Koikohaku() {
           </div>
         </Container>
         <div style={{ display: "flex" }}>
-          <div>
+          <div style={{ width: "30%" }}>
             <img src="src/assets/img_4.png" />
           </div>
-          <div style={{ textAlign: "center" }}>
+          <div style={{ width: "30%" }}>
             <img src="src/assets/img_5.png" />
           </div>
         </div>

@@ -14,6 +14,7 @@ import Gioithieu from "./Components/Gioithieu";
 import Gioithieusankygui from "./Components/Gioithieusankygui";
 import Koiasagi from "./Components/Koi/Koiasagi";
 import Koishusui from "./Components/Koi/Koishusui";
+import Koiplatinum from "./Components/Koi/Koiplatinum";
 import Lienhe from "./Components/Lienhe";
 import Kienthuckoi from "./Components/Kienthuckoi";
 const router = createBrowserRouter([
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
     element: <Koishusui />,
   },
   {
+    path: "/platinum",
+    element: <Koiplatinum />,
+  },
+  {
     path: "/gioithieu",
     element: <Gioithieu />,
   },
@@ -84,6 +89,10 @@ const router = createBrowserRouter([
   {
     path: "/kienthuckoi",
     element: <Kienthuckoi />,
+  },
+  {
+    path: "/kygui",
+    element: <Gioithieusankygui />,
   },
 ]);
 

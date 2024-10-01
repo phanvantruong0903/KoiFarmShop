@@ -70,19 +70,22 @@ export default function Koiasagi() {
 
   return (
     <>
-      <div
-        style={{
-          backgroundColor: "rgb(71,1,19)",
-          color: "#f1be7c",
-        }}
-      >
+      <div>
         <div>
           <Navbar menu={menu} setMenu={setMenu} />
         </div>
         <Container>
           <div>
             <div style={{ paddingTop: "110px", textAlign: "center" }}>
-              <h1>CÁ KOI ASAGI</h1>
+              <img
+                src="src/assets/Red_Modern_Travel_Presentation__6_-removebg-preview.png"
+                style={{ paddingLeft: "1000px", marginTop: "-15px" }}
+              />
+              <h1
+                style={{ marginTop: "-330px", fontWeight: "800", color: "red" }}
+              >
+                CÁ KOI ASAGI
+              </h1>
               <hr />
             </div>
             <div>
@@ -92,15 +95,20 @@ export default function Koiasagi() {
                   padding: "20px",
                   borderRadius: "10px",
                   border: "2px solid rgba(0, 0, 0, 0.1)",
-                  backgroundColor: "rgb(59, 48, 48)",
+                  border: "1px solid #797979",
+                  color: "black",
                 }}
               >
-                <h2>Nội Dung Bài Viết</h2>
+                <h2 style={{ color: "red" }}>Nội Dung Bài Viết</h2>
                 <ul style={{ marginTop: "10px" }}>
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll1}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       1. Giới thiệu về cá Koi Asagi
                     </span>
@@ -108,7 +116,11 @@ export default function Koiasagi() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll2}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       2. Cách nhận biết Asagi Koi
                     </span>
@@ -116,7 +128,11 @@ export default function Koiasagi() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll3}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       3. Cách chọn mua Cá Asagi Koi
                     </span>
@@ -124,7 +140,11 @@ export default function Koiasagi() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll4}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       4. Cách chăm sóc cá Koi Asagi Doitsu
                     </span>
@@ -132,7 +152,11 @@ export default function Koiasagi() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll5}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       5. Các dòng cá Asagi koi trên thị trường
                     </span>
@@ -140,7 +164,11 @@ export default function Koiasagi() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll6}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       6. Giá cá koi Asagi bao nhiêu?
                     </span>
@@ -149,8 +177,9 @@ export default function Koiasagi() {
                         <span
                           onClick={handleScroll61}
                           style={{
-                            color: "rgb(251, 139, 36)",
+                            color: "blue",
                             cursor: "pointer",
+                            fontWeight: "600",
                           }}
                         >
                           6.1 Giá cá koi Asagi F1
@@ -160,8 +189,9 @@ export default function Koiasagi() {
                         <span
                           onClick={handleScroll62}
                           style={{
-                            color: "rgb(251, 139, 36)",
+                            color: "blue",
                             cursor: "pointer",
+                            fontWeight: "600",
                           }}
                         >
                           6.2 Giá cá koi Asagi Nhật chuẩn
@@ -172,7 +202,11 @@ export default function Koiasagi() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll7}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       7. Tại sao nên mua cá Koi Asagi Doitsu tại Siêu thị Cá Koi
                       VN
@@ -181,7 +215,9 @@ export default function Koiasagi() {
                 </ul>
               </div>
               <div>
-                <h2>Nội dung chi tiết</h2>
+                <h2 style={{ color: "red", textAlign: "center" }}>
+                  Nội dung chi tiết
+                </h2>
                 <p style={{}}>
                   Trong các loại cá Koi thì giống cá Koi Asagi được xếp hạng là
                   một trong những nhà vô địch của triển lãm cá Koi trên thế
@@ -192,7 +228,7 @@ export default function Koiasagi() {
                 </p>
               </div>
               <div id="1">
-                <h3>1. Giới thiệu về cá Koi Asagi</h3>
+                <h3 style={{ color: "red" }}>1. Giới thiệu về cá Koi Asagi</h3>
                 <p>
                   Asagi là 1 trong những dòng cá Koi xuất hiện sớm nhất ở Nhật
                   Bản. Cái tên của nó bắt nguồn từ ngôi làng sinh ra toàn bộ
@@ -215,7 +251,7 @@ export default function Koiasagi() {
               </div>
 
               <div id="detailed-content">
-                <h3>2. Cách nhận biết Asagi Koi</h3>
+                <h3 style={{ color: "red" }}>2. Cách nhận biết Asagi Koi</h3>
                 <img />
 
                 <div>
@@ -323,7 +359,7 @@ export default function Koiasagi() {
                 </div>
               </div>
               <div id="3">
-                <h3>3. Cách chọn mua Cá Asagi Koi</h3>
+                <h3 style={{ color: "red" }}>3. Cách chọn mua Cá Asagi Koi</h3>
                 <div style={{ textAlign: "center" }}>
                   <p>
                     Cá Koi Asagi Doitsu và cá koi ginrin được nhiều người quan
@@ -378,7 +414,9 @@ export default function Koiasagi() {
                 </ul>
               </div>
               <div id="4">
-                <h3>4. Cách chăm sóc cá Koi Asagi Doitsu</h3>
+                <h3 style={{ color: "red" }}>
+                  4. Cách chăm sóc cá Koi Asagi Doitsu
+                </h3>
                 <div>
                   <p>
                     Để mua được Koi Asagi đạt tiêu chuẩn rất khó bởi phải từ 3
@@ -428,7 +466,9 @@ export default function Koiasagi() {
                 </div>
               </div>
               <div id="5">
-                <h2>5. Các dòng cá Asagi koi trên thị trường</h2>
+                <h3 style={{ color: "red" }}>
+                  5. Các dòng cá Asagi koi trên thị trường
+                </h3>
                 <div>
                   <p>
                     Trên thị trường hiện nay có nhiều loại cá koi Asagi, phổ
@@ -509,7 +549,7 @@ export default function Koiasagi() {
                 </div>
               </div>
               <div id="6">
-                <h3>6. Giá cá koi Asagi bao nhiêu?</h3>
+                <h3 style={{ color: "red" }}>6. Giá cá koi Asagi bao nhiêu?</h3>
                 <div>
                   <p>
                     Hiện tại Siêu thị Cá Koi Vn đang cung cấp dòng cá koi Asagi
@@ -545,7 +585,7 @@ export default function Koiasagi() {
                 </div>
               </div>
               <div id="7">
-                <h3>
+                <h3 style={{ color: "red" }}>
                   7. Tại sao nên mua cá Koi Asagi Doitsu tại Siêu thị Cá Koi VN
                 </h3>
                 <div>
