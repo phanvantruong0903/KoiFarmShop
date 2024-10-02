@@ -1,4 +1,4 @@
-import { Suspense,lazy } from "react";
+import { Suspense, lazy } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import Spinner from "./An/Components/Spinner";
@@ -9,14 +9,13 @@ import LoginPage from "./An/Pages/Login";
 
 const Staff = lazy(() => import('../src/An/Pages/Staff'));
 const Manager = lazy(() => import('../src/An/Pages/Manager'));
-const StaffLayOut = lazy(() => import("../src/An/Layouts/StaffLayOut"));
-const ManagerLayOut = lazy(() => import("../src/An/Layouts/ManagerLayOut"));
-
+const Profiles = lazy(() => import("../src/An/Pages/Staff/Profiles"));
+const Orders = lazy(() => import("../src/An/Pages/Staff/Orders"));
 
 const router = createBrowserRouter([
   {
     path: "/login",
-    element: <LoginPage />, // Nguyen route setup tam thoi de v
+    element: <LoginPage />, // Temporary login route
   },
   {
     path: "/",
@@ -24,48 +23,35 @@ const router = createBrowserRouter([
   },
   {
     path: "/login/oauth",
-    element: <Login />, // Nguyen route setup tam thoi de v
+    element: <Login />, // OAuth login route
   },
   {
     path: "/DashBoard",
-    element: <DashBoard />, //  DashBoard component
+    element: <DashBoard />, // DashBoard component
     children: [
       {
-        path: "staff",
+        path: "staff/Profiles",
         element: (
           <Suspense fallback={<Spinner />}>
-            <StaffLayOut />
+            <Profiles /> {/* Profile component */}
           </Suspense>
         ),
-        children: [
-          {
-            index: true, // Default route for "/DashBoard/staff"
-            element: (
-              <Suspense fallback={<Spinner />}>
-                <Staff />
-              </Suspense>
-            ),
-          },
-        ],
       },
-      
+      {
+        path: "staff/Orders",
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <Orders /> {/* Orders component */}
+          </Suspense>
+        ),
+      },
       {
         path: "manager",
         element: (
           <Suspense fallback={<Spinner />}>
-            <ManagerLayOut />
+            <Manager /> {/* Manager component */}
           </Suspense>
         ),
-        children: [
-          {
-            index: true, // Default route for "/DashBoard/manager"
-            element: (
-              <Suspense fallback={<Spinner />}>
-                <Manager />
-              </Suspense>
-            ),
-          },
-        ],
       },
     ],
   },

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "../Css/Login.css";
 import SignInForm from "../Components/LogIn";
 import SignUpForm from "../Components/SignUp";
@@ -14,9 +14,8 @@ export default function LoginPage() {
   const containerClass =
     "container " + (type === "signUp" ? "right-panel-active" : "");
   return (
-    <div className="App">
-      <h2>Sign in/up Form</h2>
-      <div className={containerClass} id="container">
+    <div className="App" >
+      <div className={containerClass} id="container" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
         <SignUpForm />
         <SignInForm />
         <div className="overlay-container">
