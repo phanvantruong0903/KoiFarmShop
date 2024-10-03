@@ -1,9 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import Navbar from "../Navbar/Navbar";
+import CardGrid from "../Cardgrid";
 import Footer from "../Footer";
+import axios from "axios";
 export default function Koidoitsu() {
   const [menu, setMenu] = useState("home");
+  const [cardData, setCardData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedBreed, setSelectedBreed] = useState("KOI DOITSU");
   const handleScroll1 = () => {
     const element = document.getElementById("1");
 
@@ -53,21 +59,44 @@ export default function Koidoitsu() {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://66fd0298c3a184a84d18b799.mockapi.io/Koi"
+        );
+        setCardData(response.data);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+  const filteredCards = cardData.filter((card) => card.Breed === selectedBreed); // Ví dụ: lọc theo độ tuổi lớn hơn 20000
   return (
     <>
-      <div
-        style={{
-          backgroundColor: "rgb(71,1,19)",
-          color: "#f1be7c",
-        }}
-      >
+      <div>
         <div>
           <Navbar menu={menu} setMenu={setMenu} />
         </div>
         <Container>
           <div>
             <div style={{ paddingTop: "110px", textAlign: "center" }}>
-              <h1>CÁ KOI DOITSU</h1>
+              <img
+                src="src/assets/Red_Modern_Travel_Presentation__6_-removebg-preview.png"
+                style={{ paddingLeft: "1000px", marginTop: "-15px" }}
+              />
+              <h1
+                style={{ marginTop: "-330px", fontWeight: "800", color: "red" }}
+              >
+                CÁ KOI DOITSU
+              </h1>
               <hr />
             </div>
             <div>
@@ -77,7 +106,8 @@ export default function Koidoitsu() {
                   padding: "20px",
                   borderRadius: "10px",
                   border: "2px solid rgba(0, 0, 0, 0.1)",
-                  backgroundColor: "rgb(59, 48, 48)",
+                  border: "1px solid #797979",
+                  color: "black",
                 }}
               >
                 <h2>Nội Dung Bài Viết</h2>
@@ -85,7 +115,11 @@ export default function Koidoitsu() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll1}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       1. Giới thiệu về Cá Koi Doitsu
                     </span>
@@ -93,7 +127,11 @@ export default function Koidoitsu() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll2}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       2. Cách nhận biết cá Koi Doitsu
                     </span>
@@ -101,7 +139,11 @@ export default function Koidoitsu() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll3}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       3. Các dòng koi doitsu đẹp trên thị trường
                     </span>
@@ -109,7 +151,11 @@ export default function Koidoitsu() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll4}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       4. Cách chọn mua Doitsu Koi đẹp, chất lượng
                     </span>
@@ -117,7 +163,11 @@ export default function Koidoitsu() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll5}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       5. Cách chăm sóc Cá Koi Doitsu
                     </span>
@@ -125,7 +175,11 @@ export default function Koidoitsu() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll6}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       6. Giá cá koi Doitsu bao nhiêu?
                     </span>
@@ -133,7 +187,11 @@ export default function Koidoitsu() {
                   <li style={{ paddingTop: "10px" }}>
                     <span
                       onClick={handleScroll7}
-                      style={{ color: "rgb(251, 139, 36)", cursor: "pointer" }}
+                      style={{
+                        color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                      }}
                     >
                       7. Tại sao nên mua Showa Koi tại siêu thị cá Koi VN:
                     </span>
@@ -142,7 +200,15 @@ export default function Koidoitsu() {
               </div>
 
               <div>
-                <h2>Nội dung chi tiết</h2>
+                <h2
+                  style={{
+                    fontWeight: "bold",
+                    color: "red",
+                    textAlign: "center",
+                  }}
+                >
+                  Nội dung chi tiết
+                </h2>
                 <p>
                   Cá Koi Doitsu hay còn có cái tên gọi khác là sexy Koi - một
                   giống cá Koi duy nhất chỉ có hai đường vẩy nhỏ cạnh vây lưng.
@@ -152,7 +218,7 @@ export default function Koidoitsu() {
                 </p>
               </div>
               <div id="1">
-                <h3>1. Giới thiệu về Cá Koi Doitsu</h3>
+                <h3 style={{ color: "red" }}>1. Giới thiệu về Cá Koi Doitsu</h3>
                 <p>
                   Cá Koi Doitsu ra đời vào những năm 1904, với hình dáng độc
                   đáo, là sự kết hợp lai giữa hai dòng cá Koi Nhật Bản và cá da
@@ -184,7 +250,7 @@ export default function Koidoitsu() {
               </div>
 
               <div id="2">
-                <h3>2.Cách nhận biết cá Koi Doitsu</h3>
+                <h3 style={{ color: "red" }}>2.Cách nhận biết cá Koi Doitsu</h3>
                 <div>
                   <p>
                     Để nhận biết cá Koi Doitsu giữa các loại cá Koi khác như
@@ -213,7 +279,9 @@ export default function Koidoitsu() {
                 </div>
               </div>
               <div id="3">
-                <h3>3. Các dòng koi doitsu đẹp trên thị trường</h3>
+                <h3 style={{ color: "red" }}>
+                  3. Các dòng koi doitsu đẹp trên thị trường
+                </h3>
                 <div>
                   <p>
                     Cá koi doitsu là kết quả của một cuộc lai tạo giữa cá chép
@@ -290,7 +358,9 @@ export default function Koidoitsu() {
                 </div>
               </div>
               <div id="4">
-                <h3>4. Cách chọn mua Doitsu Koi đẹp, chất lượng</h3>
+                <h3 style={{ color: "red" }}>
+                  4. Cách chọn mua Doitsu Koi đẹp, chất lượng
+                </h3>
                 <div>
                   <div style={{ textAlign: "center" }}>
                     <img src="src/assets/Koi-Doitsu" style={{ width: "50%" }} />
@@ -340,7 +410,9 @@ export default function Koidoitsu() {
               </div>
 
               <div id="5">
-                <h3>5. Cách chăm sóc Cá Koi Doitsu:</h3>
+                <h3 style={{ color: "red" }}>
+                  5. Cách chăm sóc Cá Koi Doitsu:
+                </h3>
                 <p>
                   Cá Koi Doitsu là dòng cá đẹp và vô cùng đặc biệt và đẹp mắt
                   tuy nhiên việc nuôi dưỡng cá khá khó khăn, nếu không khéo léo
@@ -383,7 +455,9 @@ export default function Koidoitsu() {
                 </ul>
               </div>
               <div id="6">
-                <h3>6. Giá cá koi Doitsu bao nhiêu?</h3>
+                <h3 style={{ color: "red" }}>
+                  6. Giá cá koi Doitsu bao nhiêu?
+                </h3>
                 <p>
                   Hiện tại Siêu thị Cá Koi Vn đang cung cấp dòng cá koi Doitsu
                   chuẩn từ cá nhật đến cá F1 với giá cực kỳ ưu đãi. Có thể nói
@@ -405,7 +479,9 @@ export default function Koidoitsu() {
               </div>
 
               <div id="7">
-                <h3>7. Tại sao nên mua Showa Koi tại siêu thị cá Koi VN:</h3>
+                <h3 style={{ color: "red" }}>
+                  7. Tại sao nên mua Showa Koi tại siêu thị cá Koi VN:
+                </h3>
                 <p>
                   Tự hào là đơn vị chuyên cung cấp cá Doitsu Koi khỏe mạnh, chất
                   lượng và uy tín hàng đầu hiện nay, siêu thị cá Koi VN sẽ bạn
@@ -483,6 +559,9 @@ export default function Koidoitsu() {
               </ul>
             </div>
           </div>
+        </div>
+        <div>
+          <CardGrid cardData={filteredCards} />
         </div>
         <div>
           <Footer />

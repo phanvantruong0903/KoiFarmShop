@@ -165,7 +165,7 @@ export default function Navbar() {
                     fontSize: "15px",
                   }}
                 >
-                  Cá Koi Platinum Ogon
+                  Cá Koi Ogon
                 </Dropdown.Item>
                 <hr />
                 <Dropdown.Item

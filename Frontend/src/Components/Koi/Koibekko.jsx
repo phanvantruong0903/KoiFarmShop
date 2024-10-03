@@ -1,10 +1,15 @@
 import Navbar from "../Navbar/Navbar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
+import CardGrid from "../Cardgrid";
 import Footer from "../Footer";
-import { Table } from "react-bootstrap";
+import axios from "axios";
 export default function Koibekko() {
   const [menu, setMenu] = useState("home");
+  const [cardData, setCardData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedBreed, setSelectedBreed] = useState("KOI BEKKO");
   const handleScroll1 = () => {
     const element = document.getElementById("1");
 
@@ -62,6 +67,26 @@ export default function Koibekko() {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://66fd0298c3a184a84d18b799.mockapi.io/Koi"
+        );
+        setCardData(response.data);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+  const filteredCards = cardData.filter((card) => card.Breed === selectedBreed); // Ví dụ: lọc theo độ tuổi lớn hơn 20000
   return (
     <>
       <div>
@@ -442,6 +467,9 @@ export default function Koibekko() {
               </ul>
             </div>
           </div>
+        </div>
+        <div>
+          <CardGrid cardData={filteredCards} />
         </div>
         <div>
           <Footer />
