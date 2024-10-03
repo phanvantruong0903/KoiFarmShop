@@ -27,7 +27,7 @@ function SignInForm() {
         login(email, password).then((result) => {
             if (result) {
                 alert("Login successfully");
-                navigate("/");
+                navigate("/DashBoard/staff/Profiles");
             }
         })
         for (const key in state) {
