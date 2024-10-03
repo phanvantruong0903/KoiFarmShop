@@ -13,7 +13,6 @@ function SignUpForm() {
         email: "",
         password: "",
         confirm_password: "",
-        date_of_birth: ""
     };
 
     const [loading, setLoading] = useState(false); 
@@ -23,7 +22,7 @@ function SignUpForm() {
     const onSubmit = (e) => {
         setLoading(true); 
         console.log("package to be sent", e); 
-        register(e.name, e.email, e.password, e.confirm_password, e.date_of_birth)
+        register(e.name, e.email, e.password, e.confirm_password)
             .then((response) => {
                 if (response.status === 200) {
                     const { access_token, refresh_token } = response.data.result;
@@ -90,15 +89,7 @@ function SignUpForm() {
                     disabled={loading} 
                 />
 
-                <input
-                    type="date"
-                    name="date_of_birth"
-                    value={state.date_of_birth}
-                    onChange={handleChange}
-                    placeholder={errors.date_of_birth ? errors.date_of_birth : "Date of Birth"}
-                    className={`input-field ${errors.date_of_birth ? 'error-input' : ''}`}
-                    disabled={loading} 
-                />
+                
 
                 <button type="submit" disabled={loading}>
                     {loading ? "Signing Up..." : "Sign Up"} 
