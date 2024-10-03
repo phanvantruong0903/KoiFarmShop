@@ -68,11 +68,9 @@ export default function Home() {
       <div>
         <Navbar menu={menu} setMenu={setMenu} />
       </div>
-
       <div style={{ width: "100%", height: "100%", mar: "1000px" }}>
         <Slideshow />
       </div>
-
       <div
         className="animated-section hidden"
         style={{
@@ -147,16 +145,6 @@ export default function Home() {
       </div>
 
       <div
-        style={{
-          backgroundImage: `url("src/assets/3.png")`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <CardGrid />
-      </div>
-
-      <div
         className="animated-section hidden"
         style={{
           display: "flex",
@@ -206,7 +194,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
       <div>
         <Footer />
       </div>
