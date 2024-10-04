@@ -48,6 +48,14 @@ class DatabaseService {
     }
   }
 
+  get koi() {
+    try {
+      return this._db.collection(process.env.DB_KOI_COLLECTION)
+    } catch (error) {
+      console.log(error + 'lỗi ở database service - get refresh token')
+    }
+  }
+
   // get followers(): Collection<Follower> {
   //   return this.db.collection(process.env.DB_FOLLOWERS_COLLECTION as string)
   // }
