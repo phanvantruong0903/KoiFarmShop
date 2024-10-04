@@ -329,10 +329,7 @@ class UsersService {
         projection: {
           password: 0,
           email_verify_token: 0,
-          forgot_password_token: 0,
-          verify: 0,
-          create_at: 0,
-          update_at: 0
+          forgot_password_token: 0
         }
       }
     )

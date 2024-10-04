@@ -83,14 +83,6 @@ usersRouter.patch(
 )
 
 /*
-des: get profile của user khác bằng unsername
-path: '/:username'
-method: get
-không cần header vì, chưa đăng nhập cũng có thể xem
-*/
-usersRouter.get('/:username', wrapAsync(getProfileController))
-
-/*
   des: change password
   path: '/change-password'
   method: PUT
