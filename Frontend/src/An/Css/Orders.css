@@ -8,6 +8,7 @@
   cursor: pointer;
   position: relative; 
   transition: background-color 0.3s ease;
+  font-size: 1rem;
   
 }
 
@@ -60,4 +61,11 @@
 }
 .Card-Container div {
   transition: box-shadow 0.3s ease;
+}
+.dropdown-toggle::after {
+  display: none !important; 
+}
+.dropdown-item:hover{
+  background-color: #b8dbff; 
+  
 }
