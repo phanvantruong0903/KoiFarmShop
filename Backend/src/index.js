@@ -1,6 +1,7 @@
 import express from 'express'
 import { config } from 'dotenv'
 import usersRouter from './routes/users.routes.js'
+import adminRouter from './routes/admin.routes.js'
 import databaseService from './services/database.service.js'
 import { defaultErrorHandler } from './middlewares/error.middlewares.js'
 import cors from 'cors'
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
   res.send('hello world nguyen')
 })
 app.use('/users', usersRouter)
+app.use('/admins', adminRouter)
 
 app.use(defaultErrorHandler)
 
