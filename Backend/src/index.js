@@ -3,7 +3,8 @@ import { config } from 'dotenv'
 import usersRouter from './routes/users.routes.js'
 import databaseService from './services/database.service.js'
 import { defaultErrorHandler } from './middlewares/error.middlewares.js'
-import cors from 'cors'
+import managerRouter from './routes/manager.routes.js'
+
 config()
 const app = express()
 app.use(cors(
@@ -21,6 +22,8 @@ app.get('/', (req, res) => {
   res.send('hello world nguyen')
 })
 app.use('/users', usersRouter)
+
+app.use('/manager', managerRouter)
 
 app.use(defaultErrorHandler)
 
