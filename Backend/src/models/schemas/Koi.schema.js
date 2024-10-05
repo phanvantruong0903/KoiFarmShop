@@ -30,7 +30,7 @@ export default class KoiSchema {
     this.Description = koi.Description || ''
     this.DailyFoodAmount = koi.DailyFoodAmount || ''
     this.FilteringRatio = koi.FilteringRatio || ''
-    this.Status = koi.Status || 1 // 1 là còn, 0 là hết
+    this.Status = koi.Status || 1 // 1: nhập khẩu, 2: f1, 3: việt, 4: kí gửi, 0 là hết
     this.CertificateID = koi.CertificateID || '' // nếu koi  k có Certificate
     this.Price = koi.Price || '' // nếu koi chưa biết giá thì để liên hệ
     this.Image = koi.Image || '' // nếu koi chưa có ảnh thì để rỗng

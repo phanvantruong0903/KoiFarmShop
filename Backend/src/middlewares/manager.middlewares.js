@@ -2,7 +2,7 @@ import { ObjectId } from 'mongodb'
 import HTTP_STATUS from '../constants/httpStatus.js'
 import databaseService from '../services/database.service.js'
 import { ErrorWithStatus } from '../models/Errors.js'
-import { USERS_MESSAGES } from '../constants/messages.js'
+import { USERS_MESSAGES } from '../constants/userMessages.js'
 
 export const isAdminValidator = async (req, res, next) => {
   try {
