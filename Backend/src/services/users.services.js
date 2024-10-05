@@ -487,6 +487,7 @@ class UsersService {
       throw error
     }
   }
+
 }
 
 const usersService = new UsersService()
