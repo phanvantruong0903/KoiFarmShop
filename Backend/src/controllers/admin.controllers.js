@@ -1,5 +1,5 @@
 import adminService from '../services/admin.service.js'
-import { ADMINS_MESSAGES } from '../constants/messages.js'
+import { ADMINS_MESSAGES } from '../constants/userMessages.js'
 
 export const getUser = async (req, res) => {
   const result = await adminService.getUser()

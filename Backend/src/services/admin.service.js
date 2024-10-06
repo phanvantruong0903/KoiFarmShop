@@ -1,7 +1,7 @@
 import databaseService from './database.service.js'
 import KoiSchema from '../models/schemas/Koi.schema.js'
 import { koiValidate } from '../middlewares/kois.middleware.js'
-import { ADMINS_MESSAGES } from '../constants/messages.js'
+import { ADMINS_MESSAGES } from '../constants/userMessages.js'
 import { ObjectId } from 'mongodb'
 
 class AdminsService {

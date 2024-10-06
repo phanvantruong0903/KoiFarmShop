@@ -73,3 +73,8 @@ export const USERS_MESSAGES = {
   UPLOAD_SUCCESS: 'Upload success',
   ACCESS_DENIED_ADMIN_ONLY: 'Access denied, admin only'
 }
+export const ADMINS_MESSAGES = {
+  ADD_KOI_SUCCESS: "Add Fish success",
+  ADD_KOI_FAIL: "Add Fish Fail",
+  UPDATE_KOI_SUCCESS: "Update Fish success"
+}

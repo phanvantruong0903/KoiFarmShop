@@ -6,7 +6,7 @@ import databaseService from './services/database.service.js'
 import { defaultErrorHandler } from './middlewares/error.middlewares.js'
 import managerRouter from './routes/manager.routes.js'
 import { createNewKoiKiGuiController } from './controllers/common.controllers.js'
-
+import cors from 'cors'
 config()
 const app = express()
 app.use(cors(
