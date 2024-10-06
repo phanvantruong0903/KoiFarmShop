@@ -2,6 +2,8 @@ import bcrypt from 'bcrypt'
 import { ObjectId } from 'mongodb'
 import databaseService from './database.service.js'
 import KoiSchema from '../models/schemas/Koi.schema.js'
+import UserSchema from '../models/schemas/User.schema.js'
+import ConsignSchema from '../models/schemas/Consign.schema.js'
 
 class KoisService {
   async createNewKoi(payload) {
@@ -27,24 +29,29 @@ class KoisService {
     const hashedPassword = await bcrypt.hash(password, 10)
 
     // Tạo người dùng mới
+    const user_id = new ObjectId()
     const userPayload = {
+      _id: user_id,
       email: payload.email,
       name: payload.name,
       address: payload.address,
       phone_number: payload.phone_number,
-      password: hashedPassword
+      password: hashedPassword,
+      username: `user${user_id.toString()}`,
+      roleid: 1
     }
-    const userResult = await databaseService.users.insertOne(userPayload)
-    const userId = userResult.insertedId
+    const userResult = await databaseService.users.insertOne(new UserSchema(userPayload))
+    const userId = user_id.toString()
 
     // Tạo bản ghi mới trong bảng consigns
     const consignPayload = {
       PositionCare: payload.PositionCare,
       Method: payload.Method,
       UserID: userId,
-      _id: new ObjectId()
+      _id: new ObjectId(),
+      status: 1
     }
-    const consignResult = await databaseService.consigns.insertOne(consignPayload)
+    const consignResult = await databaseService.consigns.insertOne(new ConsignSchema(consignPayload))
 
     // Tạo bản ghi mới trong bảng kois
     const koiPayload = {
@@ -65,7 +72,7 @@ class KoisService {
       Status: 4, // Đặt status là 4
       _id: new ObjectId()
     }
-    const koiResult = await databaseService.koi.insertOne(koiPayload)
+    const koiResult = await databaseService.kois.insertOne(new KoiSchema(koiPayload))
 
     // Trả về kết quả
     return {
