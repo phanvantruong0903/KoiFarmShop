@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb'
-import { USERS_MESSAGES } from '../constants/messages.js'
+import { USERS_MESSAGES } from '../constants/userMessages.js'
 import databaseService from '../services/database.service.js'
 import usersService from '../services/users.services.js'
 import { UserVerifyStatus } from '../constants/enums.js'
