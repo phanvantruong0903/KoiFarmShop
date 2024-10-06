@@ -4,7 +4,8 @@ import usersRouter from './routes/users.routes.js'
 import adminRouter from './routes/admin.routes.js'
 import databaseService from './services/database.service.js'
 import { defaultErrorHandler } from './middlewares/error.middlewares.js'
-import cors from 'cors'
+import managerRouter from './routes/manager.routes.js'
+
 config()
 const app = express()
 app.use(cors(
@@ -23,6 +24,8 @@ app.get('/', (req, res) => {
 })
 app.use('/users', usersRouter)
 app.use('/admins', adminRouter)
+
+app.use('/manager', managerRouter)
 
 app.use(defaultErrorHandler)
 
