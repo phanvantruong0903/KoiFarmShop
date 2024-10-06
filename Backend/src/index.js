@@ -4,6 +4,7 @@ import usersRouter from './routes/users.routes.js'
 import databaseService from './services/database.service.js'
 import { defaultErrorHandler } from './middlewares/error.middlewares.js'
 import managerRouter from './routes/manager.routes.js'
+import { createNewKoiKiGuiController } from './controllers/common.controllers.js'
 
 config()
 const app = express()
@@ -21,6 +22,9 @@ databaseService.connect().then(() => {
 app.get('/', (req, res) => {
   res.send('hello world nguyen')
 })
+
+app.post('/ki-gui', createNewKoiKiGuiController)
+
 app.use('/users', usersRouter)
 
 app.use('/manager', managerRouter)
