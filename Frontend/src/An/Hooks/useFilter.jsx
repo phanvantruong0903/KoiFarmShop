@@ -9,17 +9,22 @@ export default function useFilter(data, isProfile = false) {
 
   const [filterList, setFilterList] = useState(initialFilterList);
 
-  
+  console.log (filterList);
   const filteredData = data.filter((item) => {
     if (isProfile) {
       // For profiles
-      const matchesRole = filterList.role ? item.role === filterList.role : true;
-
-     
+      const roleMap = {
+        1: 'User',
+        2: 'Staff',
+        3: 'Manager',
+      };
+      // const matchesRole = filterList.roleid ? item.role === filterList.role : true;
+      
+      const matchesRole = filterList.role ? roleMap[item.roleid] === filterList.role : true;
       const matchesEmailVerified = filterList.Email_verified
         ? (filterList.Email_verified === 'true' ? item.Email_verifed : !item.Email_verifed)
         : true;
-      const matchesSearch = item.UserName.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
 
       return matchesRole && matchesEmailVerified && matchesSearch;
     } else {

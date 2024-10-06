@@ -10,6 +10,9 @@ import { PiDotsThreeCircleLight } from "react-icons/pi";
 import { useState } from 'react';
 import useFilter from '../../Hooks/useFilter';
 import { PiDotsThreeCircleFill } from "react-icons/pi";
+import FilterBar from '../../Components/Staff/FilterBar';
+import FilterButton from '../../Components/Staff/FilterButton';
+import { countCategory } from '../../Utils/valueParser';
 const orders = [
   {
     orderId: 101,
@@ -199,46 +202,19 @@ export default function Orders() {
 
       </div>
       <div className='d-flex ms-5 me-5 Order-container' style={{ gap: '2rem' }}>
-        <div
-          className={filterList.OrderStatus === '' ? 'active' : ''}
-          onClick={() => handleFilterChange('OrderStatus', '')}  
-        >
-          All Order <span className='ms-1'>{data.length}</span>
-        </div>
-        <div
-          className={filterList.OrderStatus === 'Shipped' ? 'active' : ''}
-          onClick={() => handleFilterChange('OrderStatus', 'Shipped')}
-        >
-          Shipped <span className='ms-1'>10</span>
-        </div>
-        <div
-          className={filterList.OrderStatus === 'Processing' ? 'active' : ''}
-          onClick={() => handleFilterChange('OrderStatus', 'Processing')}
-        >
-          Processing <span className='ms-1'>10</span>
-        </div>
-        <div
-          className={filterList.OrderStatus === 'On Hold' ? 'active' : ''}
-          onClick={() => handleFilterChange('OrderStatus', 'On Hold')}
-        >
-          On Hold <span className='ms-1'>10</span>
-        </div>
+        <FilterButton label="All Order" filterType="OrderStatus" filterValue="" currentFilter={filterList.OrderStatus} onFilterChange={handleFilterChange} count={data.length} />
+        <FilterButton label="Shipped" filterType="OrderStatus" filterValue="Shipped" currentFilter={filterList.OrderStatus} onFilterChange={handleFilterChange} count={countCategory(data,'orderStatus','Shipped')} />
+        <FilterButton label="Processing" filterType="OrderStatus" filterValue="Processing" currentFilter={filterList.OrderStatus} onFilterChange={handleFilterChange} count={countCategory(data,'orderStatus','Processing')} />
+        <FilterButton label="On Hold" filterType="OrderStatus" filterValue="On Hold" currentFilter={filterList.OrderStatus} onFilterChange={handleFilterChange} count={countCategory(data,'orderStatus','On Hold')} />
       </div>
 
       <hr className="my-1 mb-4" />
       <div className='d-flex ms-5 me-5 ' style={{ gap: '2rem' }}>
-        <DropdownButton id="dropdown-basic-button" title="Order Status" onSelect={(e) => handleFilterChange('OrderStatus', e)}>
-          <Dropdown.Item eventKey="">All</Dropdown.Item>
-          <Dropdown.Item eventKey="Shipped">Shipped</Dropdown.Item>
-          <Dropdown.Item eventKey="Processing">Processing</Dropdown.Item>
-          <Dropdown.Item eventKey="On Hold">On Hold</Dropdown.Item>
-        </DropdownButton>
 
-        <DropdownButton id="dropdown-basic-button" title="Payment Status" onSelect={(e) => handleFilterChange('PaymentStatus', e)}>
-          <Dropdown.Item eventKey="">All</Dropdown.Item>
-          <Dropdown.Item eventKey="Paid">Paid</Dropdown.Item>
-          <Dropdown.Item eventKey="Pending">Pending</Dropdown.Item>
-        </DropdownButton>
+        <FilterBar initialTitle="Order Status" NavItems={["All", "Shipped", "Processing", "On Hold"]} handleFilterChange={handleFilterChange} filter="OrderStatus" />
+
+
+        <FilterBar initialTitle="Payment Status" NavItems={["All", "Paid", "Pending"]} handleFilterChange={handleFilterChange} filter="PaymentStatus" />
 
         <div className="d-flex ms-auto" style={{ flexGrow: 0.125 }}>
           <Form className="d-flex w-100 flex-row">
@@ -278,7 +254,7 @@ export default function Orders() {
               <tr key={order.orderId}
                 onMouseEnter={() => setHoveredRow(index)}
                 onMouseLeave={() => setHoveredRow(null)}
-                
+
               >
                 <td>{index + 1}</td>
                 <td>{order.orderId}</td>
@@ -291,15 +267,15 @@ export default function Orders() {
                 <td>{order.total}</td>
                 <td>{order.orderStatus}</td>
                 <td className='d-flex justify-content-center align-items-center' style={{ height: '40px' }}>
-                <Dropdown>
+                  <Dropdown>
                     <Dropdown.Toggle as="div" style={{ border: 'none', background: 'none', cursor: 'pointer' }}>
                       {hoveredRow === index ? <PiDotsThreeCircleFill /> : <PiDotsThreeCircleLight />}
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
                       <Dropdown.Item href="#/action-1">View</Dropdown.Item>
-                      <Dropdown.Item  href="#/action-2">Edit</Dropdown.Item>
-                      <Dropdown.Item onMouseLeave={()=>{setIsActive(false)}} onMouseEnter={()=>{setIsActive(true)}} className={isActive? ('bg-danger text-white') : ''}>Delete</Dropdown.Item>
+                      <Dropdown.Item href="#/action-2">Edit</Dropdown.Item>
+                      <Dropdown.Item onMouseLeave={() => { setIsActive(false) }} onMouseEnter={() => { setIsActive(true) }} className={isActive ? ('bg-danger text-white') : ''}>Delete</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                 </td>
