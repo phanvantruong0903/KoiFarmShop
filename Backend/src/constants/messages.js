@@ -76,3 +76,10 @@ export const USERS_MESSAGES = {
   EMAIL_NOT_VERIFIED: "Email not verified",
   UPLOAD_SUCCESS: "Upload success",
 };
+
+
+export const ADMINS_MESSAGES = {
+  ADD_KOI_SUCCESS: "Add Fish success",
+  ADD_KOI_FAIL: "Add Fish Fail",
+  UPDATE_KOI_SUCCESS: "Update Fish success"
+}

@@ -35,7 +35,7 @@ class DatabaseService {
   }
   get order() {
     try {
-      return this._db.collection(process.env.DB_ORDERS_COLLECTION)
+      return this._db.collection('Order')
     } catch (error){
       console.log(error + 'lỗi ở database service - get orders')
       throw error
