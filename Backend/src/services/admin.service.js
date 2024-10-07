@@ -1,7 +1,7 @@
 import databaseService from './database.service.js'
 import KoiSchema from '../models/schemas/Koi.schema.js'
 import { koiValidate } from '../middlewares/kois.middleware.js'
-import { ADMINS_MESSAGES } from '../constants/messages.js'
+import { MESSAGES } from '../constants/message.js'
 import { ObjectId } from 'mongodb'
 
 class AdminsService {
@@ -33,7 +33,7 @@ class AdminsService {
         ...payload
       })
     )
-    return { success: true, message: ADMINS_MESSAGES.ADD_KOI_SUCCESS }
+    return { success: true, message: MESSAGES.ADD_KOI_SUCCESS }
   }
 
   async updateKoi(KoiID, payload) {
@@ -45,7 +45,7 @@ class AdminsService {
     }
 
     await databaseService.kois.findOneAndUpdate({ _id: new ObjectId(KoiID) }, { $set: payload })
-    return { success: true, message: ADMINS_MESSAGES.UPDATE_KOI_SUCCESS }
+    return { success: true, message: MESSAGES.UPDATE_KOI_SUCCESS }
   }
 
   async updateStatusKoi(KoiID) {
@@ -55,7 +55,7 @@ class AdminsService {
         { $set: { Status: 0 } },
         { new: true }
       )
-      return { success: true, message: ADMINS_MESSAGES.UPDATE_KOI_SUCCESS }
+      return { success: true, message: MESSAGES.UPDATE_KOI_SUCCESS }
     } catch (error) {
       return {success: false, message: 'FAIL'}
     }

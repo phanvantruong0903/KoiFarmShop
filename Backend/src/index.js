@@ -6,14 +6,16 @@ import databaseService from './services/database.service.js'
 import { defaultErrorHandler } from './middlewares/error.middlewares.js'
 import managerRouter from './routes/manager.routes.js'
 import { createNewKoiKiGuiController } from './controllers/common.controllers.js'
+import { getKoiByCategoryIDController } from './controllers/home.controllers.js'
+import cors from 'cors'
 
 config()
 const app = express()
-app.use(cors(
-  {
+app.use(
+  cors({
     origin: 'http://localhost:3000'
-  }
-))
+  })
+)
 const PORT = process.env.PORT || 4000
 app.use(express.json())
 databaseService.connect().then(() => {
@@ -28,8 +30,8 @@ app.post('/ki-gui', createNewKoiKiGuiController)
 
 app.use('/users', usersRouter)
 app.use('/admins', adminRouter)
-
 app.use('/manager', managerRouter)
+app.use('/kois/:CategoryID', getKoiByCategoryIDController)
 
 app.use(defaultErrorHandler)
 
