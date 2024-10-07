@@ -28,34 +28,40 @@ const CardGrid = ({ cardData }) => {
     fontWeight: "bold",
     color: "black",
   };
-  const cardCount = cardData.length;
+
+  const cardCount = cardData.length; // Số lượng cá koi
   const cards = cardData.map((card) => (
-    <Col key={card.id} md={3} className="mb-4">
+    <Col key={card._id} md={3} className="mb-4">
+      {" "}
+      {/* Sử dụng _id làm key */}
       <Card style={cardStyle}>
-        <Card.Img variant="top" src={card.Image} style={imgStyle} />
+        <Card.Img variant="top" src={card.Image} style={imgStyle} />{" "}
+        {/* Đảm bảo rằng card.Image tồn tại */}
         <Card.Body>
-          <Card.Title style={titleStyle}>{card.KoiName}</Card.Title>
+          <Card.Title style={titleStyle}>{card.CategoryName}</Card.Title>{" "}
+          {/* Thay đổi từ KoiName sang CategoryName */}
           <Card.Text style={textStyle}>
-            <span style={boldTextStyle}>Giống:</span> {card.Breed}
+            <span style={boldTextStyle}>CategoryID:</span>{" "}
+            {card.CategoryID || "N/A"}{" "}
           </Card.Text>
           <Card.Text style={textStyle}>
-            <span style={boldTextStyle}>Tuổi:</span> {card.Age}
+            <span style={boldTextStyle}>KoiName:</span> {card.KoiName || "N/A"}{" "}
           </Card.Text>
           <Card.Text style={textStyle}>
-            <span style={boldTextStyle}>Nguồn gốc:</span> {card.Origin}
+            <span style={boldTextStyle}>Age:</span> {card.Age || "N/A"}
           </Card.Text>
           <Card.Text style={textStyle}>
-            <span style={boldTextStyle}>Giới tính:</span> {card.Gender}
+            <span style={boldTextStyle}>Origin:</span> {card.Origin || "N/A"}
           </Card.Text>
           <Card.Text style={textStyle}>
-            <span style={boldTextStyle}>Kích thước:</span> {card.Size}
+            <span style={boldTextStyle}>Giới tính:</span> {card.Gender || "N/A"}
           </Card.Text>
           <Card.Text style={textStyle}>
-            <span style={boldTextStyle}>Mô tả:</span> {card.Description}
+            <span style={boldTextStyle}>Size:</span> {card.Size || "N/A"}
           </Card.Text>
         </Card.Body>
         <Button
-          href="/"
+          href="/chitietcakoi"
           active
           style={{
             width: "100%",

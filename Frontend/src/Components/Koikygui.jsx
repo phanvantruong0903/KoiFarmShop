@@ -8,10 +8,10 @@ import "./Koikygui.css";
 
 export default function Koikygui() {
   const [menu, setMenu] = useState("home");
-  const [cardData, setCardData] = useState([]);
+  const [cardData, setCardData] = useState([]); // Dữ liệu danh mục
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedBreed, setSelectedBreed] = useState("ALL");
+  const [selectedCategory, setSelectedCategory] = useState("ALL");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,9 +19,18 @@ export default function Koikygui() {
         const response = await axios.get(
           "http://localhost:4000/categories/getCategory"
         );
-        // setCardData(response.data);
-        console.log(response.data);
+        console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
+        if (Array.isArray(response.data.categoryList)) {
+          setCardData(response.data.categoryList); // Lấy mảng từ thuộc tính 'categoryList'
+          console.log(
+            "Card data set successfully:",
+            response.data.categoryList
+          ); // Kiểm tra sau khi set
+        } else {
+          console.error("Dữ liệu không phải là mảng:", response.data);
+        }
       } catch (err) {
+        console.error("Error fetching data:", err); // Ghi lại lỗi
         setError(err);
       } finally {
         setLoading(false);
@@ -31,23 +40,29 @@ export default function Koikygui() {
     fetchData();
   }, []);
 
-  const handleBreedChange = (event) => {
-    setSelectedBreed(event.target.value);
+  useEffect(() => {
+    console.log("Updated cardData:", cardData); // Ghi lại khi cardData thay đổi
+  }, [cardData]);
+
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
   };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
 
   const filteredCards =
-    selectedBreed === "ALL"
+    selectedCategory === "ALL"
       ? cardData
-      : cardData.filter((card) => card.Breed === selectedBreed);
+      : cardData.filter((card) => card.CategoryID === selectedCategory);
 
   // Đếm số lượng cá cho từng giống
-  const breedCounts = cardData.reduce((accumlator, card) => {
-    accumlator[card.Breed] = (accumlator[card.Breed] || 0) + 1;
-    return accumlator;
-  }, {});
+  const breedCounts = Array.isArray(cardData)
+    ? cardData.reduce((accumulator, card) => {
+        accumulator[card.CategoryID] = (accumulator[card.CategoryID] || 0) + 1;
+        return accumulator;
+      }, {})
+    : {}; // Nếu không phải là mảng, trả về đối tượng rỗng
 
   return (
     <>
@@ -62,22 +77,24 @@ export default function Koikygui() {
               <Form.Check
                 type="radio"
                 label={`ALL ${
-                  selectedBreed === "ALL" ? `(${cardData.length})` : ""
+                  selectedCategory === "ALL" ? `(${cardData.length})` : ""
                 }`}
                 value="ALL"
-                checked={selectedBreed === "ALL"}
-                onChange={handleBreedChange}
+                checked={selectedCategory === "ALL"}
+                onChange={handleCategoryChange}
               />
-              {Object.keys(breedCounts).map((a) => (
+              {Object.keys(breedCounts).map((categoryId) => (
                 <Form.Check
-                  key={a}
+                  key={categoryId}
                   type="radio"
-                  label={`${a} ${
-                    selectedBreed === a ? `(${breedCounts[a]})` : ""
+                  label={`${categoryId} ${
+                    selectedCategory === categoryId
+                      ? `(${breedCounts[categoryId]})`
+                      : ""
                   }`}
-                  value={a}
-                  checked={selectedBreed === a}
-                  onChange={handleBreedChange}
+                  value={categoryId}
+                  checked={selectedCategory === categoryId}
+                  onChange={handleCategoryChange}
                 />
               ))}
             </Form.Group>
