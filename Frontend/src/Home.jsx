@@ -4,7 +4,6 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import Navbar from "./Components/Navbar/Navbar";
 import Footer from "./Components/Footer";
-import CardGrid from "./Components/Cardgrid";
 import "../src/Home.css";
 import Slideshow from "./Components/Slideshow";
 
@@ -62,7 +61,10 @@ export default function Home() {
       });
     };
   }, []);
-
+  const formData = JSON.parse(localStorage.getItem("formData"));
+  useEffect(() => {
+    console.log("Dữ liệu đã nhận:", formData);
+  }, [formData]);
   return (
     <>
       <div>
@@ -194,6 +196,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+
       <div>
         <Footer />
       </div>

@@ -4,7 +4,7 @@ import usersRouter from './routes/users.routes.js'
 import categoryRouter from './routes/category.routes.js'
 import databaseService from './services/database.service.js'
 import { defaultErrorHandler } from './middlewares/error.middlewares.js'
-
+import cors from 'cors'
 config()
 const app = express()
 

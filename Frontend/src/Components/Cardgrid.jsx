@@ -28,7 +28,7 @@ const CardGrid = ({ cardData }) => {
     fontWeight: "bold",
     color: "black",
   };
-
+  const cardCount = cardData.length;
   const cards = cardData.map((card) => (
     <Col key={card.id} md={3} className="mb-4">
       <Card style={cardStyle}>
@@ -72,6 +72,11 @@ const CardGrid = ({ cardData }) => {
 
   return (
     <Container>
+      <Row>
+        <Col>
+          <h5>Tổng số cá koi: {cardCount}</h5> {/* Hiển thị số lượng cá koi */}
+        </Col>
+      </Row>
       <Row>{cards}</Row>
     </Container>
   );

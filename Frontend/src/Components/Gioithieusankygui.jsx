@@ -1,6 +1,8 @@
 import Footer from "./Footer";
 import Navbar from "./Navbar/Navbar";
+import Form from "react-bootstrap/Form";
 import { Container } from "react-bootstrap";
+import Kyguikoi from "./Kyguikoi";
 export default function Gioithieusankygui() {
   return (
     <>
@@ -232,8 +234,11 @@ export default function Gioithieusankygui() {
               </ul>
             </div>
           </div>
+          <div>
+            <Kyguikoi />
+          </div>
         </Container>
-        <div>
+        <div style={{ paddingTop: "50px" }}>
           <Footer />
         </div>
       </div>

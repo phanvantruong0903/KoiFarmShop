@@ -1,24 +1,26 @@
 import { useState, useEffect } from "react";
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer";
-import { Container, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import CardGrid from "./Cardgrid";
 import axios from "axios";
 import "./Koikygui.css";
+
 export default function Koikygui() {
   const [menu, setMenu] = useState("home");
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedBreed, setSelectedBreed] = useState("ALL"); // Mặc định giống cá là ALL
+  const [selectedBreed, setSelectedBreed] = useState("ALL");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://66fd0298c3a184a84d18b799.mockapi.io/Koi"
+          "http://localhost:4000/categories/getCategory"
         );
-        setCardData(response.data);
+        // setCardData(response.data);
+        console.log(response.data);
       } catch (err) {
         setError(err);
       } finally {
@@ -41,6 +43,12 @@ export default function Koikygui() {
       ? cardData
       : cardData.filter((card) => card.Breed === selectedBreed);
 
+  // Đếm số lượng cá cho từng giống
+  const breedCounts = cardData.reduce((accumlator, card) => {
+    accumlator[card.Breed] = (accumlator[card.Breed] || 0) + 1;
+    return accumlator;
+  }, {});
+
   return (
     <>
       <div>
@@ -53,95 +61,25 @@ export default function Koikygui() {
               <Form.Label>CHỌN LOÀI CÁ </Form.Label>
               <Form.Check
                 type="radio"
-                label="ALL"
+                label={`ALL ${
+                  selectedBreed === "ALL" ? `(${cardData.length})` : ""
+                }`}
                 value="ALL"
                 checked={selectedBreed === "ALL"}
                 onChange={handleBreedChange}
               />
-              <Form.Check
-                type="radio"
-                label="KOI KOHAKU"
-                value="KOI KOHAKU"
-                checked={selectedBreed === "KOI KOHAKU"}
-                onChange={handleBreedChange}
-              />
-              <Form.Check
-                type="radio"
-                label="KOI OGON"
-                value="KOI OGON"
-                checked={selectedBreed === "KOI OGON"}
-                onChange={handleBreedChange}
-              />
-              <Form.Check
-                type="radio"
-                label="KOI SHOWA"
-                value="KOI SHOWA"
-                checked={selectedBreed === "KOI SHOWA"}
-                onChange={handleBreedChange}
-              />
-              <Form.Check
-                type="radio"
-                label="KOI TANCHO"
-                value="KOI TANCHO"
-                checked={selectedBreed === "KOI TANCHO"}
-                onChange={handleBreedChange}
-              />
-              <Form.Check
-                type="radio"
-                label="KOI BEKKO"
-                value="KOI BEKKO"
-                checked={selectedBreed === "KOI BEKKO"}
-                onChange={handleBreedChange}
-              />
-              <Form.Check
-                type="radio"
-                label="KOI DOITSU"
-                value="KOI DOITSU"
-                checked={selectedBreed === "KOI DOITSU"}
-                onChange={handleBreedChange}
-              />
-              <Form.Check
-                type="radio"
-                label="KOI GINRIN"
-                value="KOI GINRIN"
-                checked={selectedBreed === "KOI GINRIN"}
-                onChange={handleBreedChange}
-              />
-              <Form.Check
-                type="radio"
-                label="KOI GOSHIKI"
-                value="KOI GOSHIKI"
-                checked={selectedBreed === "KOI GOSHIKI"}
-                onChange={handleBreedChange}
-              />
-              <Form.Check
-                type="radio"
-                label="KOI BENIGOI"
-                value="KOI BENIGOI"
-                checked={selectedBreed === "KOI BENIGOI"}
-                onChange={handleBreedChange}
-              />
-              <Form.Check
-                type="radio"
-                label="KOI ASAGI"
-                value="KOI ASAGI"
-                checked={selectedBreed === "KOI ASAGI"}
-                onChange={handleBreedChange}
-              />
-              <Form.Check
-                type="radio"
-                label="KOI PLATINUM"
-                value="KOI PLATINUM"
-                checked={selectedBreed === "KOI PLATINUM"}
-                onChange={handleBreedChange}
-              />
-              <Form.Check
-                type="radio"
-                label="KOI SHUSUI"
-                value="KOI SHUSUI"
-                checked={selectedBreed === "KOI SHUSUI"}
-                onChange={handleBreedChange}
-              />
+              {Object.keys(breedCounts).map((a) => (
+                <Form.Check
+                  key={a}
+                  type="radio"
+                  label={`${a} ${
+                    selectedBreed === a ? `(${breedCounts[a]})` : ""
+                  }`}
+                  value={a}
+                  checked={selectedBreed === a}
+                  onChange={handleBreedChange}
+                />
+              ))}
             </Form.Group>
           </Form>
         </div>
