@@ -52,14 +52,40 @@ class AdminsService {
     try {
       const result = await databaseService.kois.findOneAndUpdate(
         { _id: new ObjectId(KoiID) },
-        { $set: { Status: 0 } },
+        { $bit: { Status: { xor: 1 } } },
         { new: true }
       )
       return { success: true, message: MESSAGES.UPDATE_KOI_SUCCESS }
     } catch (error) {
-      return {success: false, message: 'FAIL'}
+      return { success: false, message: 'FAIL' }
     }
-    
+  }
+
+  async updateUser(UserID, payload) {
+    try {
+      const result = await databaseService.users.findOneAndUpdate(
+        { _id: new ObjectId(UserID) },
+        { $set: payload },
+        { new: true }
+      )
+      return { success: true, message: MESSAGES.UPDATE_USER_SUCCESS }
+    } catch (error) {
+      return { success: false, message: 'FAIL' }
+    }
+  }
+
+  async updateStatusUser(UserID) {
+    try {
+      const result = await databaseService.users.findOneAndUpdate(
+        { _id: new ObjectId(UserID) },
+        { $bit: { Status: { xor: 1 } } },
+        { new: true }
+      )
+      console.log(result)
+      return { success: true, message: MESSAGES.UPDATE_USER_SUCCESS }
+    } catch (error) {
+      return { success: false, message: 'FAIL' }
+    }
   }
 }
 

@@ -79,3 +79,45 @@ export const updateStatusKoi = async (req, res) => {
     console.log(error)
   }
 }
+
+export const updateUser = async (req, res) => {
+  try {
+    const { UserID } = req.params
+    console.log(UserID)
+    const result = await adminService.updateUser(UserID, req.body)
+    // result trả về success "true" nếu thành công và ngược lại trả về false khi validate dữ liệu đầu vào fail
+    // message do Joi trả về khi validate
+    console.log(result)
+    if (!result.success) {
+      return res.status(400).json({
+        message: result.message
+      })
+    }
+    res.json({
+      message: result.message,
+      result
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const updateStatusUser = async (req, res) => {
+  try {
+    const { UserID } = req.params
+    const result = await adminService.updateStatusUser(UserID)
+    // result trả về success "true" nếu thành công và ngược lại trả về false khi validate dữ liệu đầu vào fail
+    // message do Joi trả về khi validate
+    if (!result.success) {
+      return res.status(400).json({
+        message: result.message
+      })
+    }
+    res.json({
+      message: result.message,
+      result
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
