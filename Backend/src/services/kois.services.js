@@ -14,14 +14,6 @@ class KoisService {
     return result
   }
 
-  // async createNewKoiKiGui(payload) {
-  //   const KoiID = new ObjectId()
-  //   const result = await databaseService.koi.insertOne(new KoiSchema({ ...payload, _id: KoiID, Status: 4 }))
-  //   console.log(payload)
-  //   console.log(result)
-  //   return result
-  // }
-
   //test createNewKoiKiGui với payload full thông tin cần thiết từ người dùng
   async createNewKoiKiGui(payload) {
     // Tạo mật khẩu ngẫu nhiên
@@ -29,18 +21,32 @@ class KoisService {
     const hashedPassword = await bcrypt.hash(password, 10)
 
     // Tạo người dùng mới
-    const user_id = new ObjectId()
-    const userPayload = {
-      _id: user_id,
-      email: payload.email,
-      name: payload.name,
-      address: payload.address,
-      phone_number: payload.phone_number,
-      password: hashedPassword,
-      username: `user${user_id.toString()}`,
-      roleid: 1
+    let user_id = new ObjectId()
+
+    //check xem email đó đã có trong db chưa
+    //nếu có rồi tức là đã có người dùng này rồi
+    //thì sẽ không tạo mới user nữa mà lấy id của user đó
+    //để tạo consign
+    const userCheck = await databaseService.users.findOne({ email: payload.email })
+
+    let userResult
+
+    if (userCheck) {
+      user_id = userCheck._id
+    } else {
+      const userPayload = {
+        _id: user_id,
+        email: payload.email,
+        name: payload.name,
+        address: payload.address,
+        phone_number: payload.phone_number,
+        password: hashedPassword,
+        username: `user${user_id.toString()}`,
+        roleid: 1
+      }
+      userResult = await databaseService.users.insertOne(new UserSchema(userPayload))
     }
-    const userResult = await databaseService.users.insertOne(new UserSchema(userPayload))
+
     const userId = user_id.toString()
 
     // Tạo bản ghi mới trong bảng consigns
