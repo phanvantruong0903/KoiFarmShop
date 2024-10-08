@@ -15,6 +15,8 @@ import { getKoiByCategoryIDController } from './controllers/home.controllers.js'
 import { createNewKoiKiGuiValidator } from './middlewares/common.middlewares.js'
 import { wrapAsync } from './utils/handle.js'
 
+import { getKois } from './controllers/admin.controllers.js'
+
 config()
 const app = express()
 app.use(
@@ -40,6 +42,7 @@ app.use('/categories', categoryRouter)
 
 app.use('/manager', managerRouter)
 app.use('/kois/:CategoryID', getKoiByCategoryIDController)
+app.use('/getAllKoi', getKois)
 
 app.use(defaultErrorHandler)
 

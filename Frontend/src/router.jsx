@@ -81,7 +81,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/gioithieusankygui",
-    element: <Gioithieusankygui />,
+    element: <Gioithieu sankygui />,
   },
   {
     path: "/lienhe",
