@@ -1,7 +1,7 @@
 import databaseService from './database.service.js'
 import KoiSchema from '../models/schemas/Koi.schema.js'
 import { koiValidate } from '../middlewares/kois.middleware.js'
-import { ADMINS_MESSAGES } from '../constants/userMessages.js'
+import { MESSAGES } from '../constants/message.js'
 import { ObjectId } from 'mongodb'
 
 class AdminsService {
@@ -33,7 +33,7 @@ class AdminsService {
         ...payload
       })
     )
-    return { success: true, message: ADMINS_MESSAGES.ADD_KOI_SUCCESS }
+    return { success: true, message: MESSAGES.ADD_KOI_SUCCESS }
   }
 
   async updateKoi(KoiID, payload) {
@@ -45,21 +45,47 @@ class AdminsService {
     }
 
     await databaseService.kois.findOneAndUpdate({ _id: new ObjectId(KoiID) }, { $set: payload })
-    return { success: true, message: ADMINS_MESSAGES.UPDATE_KOI_SUCCESS }
+    return { success: true, message: MESSAGES.UPDATE_KOI_SUCCESS }
   }
 
   async updateStatusKoi(KoiID) {
     try {
       const result = await databaseService.kois.findOneAndUpdate(
         { _id: new ObjectId(KoiID) },
-        { $set: { Status: 0 } },
+        { $bit: { Status: { xor: 1 } } },
         { new: true }
       )
-      return { success: true, message: ADMINS_MESSAGES.UPDATE_KOI_SUCCESS }
+      return { success: true, message: MESSAGES.UPDATE_KOI_SUCCESS }
     } catch (error) {
-      return {success: false, message: 'FAIL'}
+      return { success: false, message: 'FAIL' }
     }
-    
+  }
+
+  async updateUser(UserID, payload) {
+    try {
+      const result = await databaseService.users.findOneAndUpdate(
+        { _id: new ObjectId(UserID) },
+        { $set: payload },
+        { new: true }
+      )
+      return { success: true, message: MESSAGES.UPDATE_USER_SUCCESS }
+    } catch (error) {
+      return { success: false, message: 'FAIL' }
+    }
+  }
+
+  async updateStatusUser(UserID) {
+    try {
+      const result = await databaseService.users.findOneAndUpdate(
+        { _id: new ObjectId(UserID) },
+        { $bit: { Status: { xor: 1 } } },
+        { new: true }
+      )
+      console.log(result)
+      return { success: true, message: MESSAGES.UPDATE_USER_SUCCESS }
+    } catch (error) {
+      return { success: false, message: 'FAIL' }
+    }
   }
 }
 
