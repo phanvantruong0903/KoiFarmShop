@@ -45,9 +45,9 @@ class KoisService {
         username: `user${user_id.toString()}`,
         roleid: 1
       }
-      // userResult = await databaseService.users.insertOne(new UserSchema(userPayload))
+      userResult = await databaseService.users.insertOne(new UserSchema(userPayload))
       //test register khi tạo mới user
-      userResult = await usersService.register(userPayload)
+      // userResult = await usersService.register(userPayload)
     }
 
     const userId = user_id.toString()
