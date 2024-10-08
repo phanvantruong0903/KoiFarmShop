@@ -32,4 +32,6 @@ managerRouter.post(
   wrapAsync(createNewKoiController)
 )
 
+// managerRouter.post('/manage-kiGui/inspecting-koi', accessTokenValidator, isAdminValidator, wrapAsync(inspectingKoiController))
+
 export default managerRouter
