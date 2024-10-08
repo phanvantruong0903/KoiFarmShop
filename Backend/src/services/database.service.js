@@ -63,18 +63,6 @@ class DatabaseService {
       console.log(error + 'lỗi ở database service - get consigns')
     }
   }
-
-  get consignDetail() {
-    try {
-      return this._db.collection(process.env.DB_CONSIGN_DETAIL_COLLECTION)
-    } catch (error) {
-      console.log(error + 'lỗi ở database service - get consign detail')
-    }
-  }
-
-  // get followers(): Collection<Follower> {
-  //   return this.db.collection(process.env.DB_FOLLOWERS_COLLECTION as string)
-  // }
 }
 
 const databaseService = new DatabaseService()

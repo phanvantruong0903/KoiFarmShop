@@ -4,7 +4,6 @@ import databaseService from './database.service.js'
 import KoiSchema from '../models/schemas/Koi.schema.js'
 import UserSchema from '../models/schemas/User.schema.js'
 import ConsignSchema from '../models/schemas/Consign.schema.js'
-import ConsignDetailSchema from '../models/schemas/ConsignDetail.schema.js'
 
 class KoisService {
   async createNewKoi(payload) {
@@ -50,17 +49,6 @@ class KoisService {
 
     const userId = user_id.toString()
 
-    // Tạo bản ghi mới trong bảng consigns
-    const consignID = new ObjectId()
-    const consignPayload = {
-      PositionCare: payload.PositionCare,
-      Method: payload.Method,
-      UserID: userId,
-      _id: consignID,
-      status: 1
-    }
-    const consignResult = await databaseService.consigns.insertOne(new ConsignSchema(consignPayload))
-
     // Tạo bản ghi mới trong bảng kois
     const koiID = new ObjectId()
     const koiPayload = {
@@ -83,22 +71,23 @@ class KoisService {
     }
     const koiResult = await databaseService.kois.insertOne(new KoiSchema(koiPayload))
 
-    //tạo bản ghi mới trong bảng consignDetail
-    const consignDetailPayload = {
-      ConsignID: consignID.toString(),
+    // Tạo bản ghi mới trong bảng consigns
+    const consignID = new ObjectId()
+    const consignPayload = {
+      PositionCare: payload.PositionCare,
+      Method: payload.Method,
+      UserID: userId,
       KoiID: koiID.toString(),
-      _id: new ObjectId()
+      _id: consignID,
+      status: 1
     }
-    const consignDetailResult = await databaseService.consignDetail.insertOne(
-      new ConsignDetailSchema(consignDetailPayload)
-    )
+    const consignResult = await databaseService.consigns.insertOne(new ConsignSchema(consignPayload))
 
     // Trả về kết quả
     return {
       user: userResult || userCheck._id,
       consign: consignResult,
-      koi: koiResult,
-      consignDetail: consignDetailResult
+      koi: koiResult
     }
   }
 }
