@@ -1,21 +1,20 @@
-import React from "react";
 import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-
+import "./Kyguikoi.css";
 export default function Kyguikoi() {
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
-    event.preventDefault(); // Ngăn chặn hành động mặc định của form
+    event.preventDefault(); // Prevent default form submission
 
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData.entries());
 
-    // Lưu dữ liệu vào localStorage
+    // Save data to localStorage
     localStorage.setItem("formData", JSON.stringify(data));
 
-    // Chuyển hướng đến trang mới
-    navigate("/"); // Đổi '/next-page' thành đường dẫn bạn muốn
+    // Navigate to the new page
+    navigate("/"); // Change '/' to your desired route
   };
 
   return (
@@ -46,7 +45,7 @@ export default function Kyguikoi() {
                 <Form.Label>Email Address (*): </Form.Label>
                 <Form.Control
                   type="email"
-                  placeholder="Nhập địa chỉ email (name@example.com)s"
+                  placeholder="Nhập địa chỉ email (name@example.com)"
                   required
                   name="email"
                 />
@@ -145,13 +144,20 @@ export default function Kyguikoi() {
                 style={{ width: "100%" }}
               >
                 <Form.Label>Methods: </Form.Label>
-                <div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "10px",
+                  }}
+                >
                   <Form.Check
                     type="radio"
                     id="nameOption1"
                     label="Online"
                     name="methods"
                     value="Online"
+                    style={{ marginBottom: "10px" }}
                   />
                   <Form.Check
                     type="radio"
@@ -277,13 +283,16 @@ export default function Kyguikoi() {
           style={{ width: "100%" }}
         >
           <Form.Label>Gender (*): </Form.Label>
-          <div>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+          >
             <Form.Check
               type="radio"
               id="genderOption1"
               label="Male"
               name="gender"
               value="Male"
+              style={{ marginBottom: "10px" }}
             />
             <Form.Check
               type="radio"
@@ -291,6 +300,7 @@ export default function Kyguikoi() {
               label="Female"
               name="gender"
               value="Female"
+              style={{ marginBottom: "10px" }}
             />
           </div>
         </Form.Group>
@@ -315,13 +325,16 @@ export default function Kyguikoi() {
           style={{ width: "100%" }}
         >
           <Form.Label>Breed (*): </Form.Label>
-          <div>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+          >
             <Form.Check
               type="radio"
               id="breedOption1"
               label="Trung"
               name="breed"
               value="Trung"
+              style={{ marginBottom: "10px" }}
             />
             <Form.Check
               type="radio"
@@ -329,6 +342,7 @@ export default function Kyguikoi() {
               label="Việt"
               name="breed"
               value="Việt"
+              style={{ marginBottom: "10px" }}
             />
             <Form.Check
               type="radio"
@@ -336,6 +350,7 @@ export default function Kyguikoi() {
               label="F1"
               name="breed"
               value="F1"
+              style={{ marginBottom: "10px" }}
             />
           </div>
         </Form.Group>
@@ -392,19 +407,14 @@ export default function Kyguikoi() {
           />
         </Form.Group>
 
-        {/* Thêm các Form.Group cho nộp ảnh và video */}
+        {/* Add file upload fields */}
         <Form.Group
           className="mb-3"
           controlId="exampleForm.ControlFile1"
           style={{ width: "100%" }}
         >
           <Form.Label>Nộp ảnh (*): </Form.Label>
-          <Form.Control
-            type="file"
-            placeholder="Nhập tệp ảnh"
-            required
-            name="image"
-          />
+          <Form.Control type="file" required name="image" />
         </Form.Group>
         <Form.Group
           className="mb-3"
@@ -412,12 +422,7 @@ export default function Kyguikoi() {
           style={{ width: "100%" }}
         >
           <Form.Label>Nộp video (*): </Form.Label>
-          <Form.Control
-            type="file"
-            placeholder="Nhập tệp video"
-            required
-            name="video"
-          />
+          <Form.Control type="file" required name="video" />
         </Form.Group>
         <Button type="submit" variant="primary" style={{ textAlign: "center" }}>
           Gửi

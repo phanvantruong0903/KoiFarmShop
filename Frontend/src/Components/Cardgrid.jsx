@@ -41,10 +41,6 @@ const CardGrid = ({ cardData }) => {
           <Card.Title style={titleStyle}>{card.CategoryName}</Card.Title>{" "}
           {/* Thay đổi từ KoiName sang CategoryName */}
           <Card.Text style={textStyle}>
-            <span style={boldTextStyle}>CategoryID:</span>{" "}
-            {card.CategoryID || "N/A"}{" "}
-          </Card.Text>
-          <Card.Text style={textStyle}>
             <span style={boldTextStyle}>KoiName:</span> {card.KoiName || "N/A"}{" "}
           </Card.Text>
           <Card.Text style={textStyle}>

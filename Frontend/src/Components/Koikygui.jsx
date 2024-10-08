@@ -16,16 +16,11 @@ export default function Koikygui() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:4000/categories/getCategory"
-        );
+        const response = await axios.get("http://localhost:4000/getAllKoi");
         console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
-        if (Array.isArray(response.data.categoryList)) {
-          setCardData(response.data.categoryList); // Lấy mảng từ thuộc tính 'categoryList'
-          console.log(
-            "Card data set successfully:",
-            response.data.categoryList
-          ); // Kiểm tra sau khi set
+        if (Array.isArray(response.data.result)) {
+          setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
+          console.log("Card data set successfully:", response.data.result); // Kiểm tra sau khi set
         } else {
           console.error("Dữ liệu không phải là mảng:", response.data);
         }
@@ -40,10 +35,6 @@ export default function Koikygui() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    console.log("Updated cardData:", cardData); // Ghi lại khi cardData thay đổi
-  }, [cardData]);
-
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
   };
@@ -54,55 +45,49 @@ export default function Koikygui() {
   const filteredCards =
     selectedCategory === "ALL"
       ? cardData
-      : cardData.filter((card) => card.CategoryID === selectedCategory);
+      : cardData.filter((card) => card.KoiName === selectedCategory);
 
   // Đếm số lượng cá cho từng giống
-  // Đếm số lượng cá cho từng giống
-  const breedCounts = Array.isArray(cardData)
-    ? cardData.reduce((accumulator, card) => {
-        if (card.CategoryID) {
-          // Kiểm tra xem CategoryID có tồn tại
-          accumulator[card.CategoryID] =
-            (accumulator[card.CategoryID] || 0) + 1;
-        }
-        return accumulator;
-      }, {})
-    : {}; // Nếu không phải là mảng, trả về đối tượng rỗng
+  const breedCounts = cardData.reduce((accumulator, card) => {
+    if (card.KoiName) {
+      accumulator[card.KoiName] = (accumulator[card.KoiName] || 0) + 1;
+    }
+    return accumulator;
+  }, {});
+
   return (
     <>
-      <div>
-        <Navbar />
-      </div>
+      <Navbar />
       <div style={{ display: "flex", paddingTop: "200px" }}>
         <div style={{ marginRight: "20px" }}>
-          <Form className="radio-group">
+          <div className="radio-group">
             <Form.Group>
               <Form.Label>CHỌN LOÀI CÁ </Form.Label>
               <Form.Check
+                style={{ paddingBottom: "20px" }}
                 type="radio"
-                label={`ALL ${`(${cardData.length})`}`}
+                label={`ALL (${cardData.length})`}
                 value="ALL"
                 checked={selectedCategory === "ALL"}
                 onChange={handleCategoryChange}
               />
-              {Object.keys(breedCounts).map((CategoryID) => (
+              {Object.keys(breedCounts).map((KoiName) => (
                 <Form.Check
-                  key={CategoryID}
+                  style={{ paddingBottom: "20px" }}
+                  key={KoiName}
                   type="radio"
-                  label={`${CategoryID} ${`(${breedCounts[CategoryID]})`}`}
-                  value={CategoryID}
-                  checked={selectedCategory === CategoryID}
+                  label={`${KoiName} (${breedCounts[KoiName]})`}
+                  value={KoiName}
+                  checked={selectedCategory === KoiName}
                   onChange={handleCategoryChange}
                 />
               ))}
             </Form.Group>
-          </Form>
+          </div>
         </div>
         <CardGrid cardData={filteredCards} />
       </div>
-      <div>
-        <Footer />
-      </div>
+      <Footer />
     </>
   );
 }
