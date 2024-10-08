@@ -14,7 +14,7 @@ import { isAddress, isVerified, whatRole } from '../../Utils/valueParser';
 import FilterBar from '../../Components/Staff/FilterBar';
 import FilterButton from '../../Components/Staff/FilterButton';
 import Spinner from '../../Components/Spinner';
-
+import axiosInstance from '../../Utils/axiosJS';
 export default function Profiles() {
   const [hoveredRow, setHoveredRow] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -59,14 +59,21 @@ export default function Profiles() {
   const { searchTerm, handleFilterChange, filteredData, handleSearch, filterList } = useFilter(intialData, true);
   useEffect(() => {
     setIsLoading(true);
-    fetch('http://localhost:4000/manager/manage-user/get-all')
-      .then(response => response.json())
-      .then(json => {
-        setIntialData(json.result)
-        console.log(json.result)
-      })
-      .finally(() => setIsLoading(false))
-  }, [])
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get('/manager/manage-user/get-all');
+        console.log('Data:', response.data);
+        setIntialData(response.data.result);
+      } catch (error) {
+        console.error('Error fetching data', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  
+    fetchData();
+  }, []);
+  
   return (
     <div>
       <div className='fw-bold fs-1 ms-5 mb-5'>Profiles</div>
