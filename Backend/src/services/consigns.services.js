@@ -24,7 +24,36 @@ class ConsignsService {
         status: HTTP_STATUS.NOT_FOUND
       })
     }
-    return consign
+    const koiObjectID = new ObjectId(consign.KoiID)
+    const koi = await databaseService.kois.findOne({ _id: koiObjectID })
+    if (koi == null) {
+      throw new ErrorWithStatus({
+        message: MANAGER_MESSAGES.KOI_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+    const userObjectID = new ObjectId(consign.UserID)
+    const user = await databaseService.users.findOne(
+      { _id: userObjectID },
+      {
+        projection: {
+          password: 0,
+          email_verify_token: 0,
+          forgot_password_token: 0
+        }
+      }
+    )
+    if (user == null) {
+      throw new ErrorWithStatus({
+        message: MANAGER_MESSAGES.KOI_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+    return {
+      user: user,
+      consign: consign,
+      koi: koi
+    }
   }
 }
 
