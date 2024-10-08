@@ -4,6 +4,7 @@ import databaseService from './database.service.js'
 import KoiSchema from '../models/schemas/Koi.schema.js'
 import UserSchema from '../models/schemas/User.schema.js'
 import ConsignSchema from '../models/schemas/Consign.schema.js'
+import usersService from './users.services.js'
 
 class KoisService {
   async createNewKoi(payload) {
@@ -45,6 +46,8 @@ class KoisService {
         roleid: 1
       }
       userResult = await databaseService.users.insertOne(new UserSchema(userPayload))
+      //test register khi tạo mới user
+      // userResult = await usersService.register(userPayload)
     }
 
     const userId = user_id.toString()
