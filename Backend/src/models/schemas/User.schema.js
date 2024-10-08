@@ -36,6 +36,3 @@ export default class UserSchema {
     this.phone_number = user.phone_number || ''
   }
 }
-
-// const UserSchema = new User()
-// export default UserSchema
