@@ -64,6 +64,18 @@ class DatabaseService {
     }
   }
 
+  get category() {
+    try {
+      return this._db.collection(process.env.DB_CATEGORY_COLLECTION)
+    } catch (error) {
+      console.log(error + 'lỗi ở database service - get category')
+    }
+  }
+
+  // get followers(): Collection<Follower> {
+  //   return this.db.collection(process.env.DB_FOLLOWERS_COLLECTION as string)
+  // }
+
   get kois() {
     try {
       return this._db.collection(process.env.DB_KOIS_COLLECTION)

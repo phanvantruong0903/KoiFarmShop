@@ -2,8 +2,12 @@ import express from 'express'
 import { config } from 'dotenv'
 import usersRouter from './routes/users.routes.js'
 import adminRouter from './routes/admin.routes.js'
+import categoryRouter from './routes/category.routes.js'
 import databaseService from './services/database.service.js'
 import { defaultErrorHandler } from './middlewares/error.middlewares.js'
+
+import cors from 'cors' // Thêm import cho cors
+
 import managerRouter from './routes/manager.routes.js'
 import { createNewKoiKiGuiController } from './controllers/common.controllers.js'
 import { getKoiByCategoryIDController } from './controllers/home.controllers.js'
@@ -32,6 +36,8 @@ app.post('/ki-gui', createNewKoiKiGuiValidator, wrapAsync(createNewKoiKiGuiContr
 
 app.use('/users', usersRouter)
 app.use('/admins', adminRouter)
+app.use('/categories', categoryRouter)
+
 app.use('/manager', managerRouter)
 app.use('/kois/:CategoryID', getKoiByCategoryIDController)
 
