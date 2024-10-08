@@ -5,6 +5,8 @@ import databaseService from './services/database.service.js'
 import { defaultErrorHandler } from './middlewares/error.middlewares.js'
 import managerRouter from './routes/manager.routes.js'
 import { createNewKoiKiGuiController } from './controllers/common.controllers.js'
+import { createNewKoiKiGuiValidator } from './middlewares/common.middlewares.js'
+import { wrapAsync } from './utils/handle.js'
 
 config()
 const app = express()
@@ -19,7 +21,7 @@ app.get('/', (req, res) => {
   res.send('hello world nguyen')
 })
 
-app.post('/ki-gui', createNewKoiKiGuiController)
+app.post('/ki-gui', createNewKoiKiGuiValidator, wrapAsync(createNewKoiKiGuiController))
 
 app.use('/users', usersRouter)
 

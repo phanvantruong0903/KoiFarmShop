@@ -71,5 +71,44 @@ export const USERS_MESSAGES = {
   REFRESH_TOKEN_SUCCESS: 'Refresh token success',
   EMAIL_NOT_VERIFIED: 'Email not verified',
   UPLOAD_SUCCESS: 'Upload success',
-  ACCESS_DENIED_ADMIN_ONLY: 'Access denied, admin only'
+  ACCESS_DENIED_ADMIN_ONLY: 'Access denied, admin only',
+  //address
+  ADDRESS_IS_REQUIRED: 'Address is required',
+  ADDRESS_MUST_BE_A_STRING: 'Address must be a string',
+  ADDRESS_LENGTH_MUST_BE_FROM_1_TO_200: 'Address length must be from 1 to 200',
+  //phone number
+  PHONE_NUMBER_IS_REQUIRED: 'Phone number is required',
+  PHONE_NUMBER_LENGTH_MUST_BE_FROM_1_TO_20: 'Phone number length must be from 1 to 20',
+  PHONE_NUMBER_MUST_BE_NUMERIC: 'Phone number must be numeric',
+  //position care
+  POSITION_CARE_IS_REQUIRED: 'Position care is required',
+  //method
+  METHOD_IS_REQUIRED: 'Method is required',
+  //categoryid
+  CATEGORY_ID_IS_REQUIRED: 'Category id is required',
+  //koi name
+  KOI_NAME_IS_REQUIRED: 'Koi name is required',
+  KOI_NAME_MUST_BE_A_STRING: 'Koi name must be a string',
+  KOI_NAME_LENGTH_MUST_BE_FROM_1_TO_200: 'Koi name length must be from 1 to 200',
+  //koi age
+  KOI_AGE_IS_REQUIRED: 'Koi age is required',
+  KOI_AGE_MUST_BE_NUMERIC: 'Koi age must be numeric',
+  //koi origin
+  KOI_ORIGIN_IS_REQUIRED: 'Koi origin is required',
+  KOI_ORIGIN_MUST_BE_A_STRING: 'Koi origin must be a string',
+  KOI_ORIGIN_LENGTH_MUST_BE_FROM_1_TO_200: 'Koi origin length must be from 1 to 200',
+  //koi gender
+  KOI_GENDER_IS_REQUIRED: 'Koi gender is required',
+  //koi size
+  KOI_SIZE_IS_REQUIRED: 'Koi size is required',
+  //koi breed
+  KOI_BREED_IS_REQUIRED: 'Koi breed is required',
+  //koi dailFoodAmount
+  KOI_DAILY_FOOD_AMOUNT_IS_REQUIRED: 'Koi daily food amount is required',
+  //koi filtering ratio
+  KOI_FILTERING_RATIO_IS_REQUIRED: 'Koi filtering ratio is required',
+  //koi image
+  KOI_IMAGE_IS_REQUIRED: 'Koi image is required',
+  //koi video
+  KOI_VIDEO_IS_REQUIRED: 'Koi video is required'
 }
