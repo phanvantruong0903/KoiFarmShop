@@ -64,17 +64,21 @@ class DatabaseService {
     }
   }
 
-  get koi() {
+  get kois() {
     try {
-      return this._db.collection(process.env.DB_KOI_COLLECTION)
+      return this._db.collection(process.env.DB_KOIS_COLLECTION)
     } catch (error) {
-      console.log(error + 'lỗi ở database service - get refresh token')
+      console.log(error + 'lỗi ở database service - get kois')
     }
   }
 
-  // get followers(): Collection<Follower> {
-  //   return this.db.collection(process.env.DB_FOLLOWERS_COLLECTION as string)
-  // }
+  get consigns() {
+    try {
+      return this._db.collection(process.env.DB_CONSIGNS_COLLECTION)
+    } catch (error) {
+      console.log(error + 'lỗi ở database service - get consigns')
+    }
+  }
 }
 
 const databaseService = new DatabaseService()

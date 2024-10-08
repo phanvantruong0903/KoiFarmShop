@@ -12,7 +12,7 @@ const managerRouter = Router()
  * path: '/manage-user/get-all'
  * method: get
  */
-managerRouter.get('/manage-user/get-all', wrapAsync(getAllUserController))
+managerRouter.get('/manage-user/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getAllUserController))
 
 /*Vu Nguyen thiếu middleware check token và middleware check role
 des: get profile của user khác bằng unsername
@@ -20,11 +20,16 @@ path: '/:username'
 method: get
 không cần header vì, chưa đăng nhập cũng có thể xem
 */
-managerRouter.get('/manage-user/:username', wrapAsync(getProfileController))
+managerRouter.get('/manage-user/:username', accessTokenValidator, isAdminValidator, wrapAsync(getProfileController))
 
 /**Vu Nguyen, thiếu middleware check token và middleware check role
  *
  */
-managerRouter.post('/manage-koi/create-new-koi', accessTokenValidator, isAdminValidator, wrapAsync(createNewKoiController))
+managerRouter.post(
+  '/manage-koi/create-new-koi',
+  accessTokenValidator,
+  isAdminValidator,
+  wrapAsync(createNewKoiController)
+)
 
 export default managerRouter

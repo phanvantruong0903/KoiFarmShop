@@ -37,6 +37,3 @@ export default class KoiSchema {
     this.Video = koi.Video || '' // nếu koi chưa có video thì để rỗng
   }
 }
-
-// const UserSchema = new User()
-// export default UserSchema
