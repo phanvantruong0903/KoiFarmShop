@@ -12,7 +12,7 @@ export default function LoginPage() {
     }
   };
   const containerClass =
-    "container " + (type === "signUp" ? "right-panel-active" : "");
+    "container_login " + (type === "signUp" ? "right-panel-active" : "");
   return (
     <div className="App" >
       <div className={containerClass} id="container" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>

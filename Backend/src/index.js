@@ -11,7 +11,7 @@ import cors from 'cors' // Thêm import cho cors
 import managerRouter from './routes/manager.routes.js'
 import { createNewKoiKiGuiController } from './controllers/common.controllers.js'
 import { getKoiByCategoryIDController } from './controllers/home.controllers.js'
-import cors from 'cors'
+
 import { createNewKoiKiGuiValidator } from './middlewares/common.middlewares.js'
 import { wrapAsync } from './utils/handle.js'
 
