@@ -57,13 +57,17 @@ export default function Koikygui() {
       : cardData.filter((card) => card.CategoryID === selectedCategory);
 
   // Đếm số lượng cá cho từng giống
+  // Đếm số lượng cá cho từng giống
   const breedCounts = Array.isArray(cardData)
     ? cardData.reduce((accumulator, card) => {
-        accumulator[card.CategoryID] = (accumulator[card.CategoryID] || 0) + 1;
+        if (card.CategoryID) {
+          // Kiểm tra xem CategoryID có tồn tại
+          accumulator[card.CategoryID] =
+            (accumulator[card.CategoryID] || 0) + 1;
+        }
         return accumulator;
       }, {})
     : {}; // Nếu không phải là mảng, trả về đối tượng rỗng
-
   return (
     <>
       <div>
@@ -76,24 +80,18 @@ export default function Koikygui() {
               <Form.Label>CHỌN LOÀI CÁ </Form.Label>
               <Form.Check
                 type="radio"
-                label={`ALL ${
-                  selectedCategory === "ALL" ? `(${cardData.length})` : ""
-                }`}
+                label={`ALL ${`(${cardData.length})`}`}
                 value="ALL"
                 checked={selectedCategory === "ALL"}
                 onChange={handleCategoryChange}
               />
-              {Object.keys(breedCounts).map((categoryId) => (
+              {Object.keys(breedCounts).map((CategoryID) => (
                 <Form.Check
-                  key={categoryId}
+                  key={CategoryID}
                   type="radio"
-                  label={`${categoryId} ${
-                    selectedCategory === categoryId
-                      ? `(${breedCounts[categoryId]})`
-                      : ""
-                  }`}
-                  value={categoryId}
-                  checked={selectedCategory === categoryId}
+                  label={`${CategoryID} ${`(${breedCounts[CategoryID]})`}`}
+                  value={CategoryID}
+                  checked={selectedCategory === CategoryID}
                   onChange={handleCategoryChange}
                 />
               ))}
