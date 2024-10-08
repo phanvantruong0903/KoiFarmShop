@@ -1,5 +1,5 @@
 import HTTP_STATUS from '../constants/httpStatus.js'
-import { USERS_MESSAGES } from '../constants/messages.js'
+import { USERS_MESSAGES } from '../constants/userMessages.js'
 
 export class ErrorWithStatus {
   message

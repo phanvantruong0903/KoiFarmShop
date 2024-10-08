@@ -4,7 +4,14 @@ import usersRouter from './routes/users.routes.js'
 import categoryRouter from './routes/category.routes.js'
 import databaseService from './services/database.service.js'
 import { defaultErrorHandler } from './middlewares/error.middlewares.js'
+
 import cors from 'cors' // Thêm import cho cors
+
+import managerRouter from './routes/manager.routes.js'
+import { createNewKoiKiGuiController } from './controllers/common.controllers.js'
+import { createNewKoiKiGuiValidator } from './middlewares/common.middlewares.js'
+import { wrapAsync } from './utils/handle.js'
+
 config()
 const app = express()
 app.use(cors())
@@ -17,8 +24,13 @@ databaseService.connect().then(() => {
 app.get('/', (req, res) => {
   res.send('hello world nguyen')
 })
+
+app.post('/ki-gui', createNewKoiKiGuiValidator, wrapAsync(createNewKoiKiGuiController))
+
 app.use('/users', usersRouter)
 app.use('/categories', categoryRouter)
+
+app.use('/manager', managerRouter)
 
 app.use(defaultErrorHandler)
 

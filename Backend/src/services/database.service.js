@@ -48,7 +48,7 @@ class DatabaseService {
     }
   }
 
-  get category(){
+  get category() {
     try {
       return this._db.collection(process.env.DB_CATEGORY_COLLECTION)
     } catch (error) {
@@ -59,6 +59,22 @@ class DatabaseService {
   // get followers(): Collection<Follower> {
   //   return this.db.collection(process.env.DB_FOLLOWERS_COLLECTION as string)
   // }
+
+  get kois() {
+    try {
+      return this._db.collection(process.env.DB_KOIS_COLLECTION)
+    } catch (error) {
+      console.log(error + 'lỗi ở database service - get kois')
+    }
+  }
+
+  get consigns() {
+    try {
+      return this._db.collection(process.env.DB_CONSIGNS_COLLECTION)
+    } catch (error) {
+      console.log(error + 'lỗi ở database service - get consigns')
+    }
+  }
 }
 
 const databaseService = new DatabaseService()

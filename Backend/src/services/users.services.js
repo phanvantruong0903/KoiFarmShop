@@ -6,7 +6,7 @@ import { signToken, verifyToken } from '../utils/jwt.js'
 // import User from '../models/schemas/User.schema.js'
 import UserSchema from '../models/schemas/User.schema.js'
 import databaseService from './database.service.js'
-import { USERS_MESSAGES } from '../constants/messages.js'
+import { USERS_MESSAGES } from '../constants/userMessages.js'
 import nodemailer from 'nodemailer'
 import axios from 'axios'
 import HTTP_STATUS from '../constants/httpStatus.js'
@@ -329,10 +329,7 @@ class UsersService {
         projection: {
           password: 0,
           email_verify_token: 0,
-          forgot_password_token: 0,
-          verify: 0,
-          create_at: 0,
-          update_at: 0
+          forgot_password_token: 0
         }
       }
     )
@@ -475,6 +472,16 @@ class UsersService {
         new_user: 1, //đây là user mới
         verify: UserVerifyStatus.Unverified
       }
+    }
+  }
+
+  async getAllUser() {
+    try {
+      const users = await databaseService.users.find({}).toArray()
+      return users
+    } catch (error) {
+      console.error('Error fetching users:', error)
+      throw error
     }
   }
 }

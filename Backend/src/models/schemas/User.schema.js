@@ -13,6 +13,7 @@ export default class UserSchema {
   picture = ''
   created_at = new Date()
   updated_at = new Date()
+  roleid = 1
   name = ''
   address = ''
   phone_number = ''
@@ -29,11 +30,9 @@ export default class UserSchema {
     this.picture = user.picture || ''
     this.created_at = user.created_at || date
     this.updated_at = user.updated_at || date
+    this.roleid = 1
     this.name = user.name || '' // nếu người dùng tạo mà k truyền ta sẽ để rỗng
     this.address = user.address || ''
     this.phone_number = user.phone_number || ''
   }
 }
-
-// const UserSchema = new User()
-// export default UserSchema

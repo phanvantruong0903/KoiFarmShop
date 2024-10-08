@@ -1,7 +1,7 @@
 import { hashPassword } from '../utils/crypto.js'
 import { checkSchema } from 'express-validator'
 import { validate } from '../utils/validation.js'
-import { USERS_MESSAGES } from '../constants/messages.js'
+import { USERS_MESSAGES } from '../constants/userMessages.js'
 import HTTP_STATUS from '../constants/httpStatus.js'
 import { ErrorWithStatus } from '../models/Errors.js'
 import usersService from '../services/users.services.js'
