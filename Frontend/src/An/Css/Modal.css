@@ -1,0 +1,48 @@
+.profile-row {
+    padding-bottom: 20px; 
+    border-bottom: 1px solid #e5e5e5; 
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    border: 3px solid white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-id-container {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0; 
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.user-id-container:hover {
+    background-color: #f0f0f0; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.user-id-container:hover svg {
+    color: black;
+}
+
+.user-id-container svg {
+    color: #6c757d; 
+}
+
+h5 {
+    margin-bottom: 0; 
+}
+
+.text-muted {
+    font-size: 0.85rem;
+    color: #6c757d; 
+}
+.modal-30w{
+    width: 100vw !important; 
+    max-width: 20vw !important;
+}

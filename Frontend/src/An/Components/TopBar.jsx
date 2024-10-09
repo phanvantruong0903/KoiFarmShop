@@ -18,7 +18,9 @@ export default function TopBar({ children, name, role }) {
                 <NavDropdown.Item as={Link} to="/DashBoard/staff/Orders">
                   Orders
                 </NavDropdown.Item>
-
+                <NavDropdown.Item as={Link} to="/DashBoard/manager/Consign">
+                  Manage Consign Orders
+                </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
 
