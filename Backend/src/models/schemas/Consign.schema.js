@@ -7,7 +7,7 @@ export default class ConsignSchema {
   ShippedDate = ''
   ReceiptDate = ''
   Description = ''
-  Status = ''
+  State = ''
   Method = ''
   PositionCare = ''
   Commission = ''
@@ -20,7 +20,7 @@ export default class ConsignSchema {
     this.ShippedDate = consign.ShippedDate || ''
     this.ReceiptDate = consign.ReceiptDate || ''
     this.Description = consign.Description || ''
-    this.Status = consign.Status || 1
+    this.State = consign.State || 1
     this.Method = consign.Method || ''
     this.PositionCare = consign.PositionCare || ''
     this.Commission = consign.Commission || ''

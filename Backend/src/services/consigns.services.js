@@ -131,7 +131,7 @@ class ConsignsService {
           ShippedDate: payload.ShippedDate || consign.ShippedDate || '',
           ReceiptDate: payload.ReceiptDate || consign.ReceiptDate || '',
           Description: payload.Description || consign.Description || '',
-          Status: payload.Status || consign.Status || '',
+          Status: payload.State || consign.Status || '',
           Method: payload.Method || consign.Method || '',
           PositionCare: payload.PositionCare || consign.PositionCare || '',
           Commission: payload.Commission || consign.Commission || '',
