@@ -1,7 +1,4 @@
 /* custom.css */
-@import url("https://fonts.googleapis.com/css2?family=Pacifico&family=Protest+Guerrilla&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Pacifico&family=Protest+Guerrilla&display=swap");
-/* Ẩn caret */
 
 /* Loại bỏ bất kỳ kiểu caret mặc định nào */
 .no-caret .dropdown-toggle {

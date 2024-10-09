@@ -110,7 +110,13 @@ export default function Koiogon() {
   const filteredCards = cardData.filter((card) => card.Breed === selectedBreed);
   return (
     <>
-      <div style={{}}>
+      <div
+        style={{
+          fontSize: "20px",
+
+          color: "black",
+        }}
+      >
         <div>
           <Navbar menu={menu} setMenu={setMenu} />
         </div>
@@ -137,7 +143,6 @@ export default function Koiogon() {
                   border: "2px solid rgba(0, 0, 0, 0.1)",
                   border: "1px solid #797979",
                   color: "black",
-                  fontWeight: "600",
                 }}
               >
                 <h2 style={{ fontWeight: "bold", color: "red" }}>
@@ -149,7 +154,9 @@ export default function Koiogon() {
                       onClick={handleScroll1}
                       style={{
                         cursor: "pointer",
-                        color: "blue",
+                        color: "black",
+                        fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       1. Nguồn gốc lịch sử của giống cá Koi Ogon
@@ -160,7 +167,9 @@ export default function Koiogon() {
                       onClick={handleScroll2}
                       style={{
                         cursor: "pointer",
-                        color: "blue",
+                        color: "black",
+                        fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       2. Đặc điểm của Koi ogon
@@ -171,7 +180,9 @@ export default function Koiogon() {
                       onClick={handleScroll3}
                       style={{
                         cursor: "pointer",
-                        color: "blue",
+                        color: "black",
+                        fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       3. Những dòng cá Koi ogon phổ biến hiện nay
@@ -182,7 +193,9 @@ export default function Koiogon() {
                           onClick={handleScroll31}
                           style={{
                             cursor: "pointer",
-                            color: "blue",
+                            color: "black",
+                            fontWeight: "600",
+                            fontSize: "20px",
                           }}
                         >
                           3.1 Giá cá koi Platinum F1
@@ -193,7 +206,9 @@ export default function Koiogon() {
                           onClick={handleScroll32}
                           style={{
                             cursor: "pointer",
-                            color: "blue",
+                            color: "black",
+                            fontWeight: "600",
+                            fontSize: "20px",
                           }}
                         >
                           3.2 Giá cá koi Platinum Nhật chuẩn
@@ -204,7 +219,9 @@ export default function Koiogon() {
                           onClick={handleScroll33}
                           style={{
                             cursor: "pointer",
-                            color: "blue",
+                            color: "black",
+                            fontWeight: "600",
+                            fontSize: "20px",
                           }}
                         >
                           3.3 Cá Koi Hi Ogon
@@ -215,7 +232,9 @@ export default function Koiogon() {
                           onClick={handleScroll34}
                           style={{
                             cursor: "pointer",
-                            color: "blue",
+                            color: "black",
+                            fontWeight: "600",
+                            fontSize: "20px",
                           }}
                         >
                           3.4 Cá Koi Orenji Ogon
@@ -226,7 +245,9 @@ export default function Koiogon() {
                           onClick={handleScroll35}
                           style={{
                             cursor: "pointer",
-                            color: "blue",
+                            color: "black",
+                            fontWeight: "600",
+                            fontSize: "20px",
                           }}
                         >
                           3.5 Cá Koi Mukashi Ogon
@@ -237,7 +258,9 @@ export default function Koiogon() {
                           onClick={handleScroll36}
                           style={{
                             cursor: "pointer",
-                            color: "blue",
+                            color: "black",
+                            fontWeight: "600",
+                            fontSize: "20px",
                           }}
                         >
                           3.6 Cá Nezu Ogon Koi
@@ -250,7 +273,9 @@ export default function Koiogon() {
                       onClick={handleScroll4}
                       style={{
                         cursor: "pointer",
-                        color: "blue",
+                        color: "black",
+                        fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       4. Cách nuôi cá Koi ogon khỏe mạnh, phát triển tốt
@@ -261,7 +286,9 @@ export default function Koiogon() {
                       onClick={handleScroll5}
                       style={{
                         cursor: "pointer",
-                        color: "blue",
+                        color: "black",
+                        fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       5. Địa chỉ bán cá Koi Ogon đẹp, uy tín
@@ -280,8 +307,14 @@ export default function Koiogon() {
                 >
                   Nội dung chi tiết
                 </h2>
-                <p>
-                  <span style={{ fontWeight: "bold", color: "blue" }}>
+                <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                  <span
+                    style={{
+                      fontWeight: "600",
+                      color: "blue",
+                      fontSize: "15px",
+                    }}
+                  >
                     Koi Ogon
                   </span>{" "}
                   là dòng cá Koi được yêu thích nhất trên thế giới. Với vẻ ngoài
@@ -299,9 +332,11 @@ export default function Koiogon() {
                     src="src/assets/Koi-Ogon/ca-koi-platinum-3.webp"
                     style={{ width: "50%" }}
                   />
-                  <p>Giới thiệu về cá Koi Ogon</p>
+                  <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                    Giới thiệu về cá Koi Ogon
+                  </p>
                 </div>
-                <p>
+                <p style={{ fontWeight: "400", fontSize: "15px" }}>
                   Koi Ogon có lịch sử từ 90 năm trước, ông Sawata Aoki tại Nhật
                   Bản đã có ý tưởng lai tạo một giống cá Koi đặc biệt. Có thể
                   nói sự xuất hiện của cá Koi Ogon gắn liền với lịch sử khai
@@ -312,9 +347,11 @@ export default function Koiogon() {
                 </p>
                 <div style={{ textAlign: "center" }}>
                   <img src="src/assets/Koi-Ogon-1/bo-5.jpg" />
-                  <p>Nguồn gốc lịch sử của giống cá Koi Ogon</p>
+                  <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                    Nguồn gốc lịch sử của giống cá Koi Ogon
+                  </p>
                 </div>
-                <p>
+                <p style={{ fontWeight: "400", fontSize: "15px" }}>
                   Đây cũng là lúc hành trình nuôi cá của ông bắt đầu, ông đã
                   nuôi dưỡng chú cá suốt 25 năm, trong suốt khoảng thời gian này
                   ông đã quan sát, theo dõi từng giai đoạn cá đẻ trứng, nhân đàn
@@ -327,7 +364,7 @@ export default function Koiogon() {
 
               <div id="2">
                 <h3 style={{ color: "red" }}>2.Đặc điểm của Koi ogon</h3>
-                <p>
+                <p style={{ fontWeight: "400", fontSize: "15px" }}>
                   Cá Koi Ogon được coi là một trong những giống cá Koi đẹp nhất
                   và độc đáo nhất trên trái đất với ngoại hình đặc trưng là màu
                   vàng óng ánh rực rỡ. Tên gọi "Ogon" được lấy theo từ tiếng

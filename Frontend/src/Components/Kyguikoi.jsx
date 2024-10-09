@@ -73,15 +73,41 @@ export default function Kyguikoi() {
 
       await uploadBytes(videoRef, videoFile);
       const videoUrl = await getDownloadURL(videoRef);
-
-      // Thêm URL của ảnh và video vào formData
+      console.log(imageUrl);
+      console.log(videoUrl);
       formData.append("imageUrl", imageUrl);
       formData.append("videoUrl", videoUrl);
 
+      // Tạo đối tượng dữ liệu để gửi
+      const dataToSend = {
+        PositionCare: formData.get("PositionCare"),
+        Method: formData.get("Method"),
+        CategoryID: formData.get("CategoryID"),
+        Gender: formData.get("Gender"),
+        Size: formData.get("Size"),
+        Breed: formData.get("Breed"),
+        DailyFoodAmount: formData.get("DailyFoodAmount"),
+        FilteringRatio: formData.get("FilteringRatio"),
+        Age: formData.get("Age"),
+        email: formData.get("email"),
+        phone_number: formData.get("phone_number"),
+        name: formData.get("name"),
+        address: formData.get("address"),
+        KoiName: formData.get("KoiName"),
+        Origin: formData.get("Origin"),
+        Image: formData.get("imageUrl"),
+        Video: formData.get("videoUrl"),
+        CertificateID: formData.get("CertificateID"),
+        Description: formData.get("Description"),
+      };
+      console.log(dataToSend);
       // Gửi dữ liệu tới API
       const response = await fetch("http://localhost:4000/ki-gui", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataToSend),
       });
 
       // Xử lý phản hồi từ server
@@ -174,16 +200,34 @@ export default function Kyguikoi() {
             <div style={{ width: "50%" }}>
               <Form.Group
                 className="mb-3"
-                controlId="exampleForm.ControlInput5"
+                controlId="exampleForm.ControlInput6"
                 style={{ width: "100%" }}
               >
-                <Form.Label>PositionCare: </Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Nhập Địa Điểm"
-                  required
-                  name="PositionCare"
-                />
+                <Form.Label>PositionCare (*): </Form.Label>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                  }}
+                >
+                  <Form.Check
+                    type="radio"
+                    id="genderOption1"
+                    label="Male"
+                    name="PositionCare"
+                    value="Home"
+                    style={{ marginRight: "20px" }} // Adjusted margin
+                  />
+                  <Form.Check
+                    type="radio"
+                    id="genderOption2"
+                    label="Female"
+                    name="PositionCare"
+                    value="IKoiFarm"
+                    style={{ marginBottom: "0" }} // Adjusted margin
+                  />
+                </div>
               </Form.Group>
               <Form.Group
                 className="mb-3"
@@ -194,8 +238,8 @@ export default function Kyguikoi() {
                 <div
                   style={{
                     display: "flex",
-                    flexDirection: "column",
-                    gap: "10px",
+                    flexDirection: "row",
+                    alignItems: "center",
                   }}
                 >
                   <Form.Check
@@ -204,7 +248,7 @@ export default function Kyguikoi() {
                     label="Online"
                     name="Method"
                     value="Online"
-                    style={{ marginBottom: "10px" }}
+                    style={{ marginRight: "20px" }}
                   />
                   <Form.Check
                     type="radio"
@@ -216,7 +260,41 @@ export default function Kyguikoi() {
                 </div>
               </Form.Group>
             </div>
+            <div style={{ width: "100%", paddingLeft: "20px" }}>
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput8"
+                style={{ width: "100%" }}
+              >
+                <Form.Label>Ngày Gửi: </Form.Label>
+                <Form.Control
+                  type="date"
+                  name="shippedDate"
+                  placeholder="Nhập ngày gửi"
+                />
+              </Form.Group>
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput9"
+                style={{ width: "100%" }}
+              >
+                <Form.Label>Ngày Nhận: </Form.Label>
+                <Form.Control
+                  type="date"
+                  name="receiptDate"
+                  placeholder="Nhập ngày nhận"
+                />
+              </Form.Group>
+            </div>
           </div>
+          <Form.Group
+            className="mb-3"
+            controlId="exampleForm.ControlInput9"
+            style={{ width: "100%" }}
+          >
+            <Form.Label>Description: </Form.Label>
+            <Form.Control type="text" name="Description" placeholder="Nhập" />
+          </Form.Group>
         </div>
 
         <hr />
@@ -226,7 +304,7 @@ export default function Kyguikoi() {
           controlId="exampleForm.ControlSelect1"
           style={{ width: "100%" }}
         >
-          <Form.Label>CategoryID(*): </Form.Label>
+          <Form.Label>Category(*): </Form.Label>
           <Form.Control as="select" name="CategoryID">
             <option value="">Chọn danh mục...</option>
             <option value="1">KOI KOHAKU</option>
@@ -291,7 +369,11 @@ export default function Kyguikoi() {
         >
           <Form.Label>Gender (*): </Form.Label>
           <div
-            style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
           >
             <Form.Check
               type="radio"
@@ -299,7 +381,7 @@ export default function Kyguikoi() {
               label="Male"
               name="Gender"
               value="Male"
-              style={{ marginBottom: "10px" }}
+              style={{ marginBottom: "10px", marginRight: "20px" }}
             />
             <Form.Check
               type="radio"
@@ -333,15 +415,19 @@ export default function Kyguikoi() {
         >
           <Form.Label>Breed (*): </Form.Label>
           <div
-            style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
           >
             <Form.Check
               type="radio"
               id="breedOption1"
-              label="Trung"
+              label="Nhật"
               name="Breed"
-              value="Trung"
-              style={{ marginBottom: "10px" }}
+              value="Nhật"
+              style={{ marginRight: "20px" }}
             />
             <Form.Check
               type="radio"
@@ -349,7 +435,7 @@ export default function Kyguikoi() {
               label="Việt"
               name="Breed"
               value="Việt"
-              style={{ marginBottom: "10px" }}
+              style={{ marginRight: "20px" }}
             />
             <Form.Check
               type="radio"
@@ -357,7 +443,7 @@ export default function Kyguikoi() {
               label="F1"
               name="Breed"
               value="F1"
-              style={{ marginBottom: "10px" }}
+              style={{ marginRight: "20px" }}
             />
           </div>
         </Form.Group>
@@ -366,12 +452,14 @@ export default function Kyguikoi() {
           controlId="exampleForm.ControlInput17"
           style={{ width: "100%" }}
         >
-          <Form.Label>DailyFoodAmount(*)</Form.Label>
+          <Form.Label>DailyFoodAmount(*) (đơn vị kg/ngày)</Form.Label>
           <Form.Control
             type="number"
             placeholder="Nhập lượng thức ăn / ngày"
             required
             name="DailyFoodAmount"
+            step="0.01" // Số bước là 0.01
+            min="0" // Giá trị tối thiểu là 0
           />
         </Form.Group>
         <Form.Group
@@ -379,16 +467,24 @@ export default function Kyguikoi() {
           controlId="exampleForm.ControlInput18"
           style={{ width: "100%" }}
         >
-          <Form.Label>FilteringRatio(*): </Form.Label>
+          <Form.Label>FilteringRatio(*) (%):</Form.Label>
           <Form.Control
             type="number"
             placeholder="Nhập tỷ lệ lọc"
-            min="1"
+            min="0" // Giá trị tối thiểu là 0
+            step="0.01" // Số bước là 0.01
             required
             name="FilteringRatio"
           />
         </Form.Group>
-
+        <Form.Group
+          className="mb-3"
+          controlId="exampleForm.ControlInput18"
+          style={{ width: "100%" }}
+        >
+          <Form.Label>CertificateID(*): </Form.Label>
+          <Form.Control type="text" name="CertificateID" />
+        </Form.Group>
         <Form.Group
           className="mb-3"
           controlId="exampleForm.ControlFile1"

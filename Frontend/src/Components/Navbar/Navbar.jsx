@@ -38,7 +38,7 @@ export default function Navbar() {
               paddingTop: "10px",
             }}
           >
-            Trang Chủ
+            TRANG CHỦ
           </Link>
         </div>
         <div style={{ display: "flex" }}>
@@ -54,15 +54,20 @@ export default function Navbar() {
                 fontWeight: "bold",
                 fontSize: "25px",
                 color: "white",
-                paddingRight: "10px",
               }}
             >
               <Link
                 to="/gioithieu"
-                style={{ textDecoration: "none", color: "white" }}
+                style={{
+                  fontWeight: "bold",
+                  fontSize: "25px",
+                  textDecoration: "none",
+                  paddingRight: "-5px",
+                  color: "white",
+                  paddingTop: "10px",
+                }}
               >
-                {" "}
-                Giới Thiệu
+                GIỚI THIỆU
               </Link>
             </Dropdown.Toggle>
             <CSSTransition
@@ -74,43 +79,16 @@ export default function Navbar() {
             >
               <Dropdown.Menu className="custom-menu">
                 <Dropdown.Item
-                  href="/gioithieusankygui"
-                  onMouseEnter={() => setActiveItem("/gioithieusankygui")}
+                  href="/ogon"
+                  onMouseEnter={() => setActiveItem("/ogon")}
                   onMouseLeave={() => setActiveItem(null)}
                   style={{
-                    color:
-                      activeItem === "/gioithieusankygui" ? "red" : "black",
+                    color: activeItem === "/ogon" ? "red" : "black",
                     fontWeight: "bold",
                     fontSize: "15px",
                   }}
                 >
-                  Giới Thiệu Sàn Ký Gửi
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/cacdonvibancakoi"
-                  onMouseEnter={() => setActiveItem("/cacdonvibancakoi")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/cacdonvibancakoi" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  Các Đơn Vị Bán Cá Koi
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/nguonkoi"
-                  onMouseEnter={() => setActiveItem("/nguonkoi")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/nguonkoi" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  Nguồn Koi Của Koi Store
+                  NGUỒN GỐC CỦA IKOI
                 </Dropdown.Item>
               </Dropdown.Menu>
             </CSSTransition>
@@ -152,7 +130,7 @@ export default function Navbar() {
                     fontSize: "15px",
                   }}
                 >
-                  Cá Koi Kohaku
+                  CÁ KOI KOHAKU
                 </Dropdown.Item>
                 <hr />
                 <Dropdown.Item
@@ -165,7 +143,7 @@ export default function Navbar() {
                     fontSize: "15px",
                   }}
                 >
-                  Cá Koi Ogon
+                  CÁ KOI OGON
                 </Dropdown.Item>
                 <hr />
                 <Dropdown.Item
@@ -178,7 +156,7 @@ export default function Navbar() {
                     fontSize: "15px",
                   }}
                 >
-                  Cá Koi Showa
+                  CÁ KOI SHOWA
                 </Dropdown.Item>
                 <hr />
                 <Dropdown.Item
@@ -191,7 +169,7 @@ export default function Navbar() {
                     fontSize: "15px",
                   }}
                 >
-                  Cá Koi Tancho
+                  CÁ KOI TANCHO
                 </Dropdown.Item>
                 <hr />
                 <Dropdown.Item
@@ -204,7 +182,7 @@ export default function Navbar() {
                     fontSize: "15px",
                   }}
                 >
-                  Cá Koi Bekko
+                  CÁ KOI BEKKO
                 </Dropdown.Item>
                 <hr />
                 <Dropdown.Item
@@ -217,7 +195,7 @@ export default function Navbar() {
                     fontSize: "15px",
                   }}
                 >
-                  Cá Koi Doitsu
+                  CÁ KOI DOITSU
                 </Dropdown.Item>
                 <hr />
                 <Dropdown.Item
@@ -230,7 +208,7 @@ export default function Navbar() {
                     fontSize: "15px",
                   }}
                 >
-                  Cá Koi Ginrin
+                  CÁ KOI GINRIN
                 </Dropdown.Item>
                 <hr />
                 <Dropdown.Item
@@ -243,7 +221,7 @@ export default function Navbar() {
                     fontSize: "15px",
                   }}
                 >
-                  Cá Koi Goshiki
+                  CÁ KOI GOSHIKI
                 </Dropdown.Item>
                 <hr />
                 <Dropdown.Item
@@ -256,7 +234,7 @@ export default function Navbar() {
                     fontSize: "15px",
                   }}
                 >
-                  Cá Koi Benigoi
+                  CÁ KOI BENIGOI
                 </Dropdown.Item>
                 <hr />
                 <Dropdown.Item
@@ -269,7 +247,7 @@ export default function Navbar() {
                     fontSize: "15px",
                   }}
                 >
-                  Cá Koi Asagi
+                  CÁ KOI ASAGI
                 </Dropdown.Item>
                 <hr />
                 <Dropdown.Item
@@ -282,7 +260,7 @@ export default function Navbar() {
                     fontSize: "15px",
                   }}
                 >
-                  Cá Koi Platinum
+                  CÁ KOI PLATINUM
                 </Dropdown.Item>
                 <hr />
                 <Dropdown.Item
@@ -295,7 +273,7 @@ export default function Navbar() {
                     fontSize: "15px",
                   }}
                 >
-                  Cá Koi Shusui
+                  CÁ KOI SHUSUI
                 </Dropdown.Item>
               </Dropdown.Menu>
             </CSSTransition>
@@ -317,7 +295,7 @@ export default function Navbar() {
                 color: "white",
               }}
             >
-              Tin Tức
+              TIN TỨC
             </Dropdown.Toggle>
             <CSSTransition
               in={showDropdown3}
@@ -337,7 +315,7 @@ export default function Navbar() {
                     fontSize: "15px",
                   }}
                 >
-                  Kiến Thức Koi
+                  KIẾN THỨC KOI
                 </Dropdown.Item>
                 <hr />
                 <Dropdown.Item
@@ -351,7 +329,7 @@ export default function Navbar() {
                   }}
                 >
                   {" "}
-                  Khuyễn Mãi
+                  KHUYẾN MÃI
                 </Dropdown.Item>
                 <hr />
                 <Dropdown.Item
@@ -364,7 +342,7 @@ export default function Navbar() {
                     fontSize: "15px",
                   }}
                 >
-                  Tin Tức Công Ty
+                  TIN TỨC CÔNG TY
                 </Dropdown.Item>
               </Dropdown.Menu>
             </CSSTransition>
@@ -387,7 +365,7 @@ export default function Navbar() {
                 color: "white",
               }}
             >
-              Dịch Vụ
+              DỊCH VỤ
             </Dropdown.Toggle>
             <CSSTransition
               in={showDropdown4}
@@ -407,7 +385,7 @@ export default function Navbar() {
                     fontSize: "15px",
                   }}
                 >
-                  Ký Gửi
+                  KÝ GỬI
                 </Dropdown.Item>
                 <hr />
                 <Dropdown.Item
@@ -420,7 +398,7 @@ export default function Navbar() {
                     fontSize: "15px",
                   }}
                 >
-                  Koi Đang Bán
+                  KOI ĐANG BÁN
                 </Dropdown.Item>
                 <hr />
                 <Dropdown.Item
@@ -433,7 +411,7 @@ export default function Navbar() {
                     fontSize: "15px",
                   }}
                 >
-                  Koi Ký Gửi
+                  KOI KÝ GỬI
                 </Dropdown.Item>
               </Dropdown.Menu>
             </CSSTransition>
@@ -451,7 +429,7 @@ export default function Navbar() {
                 color: "white",
               }}
             >
-              Liên Hệ
+              LIÊN HỆ
             </Link>
           </div>
         </div>
