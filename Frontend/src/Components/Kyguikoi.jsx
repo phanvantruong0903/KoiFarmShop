@@ -3,16 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Thêm import cho Firebase Storage
 import "./Kyguikoi.css";
-
 const firebaseConfig = {
-  apiKey: "AIzaSyA1MJaZaCFQM__pGl3bjeTxzTTddch0wGI",
-  authDomain: "uploadimgikoi.firebaseapp.com",
-  projectId: "uploadimgikoi",
-  storageBucket: "uploadimgikoi.appspot.com",
-  messagingSenderId: "709596858545",
-  appId: "1:709596858545:web:f74ccfc48ab859a26bfa90",
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID,
 };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app); // Khởi tạo Firebase Storage
