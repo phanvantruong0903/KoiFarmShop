@@ -2,7 +2,8 @@ import {
   createNewKoiController,
   getAllConsignController,
   getAllUserController,
-  getConsignDetailController
+  getConsignDetailController,
+  updateConsignDetailController
 } from '../controllers/manager.controllers.js'
 import { getProfileController } from '../controllers/users.controllers.js'
 import { isAdminValidator } from '../middlewares/manager.middlewares.js'
@@ -40,5 +41,7 @@ managerRouter.post(
 managerRouter.get('/manage-ki-gui/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getAllConsignController))
 
 managerRouter.get('/manage-ki-gui/:_id', accessTokenValidator, isAdminValidator, wrapAsync(getConsignDetailController))
+
+managerRouter.put('/manage-ki-gui/:_id', accessTokenValidator, isAdminValidator, wrapAsync(updateConsignDetailController))
 
 export default managerRouter
