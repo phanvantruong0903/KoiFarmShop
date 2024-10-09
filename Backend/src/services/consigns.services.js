@@ -103,6 +103,7 @@ class ConsignsService {
       }
     ])
     //cập nhật lại thông tin koi, nếu có thay đổi thì cập nhật cái mới, không thì giữ nguyên
+    const koiPrice = payload.Price || koi.Price || 0
     const koiUpdate = await databaseService.kois.updateOne({ _id: new ObjectId(koi._id) }, [
       {
         $set: {
@@ -118,24 +119,25 @@ class ConsignsService {
           FilteringRatio: payload.FilteringRatio || koi.FilteringRatio || '',
           Status: payload.Status || koi.Status || '',
           CertificateID: payload.CertificateID || koi.CertificateID || '',
-          Price: payload.Price || koi.Price || '',
+          Price: koiPrice,
           Image: payload.Image || koi.Image || '',
           Video: payload.Video || koi.Video || ''
         }
       }
     ])
     //cập nhật lại thông tin kí gửi, nếu có thay đổi thì cập nhật cái mới, không thì giữ nguyên
+    const commissionConsign = payload.Commission ?? consign.Commission ?? 10
     const consignUpdate = await databaseService.consigns.updateOne({ _id: new ObjectId(consign._id) }, [
       {
         $set: {
           ShippedDate: payload.ShippedDate || consign.ShippedDate || '',
           ReceiptDate: payload.ReceiptDate || consign.ReceiptDate || '',
           Description: payload.Description || consign.Description || '',
-          Status: payload.State || consign.Status || '',
+          State: payload.State || consign.State || '',
           Method: payload.Method || consign.Method || '',
           PositionCare: payload.PositionCare || consign.PositionCare || '',
-          Commission: payload.Commission || consign.Commission || '',
-          TotalPrice: payload.TotalPrice || consign.TotalPrice || ''
+          Commission: commissionConsign,
+          TotalPrice: koiPrice - (koiPrice * commissionConsign) / 100 || ''
         }
       }
     ])
