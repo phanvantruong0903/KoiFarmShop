@@ -78,7 +78,7 @@
     border-color: #ffffff;
   }
   
-  form {
+  /* form {
     background-color: #ffffff;
     display: flex;
     align-items: center;
@@ -87,7 +87,7 @@
     padding: 0 50px;
     height: 100%;
     text-align: center;
-  }
+  } */
   
   input {
     background-color: #eee;
@@ -120,6 +120,16 @@
     width: 50%;
     z-index: 2;
   }
+  .sign-in-container > form {
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    text-align: center;
+  }
   
   .container.right-panel-active .sign-in-container {
     transform: translateX(100%);
@@ -131,7 +141,16 @@
     opacity: 0;
     z-index: 1;
   }
-  
+  .sign-up-container > form{
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    text-align: center;
+  }
   .container.right-panel-active .sign-up-container {
     transform: translateX(100%);
     opacity: 1;
