@@ -92,49 +92,50 @@ class ConsignsService {
       })
     }
     // cập nhật lại các thông tin kí gửi
+    //cập nhật user, nếu có thay đổi thì cập nhật cái mới, không thì giữ nguyên
     const userUpdate = await databaseService.users.updateOne({ _id: new ObjectId(user._id) }, [
       {
         $set: {
-          name: payload.name,
-          address: payload.address,
-          phone_number: payload.phone_number
+          name: payload.name || user.name || '',
+          address: payload.address || user.address || '',
+          phone_number: payload.phone_number || user.phone_number || ''
         }
       }
     ])
-    //cập nhật lại thông tin koi
+    //cập nhật lại thông tin koi, nếu có thay đổi thì cập nhật cái mới, không thì giữ nguyên
     const koiUpdate = await databaseService.kois.updateOne({ _id: new ObjectId(koi._id) }, [
       {
         $set: {
-          CategoryID: payload.CategoryID,
-          KoiName: payload.KoiName,
-          Age: payload.Age,
-          Origin: payload.Origin,
-          Gender: payload.Gender,
-          Size: payload.Size,
-          Breed: payload.Breed,
-          Description: payload.Description,
-          DailyFoodAmount: payload.DailyFoodAmount,
-          FilteringRatio: payload.FilteringRatio,
-          Status: payload.Status,
-          CertificateID: payload.CertificateID,
-          Price: payload.Price,
-          Image: payload.Image,
-          Video: payload.Video
+          CategoryID: payload.CategoryID || koi.CategoryID || '',
+          KoiName: payload.KoiName || koi.KoiName || '',
+          Age: payload.Age || koi.Age || '',
+          Origin: payload.Origin || koi.Origin || '',
+          Gender: payload.Gender || koi.Gender || '',
+          Size: payload.Size || koi.Size || '',
+          Breed: payload.Breed || koi.Breed || '',
+          Description: payload.Description || koi.Description || '',
+          DailyFoodAmount: payload.DailyFoodAmount || koi.DailyFoodAmount || '',
+          FilteringRatio: payload.FilteringRatio || koi.FilteringRatio || '',
+          Status: payload.Status || koi.Status || '',
+          CertificateID: payload.CertificateID || koi.CertificateID || '',
+          Price: payload.Price || koi.Price || '',
+          Image: payload.Image || koi.Image || '',
+          Video: payload.Video || koi.Video || ''
         }
       }
     ])
-    //cập nhật lại thông tin kí gửi
+    //cập nhật lại thông tin kí gửi, nếu có thay đổi thì cập nhật cái mới, không thì giữ nguyên
     const consignUpdate = await databaseService.consigns.updateOne({ _id: new ObjectId(consign._id) }, [
       {
         $set: {
-          ShippedDate: payload.ShippedDate,
-          ReceiptDate: payload.ReceiptDate,
-          Description: payload.Description,
-          Status: payload.Status,
-          Method: payload.Method,
-          PositionCare: payload.PositionCare,
-          Commission: payload.Commission,
-          TotalPrice: payload.TotalPrice
+          ShippedDate: payload.ShippedDate || consign.ShippedDate || '',
+          ReceiptDate: payload.ReceiptDate || consign.ReceiptDate || '',
+          Description: payload.Description || consign.Description || '',
+          Status: payload.Status || consign.Status || '',
+          Method: payload.Method || consign.Method || '',
+          PositionCare: payload.PositionCare || consign.PositionCare || '',
+          Commission: payload.Commission || consign.Commission || '',
+          TotalPrice: payload.TotalPrice || consign.TotalPrice || ''
         }
       }
     ])
