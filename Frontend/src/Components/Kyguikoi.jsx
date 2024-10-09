@@ -1,40 +1,115 @@
 import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { initializeApp } from "firebase/app";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Thêm import cho Firebase Storage
 import "./Kyguikoi.css";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA1MJaZaCFQM__pGl3bjeTxzTTddch0wGI",
+  authDomain: "uploadimgikoi.firebaseapp.com",
+  projectId: "uploadimgikoi",
+  storageBucket: "uploadimgikoi.appspot.com",
+  messagingSenderId: "709596858545",
+  appId: "1:709596858545:web:f74ccfc48ab859a26bfa90",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app); // Khởi tạo Firebase Storage
+
 export default function Kyguikoi() {
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent default form submission
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
     const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData.entries());
 
-    // Save data to localStorage
-    localStorage.setItem("formData", JSON.stringify(data));
+    // Debugging: Kiểm tra các giá trị trong formData
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
 
-    // Navigate to the new page
-    navigate("/"); // Change '/' to your desired route
+    try {
+      // Kiểm tra các trường bắt buộc
+      const requiredFields = [
+        "PositionCare",
+        "Method",
+        "CategoryID",
+        "Gender",
+        "Size",
+        "Breed",
+        "DailyFoodAmount",
+        "FilteringRatio",
+        "Age",
+        "email",
+        "phone_number",
+        "name",
+        "address",
+        "KoiName",
+        "Origin",
+      ];
+
+      for (const field of requiredFields) {
+        if (!formData.get(field)) {
+          alert(`${field} là trường bắt buộc.`);
+          return;
+        }
+      }
+
+      // Kiểm tra file ảnh và video
+      const imageFile = formData.get("Image");
+      const videoFile = formData.get("Video");
+
+      if (!imageFile || !videoFile) {
+        alert("Vui lòng chọn ảnh và video.");
+        return;
+      }
+
+      // Tải lên file ảnh và video
+      const imageRef = ref(storage, `images/${imageFile.name}`);
+      const videoRef = ref(storage, `videos/${videoFile.name}`);
+
+      await uploadBytes(imageRef, imageFile);
+      const imageUrl = await getDownloadURL(imageRef);
+
+      await uploadBytes(videoRef, videoFile);
+      const videoUrl = await getDownloadURL(videoRef);
+
+      // Thêm URL của ảnh và video vào formData
+      formData.append("imageUrl", imageUrl);
+      formData.append("videoUrl", videoUrl);
+
+      // Gửi dữ liệu tới API
+      const response = await fetch("http://localhost:4000/ki-gui", {
+        method: "POST",
+        body: formData,
+      });
+
+      // Xử lý phản hồi từ server
+      if (!response.ok) {
+        const errors = await response.json();
+        const errorMessages = Object.values(errors.errors).join(", ");
+        alert(`Có lỗi xảy ra: ${errorMessages}`);
+        return;
+      }
+
+      const result = await response.json();
+      alert(result.message);
+      navigate("/");
+    } catch (error) {
+      console.error("Error uploading files or sending data: ", error);
+      alert("Có lỗi xảy ra. Vui lòng thử lại.");
+    }
   };
 
   return (
     <Form onSubmit={handleSubmit}>
+      {/* Phần còn lại của form giữ nguyên */}
       <div style={{ color: "red" }}>
         <div style={{ width: "100%" }}>
           <h3>Thông tin khách hàng</h3>
-          <Form.Group
-            className="mb-3"
-            controlId="exampleForm.ControlInput2"
-            style={{ width: "100%" }}
-          >
-            <Form.Label>Họ và tên (*): </Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Nhập Họ và Tên"
-              required
-              name="fullName"
-            />
-          </Form.Group>
+          {/* Các trường nhập liệu ở đây */}
           <div style={{ display: "flex" }}>
             <div style={{ width: "50%" }}>
               <Form.Group
@@ -42,7 +117,7 @@ export default function Kyguikoi() {
                 controlId="exampleForm.ControlInput1"
                 style={{ width: "100%" }}
               >
-                <Form.Label>Email Address (*): </Form.Label>
+                <Form.Label>Email Address (): </Form.Label>
                 <Form.Control
                   type="email"
                   placeholder="Nhập địa chỉ email (name@example.com)"
@@ -55,7 +130,7 @@ export default function Kyguikoi() {
                 controlId="exampleForm.ControlInput3"
                 style={{ width: "100%" }}
               >
-                <Form.Label>Địa chỉ (*): </Form.Label>
+                <Form.Label>Địa chỉ (): </Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Nhập địa chỉ"
@@ -63,47 +138,8 @@ export default function Kyguikoi() {
                   name="address"
                 />
               </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput3"
-                style={{ width: "100%" }}
-              >
-                <Form.Label>Tỉnh/Thành Phố (*): </Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Nhập thành phố"
-                  required
-                  name="city"
-                />
-              </Form.Group>
             </div>
             <div style={{ width: "50%", paddingLeft: "20px" }}>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput3"
-                style={{ width: "100%" }}
-              >
-                <Form.Label>Quận/Huyện(*): </Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Nhập Quận/Huyện"
-                  required
-                  name="district"
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput3"
-                style={{ width: "100%" }}
-              >
-                <Form.Label>Xã/Phường/Thị trấn(*): </Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Nhập Xã/Phường/Thị Trấn"
-                  required
-                  name="ward"
-                />
-              </Form.Group>
               <Form.Group
                 className="mb-3"
                 controlId="exampleForm.ControlInput4"
@@ -114,7 +150,20 @@ export default function Kyguikoi() {
                   type="number"
                   placeholder="Nhập Số Điện Thoại"
                   required
-                  name="phone"
+                  name="phone_number"
+                />
+              </Form.Group>
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput4"
+                style={{ width: "100%" }}
+              >
+                <Form.Label>FullName (*): </Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Nhập FullName"
+                  required
+                  name="name"
                 />
               </Form.Group>
             </div>
@@ -130,12 +179,12 @@ export default function Kyguikoi() {
                 controlId="exampleForm.ControlInput5"
                 style={{ width: "100%" }}
               >
-                <Form.Label>Địa điểm: </Form.Label>
+                <Form.Label>PositionCare: </Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Nhập Địa Điểm"
                   required
-                  name="location"
+                  name="PositionCare"
                 />
               </Form.Group>
               <Form.Group
@@ -155,7 +204,7 @@ export default function Kyguikoi() {
                     type="radio"
                     id="nameOption1"
                     label="Online"
-                    name="methods"
+                    name="Method"
                     value="Online"
                     style={{ marginBottom: "10px" }}
                   />
@@ -163,50 +212,10 @@ export default function Kyguikoi() {
                     type="radio"
                     id="nameOption2"
                     label="Offline"
-                    name="methods"
+                    name="Method"
                     value="Offline"
                   />
                 </div>
-              </Form.Group>
-            </div>
-            <div style={{ width: "50%", paddingLeft: "20px" }}>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput7"
-                style={{ width: "100%" }}
-              >
-                <Form.Label>Chi tiết: </Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Nhập chi tiết"
-                  name="description"
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput8"
-                style={{ width: "100%" }}
-              >
-                <Form.Label>Ngày Gửi: </Form.Label>
-                <Form.Control
-                  type="date"
-                  required
-                  name="shippedDate"
-                  placeholder="Nhập ngày gửi"
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput9"
-                style={{ width: "100%" }}
-              >
-                <Form.Label>Ngày Nhận: </Form.Label>
-                <Form.Control
-                  type="date"
-                  required
-                  name="receiptDate"
-                  placeholder="Nhập ngày nhận"
-                />
               </Form.Group>
             </div>
           </div>
@@ -219,8 +228,8 @@ export default function Kyguikoi() {
           controlId="exampleForm.ControlSelect1"
           style={{ width: "100%" }}
         >
-          <Form.Label>Category(*): </Form.Label>
-          <Form.Control as="select" name="category">
+          <Form.Label>CategoryID(*): </Form.Label>
+          <Form.Control as="select" name="CategoryID">
             <option value="">Chọn danh mục...</option>
             <option value="1">KOI KOHAKU</option>
             <option value="2">KOI OGON</option>
@@ -246,7 +255,7 @@ export default function Kyguikoi() {
             type="text"
             placeholder="Nhập KoiName ( Category + Origin )"
             required
-            name="koiName"
+            name="KoiName"
           />
         </Form.Group>
         <Form.Group
@@ -261,7 +270,7 @@ export default function Kyguikoi() {
             min="1"
             max="20"
             required
-            name="age"
+            name="Age"
           />
         </Form.Group>
         <Form.Group
@@ -269,12 +278,12 @@ export default function Kyguikoi() {
           controlId="exampleForm.ControlInput12"
           style={{ width: "100%" }}
         >
-          <Form.Label>Nguồn Gốc (*): </Form.Label>
+          <Form.Label>Origin (*): </Form.Label>
           <Form.Control
             type="text"
             placeholder="Nhập nguồn gốc"
             required
-            name="origin"
+            name="Origin"
           />
         </Form.Group>
         <Form.Group
@@ -290,7 +299,7 @@ export default function Kyguikoi() {
               type="radio"
               id="genderOption1"
               label="Male"
-              name="gender"
+              name="Gender"
               value="Male"
               style={{ marginBottom: "10px" }}
             />
@@ -298,7 +307,7 @@ export default function Kyguikoi() {
               type="radio"
               id="genderOption2"
               label="Female"
-              name="gender"
+              name="Gender"
               value="Female"
               style={{ marginBottom: "10px" }}
             />
@@ -316,7 +325,7 @@ export default function Kyguikoi() {
             min="5"
             max="150"
             required
-            name="size"
+            name="Size"
           />
         </Form.Group>
         <Form.Group
@@ -332,7 +341,7 @@ export default function Kyguikoi() {
               type="radio"
               id="breedOption1"
               label="Trung"
-              name="breed"
+              name="Breed"
               value="Trung"
               style={{ marginBottom: "10px" }}
             />
@@ -340,7 +349,7 @@ export default function Kyguikoi() {
               type="radio"
               id="breedOption2"
               label="Việt"
-              name="breed"
+              name="Breed"
               value="Việt"
               style={{ marginBottom: "10px" }}
             />
@@ -348,7 +357,7 @@ export default function Kyguikoi() {
               type="radio"
               id="breedOption3"
               label="F1"
-              name="breed"
+              name="Breed"
               value="F1"
               style={{ marginBottom: "10px" }}
             />
@@ -356,27 +365,15 @@ export default function Kyguikoi() {
         </Form.Group>
         <Form.Group
           className="mb-3"
-          controlId="exampleForm.ControlInput16"
-          style={{ width: "100%" }}
-        >
-          <Form.Label>Chi tiết: </Form.Label>
-          <Form.Control
-            type="text"
-            placeholder=""
-            name="descriptionAdditional"
-          />
-        </Form.Group>
-        <Form.Group
-          className="mb-3"
           controlId="exampleForm.ControlInput17"
           style={{ width: "100%" }}
         >
-          <Form.Label>Lượng thức ăn/ngày(*)</Form.Label>
+          <Form.Label>DailyFoodAmount(*)</Form.Label>
           <Form.Control
             type="number"
             placeholder="Nhập lượng thức ăn / ngày"
             required
-            name="foodAmount"
+            name="DailyFoodAmount"
           />
         </Form.Group>
         <Form.Group
@@ -384,37 +381,23 @@ export default function Kyguikoi() {
           controlId="exampleForm.ControlInput18"
           style={{ width: "100%" }}
         >
-          <Form.Label>Tỷ lệ lọc (*): </Form.Label>
+          <Form.Label>FilteringRatio(*): </Form.Label>
           <Form.Control
             type="number"
             placeholder="Nhập tỷ lệ lọc"
             min="1"
             required
-            name="filterRate"
-          />
-        </Form.Group>
-        <Form.Group
-          className="mb-3"
-          controlId="exampleForm.ControlInput19"
-          style={{ width: "100%" }}
-        >
-          <Form.Label>CertificateID (*): </Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Nhập CertificateID"
-            required
-            name="certificateID"
+            name="FilteringRatio"
           />
         </Form.Group>
 
-        {/* Add file upload fields */}
         <Form.Group
           className="mb-3"
           controlId="exampleForm.ControlFile1"
           style={{ width: "100%" }}
         >
           <Form.Label>Nộp ảnh (*): </Form.Label>
-          <Form.Control type="file" required name="image" />
+          <Form.Control type="file" required name="Image" />
         </Form.Group>
         <Form.Group
           className="mb-3"
@@ -422,7 +405,7 @@ export default function Kyguikoi() {
           style={{ width: "100%" }}
         >
           <Form.Label>Nộp video (*): </Form.Label>
-          <Form.Control type="file" required name="video" />
+          <Form.Control type="file" required name="Video" />
         </Form.Group>
         <Button type="submit" variant="primary" style={{ textAlign: "center" }}>
           Gửi
