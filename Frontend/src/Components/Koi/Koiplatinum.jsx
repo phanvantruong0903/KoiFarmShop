@@ -69,11 +69,16 @@ export default function Koiplatinum() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://66fd0298c3a184a84d18b799.mockapi.io/Koi"
-        );
-        setCardData(response.data);
+        const response = await axios.get("http://localhost:4000/getAllKoi");
+        console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
+        if (Array.isArray(response.data.result)) {
+          setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
+          console.log("Card data set successfully:", response.data.result); // Kiểm tra sau khi set
+        } else {
+          console.error("Dữ liệu không phải là mảng:", response.data);
+        }
       } catch (err) {
+        console.error("Error fetching data:", err); // Ghi lại lỗi
         setError(err);
       } finally {
         setLoading(false);
@@ -82,10 +87,9 @@ export default function Koiplatinum() {
 
     fetchData();
   }, []);
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  const filteredCards = cardData.filter((card) => card.Breed === selectedBreed);
+  const filteredCards = cardData.filter((card) => card.CategoryID === "11");
   return (
     <>
       <div style={{}}>
@@ -126,8 +130,10 @@ export default function Koiplatinum() {
                     <span
                       onClick={handleScroll1}
                       style={{
-                        cursor: "pointer",
                         color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       1. Giới thiệu về cá Platinum Koi
@@ -137,8 +143,10 @@ export default function Koiplatinum() {
                     <span
                       onClick={handleScroll2}
                       style={{
-                        cursor: "pointer",
                         color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       2. Cách nhận biết cá Koi Platinum
@@ -148,8 +156,10 @@ export default function Koiplatinum() {
                     <span
                       onClick={handleScroll3}
                       style={{
-                        cursor: "pointer",
                         color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       3. Cách chọn cá Platinum Koi
@@ -159,8 +169,10 @@ export default function Koiplatinum() {
                     <span
                       onClick={handleScroll4}
                       style={{
-                        cursor: "pointer",
                         color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       4. Cách chăm sóc cá koi Platinum
@@ -170,8 +182,10 @@ export default function Koiplatinum() {
                     <span
                       onClick={handleScroll5}
                       style={{
-                        cursor: "pointer",
                         color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       5. Giá cá koi Platinum bao nhiêu?
@@ -181,8 +195,10 @@ export default function Koiplatinum() {
                         <span
                           onClick={handleScroll51}
                           style={{
-                            cursor: "pointer",
                             color: "blue",
+                            cursor: "pointer",
+                            fontWeight: "600",
+                            fontSize: "20px",
                           }}
                         >
                           5.1 Giá cá koi Platinum F1
@@ -192,8 +208,10 @@ export default function Koiplatinum() {
                         <span
                           onClick={handleScroll52}
                           style={{
-                            cursor: "pointer",
                             color: "blue",
+                            cursor: "pointer",
+                            fontWeight: "600",
+                            fontSize: "20px",
                           }}
                         >
                           5.2 Giá cá koi Platinum Nhật chuẩn
@@ -205,9 +223,10 @@ export default function Koiplatinum() {
                     <span
                       onClick={handleScroll6}
                       style={{
-                        color: "rgb(251, 139, 36)",
-                        cursor: "pointer",
                         color: "blue",
+                        cursor: "pointer",
+                        fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       6. Tại sao nên mua cá Platinum Koi tại Siêu thị Cá Koi VN?
@@ -226,12 +245,28 @@ export default function Koiplatinum() {
                 >
                   Nội dung chi tiết
                 </h2>
-                <p>
-                  <span style={{ fontWeight: "bold" }}>Cá Koi </span>là giống cá
-                  được ưa chuộng để làm cảnh, trang trí không gian sống trở lên
-                  hoàn hảo cho người đam mê cá cảnh. Với đa dạng giống loài, màu
-                  sắc và kích thước nổi bật trong đó là dòng{" "}
-                  <span style={{ fontWeight: "bold" }}>Cá Platinum Koi l </span>
+                <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                  <span
+                    style={{
+                      fontSize: "20px",
+                      fontWeight: "600",
+                      color: "red",
+                    }}
+                  >
+                    Cá Koi{" "}
+                  </span>
+                  là giống cá được ưa chuộng để làm cảnh, trang trí không gian
+                  sống trở lên hoàn hảo cho người đam mê cá cảnh. Với đa dạng
+                  giống loài, màu sắc và kích thước nổi bật trong đó là dòng{" "}
+                  <span
+                    style={{
+                      fontSize: "20px",
+                      fontWeight: "600",
+                      color: "red",
+                    }}
+                  >
+                    Cá Platinum Koi{" "}
+                  </span>
                   à một trong những loài cá Koi được nhiều người yêu thích bởi
                   vẻ ngoài đặc trưng của nó. Hãy cùng Siêu thị Cá Koi VN tìm
                   hiểu rõ hơn về loài cá này ngay trong bài viết dưới đây.
@@ -247,9 +282,11 @@ export default function Koiplatinum() {
                     src="src/assets/Koi-Ogon/ca-koi-platinum-3.webp"
                     style={{ width: "50%" }}
                   />
-                  <p>Giới thiệu về cá Platinum Koi</p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                    Giới thiệu về cá Platinum Koi
+                  </p>
                 </div>
-                <p>
+                <p style={{ fontSize: "15px", fontWeight: "400" }}>
                   Cá koi bạch kim Platinum là dòng điển hình nhất của Hikarimuji
                   Mono - là dòng Cá Koi duy nhất có một màu. Thông thường, các
                   loài cá Koi Nhật sẽ có hai màu trở lên nhưng chỉ duy nhất có
@@ -258,7 +295,7 @@ export default function Koiplatinum() {
                   có thân cá nhỏ hơn, phần râu khá ngắn. Vây ngực - lưng - đuôi
                   cá khá nhỏ, khi bơi kém phần mềm mại và uyển chuyển.
                 </p>
-                <ul>
+                <ul style={{ fontSize: "15px", fontWeight: "400" }}>
                   <li>Kích thước hồ cá tối thiểu: 1000 gallon</li>
                   <li>Mức độ chăm sóc: Dễ dàng</li>
                   <li>Tính cách: Hòa Bình</li>
@@ -279,7 +316,7 @@ export default function Koiplatinum() {
                   />
                   <p>Cách nhận biết cá Koi Platinum</p>
                 </div>
-                <p>
+                <p style={{ fontSize: "15px", fontWeight: "400" }}>
                   Platinum Koi được xem là ngôi sao của hồ cá Koi. Màu trắng
                   bạch kim của cá như phát sáng như “thỏi bạc” di động dưới làn
                   nước trong xanh. Đặc điểm nhận dạng loài cá koi bạch kim
@@ -302,11 +339,11 @@ export default function Koiplatinum() {
                     style={{ width: "50%" }}
                   />
                 </div>
-                <p>
+                <p style={{ fontSize: "15px", fontWeight: "400" }}>
                   Một trong những cách chọn cá koi bạch kim Platinum đẹp, đẳng
                   cấp cần đáp ứng những điều kiện sau:
                 </p>
-                <ul>
+                <ul style={{ fontSize: "15px", fontWeight: "400" }}>
                   <li>
                     Cá có màu sắc trắng bạc đẹp và đều màu, không được có các
                     màu khác xen lẫn.
@@ -352,7 +389,7 @@ export default function Koiplatinum() {
                     bị nhiễm sán
                   </li>
                 </ul>
-                <p>
+                <p style={{ fontSize: "15px", fontWeight: "400" }}>
                   Người Nhật rất tôn thờ loài cá koi bạch kim Platinum. Đây là
                   biểu tượng của ánh sáng, may mắn, sự thanh sạch và thanh cao
                   nên rất được quan lại xưa ưa chuộng. Nhiều người mua Platinum
@@ -378,15 +415,17 @@ export default function Koiplatinum() {
                       src="src/assets/Koi-Ogon/4.webp"
                       style={{ width: "50%" }}
                     />
-                    <p>Cách chăm sóc cá koi Platinum Ogon</p>
+                    <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                      Cách chăm sóc cá koi Platinum Ogon
+                    </p>
                   </div>
                   <p></p>
                 </div>
-                <p>
+                <p style={{ fontSize: "15px", fontWeight: "400" }}>
                   Khi nuôi cá Platinum Koi cũng như asagi koi, bạn cũng nên tìm
                   hiểu cách chăm sóc cụ thể:
                 </p>
-                <ul>
+                <ul style={{ fontSize: "15px", fontWeight: "400" }}>
                   <li>
                     Cá koi bạch kim Platinum sinh trưởng và phát triển trong một
                     hồ cá có thể tích lớn hơn 1000 gallon nước, nền tốt và ít
@@ -408,7 +447,7 @@ export default function Koiplatinum() {
                 <h3 style={{ color: "red" }}>
                   5. Giá cá koi Platinum bao nhiêu?{" "}
                 </h3>
-                <p>
+                <p style={{ fontSize: "15px", fontWeight: "400" }}>
                   Hiện tại Siêu thị Cá Koi Vn đang cung cấp dòng cá koi Platinum
                   chuẩn từ cá nhật đến cá F1 với giá cực kỳ ưu đãi. Có thể nói
                   Siêu thị Cá Koi VN là một trong những đơn vị cung cấp cá koi
@@ -417,7 +456,7 @@ export default function Koiplatinum() {
                 </p>
                 <div id="51">
                   <h4 style={{ color: "red" }}>5.1 Giá cá koi Platinum F1</h4>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Đối với những con Kohaku f1 có kích thước từ 18cm – 40cm,
                     giá cá koi dao động từ 150.000 – 500.000 VNĐ tùy loại. Cao
                     cấp hơn là những con Kohaku f1 có kích thước từ 50cm – 55cm,
@@ -429,7 +468,7 @@ export default function Koiplatinum() {
                   <h4 style={{ color: "red" }}>
                     5.2 Giá cá koi Platinum Nhật chuẩn
                   </h4>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Một con cá Koi trưởng thành Nhật Bản như Platinum koi với
                     kích thước từ 10-15cm sẽ có giá từ 600.000 –
                     2.000.000VNĐ/con. <br /> Ngoài ra còn có con Platinum Koi
@@ -444,7 +483,7 @@ export default function Koiplatinum() {
                 <h3 style={{ color: "red" }}>
                   6. Tại sao nên mua cá Platinum Koi tại Siêu thị Cá Koi VN?
                 </h3>
-                <p>
+                <p style={{ fontSize: "15px", fontWeight: "400" }}>
                   Hiện nay, trên thị trường có rất nhiều đơn vị cung cấp cá koi
                   bạch kim Platinum với giá thành và chất lượng khác nhau. Điều
                   này rất khó khăn đối với khách hàng để có thể lựa chọn được
@@ -475,60 +514,6 @@ export default function Koiplatinum() {
           </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            backgroundImage: `url("src/assets/pexels-quang-nguyen-vinh-222549-2131828.jpg")`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          <div
-            style={{
-              width: "100%",
-              margin: "100px",
-              color: "white",
-              display: "flex",
-            }}
-          >
-            <div
-              style={{
-                width: "100%",
-                color: "black",
-                fontSize: "20px",
-                marginTop: "70px",
-                marginLeft: "20px",
-              }}
-            >
-              <h1 style={{ color: "white" }}>Điểm nổi bật của KoiStoreVN</h1>
-
-              <ul style={{ fontSize: "16px", color: "white" }}>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  Cá nhập khẩu chất lượng cao, nhập trực tiếp tại các trang trại
-                  Cá Koi Nhật Bản
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  Khách hàng yên tâm nuôi cá vì luôn có chuyên gia đồng hành
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  Đa dạng sản phẩm, dịch vụ chăm sóc Cá Koi và Hồ Cá Koi
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  KoiStoreVN tự hào là đơn vị đầu tiên tại miền bắc được chuyển
-                  giao công nghệ mô hình trại SAKAI (Sakai fish farm, Hiroshima,
-                  Japan)
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  Trại gồm 120 hồ lớn chuẩn theo mô hình trại SAKAI
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
         <div>
           <CardGrid cardData={filteredCards} />
         </div>

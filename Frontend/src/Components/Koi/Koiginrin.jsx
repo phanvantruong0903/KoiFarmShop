@@ -9,7 +9,6 @@ export default function Koiginrin() {
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedBreed, setSelectedBreed] = useState("KOI GINRIN");
   const handleScroll1 = () => {
     const element = document.getElementById("1");
 
@@ -62,11 +61,16 @@ export default function Koiginrin() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://66fd0298c3a184a84d18b799.mockapi.io/Koi"
-        );
-        setCardData(response.data);
+        const response = await axios.get("http://localhost:4000/getAllKoi");
+        console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
+        if (Array.isArray(response.data.result)) {
+          setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
+          console.log("Card data set successfully:", response.data.result); // Kiểm tra sau khi set
+        } else {
+          console.error("Dữ liệu không phải là mảng:", response.data);
+        }
       } catch (err) {
+        console.error("Error fetching data:", err); // Ghi lại lỗi
         setError(err);
       } finally {
         setLoading(false);
@@ -75,10 +79,9 @@ export default function Koiginrin() {
 
     fetchData();
   }, []);
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  const filteredCards = cardData.filter((card) => card.Breed === selectedBreed); // Ví dụ: lọc theo độ tuổi lớn hơn 20000
+  const filteredCards = cardData.filter((card) => card.CategoryID === "7");
   return (
     <>
       <div>
@@ -119,6 +122,7 @@ export default function Koiginrin() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       1. Giới thiệu về cá Koi Ginrin
@@ -131,6 +135,7 @@ export default function Koiginrin() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       2. Cách nhận biết cá Koi Ginrin
@@ -143,6 +148,7 @@ export default function Koiginrin() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       3. Cách chọn mua cá Koi Ginrin
@@ -155,6 +161,7 @@ export default function Koiginrin() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       4. Cách chăm sóc Koi Ginrin
@@ -167,6 +174,7 @@ export default function Koiginrin() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       5. Giá cá koi Ginrin bao nhiêu?
@@ -179,6 +187,7 @@ export default function Koiginrin() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       6. Tại sao nên mua cá Koi Ginrin tại Siêu thị Cá Koi VN
@@ -197,7 +206,7 @@ export default function Koiginrin() {
                 >
                   Nội dung chi tiết
                 </h2>
-                <p>
+                <p style={{ fontSize: "15px", fontWeight: "400" }}>
                   Cá Koi Ginrin nổi bật với chiếc vảy phản chiếu màu bạc lấp
                   lánh thu hút người chơi ngay lần đầu tiên. Bài viết này chúng
                   ta sẽ đi khám phá các đặc điểm nổi bật và địa chỉ cung cấp cá
@@ -207,7 +216,7 @@ export default function Koiginrin() {
               </div>
               <div id="1">
                 <h3 style={{ color: "red" }}>1. Giới thiệu về cá Koi Ginrin</h3>
-                <p>
+                <p style={{ fontSize: "15px", fontWeight: "400" }}>
                   Cá Koi Ginrin có nguồn gốc chủ yếu từ Nhật Bản và được lai tạo
                   bởi một nhà bác học tên Eizaburo Hoshino vào khoảng năm 1929.
                   Nhà lai tạo Hoshino gặp một ngư dân đã bắt được một con Magoi
@@ -222,14 +231,16 @@ export default function Koiginrin() {
                     src="src/assets/Koi-Ginrin/ca-koi-kin-ginrin-kohaku-1.webp"
                     style={{ width: "50%" }}
                   />
-                  <p>Hình ảnh cá Koi Ginrin</p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                    Hình ảnh cá Koi Ginrin
+                  </p>
                 </div>
               </div>
 
               <div id="2">
                 <h3 style={{ color: "red" }}>2.Cách nhận biết cá Koi Ginrin</h3>
                 <div>
-                  <ul>
+                  <ul style={{ fontSize: "15px", fontWeight: "400" }}>
                     <li>Koi Ginrin size 15 – 45</li>
                     <li>Kích thước hồ cá tối thiểu: 1000 gallon</li>
                     <li>Mức độ chăm sóc: Dễ dàng</li>
@@ -240,7 +251,7 @@ export default function Koiginrin() {
                     <li>Chất lượng: Đẹp xuất sắc với ánh bạc sáng lấp lánh</li>
                   </ul>
                   <div>
-                    <p>
+                    <p style={{ fontSize: "15px", fontWeight: "400" }}>
                       Đặc điểm dễ nhận biết nhất của cá Koi Ginrin là màu sắc
                       lấp lánh ánh bạc trên thân và được bao phủ bởi sắc tố đỏ
                       Hi. Các vảy Ginrin thường ở phần đầu hoặc phần vai tiếp
@@ -256,7 +267,7 @@ export default function Koiginrin() {
               <div id="3">
                 <h3 style={{ color: "red" }}>3. Cách chọn mua cá Koi Ginrin</h3>
                 <div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Với sự lấp lánh kiêu sa của những chú cá Koi Ginrin đẹp mắt
                     chắc chắn sẽ mang đến cho không gian sống, làm việc của bạn
                     trở nên hấp dẫn hơn. Theo quan niệm phong thủy, sở hữu cho
@@ -270,9 +281,12 @@ export default function Koiginrin() {
                     src="src/assets/Koi-Ginrin/showa-grinrin.webp"
                     style={{ width: "50%" }}
                   />
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                    KOI GINRIN
+                  </p>
                 </div>
                 <div>
-                  <ul>
+                  <ul style={{ fontSize: "15px", fontWeight: "400" }}>
                     <li>
                       Không nên chọn kích thước cá lớn bởi không phải gia đình
                       nào cũng có bể cá Koi phù hợp để cá phát triển tốt nhất.
@@ -303,11 +317,11 @@ export default function Koiginrin() {
               <div id="4">
                 <h3 style={{ color: "red" }}>4. Cách chăm sóc Koi Ginrin</h3>
                 <div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Để chăm sóc cá Koi Ginrin phát triển khỏe mạnh và toàn diện
                     nhất thì bạn cần phải chú ý đến các yếu tố xung quanh sau:
                   </p>
-                  <ul>
+                  <ul style={{ fontSize: "15px", fontWeight: "400" }}>
                     <li>
                       Dù là dòng cá ăn tạp nhưng cần có chế độ ăn uống phù hợp,
                       chia ra làm các bữa nhỏ, hạn chế để cá ăn quá no.
@@ -352,7 +366,7 @@ export default function Koiginrin() {
                   5. Giá cá koi Ginrin bao nhiêu?
                 </h3>
                 <div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Hiện tại Siêu thị Cá Koi Vn đang cung cấp dòng cá koi Ginrin
                     chuẩn từ cá nhật đến cá F1 với giá cực kỳ ưu đãi. Có thể nói
                     Siêu thị Cá Koi VN là một trong những đơn vị cung cấp cá koi
@@ -374,7 +388,7 @@ export default function Koiginrin() {
                   Tại sao nên mua cá Koi Ginrin tại Siêu thị Cá Koi VN
                 </h3>
                 <div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Nhu cầu chơi cá Koi ngày càng nhiều trên thị trường, để chọn
                     mua được cá Koi Ginrin khỏe, đẹp là điều không hề dễ dàng.
                     Bởi vì nếu bạn không phải là người “sành ” về dòng cá này sẽ

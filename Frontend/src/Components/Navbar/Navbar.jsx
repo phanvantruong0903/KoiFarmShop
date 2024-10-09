@@ -62,7 +62,7 @@ export default function Navbar() {
                   fontWeight: "bold",
                   fontSize: "25px",
                   textDecoration: "none",
-                  paddingRight: "-5px",
+
                   color: "white",
                   paddingTop: "10px",
                 }}
@@ -430,6 +430,22 @@ export default function Navbar() {
               }}
             >
               LIÊN HỆ
+            </Link>
+          </div>
+        </div>
+        <div>
+          <div style={{ paddingTop: "6px" }}>
+            <Link
+              to="/lienhe"
+              style={{
+                fontWeight: "bold",
+                fontSize: "25px",
+                paddingLeft: "20px",
+                textDecoration: "none",
+                color: "white",
+              }}
+            >
+              LOG IN
             </Link>
           </div>
         </div>

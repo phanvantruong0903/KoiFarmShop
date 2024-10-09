@@ -64,6 +64,35 @@ export default function Kyguikoi() {
         return;
       }
 
+      // Kiểm tra ngày gửi và ngày nhận
+      const shippedDate = new Date(formData.get("shippedDate"));
+      const receiptDate = new Date(formData.get("receiptDate"));
+      const currentDate = new Date();
+
+      if (shippedDate < currentDate) {
+        alert("Ngày gửi không được ở quá khứ.");
+        return;
+      }
+
+      if (receiptDate < currentDate) {
+        alert("Ngày nhận không được ở quá khứ.");
+        return;
+      }
+
+      // Kiểm tra FilteringRatio và DailyFoodAmount
+      const filteringRatio = parseFloat(formData.get("FilteringRatio"));
+      const dailyFoodAmount = parseFloat(formData.get("DailyFoodAmount"));
+
+      if (filteringRatio <= 0) {
+        alert("Tỷ lệ lọc (FilteringRatio) phải lớn hơn 0.");
+        return;
+      }
+
+      if (dailyFoodAmount <= 0) {
+        alert("Lượng thức ăn hàng ngày (DailyFoodAmount) phải lớn hơn 0.");
+        return;
+      }
+
       // Tải lên file ảnh và video
       const imageRef = ref(storage, `images/${imageFile.name}`);
       const videoRef = ref(storage, `videos/${videoFile.name}`);
@@ -73,10 +102,6 @@ export default function Kyguikoi() {
 
       await uploadBytes(videoRef, videoFile);
       const videoUrl = await getDownloadURL(videoRef);
-      console.log(imageUrl);
-      console.log(videoUrl);
-      formData.append("imageUrl", imageUrl);
-      formData.append("videoUrl", videoUrl);
 
       // Tạo đối tượng dữ liệu để gửi
       const dataToSend = {
@@ -95,12 +120,12 @@ export default function Kyguikoi() {
         address: formData.get("address"),
         KoiName: formData.get("KoiName"),
         Origin: formData.get("Origin"),
-        Image: formData.get("imageUrl"),
-        Video: formData.get("videoUrl"),
+        Image: imageUrl,
+        Video: videoUrl,
         CertificateID: formData.get("CertificateID"),
         Description: formData.get("Description"),
       };
-      console.log(dataToSend);
+
       // Gửi dữ liệu tới API
       const response = await fetch("http://localhost:4000/ki-gui", {
         method: "POST",
@@ -213,16 +238,16 @@ export default function Kyguikoi() {
                 >
                   <Form.Check
                     type="radio"
-                    id="genderOption1"
-                    label="Male"
+                    id="Home"
+                    label="Home"
                     name="PositionCare"
                     value="Home"
                     style={{ marginRight: "20px" }} // Adjusted margin
                   />
                   <Form.Check
                     type="radio"
-                    id="genderOption2"
-                    label="Female"
+                    id="IKoiFarm"
+                    label="IKoiFarm"
                     name="PositionCare"
                     value="IKoiFarm"
                     style={{ marginBottom: "0" }} // Adjusted margin
@@ -293,7 +318,12 @@ export default function Kyguikoi() {
             style={{ width: "100%" }}
           >
             <Form.Label>Description: </Form.Label>
-            <Form.Control type="text" name="Description" placeholder="Nhập" />
+            <Form.Control
+              as="textarea" // Thay đổi kiểu thành textarea
+              name="Description"
+              placeholder="Nhập"
+              style={{ height: "150px", resize: "none" }} // Tăng chiều cao và không cho phép thay đổi kích thước
+            />
           </Form.Group>
         </div>
 
@@ -458,8 +488,6 @@ export default function Kyguikoi() {
             placeholder="Nhập lượng thức ăn / ngày"
             required
             name="DailyFoodAmount"
-            step="0.01" // Số bước là 0.01
-            min="0" // Giá trị tối thiểu là 0
           />
         </Form.Group>
         <Form.Group
@@ -471,8 +499,6 @@ export default function Kyguikoi() {
           <Form.Control
             type="number"
             placeholder="Nhập tỷ lệ lọc"
-            min="0" // Giá trị tối thiểu là 0
-            step="0.01" // Số bước là 0.01
             required
             name="FilteringRatio"
           />
