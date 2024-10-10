@@ -124,3 +124,17 @@ export const updateStatusUser = async (req, res) => {
     console.log(error)
   }
 }
+
+export const createCategory = async (req, res) => {
+  try {
+    const category = await adminService.addCategory(req.body)
+    // nếu tạo thành công category trả về json success: true và ngược lại
+    if (!category.success) {
+      res.status(400).json({ message: 'Lỗi khi tạo category' })
+    }
+
+    res.status(200).json({ message: 'Create Categort Successfully' })
+  } catch (error) {
+    console.log('Error at create new Category')
+  }
+}

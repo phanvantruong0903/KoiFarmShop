@@ -1,8 +1,15 @@
 import {
+  createCategoryController,
   createNewKoiController,
   getAllConsignController,
   getAllUserController,
-  getConsignDetailController
+  getConsignDetailController,
+  getAllKoiController,
+  getAllOrderController,
+  updateKoiController,
+  updateStatusKoiController,
+  updateStatusUserController,
+  updateUserController
 } from '../controllers/manager.controllers.js'
 import { getProfileController } from '../controllers/users.controllers.js'
 import { isAdminValidator } from '../middlewares/manager.middlewares.js'
@@ -40,5 +47,34 @@ managerRouter.post(
 managerRouter.get('/manage-ki-gui/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getAllConsignController))
 
 managerRouter.get('/manage-ki-gui/:_id', accessTokenValidator, isAdminValidator, wrapAsync(getConsignDetailController))
+
+managerRouter.get('/manage-order/', accessTokenValidator, isAdminValidator, wrapAsync(getAllOrderController))
+
+managerRouter.get('/manage-koi/', accessTokenValidator, isAdminValidator, wrapAsync(getAllKoiController))
+
+managerRouter.put('/manage-koi/updateKoi/:KoiID', accessTokenValidator, isAdminValidator, wrapAsync(updateKoiController))
+
+managerRouter.put(
+  '/manage-koi/disable-enable/:KoiID',
+  accessTokenValidator,
+  accessTokenValidator,
+  wrapAsync(updateStatusKoiController)
+)
+
+managerRouter.post(
+  '/manage-category/createNewCategory',
+  accessTokenValidator,
+  accessTokenValidator,
+  wrapAsync(createCategoryController)
+)
+
+managerRouter.post('/manage-user/updateUser/:UserID', accessTokenValidator, accessTokenValidator, wrapAsync(updateUserController))
+
+managerRouter.post(
+  '/manage-user/updateUser/:UserID',
+  accessTokenValidator,
+  accessTokenValidator,
+  wrapAsync(updateStatusUserController)
+)
 
 export default managerRouter

@@ -3,6 +3,7 @@ import KoiSchema from '../models/schemas/Koi.schema.js'
 import { koiValidate } from '../middlewares/kois.middleware.js'
 import { MESSAGES } from '../constants/message.js'
 import { ObjectId } from 'mongodb'
+import CategorySchema from '../models/schemas/Category.schema.js'
 
 class AdminsService {
   async getUser() {
@@ -85,6 +86,23 @@ class AdminsService {
       return { success: true, message: MESSAGES.UPDATE_USER_SUCCESS }
     } catch (error) {
       return { success: false, message: 'FAIL' }
+    }
+  }
+
+  async addCategory(payload) {
+    try {
+      if (!payload.CategoryName) {
+        return { success: false, message: 'Category Name is required' }
+      }
+
+      await databaseService.category.insertOne(
+        new CategorySchema({
+          ...payload
+        })
+      )
+      return { success: true, message: 'Creat Category Success' }
+    } catch (error) {
+      return { success: false, message: error.message }
     }
   }
 }
