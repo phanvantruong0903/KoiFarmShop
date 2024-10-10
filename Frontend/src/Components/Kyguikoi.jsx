@@ -1,8 +1,10 @@
 import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Thêm import cho Firebase Storage
 import "./Kyguikoi.css";
+import axios from "axios";
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
   authDomain: import.meta.env.VITE_AUTH_DOMAIN,
@@ -16,6 +18,11 @@ const app = initializeApp(firebaseConfig);
 const storage = getStorage(app); // Khởi tạo Firebase Storage
 
 export default function Kyguikoi() {
+  const [cardData, setCardData] = useState([]); // Dữ liệu danh mục
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("ALL");
+  const [categoryData, setCategoryData] = useState([]);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -79,24 +86,9 @@ export default function Kyguikoi() {
         return;
       }
 
-      // Kiểm tra FilteringRatio và DailyFoodAmount
-      const filteringRatio = parseFloat(formData.get("FilteringRatio"));
-      const dailyFoodAmount = parseFloat(formData.get("DailyFoodAmount"));
-
-      if (filteringRatio <= 0) {
-        alert("Tỷ lệ lọc (FilteringRatio) phải lớn hơn 0.");
-        return;
-      }
-
-      if (dailyFoodAmount <= 0) {
-        alert("Lượng thức ăn hàng ngày (DailyFoodAmount) phải lớn hơn 0.");
-        return;
-      }
-
       // Tải lên file ảnh và video
       const imageRef = ref(storage, `images/${imageFile.name}`);
       const videoRef = ref(storage, `videos/${videoFile.name}`);
-
       await uploadBytes(imageRef, imageFile);
       const imageUrl = await getDownloadURL(imageRef);
 
@@ -109,10 +101,10 @@ export default function Kyguikoi() {
         Method: formData.get("Method"),
         CategoryID: formData.get("CategoryID"),
         Gender: formData.get("Gender"),
-        Size: formData.get("Size"),
+        Size: parseInt(formData.get("Size")),
         Breed: formData.get("Breed"),
-        DailyFoodAmount: formData.get("DailyFoodAmount"),
-        FilteringRatio: formData.get("FilteringRatio"),
+        DailyFoodAmount: parseFloat(formData.get("DailyFoodAmount")),
+        FilteringRatio: parseFloat(formData.get("FilteringRatio")),
         Age: formData.get("Age"),
         email: formData.get("email"),
         phone_number: formData.get("phone_number"),
@@ -151,6 +143,32 @@ export default function Kyguikoi() {
       alert("Có lỗi xảy ra. Vui lòng thử lại.");
     }
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/getAllKoi");
+        console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
+        if (Array.isArray(response.data.koisList)) {
+          setCardData(response.data.koisList); // Lấy mảng từ thuộc tính 'result'
+          setCategoryData(response.data.cateogryList);
+          console.log("Card data set successfully:", response.data.koisList); // Kiểm tra sau khi set
+          console.log(
+            "Category Data set successfully:",
+            response.data.cateogryList
+          );
+        } else {
+          console.error("Dữ liệu không phải là mảng:", response.data);
+        }
+      } catch (err) {
+        console.error("Error fetching data:", err); // Ghi lại lỗi
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -335,20 +353,14 @@ export default function Kyguikoi() {
           style={{ width: "100%" }}
         >
           <Form.Label>Category(*): </Form.Label>
+
           <Form.Control as="select" name="CategoryID">
             <option value="">Chọn danh mục...</option>
-            <option value="1">KOI KOHAKU</option>
-            <option value="2">KOI OGON</option>
-            <option value="3">KOI SHOWA</option>
-            <option value="4">KOI TANCHO</option>
-            <option value="5">KOI BEKKO</option>
-            <option value="6">KOI DOITSU</option>
-            <option value="7">KOI GINRIN</option>
-            <option value="8">KOI GOSHIKI</option>
-            <option value="9">KOI BENIGOI</option>
-            <option value="10">KOI ASAGI</option>
-            <option value="11">KOI PLATINUM</option>
-            <option value="12">KOI SHUSUI</option>
+            {categoryData.map((category) => (
+              <option key={category._id} value={category._id}>
+                {category.CategoryName}
+              </option>
+            ))}
           </Form.Control>
         </Form.Group>
         <Form.Group
@@ -488,6 +500,7 @@ export default function Kyguikoi() {
             placeholder="Nhập lượng thức ăn / ngày"
             required
             name="DailyFoodAmount"
+            step="0.01"
           />
         </Form.Group>
         <Form.Group
@@ -501,6 +514,7 @@ export default function Kyguikoi() {
             placeholder="Nhập tỷ lệ lọc"
             required
             name="FilteringRatio"
+            step="0.01"
           />
         </Form.Group>
         <Form.Group
