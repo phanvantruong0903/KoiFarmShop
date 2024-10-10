@@ -50,8 +50,8 @@ export default function Koikygui() {
   const filteredCards =
     selectedCategory === "ALL"
       ? cardData
-      : cardData.filter((card) => card.CategoryID === selectedCategory);
-
+      : cardData.filter((card) => card.CategoryID === selectedCategory._id);
+  console.log("Filter card " + sele);
   // Đếm số lượng cá cho từng giống
   const breedCounts = cardData.reduce((accumulator, card) => {
     if (card.CategoryID) {
