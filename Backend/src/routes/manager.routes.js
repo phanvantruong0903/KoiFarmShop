@@ -71,7 +71,7 @@ managerRouter.post(
 managerRouter.post('/manage-user/updateUser/:UserID', accessTokenValidator, accessTokenValidator, wrapAsync(updateUserController))
 
 managerRouter.post(
-  '/manage-user/updateUser/:UserID',
+  '/manage-user/disable-enable/:UserID',
   accessTokenValidator,
   accessTokenValidator,
   wrapAsync(updateStatusUserController)
