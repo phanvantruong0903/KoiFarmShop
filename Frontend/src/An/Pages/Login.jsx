@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import "../Css/Login.css";
 import SignInForm from "../Components/LogIn";
 import SignUpForm from "../Components/SignUp";
-
+import { useLocation } from "react-router-dom";
 export default function LoginPage() {
-  const [type, setType] = useState("signIn");
+  const location = useLocation(); // Get the location object
+  const initialType = location.state?.type || "signIn";
+  const [type, setType] = useState(initialType);
   const handleOnClick = (text) => {
     if (text !== type) {
       setType(text);
