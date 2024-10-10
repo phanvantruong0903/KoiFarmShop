@@ -8,10 +8,10 @@ import usersService from '../services/users.services.js'
 import databaseService from '../services/database.service.js'
 import { verifyToken } from '../utils/jwt.js'
 import capitalize from 'lodash'
-import JsonWebTokenError from 'jsonwebtoken'
 import { ObjectId } from 'mongodb'
 import { UserVerifyStatus } from '../constants/enums.js'
 import { REGEX_USERNAME } from '../constants/regex.js'
+import JsonWebTokenError from 'jsonwebtoken'
 
 const passwordSchema = {
   notEmpty: {
@@ -285,13 +285,10 @@ export const refreshTokenValidator = validate(
               }
               req.decoded_refresh_token = decoded_refresh_token
             } catch (error) {
-              
-                throw new ErrorWithStatus({
-                  message: capitalize(error.message),
-                  status: HTTP_STATUS.UNAUTHORIZED
-                })
-              
-              throw error
+              throw new ErrorWithStatus({
+                message: capitalize(error.message),
+                status: HTTP_STATUS.UNAUTHORIZED
+              })
             }
             return true
           }

@@ -175,7 +175,7 @@ export default function Orders() {
   const [isActive, setIsActive] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState(orders)
-  const { searchTerm, handleFilterChange, filteredData, handleSearch, filterList } = useFilter(data);
+  const { searchTerm, handleFilterChange, filteredData, handleSearch, filterList } = useFilter(data,'order');
 
   return (
     <div>
