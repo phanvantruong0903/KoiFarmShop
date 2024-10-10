@@ -1,4 +1,5 @@
 import adminService from '../services/admin.service.js'
+import databaseService from '../services/database.service.js'
 
 export const getUser = async (req, res) => {
   const result = await adminService.getUser()
@@ -15,9 +16,11 @@ export const getOrder = async (req, res) => {
 }
 
 export const getKois = async (req, res) => {
-  const result = await adminService.getKoi()
+  const koisList = await adminService.getKoi()
+  const cateogryList = await databaseService.category.find().toArray()
   res.json({
-    result
+    koisList,
+    cateogryList
   })
 }
 

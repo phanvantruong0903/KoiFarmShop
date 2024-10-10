@@ -17,7 +17,7 @@ import { isAdminValidator } from '../middlewares/manager.middlewares.js'
 
 adminRouter.get('/getUsers', accessTokenValidator, isAdminValidator, getUser)
 adminRouter.get('/getOrder', accessTokenValidator, isAdminValidator, getOrder)
-adminRouter.get('/getKois', accessTokenValidator, isAdminValidator, getKois)
+adminRouter.get('/getKois', getKois)
 
 adminRouter.post('/addKoi', accessTokenValidator, isAdminValidator, addKoi)
 adminRouter.put('/updateKoi/:KoiID', accessTokenValidator, isAdminValidator, updateKoi)
