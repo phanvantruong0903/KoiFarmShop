@@ -1,5 +1,5 @@
 import Navbar from "../Navbar/Navbar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { Table } from "react-bootstrap";
 import CardGrid from "../Cardgrid";
@@ -10,7 +10,7 @@ export default function Koitancho() {
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedBreed, setSelectedBreed] = useState("KOI TANCHO");
+
   const handleScroll1 = () => {
     const element = document.getElementById("1");
 
@@ -105,11 +105,16 @@ export default function Koitancho() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://66fd0298c3a184a84d18b799.mockapi.io/Koi"
-        );
-        setCardData(response.data);
+        const response = await axios.get("http://localhost:4000/getAllKoi");
+        console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
+        if (Array.isArray(response.data.result)) {
+          setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
+          console.log("Card data set successfully:", response.data.result); // Kiểm tra sau khi set
+        } else {
+          console.error("Dữ liệu không phải là mảng:", response.data);
+        }
       } catch (err) {
+        console.error("Error fetching data:", err); // Ghi lại lỗi
         setError(err);
       } finally {
         setLoading(false);
@@ -118,10 +123,9 @@ export default function Koitancho() {
 
     fetchData();
   }, []);
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  const filteredCards = cardData.filter((card) => card.Breed === selectedBreed);
+  const filteredCards = cardData.filter((card) => card.CategoryID === "4");
   return (
     <>
       <div style={{}}>
@@ -162,6 +166,7 @@ export default function Koitancho() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       1. Giới thiệu cá Koi Tancho
@@ -174,6 +179,7 @@ export default function Koitancho() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       2. Các loại cá koi Tancho đẹp
@@ -186,6 +192,7 @@ export default function Koitancho() {
                             color: "blue",
                             cursor: "pointer",
                             fontWeight: "600",
+                            fontSize: "20px",
                           }}
                         >
                           2.1 Tancho Kohaku
@@ -198,6 +205,7 @@ export default function Koitancho() {
                             color: "blue",
                             cursor: "pointer",
                             fontWeight: "600",
+                            fontSize: "20px",
                           }}
                         >
                           2.2 Tancho Sanke
@@ -210,6 +218,7 @@ export default function Koitancho() {
                             color: "blue",
                             cursor: "pointer",
                             fontWeight: "600",
+                            fontSize: "20px",
                           }}
                         >
                           2.3 Tancho Showa
@@ -224,6 +233,7 @@ export default function Koitancho() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       3. Phân biệt các loại cá koi Tancho có trên thị trường
@@ -236,6 +246,7 @@ export default function Koitancho() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       4. Cách chọn cá koi tancho
@@ -248,6 +259,7 @@ export default function Koitancho() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       5. Cách chăm sóc cá koi tancho
@@ -260,6 +272,7 @@ export default function Koitancho() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       6. Cách chăm sóc Koi Kohaku
@@ -272,6 +285,7 @@ export default function Koitancho() {
                             color: "blue",
                             cursor: "pointer",
                             fontWeight: "600",
+                            fontSize: "20px",
                           }}
                         >
                           6.1 Giá cá koi Tancho F1
@@ -284,6 +298,7 @@ export default function Koitancho() {
                             color: "blue",
                             cursor: "pointer",
                             fontWeight: "600",
+                            fontSize: "20px",
                           }}
                         >
                           6.2 Tại sao nên mua Tancho koi tại siêu thị Cá koi VN?
@@ -298,6 +313,7 @@ export default function Koitancho() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       7. Giá coi Koi Kohaku bao nhiêu?
@@ -310,6 +326,7 @@ export default function Koitancho() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       8. Tại sao nên mua Koi Kohaku tại KoiVNStore
@@ -328,7 +345,7 @@ export default function Koitancho() {
                 >
                   Nội dung chi tiết
                 </h2>
-                <p style={{}}>
+                <p style={{ fontSize: "15px", fontWeight: "400" }}>
                   Hiện nay, cá koi là dòng cá được ưa chuộng để làm cảnh cũng
                   như trang trí cho không gian sống của bạn. Cá koi có nhiều
                   giống loài, kích thước và màu sắc và dòng cá Koi Tancho là một
@@ -340,9 +357,9 @@ export default function Koitancho() {
               </div>
               <div id="1">
                 <h3 style={{ color: "red" }}>1. Giới thiệu cá Koi Tancho </h3>
-                <img />
+
                 <div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Cá Koi Tancho hiện đang là sự chú ý của nhiều dân chơi cá,
                     đặc điểm nổi bật của dòng cá này đó là tượng trưng cho quốc
                     kỳ Nhật Bản. Đặc điểm của Tancho koi là có chấm tròn màu đỏ
@@ -355,7 +372,9 @@ export default function Koitancho() {
                   </p>
                   <div style={{ textAlign: "center" }}>
                     <img src="src/assets/Koi-Tancho/ca-koi-tancho-nhat.jpg" />
-                    <p>Đàn cá Koi Tancho đẹp</p>
+                    <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                      Đàn cá Koi Tancho đẹp
+                    </p>
                   </div>
                 </div>
               </div>
@@ -363,23 +382,28 @@ export default function Koitancho() {
               <div id="detailed-content">
                 <h3 style={{ color: "red" }}>2. Các loại cá koi Tancho đẹp</h3>
                 <div>
-                  Bạn có thể phân biệt cá Koi Tancho với một số những giống cá
-                  koi Nhật khác bằng cách nhìn vào dấu chấm tròn trên đầu. Ba
-                  loại cá Koi Tancho thông thường đều có hình dáng giống nhau.
-                  Nhưng những loại cá koi có vảy đục , vây đẹp có thể nhìn rõ
-                  được các tia vây, màu sắc rực rỡ , mắt to, người tròn và đầu
-                  hơi gù được nhiều dân chơi cá tìm kiếm. Hiện nay có 3 loại
-                  Tancho koi đẹp điển hình đó là Kohaku, Sanke, Showa. Dưới đây
-                  là một số những đặc điểm của loại cá này.
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                    Bạn có thể phân biệt cá Koi Tancho với một số những giống cá
+                    koi Nhật khác bằng cách nhìn vào dấu chấm tròn trên đầu. Ba
+                    loại cá Koi Tancho thông thường đều có hình dáng giống nhau.
+                    Nhưng những loại cá koi có vảy đục , vây đẹp có thể nhìn rõ
+                    được các tia vây, màu sắc rực rỡ , mắt to, người tròn và đầu
+                    hơi gù được nhiều dân chơi cá tìm kiếm. Hiện nay có 3 loại
+                    Tancho koi đẹp điển hình đó là Kohaku, Sanke, Showa. Dưới
+                    đây là một số những đặc điểm của loại cá này.
+                  </p>
                 </div>
                 <div>
                   <ul>
                     <li>
-                      <span id="21" style={{ fontWeight: "bold" }}>
+                      <span
+                        id="21"
+                        style={{ fontSize: "20px", fontWeight: "600" }}
+                      >
                         2.1 Tancho Kohaku
                       </span>
                       <br />
-                      <p>
+                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
                         Cá Koi Tancho Kohaku được ví như quốc kỳ của Nhật Bản,
                         chúng có thân và phần bụng màu trắng như tuyết, tất cả
                         các vây cũng có màu trắng. Chỉ có duy nhất một chấm màu
@@ -387,19 +411,21 @@ export default function Koitancho() {
                       </p>
                       <div style={{ textAlign: "center" }}>
                         <img src="src/assets/Koi-Tancho/08e242e22db6eae8b3a7-225x300.jpg" />
-                        <p>Tancho Kohaku</p>
+                        <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                          Tancho Kohaku
+                        </p>
                       </div>
                     </li>
 
                     <li>
                       <span
                         id="21"
-                        style={{ fontWeight: "bold", color: "red" }}
+                        style={{ fontSize: "20px", fontWeight: "600" }}
                       >
                         2.2 Tancho Sanke
                       </span>
                       <br />
-                      <p>
+                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
                         Tancho koi Sanke ngoài có chấm đỏ trên đầu thì đặc điểm
                         nổi bật của nó cũng khá giống với cá koi sanke bình
                         thường. Đó là sự xuất hiện của chấm sumi trên nền trắng
@@ -408,18 +434,20 @@ export default function Koitancho() {
                       </p>
                       <div style={{ textAlign: "center" }}>
                         <img src="src/assets/Koi-Tancho/Tancho-Sanke.png" />
-                        <p>Tancho Sanke</p>
+                        <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                          Tancho Sanke
+                        </p>
                       </div>
                     </li>
                     <li>
                       <span
                         id="23"
-                        style={{ fontWeight: "bold", color: "red" }}
+                        style={{ fontSize: "20px", fontWeight: "600" }}
                       >
                         2.3 Tancho Showa
                       </span>
                       <br />
-                      <p>
+                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
                         Cá Koi Tancho Showa là giống cá giống ý như sankoku.
                         Nhưng có điều sẽ khác đó là chỉ chấm đỏ trên đầu. Tancho
                         showa cả phần đầu và phần thân có xuất hiện vệt đen lớn
@@ -442,7 +470,7 @@ export default function Koitancho() {
                   3. Phân biệt các loại cá koi Tancho có trên thị trường
                 </h3>
                 <Table striped bordered hover responsive>
-                  <thead>
+                  <thead style={{ fontSize: "15px", fontWeight: "400" }}>
                     <tr>
                       <th>Tiêu chí</th>
                       <th>Tancho Nhật thuần chủng</th>
@@ -502,7 +530,7 @@ export default function Koitancho() {
               <div id="4">
                 <h3 style={{ color: "red" }}>4. Cách chọn cá koi tancho</h3>
                 <div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Đối với những người chơi Tancho koi đều mong muốn cá của
                     mình có giá trị và có thể tham gia được các cộng đồng chơi
                     cá koi. Vậy nên, việc lựa chọn cá Koi Tancho đẹp để nuôi
@@ -514,7 +542,7 @@ export default function Koitancho() {
                   </p>
                 </div>
 
-                <div>
+                <div style={{ fontSize: "15px", fontWeight: "400" }}>
                   <ul>
                     <li>
                       Các em cá koi chỉ cần có dấu hiệu hình đỏ trên đầu đều
@@ -542,7 +570,7 @@ export default function Koitancho() {
               <div id="5">
                 <h3 style={{ color: "red" }}>5. Cách chăm sóc cá koi tancho</h3>
                 <div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Cá Koi Tancho được nuôi trong một môi trường từ 18 - 26 độ
                     C. Nước nuôi cá thường là nước cứng có tính kiềm yếu và phải
                     sạch sẽ. Nhưng đây là một loại cá dễ nuôi hơn so với một số
@@ -565,7 +593,7 @@ export default function Koitancho() {
                   6. Giá cá koi Tancho bao nhiêu?
                 </h3>
                 <div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Vì Kohaku koi là loài thông minh có thể sống trong nhiều
                     thập kỷ vì thế khi chăm sóc cá Koi Kohaku bạn cần lưu ý về
                     điều kiện môi trường và yếu tố xung quanh sẽ làm ảnh hưởng
@@ -575,9 +603,14 @@ export default function Koitancho() {
                 <div>
                   <ul>
                     <li>
-                      <span id="61">6.1 Giá cá koi Tancho F1</span>
+                      <span
+                        id="61"
+                        style={{ fontSize: "20px", fontWeight: "600" }}
+                      >
+                        6.1 Giá cá koi Tancho F1
+                      </span>
                       <br />
-                      <p>
+                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
                         Đối với những con Tancho f1 có kích thước từ 18cm –
                         40cm, giá cá koi dao động từ 150.000 – 500.000 VNĐ tùy
                         loại.
@@ -588,9 +621,11 @@ export default function Koitancho() {
                       </p>
                     </li>
                     <li id="62">
-                      <span>6.2 Giá cá koi Tancho Nhật chuẩn</span>
+                      <span style={{ fontSize: "20px", fontWeight: "600" }}>
+                        6.2 Giá cá koi Tancho Nhật chuẩn
+                      </span>
                       <br />
-                      <p>
+                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
                         Một con cá Koi trưởng thành Nhật Bản như Tancho koi với
                         kích thước từ 10-15cm sẽ có giá từ 600.000 –
                         2.000.000VNĐ/con.
@@ -609,7 +644,7 @@ export default function Koitancho() {
                   7. Tại sao nên mua Tancho koi tại siêu thị Cá koi VN?
                 </h3>
                 <div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Bên cạnh đó, siêu thị Cá Koi VN có đội ngũ chuyên gia nhiều
                     kinh nghiệm sẽ tư vấn và hỗ trợ cho bạn lựa chọn mua cũng
                     như chăm sóc cá Koi đúng cách. Vậy nên, nếu bạn có nhu cầu
@@ -635,60 +670,6 @@ export default function Koitancho() {
           </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            backgroundImage: `url("src/assets/pexels-quang-nguyen-vinh-222549-2131828.jpg")`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          <div
-            style={{
-              width: "100%",
-              margin: "100px",
-              color: "white",
-              display: "flex",
-            }}
-          >
-            <div
-              style={{
-                width: "100%",
-                color: "black",
-                fontSize: "20px",
-                marginTop: "70px",
-                marginLeft: "20px",
-              }}
-            >
-              <h1 style={{ color: "white" }}>Điểm nổi bật của KoiStoreVN</h1>
-
-              <ul style={{ fontSize: "16px", color: "white" }}>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  Cá nhập khẩu chất lượng cao, nhập trực tiếp tại các trang trại
-                  Cá Koi Nhật Bản
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  Khách hàng yên tâm nuôi cá vì luôn có chuyên gia đồng hành
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  Đa dạng sản phẩm, dịch vụ chăm sóc Cá Koi và Hồ Cá Koi
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  KoiStoreVN tự hào là đơn vị đầu tiên tại miền bắc được chuyển
-                  giao công nghệ mô hình trại SAKAI (Sakai fish farm, Hiroshima,
-                  Japan)
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  Trại gồm 120 hồ lớn chuẩn theo mô hình trại SAKAI
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
         <div>
           <CardGrid cardData={filteredCards} />
         </div>

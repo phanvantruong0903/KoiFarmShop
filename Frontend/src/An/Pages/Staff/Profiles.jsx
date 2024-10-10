@@ -1,26 +1,35 @@
-import Dropdown from 'react-bootstrap/Dropdown';
-
-import { FaSearch } from "react-icons/fa";
+// CSS
 import '../../Css/Orders.css'
+// Bootstrap 
 import Form from 'react-bootstrap/Form'
 import FormControl from 'react-bootstrap/FormControl'
-import { BsFilterSquare } from "react-icons/bs";
-import { Table } from 'react-bootstrap';
-import { PiDotsThreeCircleLight } from "react-icons/pi";
-import { PiDotsThreeCircleFill } from "react-icons/pi";
+// React 
 import { useState, useEffect } from 'react';
+// Custom Hooks
 import useFilter from '../../Hooks/useFilter';
-import { isAddress, isVerified, whatRole } from '../../Utils/valueParser';
+// Utils
+import { isAddress, whatRole } from '../../Utils/valueParser';
+// Components
 import FilterBar from '../../Components/Staff/FilterBar';
 import FilterButton from '../../Components/Staff/FilterButton';
 import Spinner from '../../Components/Spinner';
+import TableGen from '../../Components/Staff/TableGen';
+import ViewProfile from '../../Components/Staff/ViewProfile';
+// Axios
 import axiosInstance from '../../Utils/axiosJS';
 export default function Profiles() {
   const [hoveredRow, setHoveredRow] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isActive, setIsActive] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const headers = ['#', 'User_ID', 'Name', 'Role', 'Email', 'Email Status', 'Address', 'Phone Number'];
+  const fieldMapping = ['_id', 'name', 'role', 'email', 'verify', 'address', 'phone_number'];
+  const handleRowAction = (id, actionType) => {
+    if (actionType === 'delete') {
 
-
+      console.log(`Delete user with ID: ${id}`);
+    }
+  };
   const [intialData, setIntialData] = useState([])
   const handleMouseEnter = (index) => {
     setHoveredRow(index);
@@ -56,7 +65,7 @@ export default function Profiles() {
     })
     return count;
   }
-  const { searchTerm, handleFilterChange, filteredData, handleSearch, filterList } = useFilter(intialData, true);
+  const { searchTerm, handleFilterChange, filteredData, handleSearch, filterList } = useFilter(intialData, 'profile');
   useEffect(() => {
     setIsLoading(true);
     const fetchData = async () => {
@@ -70,12 +79,13 @@ export default function Profiles() {
         setIsLoading(false);
       }
     };
-  
+
     fetchData();
   }, []);
-  
+
   return (
     <div>
+      <ViewProfile actions={showModal} setactions={setShowModal} />
       <div className='fw-bold fs-1 ms-5 mb-5'>Profiles</div>
 
       <div className='d-flex ms-5 me-5 mb-3 Card-Container' style={{ height: '100px', gap: '1rem' }}>
@@ -129,7 +139,7 @@ export default function Profiles() {
           currentFilter={filterList.role}
           onFilterChange={handleFilterChange}
           count={totalManager(intialData)}
-  
+
         />
 
       </div>
@@ -169,60 +179,25 @@ export default function Profiles() {
         </div>
       </div>
       <div>
-        {/* Show the spinner if data is still loading */}
         {isLoading ? (
           <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
             <Spinner animation="border" variant="primary" />
           </div>
         ) : (
-          <Table striped bordered hover responsive="md"> {/* TODO: turn cái này thành một cái uhhh component dài dòng thấj sư */}
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>User_ID</th>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Email</th>
-                <th>Email Status</th>
-                <th>Address</th>
-                <th>Phone Number</th>
-                <th className="d-flex justify-content-center align-content-center"><BsFilterSquare /></th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredData.map((mock, index) => (
-                <tr
-                  key={mock._id}
-                  onMouseEnter={() => handleMouseEnter(index)}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <td>{index + 1}</td>
-                  <td>{mock._id}</td>
-                  <td>{mock.name}</td>
-                  <td>{whatRole(mock.roleid)}</td>
-                  <td>{mock.email}</td>
-                  <td className={mock.verify ? 'text-success' : 'text-danger'}>
-                    {mock.verify ? 'Verified' : 'Not verified'}
-                  </td>
-                  <td>{isAddress(mock.address) ? mock.address : 'No address'}</td>
-                  <td>{!mock.phone_number ? 'not provided' : mock.phone_number}</td>
-                  <td className="d-flex justify-content-center align-items-center" style={{ height: '40px' }}>
-                    <Dropdown>
-                      <Dropdown.Toggle as="div" style={{ border: 'none', background: 'none', cursor: 'pointer' }}>
-                        {hoveredRow === index ? <PiDotsThreeCircleFill /> : <PiDotsThreeCircleLight />}
-                      </Dropdown.Toggle>
-
-                      <Dropdown.Menu>
-                        <Dropdown.Item href="#/action-1">View</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Edit</Dropdown.Item>
-                        <Dropdown.Item onMouseLeave={() => { setIsActive(false) }} onMouseEnter={() => { setIsActive(true) }} className={isActive ? ('bg-danger text-white') : ''}>Delete</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <TableGen
+            data={filteredData}
+            headers={headers}
+            fieldMapping={fieldMapping}
+            hoveredRow={hoveredRow}
+            handleMouseEnter={handleMouseEnter}
+            handleMouseLeave={handleMouseLeave}
+            whatRole={whatRole}
+            isAddress={isAddress}
+            isActive={isActive}
+            setIsActive={setIsActive}
+            handleRowAction={handleRowAction}
+            showModal={setShowModal}
+          />
         )}
       </div>
     </div>

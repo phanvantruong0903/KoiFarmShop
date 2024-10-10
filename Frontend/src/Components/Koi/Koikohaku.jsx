@@ -9,7 +9,7 @@ export default function Koikohaku() {
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedBreed, setSelectedBreed] = useState("KOI KOHAKU");
+
   const handleScroll1 = () => {
     const element = document.getElementById("1");
 
@@ -83,11 +83,16 @@ export default function Koikohaku() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://66fd0298c3a184a84d18b799.mockapi.io/Koi"
-        );
-        setCardData(response.data);
+        const response = await axios.get("http://localhost:4000/getAllKoi");
+        console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
+        if (Array.isArray(response.data.result)) {
+          setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
+          console.log("Card data set successfully:", response.data.result); // Kiểm tra sau khi set
+        } else {
+          console.error("Dữ liệu không phải là mảng:", response.data);
+        }
       } catch (err) {
+        console.error("Error fetching data:", err); // Ghi lại lỗi
         setError(err);
       } finally {
         setLoading(false);
@@ -98,7 +103,7 @@ export default function Koikohaku() {
   }, []);
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  const filteredCards = cardData.filter((card) => card.Breed === selectedBreed);
+  const filteredCards = cardData.filter((card) => card.CategoryID === "1");
 
   return (
     <>

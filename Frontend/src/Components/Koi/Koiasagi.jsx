@@ -9,7 +9,7 @@ export default function Koiasagi() {
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedBreed, setSelectedBreed] = useState("KOI ASAGI"); // Thay thế với giống cá bạn muốn lọc
+
   const handleScroll1 = () => {
     const element = document.getElementById("1");
 
@@ -76,11 +76,16 @@ export default function Koiasagi() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://66fd0298c3a184a84d18b799.mockapi.io/Koi"
-        );
-        setCardData(response.data);
+        const response = await axios.get("http://localhost:4000/getAllKoi");
+        console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
+        if (Array.isArray(response.data.result)) {
+          setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
+          console.log("Card data set successfully:", response.data.result); // Kiểm tra sau khi set
+        } else {
+          console.error("Dữ liệu không phải là mảng:", response.data);
+        }
       } catch (err) {
+        console.error("Error fetching data:", err); // Ghi lại lỗi
         setError(err);
       } finally {
         setLoading(false);
@@ -89,10 +94,9 @@ export default function Koiasagi() {
 
     fetchData();
   }, []);
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  const filteredCards = cardData.filter((card) => card.Breed === selectedBreed); // Ví dụ: lọc theo độ tuổi lớn hơn 20000
+  const filteredCards = cardData.filter((card) => card.CategoryID === "10");
   return (
     <>
       <div>
@@ -133,6 +137,7 @@ export default function Koiasagi() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       1. Giới thiệu về cá Koi Asagi
@@ -145,6 +150,7 @@ export default function Koiasagi() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       2. Cách nhận biết Asagi Koi
@@ -157,6 +163,7 @@ export default function Koiasagi() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       3. Cách chọn mua Cá Asagi Koi
@@ -169,6 +176,7 @@ export default function Koiasagi() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       4. Cách chăm sóc cá Koi Asagi Doitsu
@@ -181,6 +189,7 @@ export default function Koiasagi() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       5. Các dòng cá Asagi koi trên thị trường
@@ -193,6 +202,7 @@ export default function Koiasagi() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       6. Giá cá koi Asagi bao nhiêu?
@@ -205,6 +215,7 @@ export default function Koiasagi() {
                             color: "blue",
                             cursor: "pointer",
                             fontWeight: "600",
+                            fontSize: "20px",
                           }}
                         >
                           6.1 Giá cá koi Asagi F1
@@ -217,6 +228,7 @@ export default function Koiasagi() {
                             color: "blue",
                             cursor: "pointer",
                             fontWeight: "600",
+                            fontSize: "20px",
                           }}
                         >
                           6.2 Giá cá koi Asagi Nhật chuẩn
@@ -231,6 +243,7 @@ export default function Koiasagi() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       7. Tại sao nên mua cá Koi Asagi Doitsu tại Siêu thị Cá Koi
@@ -243,7 +256,7 @@ export default function Koiasagi() {
                 <h2 style={{ color: "red", textAlign: "center" }}>
                   Nội dung chi tiết
                 </h2>
-                <p style={{}}>
+                <p style={{ fontSize: "15px", fontWeight: "400" }}>
                   Trong các loại cá Koi thì giống cá Koi Asagi được xếp hạng là
                   một trong những nhà vô địch của triển lãm cá Koi trên thế
                   giới. Với lịch sử lâu đời, Asagi Koi đã trở thành cá chép cảnh
@@ -254,7 +267,7 @@ export default function Koiasagi() {
               </div>
               <div id="1">
                 <h3 style={{ color: "red" }}>1. Giới thiệu về cá Koi Asagi</h3>
-                <p>
+                <p style={{ fontSize: "15px", fontWeight: "400" }}>
                   Asagi là 1 trong những dòng cá Koi xuất hiện sớm nhất ở Nhật
                   Bản. Cái tên của nó bắt nguồn từ ngôi làng sinh ra toàn bộ
                   giống cá Koi Asagi này làm nghề dệt vải giống hoa văn trên
@@ -264,11 +277,13 @@ export default function Koiasagi() {
                   những hậu duệ của giống Asagi Magoi (Narumi: tên của ngôi làng
                   sản sinh ra toàn bộ giống Asagi).
                 </p>
-                <div>
+                <div style={{ textAlign: "center" }}>
                   <img src="src/assets/Koi-Asagi/ca-koi-asagi.webp" />
-                  <p>Hình ảnh cá Koi Asagi</p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                    Hình ảnh cá Koi Asagi
+                  </p>
                 </div>
-                <p>
+                <p style={{ fontSize: "15px", fontWeight: "400" }}>
                   Và cho đến nay thì dòng Asagi đang được nhiều người ưa chuộng
                   bởi sự độc đáo trên những vảy vàng lấp lánh trên lưng vô cùng
                   đặc biệt mà các dòng Koi các không có.
@@ -277,14 +292,13 @@ export default function Koiasagi() {
 
               <div id="detailed-content">
                 <h3 style={{ color: "red" }}>2. Cách nhận biết Asagi Koi</h3>
-                <img />
 
                 <div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Cùng tìm hiểu các thông số kỹ thuật của dòng Asagi Koi hiện
                     nay trên thị trường
                   </p>
-                  <ul>
+                  <ul style={{ fontSize: "15px", fontWeight: "400" }}>
                     <li>Size kích thước : 10 – 55cm</li>
                     <li>Nguồn gốc: Oya, Yamaju</li>
                     <li>Loại: Thuần chủng Nhật Bản</li>
@@ -293,7 +307,7 @@ export default function Koiasagi() {
                   </ul>
                 </div>
                 <div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Asagi Koi cùng với giống Goshiki koi là một trong những dòng
                     cá Koi có lịch sử lâu đời hiện nay, chúng được coi là tổ
                     tiên của các loài loài cá Koi Nishikigoi. Cá Koi Asagi có
@@ -303,9 +317,17 @@ export default function Koiasagi() {
                   </p>
                   <ul>
                     <li>
-                      <span style={{ fontWeight: "bold" }}>Hình dáng: </span>
+                      <span
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "600",
+                          color: "red",
+                        }}
+                      >
+                        Hình dáng:{" "}
+                      </span>
                       <br />
-                      <p>
+                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
                         Asagi koi có hình dáng cơ bản giống như cá chép, thân
                         dày hơn cá chép. Đầu của koi luôn có màu trắng sáng,
                         phần má có màu sắc khác, xương vây có thể nhìn thấy bằng
@@ -313,9 +335,17 @@ export default function Koiasagi() {
                       </p>
                     </li>
                     <li>
-                      <span style={{ fontWeight: "bold" }}>Hình dáng: </span>
+                      <span
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "600",
+                          color: "red",
+                        }}
+                      >
+                        Hình dáng:{" "}
+                      </span>
                       <br />
-                      <p>
+                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
                         Asagi koi có hình dáng cơ bản giống như cá chép, thân
                         dày hơn cá chép. Đầu của koi luôn có màu trắng sáng,
                         phần má có màu sắc khác, xương vây có thể nhìn thấy bằng
@@ -323,9 +353,17 @@ export default function Koiasagi() {
                       </p>
                     </li>
                     <li>
-                      <span style={{ fontWeight: "bold" }}>Màu sắc: </span>
+                      <span
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "600",
+                          color: "red",
+                        }}
+                      >
+                        Màu sắc:{" "}
+                      </span>
                       <br />
-                      <ul>
+                      <ul style={{ fontSize: "15px", fontWeight: "400" }}>
                         <li>
                           Lưng hoàn toàn không có hiện tượng pha màu như các
                           dòng cá koi khác. Koi Asagi có vảy màu xanh lam hoàn
@@ -344,9 +382,17 @@ export default function Koiasagi() {
                     </li>
                     <li>
                       {" "}
-                      <span style={{ fontWeight: "bold" }}>Vây: </span>
+                      <span
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "600",
+                          color: "red",
+                        }}
+                      >
+                        Vây:{" "}
+                      </span>
                       <br />
-                      <p>
+                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
                         Màu sắc của vây sẽ trùng màu với phần bụng dưới của
                         chúng. Nếu bụng màu đỏ cam thì phần vây của chúng cũng
                         sẽ có màu đỏ cam và có màu trắng ở viền, tương tự với
@@ -355,9 +401,17 @@ export default function Koiasagi() {
                     </li>
                     <li>
                       {" "}
-                      <span style={{ fontWeight: "bold" }}>Râu và mắt: </span>
+                      <span
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "600",
+                          color: "red",
+                        }}
+                      >
+                        Râu và mắt:{" "}
+                      </span>
                       <br />
-                      <p>
+                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
                         Mắt của cá Koi Asagi tròn và lớn, 2 râu dài, to hơn so
                         với cá chép bình thường, phần đầu trắng quan sát được cả
                         mũi của cá.
@@ -365,9 +419,17 @@ export default function Koiasagi() {
                     </li>
                     <li>
                       {" "}
-                      <span style={{ fontWeight: "bold" }}>Vẩy: </span>
+                      <span
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "600",
+                          color: "red",
+                        }}
+                      >
+                        Vẩy:{" "}
+                      </span>
                       <br />
-                      <ul>
+                      <ul style={{ fontSize: "15px", fontWeight: "400" }}>
                         <li>
                           Cá koi asagi có vảy màu xanh ánh kim, các vảy trên
                           thân cá nổi rõ. Nhìn từ xa, asagi-koi trông giống như
@@ -385,8 +447,8 @@ export default function Koiasagi() {
               </div>
               <div id="3">
                 <h3 style={{ color: "red" }}>3. Cách chọn mua Cá Asagi Koi</h3>
-                <div style={{ textAlign: "center" }}>
-                  <p>
+                <div>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Cá Koi Asagi Doitsu và cá koi ginrin được nhiều người quan
                     tâm bởi yếu tố phong thủy mà loài cá này mang lại vô cùng
                     đặc biệt. Theo người Nhật thì những khoang màu xanh, đỏ,
@@ -397,27 +459,51 @@ export default function Koiasagi() {
                 </div>
                 <ul>
                   <li>
-                    <span style={{ fontWeight: "bold" }}>
-                      Chọn cá có tính cân xứng
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "600",
+                        color: "red",
+                      }}
+                    >
+                      Chọn cá có tính cân xứng : {""}
                     </span>
-                    Một con cá Koi Asagi lý tưởng thì tính cân xứng khá quan
-                    trọng, nó được biểu hiện bởi những mảng màu đỏ Hi. Các mảng
-                    màu đỏ Hi này sẽ chạy dọc từ phần đầu cho tời phần đuôi ở
-                    hai bên lưng của Asagi.
+                    <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                      Một con cá Koi Asagi lý tưởng thì tính cân xứng khá quan
+                      trọng, nó được biểu hiện bởi những mảng màu đỏ Hi. Các
+                      mảng màu đỏ Hi này sẽ chạy dọc từ phần đầu cho tời phần
+                      đuôi ở hai bên lưng của Asagi.
+                    </p>
                   </li>
                   <li>
-                    <span style={{ fontWeight: "bold" }}>Mắt cá</span>
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "600",
+                        color: "red",
+                      }}
+                    >
+                      Mắt cá
+                    </span>
                     <br />
-                    <p>
+                    <p style={{ fontSize: "15px", fontWeight: "400" }}>
                       Cá Koi Asagi được người chơi cá cảnh đánh giá cao là do nó
                       có đôi mắt màu đỏ. Phần mang cá của nó cũng phải có viền
                       đỏ Hi
                     </p>
                   </li>
                   <li>
-                    <span style={{ fontWeight: "bold" }}>Đầu cá</span>
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "600",
+                        color: "red",
+                      }}
+                    >
+                      Đầu cá
+                    </span>
                     <br />
-                    <p>
+                    <p style={{ fontSize: "15px", fontWeight: "400" }}>
                       Nên chọn cá Koi có cái đầu trắng muốt thuần khiết đôi lúc
                       đầu của nó phát triển sẽ có sắc tố đỏ. Đặc biệt khi chọn
                       Asagi non thì nên kiểm tra chop mũi để nhận biết sau này
@@ -425,11 +511,19 @@ export default function Koiasagi() {
                     </p>
                   </li>
                   <li>
-                    <span style={{ fontWeight: "bold" }}>Phần lưng</span>: Phần
-                    đỏ trên đầu tương đối giống tancho kohaku. Ngoài ra trên
-                    thân còn có các đốm đỏ phân bổ đều trên thân
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "600",
+                        color: "red",
+                      }}
+                    >
+                      Phần lưng
+                    </span>
+                    : Phần đỏ trên đầu tương đối giống tancho kohaku. Ngoài ra
+                    trên thân còn có các đốm đỏ phân bổ đều trên thân
                     <br />
-                    <p>
+                    <p style={{ fontSize: "15px", fontWeight: "400" }}>
                       Phần lưng Asagi chính là bộ phận quan trọng quyết định
                       phần lớn vẻ đẹp của nó. Và sẽ được bao phủ trong lớp vảy
                       màu xanh với tông xanh nhạt dần đến gần gốc của vảy kết
@@ -443,13 +537,13 @@ export default function Koiasagi() {
                   4. Cách chăm sóc cá Koi Asagi Doitsu
                 </h3>
                 <div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Để mua được Koi Asagi đạt tiêu chuẩn rất khó bởi phải từ 3
                     năm tuổi bạn mới có thể nhận biết nó đẹp hay không. Chính vì
                     thế mà việc chăm sóc một em cá Koi là vô cùng khó và cần
                     phải đảm bảo đầy đủ các tiêu chí sau:
                   </p>
-                  <ul>
+                  <ul style={{ fontSize: "15px", fontWeight: "400" }}>
                     <li>
                       Để cá phát triển tốt cần duy trì độ pH trong hồ từ 7 – 7.5
                       đạt chuẩn
@@ -495,15 +589,23 @@ export default function Koiasagi() {
                   5. Các dòng cá Asagi koi trên thị trường
                 </h3>
                 <div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Trên thị trường hiện nay có nhiều loại cá koi Asagi, phổ
                     biến như:
                   </p>
                   <ul>
                     <li>
-                      <span style={{ fontWeight: "bold" }}>Ginrin Asagi: </span>
+                      <span
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "600",
+                          color: "red",
+                        }}
+                      >
+                        Ginrin Asagi:{" "}
+                      </span>
                       <br />
-                      <p>
+                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
                         có lớp vẩy mày xanh ánh kim kết hợp cùng với xanh dương
                         tạo cảm giác bóng bẩy, rõ nét, lấp lánh. Đây là dòng cá
                         nỗi bật nhất trong các dòng Asagi
@@ -514,9 +616,17 @@ export default function Koiasagi() {
                       </div>
                     </li>
                     <li>
-                      <span style={{ fontWeight: "bold" }}>Konjo Asagi: </span>
+                      <span
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "600",
+                          color: "red",
+                        }}
+                      >
+                        Konjo Asagi:{" "}
+                      </span>
                       <br />
-                      <p>
+                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
                         Đặc điểm là màu xanh dương đậm nhất, cùng với điểm Hi đỏ
                         cam, tực rỡ, nổi bật, rõ các đường biên.
                       </p>
@@ -526,9 +636,17 @@ export default function Koiasagi() {
                       </div>
                     </li>
                     <li>
-                      <span style={{ fontWeight: "bold" }}>Narumi Asagi: </span>
+                      <span
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "600",
+                          color: "red",
+                        }}
+                      >
+                        Narumi Asagi:{" "}
+                      </span>
                       <br />
-                      <p>
+                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
                         Vẩy màu xanh nhạt, ở giữa màu xanh đậm, viền ngoài nhạt
                         dần.
                       </p>
@@ -538,18 +656,36 @@ export default function Koiasagi() {
                       </div>
                     </li>
                     <li>
-                      <span style={{ fontWeight: "bold" }}>Asaki Sanke: </span>
+                      <span
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "600",
+                          color: "red",
+                        }}
+                      >
+                        Asaki Sanke:{" "}
+                      </span>
                       <br />
-                      <p>Vảy màu vàng nhạt/ xám nhạt nhất của nhà Asagi.</p>
+                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                        Vảy màu vàng nhạt/ xám nhạt nhất của nhà Asagi.
+                      </p>
                       <div style={{ textAlign: "center" }}>
                         <img src="src/assets/Koi-Asagi/4789c7fd1367ba7ae35a271f1b912a8c.png" />
                         <p>Asaki Sanke</p>
                       </div>
                     </li>
                     <li>
-                      <span style={{ fontWeight: "bold" }}>Mizu Sanke: </span>
+                      <span
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "600",
+                          color: "red",
+                        }}
+                      >
+                        Mizu Sanke:{" "}
+                      </span>
                       <br />
-                      <p>
+                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
                         Lưng có màu xanh nhạt, bụng dưới có màu trắng, đầu và
                         bụng trên có màu đỏ cam.{" "}
                       </p>
@@ -559,9 +695,17 @@ export default function Koiasagi() {
                       </div>
                     </li>
                     <li>
-                      <span style={{ fontWeight: "bold" }}>Hi Sanke: </span>
+                      <span
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "600",
+                          color: "red",
+                        }}
+                      >
+                        Hi Sanke:{" "}
+                      </span>
                       <br />
-                      <p>
+                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
                         Màu đỏ từ bụng kéo dài lên phía trên đường biên, Vây,
                         đầu có thê toàn bộ là màu Hi đỏ cam
                       </p>
@@ -576,7 +720,7 @@ export default function Koiasagi() {
               <div id="6">
                 <h3 style={{ color: "red" }}>6. Giá cá koi Asagi bao nhiêu?</h3>
                 <div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Hiện tại Siêu thị Cá Koi Vn đang cung cấp dòng cá koi Asagi
                     chuẩn từ cá nhật đến cá F1 với giá cá koi cực kỳ ưu đãi. Có
                     thể nói Siêu thị Cá Koi VN là một trong những đơn vị cung
@@ -587,24 +731,37 @@ export default function Koiasagi() {
                 <div>
                   <ul>
                     <li>
-                      <span style={{ fontWeight: "bold" }} id="61">
+                      <span
+                        style={{
+                          fontSize: "20px",
+                          fontWeight: "600",
+                          color: "red",
+                        }}
+                        id="61"
+                      >
                         6.1 Giá cá koi Asagi F1
                       </span>
                       <br />
-                      Cá koi có thể tồn tại trong nhiều nhiệt độ nước, khả năng
-                      chịu lạnh tốt. Tuy nhiên không nên để đáy hồ bị đóng băng
-                      để hạn chế ảnh hưởng cá phát triển.
-                      <img src="src/assets/Koi-Asagi/ca-koi-asagi-1.webp" />
+                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                        Cá koi có thể tồn tại trong nhiều nhiệt độ nước, khả
+                        năng chịu lạnh tốt. Tuy nhiên không nên để đáy hồ bị
+                        đóng băng để hạn chế ảnh hưởng cá phát triển.
+                      </p>
+                      <div style={{ textAlign: "center" }}>
+                        <img src="src/assets/Koi-Asagi/ca-koi-asagi-1.webp" />
+                      </div>
                     </li>
                     <li>
                       <span style={{ fontWeight: "bold" }} id="61">
                         6.2 Giá cá koi Asagi Nhật chuẩn
                       </span>
                       <br />
-                      Ngoài ra còn có con Asagi Koi thuần chủng … được xếp vào
-                      hàng hiếm có kích thước lớn thì giá cá koi lên đến vài
-                      nghìn đến hàng chục nghìn USD. Do đó nếu bạn muốn mua hãy
-                      liên hệ với chúng tôi để được tư vấn tận tình.
+                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                        Ngoài ra còn có con Asagi Koi thuần chủng … được xếp vào
+                        hàng hiếm có kích thước lớn thì giá cá koi lên đến vài
+                        nghìn đến hàng chục nghìn USD. Do đó nếu bạn muốn mua
+                        hãy liên hệ với chúng tôi để được tư vấn tận tình.
+                      </p>
                     </li>
                   </ul>
                 </div>
@@ -617,7 +774,7 @@ export default function Koiasagi() {
                   <div style={{ textAlign: "center" }}>
                     <img src="src/assets/Koi-Asagi/ca-koi-asagi-2.webp" />
                   </div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Siêu thị cá Koi VN một trong những địa chỉ uy tín cung cấp
                     cho bạn đa dạng các mẫu cá Koi chất lượng, khỏe mạnh. Trong
                     đó, nổi bật là dòng cá Koi Asagi đẹp mắt đang được ưa chuộng
@@ -643,60 +800,6 @@ export default function Koiasagi() {
           </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            backgroundImage: `url("src/assets/pexels-quang-nguyen-vinh-222549-2131828.jpg")`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          <div
-            style={{
-              width: "100%",
-              margin: "100px",
-              color: "white",
-              display: "flex",
-            }}
-          >
-            <div
-              style={{
-                width: "100%",
-                color: "black",
-                fontSize: "20px",
-                marginTop: "70px",
-                marginLeft: "20px",
-              }}
-            >
-              <h1 style={{ color: "white" }}>Điểm nổi bật của KoiStoreVN</h1>
-
-              <ul style={{ fontSize: "16px", color: "white" }}>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  Cá nhập khẩu chất lượng cao, nhập trực tiếp tại các trang trại
-                  Cá Koi Nhật Bản
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  Khách hàng yên tâm nuôi cá vì luôn có chuyên gia đồng hành
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  Đa dạng sản phẩm, dịch vụ chăm sóc Cá Koi và Hồ Cá Koi
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  KoiStoreVN tự hào là đơn vị đầu tiên tại miền bắc được chuyển
-                  giao công nghệ mô hình trại SAKAI (Sakai fish farm, Hiroshima,
-                  Japan)
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  Trại gồm 120 hồ lớn chuẩn theo mô hình trại SAKAI
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
         <div>
           <CardGrid cardData={filteredCards} />
         </div>

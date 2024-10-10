@@ -91,11 +91,16 @@ export default function Koiogon() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://66fd0298c3a184a84d18b799.mockapi.io/Koi"
-        );
-        setCardData(response.data);
+        const response = await axios.get("http://localhost:4000/getAllKoi");
+        console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
+        if (Array.isArray(response.data.result)) {
+          setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
+          console.log("Card data set successfully:", response.data.result); // Kiểm tra sau khi set
+        } else {
+          console.error("Dữ liệu không phải là mảng:", response.data);
+        }
       } catch (err) {
+        console.error("Error fetching data:", err); // Ghi lại lỗi
         setError(err);
       } finally {
         setLoading(false);
@@ -104,10 +109,9 @@ export default function Koiogon() {
 
     fetchData();
   }, []);
-
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  const filteredCards = cardData.filter((card) => card.Breed === selectedBreed);
+  const filteredCards = cardData.filter((card) => card.CategoryID === "2");
   return (
     <>
       <div
@@ -154,7 +158,7 @@ export default function Koiogon() {
                       onClick={handleScroll1}
                       style={{
                         cursor: "pointer",
-                        color: "black",
+                        color: "blue",
                         fontWeight: "600",
                         fontSize: "20px",
                       }}
@@ -167,7 +171,7 @@ export default function Koiogon() {
                       onClick={handleScroll2}
                       style={{
                         cursor: "pointer",
-                        color: "black",
+                        color: "blue",
                         fontWeight: "600",
                         fontSize: "20px",
                       }}
@@ -180,7 +184,7 @@ export default function Koiogon() {
                       onClick={handleScroll3}
                       style={{
                         cursor: "pointer",
-                        color: "black",
+                        color: "blue",
                         fontWeight: "600",
                         fontSize: "20px",
                       }}
@@ -193,7 +197,7 @@ export default function Koiogon() {
                           onClick={handleScroll31}
                           style={{
                             cursor: "pointer",
-                            color: "black",
+                            color: "blue",
                             fontWeight: "600",
                             fontSize: "20px",
                           }}
@@ -206,7 +210,7 @@ export default function Koiogon() {
                           onClick={handleScroll32}
                           style={{
                             cursor: "pointer",
-                            color: "black",
+                            color: "blue",
                             fontWeight: "600",
                             fontSize: "20px",
                           }}
@@ -219,7 +223,7 @@ export default function Koiogon() {
                           onClick={handleScroll33}
                           style={{
                             cursor: "pointer",
-                            color: "black",
+                            color: "blue",
                             fontWeight: "600",
                             fontSize: "20px",
                           }}
@@ -232,7 +236,7 @@ export default function Koiogon() {
                           onClick={handleScroll34}
                           style={{
                             cursor: "pointer",
-                            color: "black",
+                            color: "blue",
                             fontWeight: "600",
                             fontSize: "20px",
                           }}
@@ -245,7 +249,7 @@ export default function Koiogon() {
                           onClick={handleScroll35}
                           style={{
                             cursor: "pointer",
-                            color: "black",
+                            color: "blue",
                             fontWeight: "600",
                             fontSize: "20px",
                           }}
@@ -258,7 +262,7 @@ export default function Koiogon() {
                           onClick={handleScroll36}
                           style={{
                             cursor: "pointer",
-                            color: "black",
+                            color: "blue",
                             fontWeight: "600",
                             fontSize: "20px",
                           }}
@@ -273,7 +277,7 @@ export default function Koiogon() {
                       onClick={handleScroll4}
                       style={{
                         cursor: "pointer",
-                        color: "black",
+                        color: "blue",
                         fontWeight: "600",
                         fontSize: "20px",
                       }}
@@ -286,7 +290,7 @@ export default function Koiogon() {
                       onClick={handleScroll5}
                       style={{
                         cursor: "pointer",
-                        color: "black",
+                        color: "blue",
                         fontWeight: "600",
                         fontSize: "20px",
                       }}
@@ -312,7 +316,7 @@ export default function Koiogon() {
                     style={{
                       fontWeight: "600",
                       color: "blue",
-                      fontSize: "15px",
+                      fontSize: "20px",
                     }}
                   >
                     Koi Ogon
@@ -381,9 +385,11 @@ export default function Koiogon() {
                 </p>
                 <div style={{ textAlign: "center" }}>
                   <img src="src/assets/Koi-Ogon-1/image14-1661495518-730-width801height889.jpg" />
-                  <p>Đặc điểm của Koi ogon</p>
+                  <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                    Đặc điểm của Koi ogon
+                  </p>
                 </div>
-                <p>
+                <p style={{ fontWeight: "400", fontSize: "15px" }}>
                   Ngoài màu sắc rực rỡ, Koi Ogon cũng được yêu thích bởi vẻ đẹp
                   tinh tế, sang trọng và thon gọn của chúng. Thân cá Koi Ogon
                   cũng có hình dạng khá dài, chúng có đầu tròn và mắt lớn, đuôi
@@ -405,144 +411,212 @@ export default function Koiogon() {
                 </h3>
                 <ul>
                   <li>
-                    <span style={{ fontWeight: "bold", color: "blue" }} id="31">
+                    <span
+                      style={{
+                        fontWeight: "600",
+                        color: "blue",
+                        fontSize: "20px",
+                      }}
+                      id="31"
+                    >
                       3.1 Cá Koi Platinum Ogon
                     </span>
                     <br />
-                    Cá Koi Platinum Ogon là một trong những dòng cá Koi Ogon đẹp
-                    và đặc biệt nhất với màu trắng bạc sang trọng. Loại cá Koi
-                    này được tạo ra từ sự pha trộn giữa các dòng Koi Ogon khác
-                    nhau, tạo nên một loài cá có màu sắc đa dạng và độc đáo.
-                    <br />
-                    Với bề ngoài thanh lịch và trang nhã, Platinum Ogon được yêu
-                    thích vì sự tinh tế của nó. Thân cá Koi Platinum Ogon có màu
-                    trắng bạc óng ánh vô cùng đẹp mắt, tạo nên một vẻ ngoài tinh
-                    khôi, thanh tao và đẹp mắt. Chúng có thân hình thon gọn và
-                    đầu nhỏ, vây và đuôi rộng và dài, tạo thành một hình dáng
-                    hoàn hảo và thanh lịch.Điểm nhấn nổi bật của loài cá này là
-                    màu sắc trắng bạc đa dạng và tinh tế, tạo nên một sự độc đáo
-                    và quyến rũ. Một số loài Platinum Ogon có thể có màu sắc pha
-                    trộn với màu vàng hoặc cam, tạo nên sự sang trọng và quý
-                    phái đến từng tiểu tiết.
+                    <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                      Cá Koi Platinum Ogon là một trong những dòng cá Koi Ogon
+                      đẹp và đặc biệt nhất với màu trắng bạc sang trọng. Loại cá
+                      Koi này được tạo ra từ sự pha trộn giữa các dòng Koi Ogon
+                      khác nhau, tạo nên một loài cá có màu sắc đa dạng và độc
+                      đáo.
+                      <br />
+                      Với bề ngoài thanh lịch và trang nhã, Platinum Ogon được
+                      yêu thích vì sự tinh tế của nó. Thân cá Koi Platinum Ogon
+                      có màu trắng bạc óng ánh vô cùng đẹp mắt, tạo nên một vẻ
+                      ngoài tinh khôi, thanh tao và đẹp mắt. Chúng có thân hình
+                      thon gọn và đầu nhỏ, vây và đuôi rộng và dài, tạo thành
+                      một hình dáng hoàn hảo và thanh lịch.Điểm nhấn nổi bật của
+                      loài cá này là màu sắc trắng bạc đa dạng và tinh tế, tạo
+                      nên một sự độc đáo và quyến rũ. Một số loài Platinum Ogon
+                      có thể có màu sắc pha trộn với màu vàng hoặc cam, tạo nên
+                      sự sang trọng và quý phái đến từng tiểu tiết.
+                    </p>
                     <div style={{ textAlign: "center" }}>
                       <img src="src/assets/Koi-Ogon-1/image14-1661495518-730-width801height889.jpg" />
-                      <p>KOI PLATINUM OGON</p>
+                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                        KOI PLATINUM OGON
+                      </p>
                     </div>
                   </li>
                   <li>
-                    <span style={{ fontWeight: "bold", color: "blue" }} id="32">
+                    <span
+                      style={{
+                        fontWeight: "600",
+                        color: "blue",
+                        fontSize: "20px",
+                      }}
+                      id="32"
+                    >
                       3.2 Cá Koi Yamabuki Ogon
                     </span>
                     <br />
-                    Cá Koi Yamabuki Ogon là một trong những giống cá Koi Ogon
-                    phổ biến và được ưa chuộng trên khắp thế giới. Đây là một
-                    dòng cá có màu vàng kim rực rỡ với những đặc trưng màu sắc
-                    rất rõ nét và không thể nào bị nhầm lẫn được. Đây là một
-                    trong những loại cá Koi không có khuyết điểm về màu sắc.
-                    <br />
-                    Yamabuki Ogon có màu vàng đậm trên lưng cá, được phối hợp
-                    với các chấm đen hoặc sọc đen trên lưng. Màu vàng của
-                    Yamabuki Ogon được xem là đặc trưng của loài cá này và tạo
-                    nên sự nổi bật và rực rỡ cho màu sắc của chúng. Vây và đuôi
-                    của Yamabuki Ogon đều có màu vàng nhạt, tạo thành một sự
-                    phối hợp màu sắc hài hoà và đẹp mắt.
-                    <br />
-                    Yamabuki Ogon có kích thước tối đa khoảng 1 mét và tuổi thọ
-                    của chúng vào khoảng 35 năm. Là một dòng cá Koi có tính tình
-                    vô cùng hiền hoà và thân thiện. Chúng cũng rất dễ nuôi, có
-                    thể sinh sống trong các bể cá ở nhiều điều kiện khác nhau và
-                    không có quá nhiều yêu cầu về nước.
+                    <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                      Cá Koi Yamabuki Ogon là một trong những giống cá Koi Ogon
+                      phổ biến và được ưa chuộng trên khắp thế giới. Đây là một
+                      dòng cá có màu vàng kim rực rỡ với những đặc trưng màu sắc
+                      rất rõ nét và không thể nào bị nhầm lẫn được. Đây là một
+                      trong những loại cá Koi không có khuyết điểm về màu sắc.
+                      <br />
+                      Yamabuki Ogon có màu vàng đậm trên lưng cá, được phối hợp
+                      với các chấm đen hoặc sọc đen trên lưng. Màu vàng của
+                      Yamabuki Ogon được xem là đặc trưng của loài cá này và tạo
+                      nên sự nổi bật và rực rỡ cho màu sắc của chúng. Vây và
+                      đuôi của Yamabuki Ogon đều có màu vàng nhạt, tạo thành một
+                      sự phối hợp màu sắc hài hoà và đẹp mắt.
+                      <br />
+                      Yamabuki Ogon có kích thước tối đa khoảng 1 mét và tuổi
+                      thọ của chúng vào khoảng 35 năm. Là một dòng cá Koi có
+                      tính tình vô cùng hiền hoà và thân thiện. Chúng cũng rất
+                      dễ nuôi, có thể sinh sống trong các bể cá ở nhiều điều
+                      kiện khác nhau và không có quá nhiều yêu cầu về nước.
+                    </p>
                     <div style={{ textAlign: "center" }}>
                       <img src="src/assets/Koi-Ogon-1/img_0095.png" />
-                      <p>KOI YAMABUIKI OGON</p>
+                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                        KOI YAMABUIKI OGON
+                      </p>
                     </div>
                   </li>
 
                   <li>
-                    <span style={{ fontWeight: "bold", color: "blue" }} id="33">
+                    <span
+                      style={{
+                        fontWeight: "600",
+                        color: "blue",
+                        fontSize: "20px",
+                      }}
+                      id="33"
+                    >
                       3.3 Cá Koi Hi Ogon
                     </span>
                     <br />
-                    Cá Koi Hi Ogon là một trong những giống cá Koi được yêu
-                    thích trên toàn thế giới với màu sắc chủ đạo là màu đỏ tươi.
-                    Tuy nhiên, nhiều người mới tập chơi cá hay gặp phải nhầm lẫn
-                    giữa Hi Ogon và Orenji Ogon – một giống cá Koi khác cũng có
-                    màu đỏ. Tuy nhiên, Hi Ogon có màu đỏ thắm, đậm hơn và phần
-                    đuôi cũng có màu sắc đậm hơn so với phần thân.
-                    <br />
-                    Tuy nhiên, khi được nuôi dưỡng đúng cách, cá Koi Hi Ogon có
-                    thể phát triển và tồn tại lâu dài, chúng có thể duy trì tuổi
-                    thọ lên tới 25-35 năm. Các triển lãm cá cảnh và cuộc thi cá
-                    Koi cũng thường trưng bày những con cá Koi Hi Ogon đẹp nhất
-                    để khán giả chiêm ngưỡng và thưởng thức.
+                    <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                      Cá Koi Hi Ogon là một trong những giống cá Koi được yêu
+                      thích trên toàn thế giới với màu sắc chủ đạo là màu đỏ
+                      tươi. Tuy nhiên, nhiều người mới tập chơi cá hay gặp phải
+                      nhầm lẫn giữa Hi Ogon và Orenji Ogon – một giống cá Koi
+                      khác cũng có màu đỏ. Tuy nhiên, Hi Ogon có màu đỏ thắm,
+                      đậm hơn và phần đuôi cũng có màu sắc đậm hơn so với phần
+                      thân.
+                      <br />
+                      Tuy nhiên, khi được nuôi dưỡng đúng cách, cá Koi Hi Ogon
+                      có thể phát triển và tồn tại lâu dài, chúng có thể duy trì
+                      tuổi thọ lên tới 25-35 năm. Các triển lãm cá cảnh và cuộc
+                      thi cá Koi cũng thường trưng bày những con cá Koi Hi Ogon
+                      đẹp nhất để khán giả chiêm ngưỡng và thưởng thức.
+                    </p>
                     <div style={{ textAlign: "center" }}>
                       <img src="src/assets/Koi-Ogon-1/hi-ogon.jpg" />
-                      <p>KOI HI OGON </p>
+                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                        KOI HI OGON{" "}
+                      </p>
                     </div>
                   </li>
 
                   <li>
-                    <span style={{ fontWeight: "bold", color: "blue" }} id="34">
+                    <span
+                      style={{
+                        fontWeight: "600",
+                        color: "blue",
+                        fontSize: "20px",
+                      }}
+                      id="34"
+                    >
                       3.4 Cá Koi Orenji Ogon
                     </span>
                     <br />
-                    Cá Koi Orenji Ogon là một trong những dòng cá Koi được yêu
-                    thích nhất với màu sắc chủ đạo là cam. Thân cá của chúng có
-                    vảy rồng óng ánh, tạo nên một vẻ ngoài vô cùng bắt mắt. Phần
-                    vây đuôi và vây lưng của cá đều có màu tuyết trắng giống với
-                    Yamabuki Ogon Koi, góp phần tạo thành một kết cấu thân cá
-                    hoàn hảo.
-                    <br />
-                    Việc nuôi cá Koi Orenji Ogon cần có kiến thức và kinh nghiệm
-                    để giám sát và quản lý hồ cá để đảm bảo chất lượng và sự
-                    tăng trưởng tối ưu nhất cho chúng. Nước trong hồ nuôi cần
-                    được kiểm soát chặt chẽ độ pH, độ kiềm và nhiệt độ thích
-                    hợp, cũng như nguồn thức ăn chất lượng cao để đảm bảo nhu
-                    cầu phát triển của cá.
+                    <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                      Cá Koi Orenji Ogon là một trong những dòng cá Koi được yêu
+                      thích nhất với màu sắc chủ đạo là cam. Thân cá của chúng
+                      có vảy rồng óng ánh, tạo nên một vẻ ngoài vô cùng bắt mắt.
+                      Phần vây đuôi và vây lưng của cá đều có màu tuyết trắng
+                      giống với Yamabuki Ogon Koi, góp phần tạo thành một kết
+                      cấu thân cá hoàn hảo.
+                      <br />
+                      Việc nuôi cá Koi Orenji Ogon cần có kiến thức và kinh
+                      nghiệm để giám sát và quản lý hồ cá để đảm bảo chất lượng
+                      và sự tăng trưởng tối ưu nhất cho chúng. Nước trong hồ
+                      nuôi cần được kiểm soát chặt chẽ độ pH, độ kiềm và nhiệt
+                      độ thích hợp, cũng như nguồn thức ăn chất lượng cao để đảm
+                      bảo nhu cầu phát triển của cá.
+                    </p>
                     <div style={{ textAlign: "center" }}>
                       <img src="src/assets/Koi-Ogon-1/orenji-ogon.jpg" />
-                      <p>KOI ORENJI OGON </p>
+                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                        KOI ORENJI OGON{" "}
+                      </p>
                     </div>
                   </li>
                   <li>
-                    <span style={{ fontWeight: "bold", color: "blue" }} id="35">
+                    <span
+                      style={{
+                        fontWeight: "600",
+                        color: "blue",
+                        fontSize: "20px",
+                      }}
+                      id="35"
+                    >
                       3.5 Cá Koi Mukashi Ogon
                     </span>
                     <br />
-                    Cá Koi Mukashi Ogon là một trong những dòng cá Koi có lịch
-                    sử lai tạo lâu đời và được yêu thích vì nét đẹp cổ xưa, độc
-                    đáo của chúng. Mukashi Ogon có nghĩa là "vàng xưa", bởi vì
-                    chúng có màu sắc vàng tươi và được coi như một biểu tượng
-                    của sự thịnh vượng và may mắn theo văn hóa Nhật Bản.
-                    <br />
-                    Thân cá của Mukashi Ogon có màu vàng tươi đặc trưng, tuy
-                    vậy, màu sắc lại không đồng đều trên cơ thể cá. Thường có
-                    một hoặc hai vết trắng ở phần đầu của thân, tạo thành một vẻ
-                    đẹp khác biệt và độc đáo. Ngoài ra, các vây của chú cá cũng
-                    có màu vàng tươi, tạo nên sự đồng điệu với thân cá.
+                    <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                      Cá Koi Mukashi Ogon là một trong những dòng cá Koi có lịch
+                      sử lai tạo lâu đời và được yêu thích vì nét đẹp cổ xưa,
+                      độc đáo của chúng. Mukashi Ogon có nghĩa là "vàng xưa",
+                      bởi vì chúng có màu sắc vàng tươi và được coi như một biểu
+                      tượng của sự thịnh vượng và may mắn theo văn hóa Nhật Bản.
+                      <br />
+                      Thân cá của Mukashi Ogon có màu vàng tươi đặc trưng, tuy
+                      vậy, màu sắc lại không đồng đều trên cơ thể cá. Thường có
+                      một hoặc hai vết trắng ở phần đầu của thân, tạo thành một
+                      vẻ đẹp khác biệt và độc đáo. Ngoài ra, các vây của chú cá
+                      cũng có màu vàng tươi, tạo nên sự đồng điệu với thân cá.
+                    </p>
                     <div style={{ textAlign: "center" }}>
                       <img src="src/assets/Koi-Ogon-1/mukashi-ogon.webp" />
-                      <p>KOI MUKASHI OGON </p>
+                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                        KOI MUKASHI OGON{" "}
+                      </p>
                     </div>
                   </li>
                   <li>
-                    <span style={{ fontWeight: "bold", color: "blue" }} id="36">
+                    <span
+                      style={{
+                        fontWeight: "600",
+                        color: "blue",
+                        fontSize: "20px",
+                      }}
+                      id="36"
+                    >
                       3.6 Nezu Ogon Koi
                     </span>
                     <br />
-                    Cá Koi Nezu Ogon là một trong những dòng cá Koi được yêu
-                    thích với màu sắc độc đáo và khác lạ. "Nezu" có nghĩa là
-                    "chuột đồng", vì vậy tên của chú cá được đặt theo hình dáng
-                    và màu sắc của mình, giống như một chú chuột đồng.
-                    <br />
-                    Thân cá của Nezu Ogon có màu bạc nhạt đặc trưng, phần lớn
-                    thân cá được bao phủ bằng các vảy trắng long lanh tựa như
-                    phấn trắng, tạo nên một vẻ đẹp sang trọng và khác lạ. Một số
-                    vảy có thể có màu đen hoặc nâu, tạo nên một sự đồng điệu và
-                    khác biệt đối với chú cá.
+                    <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                      Cá Koi Nezu Ogon là một trong những dòng cá Koi được yêu
+                      thích với màu sắc độc đáo và khác lạ. "Nezu" có nghĩa là
+                      "chuột đồng", vì vậy tên của chú cá được đặt theo hình
+                      dáng và màu sắc của mình, giống như một chú chuột đồng.
+                      <br />
+                      Thân cá của Nezu Ogon có màu bạc nhạt đặc trưng, phần lớn
+                      thân cá được bao phủ bằng các vảy trắng long lanh tựa như
+                      phấn trắng, tạo nên một vẻ đẹp sang trọng và khác lạ. Một
+                      số vảy có thể có màu đen hoặc nâu, tạo nên một sự đồng
+                      điệu và khác biệt đối với chú cá.
+                    </p>
                     <div style={{ textAlign: "center" }}>
                       <img src="src/assets/Koi-Ogon-1/nezu-ogon.jpg" />
-                      <p>KOI NEZU OGON </p>
+                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                        KOI NEZU OGON{" "}
+                      </p>
                     </div>
                   </li>
                 </ul>
@@ -551,9 +625,13 @@ export default function Koiogon() {
                 <h3 style={{ color: "red" }}>
                   4. Cách nuôi cá Koi ogon khỏe mạnh, phát triển tốt
                 </h3>
-                <p>Sau đây là cách nuôi cá Koi Ogon phát triển khỏe mạnh:</p>
-                <p style={{ fontWeight: "bold" }}>Chọn hồ nuôi phù hợp</p>
-                <ul>
+                <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                  Sau đây là cách nuôi cá Koi Ogon phát triển khỏe mạnh:
+                </p>
+                <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                  Chọn hồ nuôi phù hợp
+                </p>
+                <ul style={{ fontWeight: "400", fontSize: "15px" }}>
                   <li>
                     Về diện tích, hồ nuôi tối thiểu cần có diện tích 4-5m2 và độ
                     sâu khoảng 1,2 đến 1,5 m.
@@ -573,8 +651,10 @@ export default function Koiogon() {
                     sẽ và cân đối dinh dưỡng.
                   </li>
                 </ul>
-                <p style={{ fontWeight: "bold" }}>Đảm bảo chất lượng nước</p>
-                <ul>
+                <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                  Đảm bảo chất lượng nước
+                </p>
+                <ul style={{ fontWeight: "400", fontSize: "15px" }}>
                   <li>
                     pH: Khoảng pH lý tưởng đối với cá Koi Ogon là 7.2-7.6. Nếu
                     pH quá cao hoặc quá thấp, sẽ ảnh hưởng đến chất lượng của cá
@@ -598,8 +678,8 @@ export default function Koiogon() {
                     tăng cường hàm lượng oxy trong nước.
                   </li>
                 </ul>
-                <p style={{ fontWeight: "bold" }}>Thức ăn</p>
-                <ul>
+                <p style={{ fontWeight: "600", fontSize: "20px" }}>Thức ăn</p>
+                <ul style={{ fontWeight: "400", fontSize: "15px" }}>
                   <li>
                     Thức ăn viên: được sản xuất từ các nguyên liệu thiên nhiên
                     như rong biển, tôm, cá hú, cá diếc, . .. Thức ăn viên có
@@ -616,9 +696,11 @@ export default function Koiogon() {
                   </li>
                 </ul>
                 <p>
-                  <span style={{ fontWeight: "bold" }}>Kiểm tra sức khoẻ</span>
+                  <span style={{ fontWeight: "600", fontSize: "20px" }}>
+                    Kiểm tra sức khoẻ
+                  </span>
                   <br />
-                  <p>
+                  <p style={{ fontWeight: "400", fontSize: "15px" }}>
                     Kiểm tra sức khỏe thường xuyên là vô cùng cần thiết nhằm bảo
                     vệ sức khoẻ của cá Koi Ogon. Bạn nên theo dõi thường xuyên
                     chú cá của mình nhằm phát hiện kịp thời các dấu hiệu của
@@ -626,11 +708,11 @@ export default function Koiogon() {
                   </p>
                 </p>
                 <p>
-                  <span style={{ fontWeight: "bold" }}>
+                  <span style={{ fontWeight: "600", fontSize: "20px" }}>
                     Giám sát và quản lý
                   </span>
                   <br />
-                  <p>
+                  <p style={{ fontWeight: "400", fontSize: "15px" }}>
                     Giám sát và quản lý là một phần cực kỳ cần thiết đối với quá
                     trình chăm sóc cá Koi Ogon. Bạn cần đảm bảo rằng các thông
                     số nước, thức ăn và sức khoẻ của chúng được giám sát và quản
@@ -643,7 +725,7 @@ export default function Koiogon() {
                 <h3 style={{ color: "red" }}>
                   5. Địa chỉ bán cá Koi Ogon đẹp, uy tín?{" "}
                 </h3>
-                <p>
+                <p style={{ fontWeight: "400", fontSize: "15px" }}>
                   Siêu Thị Cá Koi VN là đơn vị thiết kế thi công hồ cá Koi
                   chuyên nghiệp, uy tín hiện nay. Ngoài ra, chúng tôi còn là đơn
                   vị chuyên cung cấp các dòng cá Koi Ogon siêu đẹp với mức giá
@@ -685,60 +767,6 @@ export default function Koiogon() {
           </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            backgroundImage: `url("src/assets/pexels-quang-nguyen-vinh-222549-2131828.jpg")`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          <div
-            style={{
-              width: "100%",
-              margin: "100px",
-              color: "white",
-              display: "flex",
-            }}
-          >
-            <div
-              style={{
-                width: "100%",
-                color: "black",
-                fontSize: "20px",
-                marginTop: "70px",
-                marginLeft: "20px",
-              }}
-            >
-              <h1 style={{ color: "white" }}>Điểm nổi bật của KoiStoreVN</h1>
-
-              <ul style={{ fontSize: "16px", color: "white" }}>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  Cá nhập khẩu chất lượng cao, nhập trực tiếp tại các trang trại
-                  Cá Koi Nhật Bản
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  Khách hàng yên tâm nuôi cá vì luôn có chuyên gia đồng hành
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  Đa dạng sản phẩm, dịch vụ chăm sóc Cá Koi và Hồ Cá Koi
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  KoiStoreVN tự hào là đơn vị đầu tiên tại miền bắc được chuyển
-                  giao công nghệ mô hình trại SAKAI (Sakai fish farm, Hiroshima,
-                  Japan)
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  Trại gồm 120 hồ lớn chuẩn theo mô hình trại SAKAI
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
         <div>
           <CardGrid cardData={filteredCards} />
         </div>
