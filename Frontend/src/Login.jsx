@@ -11,11 +11,11 @@ export default function Login() {
     const verify = params.get("verify"); //lấy ra verify từ params
     //verify để biết user này mới hay cũ, đã login nhiều lần nhưng chưa verify thì sao
 
-    console.log({ accessToken, refreshToken, new_user, verify }); //log thử
+    console.log({ accessToken, refreshToken, new_user, verify,params }); //log thử
 
     localStorage.setItem("accessToken", accessToken); //lưu access_token vào localStorage
     localStorage.setItem("refreshToken", refreshToken); //lưu refresh_token vào localStorage
     navigate("/"); //xem xong thì bật dòng này để chuyển hướng về trang chủ
   }, [params]); //useEffect sẽ chạy lại khi params thay đổi
-  return <div>Login</div>;
+  return <div>Login</div>; // vo dung vi nó đã chuyển hướng trang rồi
 }

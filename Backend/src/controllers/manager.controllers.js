@@ -1,5 +1,6 @@
 import { MANAGER_MESSAGES } from '../constants/managerMessage.js'
 import consignsService from '../services/consigns.services.js'
+import consignsService from '../services/consigns.services.js'
 import koisService from '../services/kois.services.js'
 import usersService from '../services/users.services.js'
 

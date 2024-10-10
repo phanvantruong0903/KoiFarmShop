@@ -185,3 +185,12 @@ export const oAuthController = async (req, res, next) => {
   const urlRedirect = `${process.env.CLIENT_REDIRECT_CALLBACK}?access_token=${access_token}&refresh_token=${refresh_token}&new_user=${new_user}`
   return res.redirect(urlRedirect)
 }
+
+// export const getUser = async(req, res, next) => {
+//   const {UserID} = req.query
+//   const result = databaseService._db.collection(process.env.DB_USERS_COLLECTION).find({_id: UserID})
+//   return res.json({
+//     message: USERS_MESSAGES.GET_PROFILE_SUCCESS,
+//     result
+//   })
+// }

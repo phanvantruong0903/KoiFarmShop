@@ -1,0 +1,15 @@
+/* src/Home.css */
+.animated-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1.5s ease-out, transform 1s ease-out;
+}
+
+.animated-section.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hidden {
+  display: none; /* Ẩn phần tử */
+}

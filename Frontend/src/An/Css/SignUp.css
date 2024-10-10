@@ -1,0 +1,14 @@
+.input-field {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+}
+
+.error-input {
+    border-color: #ff0000;
+    color: #ff0000;
+}
+
+.error-input::placeholder {
+    color: #ff0000;
+}

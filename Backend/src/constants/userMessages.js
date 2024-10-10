@@ -112,3 +112,8 @@ export const USERS_MESSAGES = {
   //koi video
   KOI_VIDEO_IS_REQUIRED: 'Koi video is required'
 }
+export const ADMINS_MESSAGES = {
+  ADD_KOI_SUCCESS: "Add Fish success",
+  ADD_KOI_FAIL: "Add Fish Fail",
+  UPDATE_KOI_SUCCESS: "Update Fish success"
+}

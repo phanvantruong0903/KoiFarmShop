@@ -1,0 +1,71 @@
+.border {
+  background-color: #ffffff;
+  border-color: #e0e0e0;
+  color: #333;
+}
+
+.Order-container div {
+  cursor: pointer;
+  position: relative; 
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+  
+}
+
+.Order-container div::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px; 
+  
+  transform: translateY(5px); 
+  background-color: #007bff; 
+  transition: width 0.3s ease; 
+}
+
+
+.Order-container div:hover::after {
+  width: 100%; 
+}
+.Order-container .active::after {
+  width: 100%; 
+}
+.Order-container span {
+  font-size: inherit;
+  
+  
+}
+
+.Order-container span {
+  padding: 0.15rem 0.15rem; 
+  background-color: transparent; 
+  border: 1px solid transparent; 
+  border-radius: 7px; 
+  transition: background-color 0.3s ease, border-color 0.3s ease; 
+  background-color: #fff9f9
+}
+
+.Order-container div:hover span {
+  background-color: #e0e0e0; 
+  border-color: #ccc; 
+}
+.search-bar {
+  transform: translateY(-8px)
+}
+.Card-Container div:hover {
+  box-shadow: 0 20px 15px 0 rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  
+}
+.Card-Container div {
+  transition: box-shadow 0.3s ease;
+}
+.dropdown-toggle::after {
+  display: none !important; 
+}
+.dropdown-item:hover{
+  background-color: #b8dbff; 
+  
+}

@@ -35,9 +35,9 @@ const usersRouter = Router()
 
 usersRouter.post('/register', registerValidator, wrapAsync(registerController))
 
-usersRouter.post('/login', loginValidator, wrapAsync(loginController)) //tạm thời chưa được
+usersRouter.post('/login', loginValidator, wrapAsync(loginController)) // đã được
 
-usersRouter.post('/logout', accessTokenValidator, refreshTokenValidator, wrapAsync(logoutController))
+usersRouter.post('/logout', accessTokenValidator, refreshTokenValidator, wrapAsync(logoutController)) 
 
 usersRouter.get('/verify-email', emailVerifyTokenValidator, wrapAsync(emailVerifyTokenController))
 

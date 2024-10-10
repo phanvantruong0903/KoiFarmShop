@@ -33,7 +33,23 @@ class DatabaseService {
       throw error
     }
   }
-
+  get order() {
+    try {
+      return this._db.collection('Order')
+    } catch (error){
+      console.log(error + 'lỗi ở database service - get orders')
+      throw error
+    }
+  }
+  get kois() {
+    try {
+      return this._db.collection('kois')
+    } catch (error){
+      console.log(error + 'lỗi ở database service - get kois')
+      throw error
+    }
+  }
+  
   async indexUsers() {
     await this.users.createIndex({ email: 1 }, { unique: true }) //register
     await this.users.createIndex({ username: 1 }, { unique: true }) //getProfile
@@ -47,6 +63,18 @@ class DatabaseService {
       console.log(error + 'lỗi ở database service - get refresh token')
     }
   }
+
+  get category() {
+    try {
+      return this._db.collection(process.env.DB_CATEGORY_COLLECTION)
+    } catch (error) {
+      console.log(error + 'lỗi ở database service - get category')
+    }
+  }
+
+  // get followers(): Collection<Follower> {
+  //   return this.db.collection(process.env.DB_FOLLOWERS_COLLECTION as string)
+  // }
 
   get kois() {
     try {

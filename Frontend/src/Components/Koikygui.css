@@ -1,0 +1,8 @@
+.radio-group {
+  border: 1px solid #ccc; /* Viền xung quanh */
+  border-radius: 5px; /* Bo góc */
+  padding: 15px; /* Khoảng cách bên trong */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow */
+  background-color: #fff; /* Màu nền */
+  width: 100%;
+}
