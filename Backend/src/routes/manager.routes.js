@@ -48,9 +48,9 @@ managerRouter.get('/manage-ki-gui/get-all', accessTokenValidator, isAdminValidat
 
 managerRouter.get('/manage-ki-gui/:_id', accessTokenValidator, isAdminValidator, wrapAsync(getConsignDetailController))
 
-managerRouter.get('/manage-order/', accessTokenValidator, isAdminValidator, wrapAsync(getAllOrderController))
+managerRouter.get('/manage-order/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getAllOrderController))
 
-managerRouter.get('/manage-koi/', accessTokenValidator, isAdminValidator, wrapAsync(getAllKoiController))
+managerRouter.get('/manage-koi/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getAllKoiController))
 
 managerRouter.put('/manage-koi/updateKoi/:KoiID', accessTokenValidator, isAdminValidator, wrapAsync(updateKoiController))
 
