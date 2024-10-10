@@ -12,15 +12,20 @@ export default function Koikygui() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("ALL");
-
+  const [categoryData, setCategoryData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:4000/getAllKoi");
         console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
-        if (Array.isArray(response.data.result)) {
-          setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
-          console.log("Card data set successfully:", response.data.result); // Kiểm tra sau khi set
+        if (Array.isArray(response.data.koisList)) {
+          setCardData(response.data.koisList); // Lấy mảng từ thuộc tính 'result'
+          setCategoryData(response.data.cateogryList);
+          console.log("Card data set successfully:", response.data.koisList); // Kiểm tra sau khi set
+          console.log(
+            "Category Data set successfully:",
+            response.data.cateogryList
+          );
         } else {
           console.error("Dữ liệu không phải là mảng:", response.data);
         }
@@ -45,12 +50,12 @@ export default function Koikygui() {
   const filteredCards =
     selectedCategory === "ALL"
       ? cardData
-      : cardData.filter((card) => card.KoiName === selectedCategory);
-
+      : cardData.filter((card) => card.CategoryID === selectedCategory._id);
+  console.log("Filter card " + sele);
   // Đếm số lượng cá cho từng giống
   const breedCounts = cardData.reduce((accumulator, card) => {
-    if (card.KoiName) {
-      accumulator[card.KoiName] = (accumulator[card.KoiName] || 0) + 1;
+    if (card.CategoryID) {
+      accumulator[card.CategoryID] = (accumulator[card.CategoryID] || 0) + 1;
     }
     return accumulator;
   }, {});
@@ -71,17 +76,22 @@ export default function Koikygui() {
                 checked={selectedCategory === "ALL"}
                 onChange={handleCategoryChange}
               />
-              {Object.keys(breedCounts).map((KoiName) => (
-                <Form.Check
-                  style={{ paddingBottom: "20px" }}
-                  key={KoiName}
-                  type="radio"
-                  label={`${KoiName} (${breedCounts[KoiName]})`}
-                  value={KoiName}
-                  checked={selectedCategory === KoiName}
-                  onChange={handleCategoryChange}
-                />
-              ))}
+              {Object.keys(categoryData).map((CategoryID) => {
+                // Tìm tên category tương ứng từ categoryData
+                const categoryName = categoryData[CategoryID].CategoryName;
+
+                return (
+                  <Form.Check
+                    style={{ paddingBottom: "20px" }}
+                    key={CategoryID}
+                    type="radio"
+                    label={`${categoryName} (${breedCounts[CategoryID]})`} // Sử dụng categoryName ở đây
+                    value={CategoryID}
+                    checked={selectedCategory === CategoryID}
+                    onChange={handleCategoryChange}
+                  />
+                );
+              })}
             </Form.Group>
           </div>
         </div>

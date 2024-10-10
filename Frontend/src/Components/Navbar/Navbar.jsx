@@ -4,12 +4,23 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../Navbar/Navbar.css";
 import { Link } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
+import LoginPage from "../../An/Pages/Login";
+import { Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 export default function Navbar() {
   const [showDropdown1, setShowDropdown1] = useState(false);
   const [showDropdown2, setShowDropdown2] = useState(false);
   const [showDropdown3, setShowDropdown3] = useState(false);
   const [showDropdown4, setShowDropdown4] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
+  const [state, setState] = useState("");
+  const navigate = useNavigate();
+  function handleStateSignUp() {
+    navigate("/Login", { state: { type: "signUp" } });
+  }
+  function handleStateSignIn() {
+    navigate("/Login");
+  }
   return (
     <div className="navbar">
       <div>
@@ -433,20 +444,14 @@ export default function Navbar() {
             </Link>
           </div>
         </div>
-        <div>
+        <div style={{ paddingLeft: "20px" }}>
           <div style={{ paddingTop: "6px" }}>
-            <Link
-              to="/lienhe"
-              style={{
-                fontWeight: "bold",
-                fontSize: "25px",
-                paddingLeft: "20px",
-                textDecoration: "none",
-                color: "white",
-              }}
-            >
-              LOG IN
-            </Link>
+            <Button onClick={handleStateSignIn}>Sign In</Button>
+          </div>
+        </div>
+        <div style={{ paddingLeft: "20px" }}>
+          <div style={{ paddingTop: "6px" }}>
+            <Button onClick={handleStateSignUp}>Sign Up</Button>
           </div>
         </div>
       </div>
