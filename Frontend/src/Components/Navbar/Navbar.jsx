@@ -325,7 +325,7 @@ export default function Navbar() {
           {isLoggedIn ? (
             <Dropdown className="custom-dropdown">
               <Dropdown.Toggle
-                variant="secondary"
+                variant="success"
                 className="custom-dropdown-toggle"
               >
                 Tài khoản
@@ -335,8 +335,18 @@ export default function Navbar() {
                   Xem hồ sơ
                 </Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item href="/donhang" className="custom-dropdown-item">
+                <Dropdown.Item
+                  href="/trackingorder"
+                  className="custom-dropdown-item"
+                >
                   Đơn hàng
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item
+                  href="/donkygui"
+                  className="custom-dropdown-item"
+                >
+                  Đơn ký gửi
                 </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item
@@ -345,7 +355,6 @@ export default function Navbar() {
                 >
                   Đăng xuất
                 </Dropdown.Item>
-                <Dropdown.Divider />
               </Dropdown.Menu>
             </Dropdown>
           ) : (

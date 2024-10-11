@@ -104,13 +104,13 @@ export default function Home() {
               paddingRight: "1000px",
             }}
           >
-            <h1>Giới Thiệu về KoiVNStore</h1>
+            <h1>Giới Thiệu về IKoi</h1>
             <p style={{ fontWeight: "400", fontSize: "15px" }}>
-              KoiVNStore là một cửa hàng chuyên cung cấp cá koi và các sản phẩm
-              liên quan đến hồ cá. Với sứ mệnh mang đến cho khách hàng những
-              giống cá koi chất lượng cao cùng dịch vụ tận tâm nhất, KoiVNStore
-              đã nhanh chóng trở thành điểm đến tin cậy cho những người yêu
-              thích nuôi cá koi tại Việt Nam.
+              IKoi là một cửa hàng chuyên cung cấp cá koi và các sản phẩm liên
+              quan đến hồ cá. Với sứ mệnh mang đến cho khách hàng những giống cá
+              koi chất lượng cao cùng dịch vụ tận tâm nhất, IKoi đã nhanh chóng
+              trở thành điểm đến tin cậy cho những người yêu thích nuôi cá koi
+              tại Việt Nam.
             </p>
             <p style={{ fontWeight: "400", fontSize: "15px" }}>
               Chúng tôi tự hào cung cấp một loạt các sản phẩm đa dạng, từ cá koi
@@ -120,11 +120,11 @@ export default function Home() {
               phẩm phù hợp nhất với nhu cầu của mình.
             </p>
             <p style={{ fontWeight: "400", fontSize: "15px" }}>
-              Không chỉ dừng lại ở việc bán hàng, KoiVNStore còn cam kết cung
-              cấp dịch vụ chăm sóc và bảo trì hồ cá, giúp khách hàng duy trì một
-              môi trường sống tốt nhất cho những chú cá koi của mình. Hãy đến
-              với KoiVNStore để trải nghiệm sự khác biệt và khám phá thế giới cá
-              koi đầy màu sắc!
+              Không chỉ dừng lại ở việc bán hàng, IKoi còn cam kết cung cấp dịch
+              vụ chăm sóc và bảo trì hồ cá, giúp khách hàng duy trì một môi
+              trường sống tốt nhất cho những chú cá koi của mình. Hãy đến với
+              IKoi để trải nghiệm sự khác biệt và khám phá thế giới cá koi đầy
+              màu sắc!
             </p>
             <br />
           </div>
@@ -159,7 +159,7 @@ export default function Home() {
               paddingLeft: "20px",
             }}
           >
-            <h2>Nuôi Cá Koi Nên Đồng Hành Cùng Chuyên Gia</h2>
+            <h2>Nuôi Cá Koi Nên Đồng Hành Cùng Chuyên Gia Tại IKoi</h2>
             <p style={{ fontSize: "15px", fontWeight: "400" }}>
               Tại IKoi, chúng tôi tin rằng việc nuôi cá koi không chỉ đơn thuần
               là sở thích mà còn là một hành trình đầy nghệ thuật và tâm huyết.

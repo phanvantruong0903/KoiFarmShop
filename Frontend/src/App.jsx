@@ -26,6 +26,7 @@ import OrderPage from "./Components/OrderPage";
 import TrackingOrderPage from "./Components/trackingOrderPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Profile from "./Components/Profile";
+import DonKyGuiPage from "./Components/Donkygui";
 const Staff = lazy(() => import("../src/An/Pages/Staff"));
 const Manager = lazy(() => import("./An/Pages/Manager/Manager"));
 const Profiles = lazy(() => import("../src/An/Pages/Staff/Profiles"));
@@ -123,6 +124,10 @@ const router = createBrowserRouter([
   {
     path: "/profile",
     element: <Profile />, // Home component
+  },
+  {
+    path: "/donkygui",
+    element: <DonKyGuiPage />, // Home component
   },
   {
     path: "/login/oauth",

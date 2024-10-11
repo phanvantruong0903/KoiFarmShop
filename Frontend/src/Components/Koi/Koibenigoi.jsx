@@ -9,7 +9,7 @@ export default function Koibenigoi() {
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [idBenigoi, setIdKohaku] = useState(null);
+  const [idBenigoi, setIDBenigoi] = useState(null);
   const [filteredCards, setFilteredCards] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
   const handleScroll1 = () => {
