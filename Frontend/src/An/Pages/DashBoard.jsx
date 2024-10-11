@@ -31,7 +31,7 @@ const useAuthCheck = () => {
 
 export default function DashBoard() {
   useAuthCheck();
-
+  
   return (
     <TopBar>
       <Container fluid>

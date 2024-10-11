@@ -40,7 +40,7 @@ export default function TableGen({
                     >
                         <td>{index + 1}</td>
                         {fieldMapping.map((field, idx) => {
-                            
+
                             if (field === 'role') {
                                 return <td key={idx}>{whatRole(mock.roleid)}</td>;
                             }
@@ -54,14 +54,14 @@ export default function TableGen({
                             if (field === 'address') {
                                 return <td key={idx}>{isAddress(mock.address) ? mock.address : 'No address'}</td>;
                             }
-                            if (field === 'Status'){
+                            if (field === 'Status') {
                                 const statusMap = {
                                     1: 'Deposit Requests',
                                     2: 'Koi Checks',
                                     3: 'Price Agreements',
                                     4: 'Fish Deliveries',
                                     5: 'Fish Sales'
-                                     
+
                                 };
                                 return <td key={idx}>{statusMap[mock.Status]}</td>;
                             }
@@ -76,8 +76,9 @@ export default function TableGen({
                                 <Dropdown.Menu>
                                     <Dropdown.Item
                                         onClick={() => {
-                                            showModal(true); 
-                                            handleRowAction(mock._id, 'view'); 
+                                            handleRowAction(mock._id, 'view');
+                                            showModal(true);
+
                                         }}
                                     >
                                         View

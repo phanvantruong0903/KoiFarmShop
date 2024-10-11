@@ -6,19 +6,25 @@ import Spinner from "../../Components/Spinner"
 import FilterButton from "../../Components/Staff/FilterButton"
 import TableGen from "../../Components/Staff/TableGen"
 import FilterBar from "../../Components/Staff/FilterBar"
+import ConsignDetailModal from "../../Components/Manager/ConsignDetailModal"
 import { Form, FormControl } from "react-bootstrap"
 import '../../Css/Orders.css'
-
+import { whatRole } from "../../Utils/valueParser"
 export default function Manager() {
   const [intialData, setIntialData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [hoveredRow, setHoveredRow] = useState(null);
   const [isActive, setIsActive] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [consignID, setConsignID] = useState(null);
   const { searchTerm, handleFilterChange, filteredData, handleSearch, filterList } = useFilter(intialData, 'consign');
   const handleRowAction = (id, actionType) => {
     if (actionType === 'delete') {
 
       console.log(`Delete user with ID: ${id}`);
+    }
+    else if (actionType === 'view') {
+      setConsignID(id)
     }
   };
   const handleMouseEnter = (index) => {
@@ -27,7 +33,7 @@ export default function Manager() {
   const handleMouseLeave = () => {
     setHoveredRow(null);
   };
-  const headers = ['#', 'User_ID', 'Shipped Date', 'Receipt Date', 'Description', 'Status', 'Method', 'Position Care'];
+  const headers = ['#', 'Consign ID', 'Shipped Date', 'Receipt Date', 'Description', 'Status', 'Method', 'Position Care'];
   const fieldMapping = ['_id', 'ShippedDate', 'ReceiptDate', 'Description', 'Status', 'Method', 'PositionCare']
   useEffect(() => {
     setIsLoading(true);
@@ -44,45 +50,48 @@ export default function Manager() {
     fetchData()
   }
     , [])
-    function totalKoiChecks(data) {
-      let count = 0;
-      data.forEach(element => {
-        if (element.Status === 1) {
-          count++;
-        }
-      });
-      return count;
-    }
-    function totalPriceAgreements(data) {
-      let count = 0;
-      data.forEach(element => {
-        if (element.Status === 2) {
-          count++;
-        }
-      });
-      return count;
-    }
-    function totalFishDeliveries(data) {
-      let count = 0;
-      data.forEach(element => {
-        if (element.Status === 3) {
-          count++;
-        }
-      });
-      return count;
-    }
-    function totalFishSales(data) {
-      let count = 0;
-      data.forEach(element => {
-        if (element.Status === 4) {
-          count++;
-        }
-      });
-      return count;
-    }
+  function totalKoiChecks(data) {
+    let count = 0;
+    data.forEach(element => {
+      if (element.Status === 1) {
+        count++;
+      }
+    });
+    return count;
+  }
+  function totalPriceAgreements(data) {
+    let count = 0;
+    data.forEach(element => {
+      if (element.Status === 2) {
+        count++;
+      }
+    });
+    return count;
+  }
+  function totalFishDeliveries(data) {
+    let count = 0;
+    data.forEach(element => {
+      if (element.Status === 3) {
+        count++;
+      }
+    });
+    return count;
+  }
+  function totalFishSales(data) {
+    let count = 0;
+    data.forEach(element => {
+      if (element.Status === 4) {
+        count++;
+      }
+    });
+    return count;
+  }
 
   return (
     <div>
+      <ConsignDetailModal actions={showModal} setactions={setShowModal} consignID={consignID} />
+
+
       <div className='fw-bold fs-1 ms-5 mb-5'>Consign</div>
 
       <div className='d-flex ms-5 me-5 mb-3 Card-Container' style={{ height: '100px', gap: '1rem' }}>
@@ -214,6 +223,9 @@ export default function Manager() {
             setIsActive={setIsActive}
             handleMouseEnter={handleMouseEnter}
             handleMouseLeave={handleMouseLeave}
+            whatRole={whatRole}
+            showModal={setShowModal}
+
           />
         )}
       </div>
