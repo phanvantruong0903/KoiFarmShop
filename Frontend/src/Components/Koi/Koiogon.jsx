@@ -4,12 +4,15 @@ import Navbar from "../Navbar/Navbar";
 import CardGrid from "../Cardgrid";
 import Footer from "../Footer";
 import axios from "axios";
+import "../Css/koiStyle.css";
 export default function Koiogon() {
   const [menu, setMenu] = useState("home");
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedBreed, setSelectedBreed] = useState("KOI OGON");
+  const [idOgon, setIDOgon] = useState(null);
+  const [filteredCards, setFilteredCards] = useState([]);
+  const [categoryData, setCategoryData] = useState([]);
   const handleScroll1 = () => {
     const element = document.getElementById("1");
 
@@ -95,7 +98,12 @@ export default function Koiogon() {
         console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
         if (Array.isArray(response.data.result)) {
           setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
-          console.log("Card data set successfully:", response.data.result); // Kiểm tra sau khi set
+          setCategoryData(response.data.cateogryList);
+          console.log("Card data set successfully:", response.data.result9); // Kiểm tra sau khi set
+          console.log(
+            "Category Data set successfully:",
+            response.data.cateogryList
+          );
         } else {
           console.error("Dữ liệu không phải là mảng:", response.data);
         }
@@ -109,18 +117,25 @@ export default function Koiogon() {
 
     fetchData();
   }, []);
+  useEffect(() => {
+    const ogonCard = categoryData.find((card) => card.CategoryName === "Ogon");
+
+    if (ogonCard) {
+      setIDOgon(ogonCard._id);
+    }
+  }, [categoryData]); // Run this effect when categoryData changes
+
+  useEffect(() => {
+    if (idOgon) {
+      const filtered = cardData.filter((card) => card.CategoryID === idOgon);
+      setFilteredCards(filtered);
+    }
+  }, [idOgon, cardData]);
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  const filteredCards = cardData.filter((card) => card.CategoryID === "2");
   return (
     <>
-      <div
-        style={{
-          fontSize: "20px",
-
-          color: "black",
-        }}
-      >
+      <div>
         <div>
           <Navbar menu={menu} setMenu={setMenu} />
         </div>
@@ -129,172 +144,71 @@ export default function Koiogon() {
             <div style={{ paddingTop: "110px", textAlign: "center" }}>
               <img
                 src="src/assets/Red_Modern_Travel_Presentation__6_-removebg-preview.png"
-                style={{ paddingLeft: "1000px", marginTop: "-15px" }}
+                className="img1Style"
               />
-              <h1
-                style={{ marginTop: "-330px", fontWeight: "800", color: "red" }}
-              >
-                CÁ KOI OGON
-              </h1>
+              <h1 className="nameOfKoi">CÁ KOI OGON</h1>
               <hr />
             </div>
             <div>
-              <div
-                style={{
-                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
-                  padding: "20px",
-                  borderRadius: "10px",
-                  border: "2px solid rgba(0, 0, 0, 0.1)",
-                  border: "1px solid #797979",
-                  color: "black",
-                }}
-              >
+              <div className="body_StyleKoiOfPage">
                 <h2 style={{ fontWeight: "bold", color: "red" }}>
                   Nội Dung Bài Viết
                 </h2>
                 <ul style={{ marginTop: "10px" }}>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll1}
-                      style={{
-                        cursor: "pointer",
-                        color: "blue",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll1} className="contentBox">
                       1. Nguồn gốc lịch sử của giống cá Koi Ogon
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll2}
-                      style={{
-                        cursor: "pointer",
-                        color: "blue",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll2} className="contentBox">
                       2. Đặc điểm của Koi ogon
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll3}
-                      style={{
-                        cursor: "pointer",
-                        color: "blue",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll3} className="contentBox">
                       3. Những dòng cá Koi ogon phổ biến hiện nay
                     </span>
                     <ul>
                       <li style={{ paddingTop: "10px" }}>
-                        <span
-                          onClick={handleScroll31}
-                          style={{
-                            cursor: "pointer",
-                            color: "blue",
-                            fontWeight: "600",
-                            fontSize: "20px",
-                          }}
-                        >
+                        <span onClick={handleScroll31} className="contentBox">
                           3.1 Giá cá koi Platinum F1
                         </span>
                       </li>
                       <li style={{ paddingTop: "10px" }}>
-                        <span
-                          onClick={handleScroll32}
-                          style={{
-                            cursor: "pointer",
-                            color: "blue",
-                            fontWeight: "600",
-                            fontSize: "20px",
-                          }}
-                        >
+                        <span onClick={handleScroll32} className="contentBox">
                           3.2 Giá cá koi Platinum Nhật chuẩn
                         </span>
                       </li>
                       <li style={{ paddingTop: "10px" }}>
-                        <span
-                          onClick={handleScroll33}
-                          style={{
-                            cursor: "pointer",
-                            color: "blue",
-                            fontWeight: "600",
-                            fontSize: "20px",
-                          }}
-                        >
+                        <span onClick={handleScroll33} className="contentBox">
                           3.3 Cá Koi Hi Ogon
                         </span>
                       </li>
                       <li style={{ paddingTop: "10px" }}>
-                        <span
-                          onClick={handleScroll34}
-                          style={{
-                            cursor: "pointer",
-                            color: "blue",
-                            fontWeight: "600",
-                            fontSize: "20px",
-                          }}
-                        >
+                        <span onClick={handleScroll34} className="contentBox">
                           3.4 Cá Koi Orenji Ogon
                         </span>
                       </li>
                       <li style={{ paddingTop: "10px" }}>
-                        <span
-                          onClick={handleScroll35}
-                          style={{
-                            cursor: "pointer",
-                            color: "blue",
-                            fontWeight: "600",
-                            fontSize: "20px",
-                          }}
-                        >
+                        <span onClick={handleScroll35} className="contentBox">
                           3.5 Cá Koi Mukashi Ogon
                         </span>
                       </li>
                       <li style={{ paddingTop: "10px" }}>
-                        <span
-                          onClick={handleScroll36}
-                          style={{
-                            cursor: "pointer",
-                            color: "blue",
-                            fontWeight: "600",
-                            fontSize: "20px",
-                          }}
-                        >
+                        <span onClick={handleScroll36} className="contentBox">
                           3.6 Cá Nezu Ogon Koi
                         </span>
                       </li>
                     </ul>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll4}
-                      style={{
-                        cursor: "pointer",
-                        color: "blue",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll4} className="contentBox">
                       4. Cách nuôi cá Koi ogon khỏe mạnh, phát triển tốt
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll5}
-                      style={{
-                        cursor: "pointer",
-                        color: "blue",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll5} className="contentBox">
                       5. Địa chỉ bán cá Koi Ogon đẹp, uy tín
                     </span>
                   </li>
@@ -302,15 +216,7 @@ export default function Koiogon() {
               </div>
 
               <div>
-                <h2
-                  style={{
-                    textAlign: "center",
-                    color: "red",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Nội dung chi tiết
-                </h2>
+                <h2 className="noidungchitiet">Nội dung chi tiết</h2>
                 <p style={{ fontSize: "15px", fontWeight: "400" }}>
                   <span
                     style={{
@@ -371,9 +277,9 @@ export default function Koiogon() {
                 <p style={{ fontWeight: "400", fontSize: "15px" }}>
                   Cá Koi Ogon được coi là một trong những giống cá Koi đẹp nhất
                   và độc đáo nhất trên trái đất với ngoại hình đặc trưng là màu
-                  vàng óng ánh rực rỡ. Tên gọi "Ogon" được lấy theo từ tiếng
-                  Nhật, có nghĩa là "vàng", nhằm vinh danh cho sắc màu đặc trưng
-                  của giống cá này.
+                  vàng óng ánh rực rỡ. Tên gọi Ogon được lấy theo từ tiếng Nhật,
+                  có nghĩa là vàng, nhằm vinh danh cho sắc màu đặc trưng của
+                  giống cá này.
                   <br />
                   Màu sắc của Koi Ogon là một điểm nhấn cực kỳ ấn tượng, chúng
                   có màu vàng sáng, chúng thường được tô điểm bằng một vài chấm
@@ -571,8 +477,8 @@ export default function Koiogon() {
                     <p style={{ fontWeight: "400", fontSize: "15px" }}>
                       Cá Koi Mukashi Ogon là một trong những dòng cá Koi có lịch
                       sử lai tạo lâu đời và được yêu thích vì nét đẹp cổ xưa,
-                      độc đáo của chúng. Mukashi Ogon có nghĩa là "vàng xưa",
-                      bởi vì chúng có màu sắc vàng tươi và được coi như một biểu
+                      độc đáo của chúng. Mukashi Ogon có nghĩa là vàng xưa, bởi
+                      vì chúng có màu sắc vàng tươi và được coi như một biểu
                       tượng của sự thịnh vượng và may mắn theo văn hóa Nhật Bản.
                       <br />
                       Thân cá của Mukashi Ogon có màu vàng tươi đặc trưng, tuy
@@ -602,9 +508,9 @@ export default function Koiogon() {
                     <br />
                     <p style={{ fontWeight: "400", fontSize: "15px" }}>
                       Cá Koi Nezu Ogon là một trong những dòng cá Koi được yêu
-                      thích với màu sắc độc đáo và khác lạ. "Nezu" có nghĩa là
-                      "chuột đồng", vì vậy tên của chú cá được đặt theo hình
-                      dáng và màu sắc của mình, giống như một chú chuột đồng.
+                      thích với màu sắc độc đáo và khác lạ. Nezu có nghĩa là
+                      chuột đồng, vì vậy tên của chú cá được đặt theo hình dáng
+                      và màu sắc của mình, giống như một chú chuột đồng.
                       <br />
                       Thân cá của Nezu Ogon có màu bạc nhạt đặc trưng, phần lớn
                       thân cá được bao phủ bằng các vảy trắng long lanh tựa như

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer";
-import { Form } from "react-bootstrap";
+import { Form, FormCheck } from "react-bootstrap";
 import CardGrid from "./Cardgrid";
 import axios from "axios";
 import "./Koikygui.css";
@@ -18,10 +18,10 @@ export default function Koikygui() {
       try {
         const response = await axios.get("http://localhost:4000/getAllKoi");
         console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
-        if (Array.isArray(response.data.koisList)) {
-          setCardData(response.data.koisList); // Lấy mảng từ thuộc tính 'result'
+        if (Array.isArray(response.data.result)) {
+          setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
           setCategoryData(response.data.cateogryList);
-          console.log("Card data set successfully:", response.data.koisList); // Kiểm tra sau khi set
+          console.log("Card data set successfully:", response.data.result9); // Kiểm tra sau khi set
           console.log(
             "Category Data set successfully:",
             response.data.cateogryList
@@ -50,9 +50,7 @@ export default function Koikygui() {
   const filteredCards =
     selectedCategory === "ALL"
       ? cardData
-      : cardData.filter((card) => card.CategoryID === selectedCategory._id);
-  console.log("Filter card " + sele);
-  // Đếm số lượng cá cho từng giống
+      : cardData.filter((card) => card.CategoryID === selectedCategory); // So sánh với selectedCategory
   const breedCounts = cardData.reduce((accumulator, card) => {
     if (card.CategoryID) {
       accumulator[card.CategoryID] = (accumulator[card.CategoryID] || 0) + 1;
@@ -76,18 +74,17 @@ export default function Koikygui() {
                 checked={selectedCategory === "ALL"}
                 onChange={handleCategoryChange}
               />
-              {Object.keys(categoryData).map((CategoryID) => {
-                // Tìm tên category tương ứng từ categoryData
-                const categoryName = categoryData[CategoryID].CategoryName;
-
+              {categoryData.map((card) => {
+                const categoryName = card.CategoryName;
+                const count = breedCounts[card._id] ?? 0;
                 return (
-                  <Form.Check
+                  <FormCheck
                     style={{ paddingBottom: "20px" }}
-                    key={CategoryID}
+                    key={card._id}
                     type="radio"
-                    label={`${categoryName} (${breedCounts[CategoryID]})`} // Sử dụng categoryName ở đây
-                    value={CategoryID}
-                    checked={selectedCategory === CategoryID}
+                    label={`${categoryName} (${count})`} // Sử dụng count ở đây
+                    value={card._id} // Sử dụng _id làm value
+                    checked={selectedCategory === card._id}
                     onChange={handleCategoryChange}
                   />
                 );

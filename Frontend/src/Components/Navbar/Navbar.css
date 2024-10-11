@@ -142,3 +142,62 @@
   border-radius: 0px;
   width: 100%;
 }
+
+.custom-button {
+  border: none; /* Remove default border */
+  border-radius: 50px; /* Rounded corners */
+  padding: 10px 20px; /* Padding for better size */
+  font-weight: bold; /* Bold text */
+  font-size: 16px; /* Font size */
+  color: black; /* Text color */
+  background-color: #dc3545; /* Bootstrap danger color */
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+}
+
+.custom-button:hover {
+  background-color: #c82333; /* Darker shade on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.custom-button:focus {
+  outline: none; /* Remove focus outline */
+}
+.custom-dropdown {
+  position: relative; /* Allows positioning of the dropdown */
+}
+
+.custom-dropdown-toggle {
+  background-color: #6c757d; /* Bootstrap secondary color */
+  border: none; /* Remove default border */
+  color: white; /* Text color */
+  font-weight: bold; /* Bold text */
+  padding: 10px 20px; /* Padding for better size */
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s; /* Smooth transition */
+}
+
+.custom-dropdown-toggle:hover {
+  background-color: #5a6268; /* Darker shade on hover */
+}
+
+.custom-dropdown-menu {
+  background-color: #ffffff; /* White background for menu */
+  border-radius: 5px; /* Rounded corners for menu */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.custom-dropdown-item {
+  color: #212529; /* Dark text color */
+  padding: 10px 20px; /* Padding for menu items */
+  font-weight: normal; /* Normal font weight */
+}
+
+.custom-dropdown-item:hover {
+  background-color: #f8f9fa; /* Light gray on hover */
+  color: #dc3545; /* Change text color on hover */
+}
+
+.custom-dropdown-item:focus {
+  outline: none; /* Remove focus outline */
+  background-color: #e9ecef; /* Light gray for focus */
+}

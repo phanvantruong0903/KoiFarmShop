@@ -1,28 +1,62 @@
 import React, { useState, useEffect } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../Navbar/Navbar.css";
-import { Link } from "react-router-dom";
+import "../Navbar/Navbar.css"; // Make sure this CSS file exists
+import { Link, useNavigate } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
-import LoginPage from "../../An/Pages/Login";
 import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function Navbar() {
   const [showDropdown1, setShowDropdown1] = useState(false);
   const [showDropdown2, setShowDropdown2] = useState(false);
   const [showDropdown3, setShowDropdown3] = useState(false);
   const [showDropdown4, setShowDropdown4] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
-  const [state, setState] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [hasShownToast, setHasShownToast] = useState(false); // Initialize to false
   const navigate = useNavigate();
-  function handleStateSignUp() {
-    navigate("/Login", { state: { type: "signUp" } });
-  }
-  function handleStateSignIn() {
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    setIsLoggedIn(!!accessToken);
+
+    // Check if the toast has been shown before
+    const hasShownToast = localStorage.getItem("hasShownToast");
+    if (isLoggedIn && !hasShownToast) {
+      toast.success("Đăng nhập thành công");
+      localStorage.setItem("hasShownToast", "true"); // Set the flag
+    }
+  }, [isLoggedIn]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("hasShownToast"); //
+    setIsLoggedIn(false);
+    setHasShownToast(false); // Reset toast state on logout
+    toast.success("Đăng xuất thành công!");
+  };
+
+  const handleStateSignIn = () => {
     navigate("/Login");
-  }
+  };
+
+  const handleStateSignUp = () => {
+    navigate("/Login", { state: { type: "signUp" } });
+    toast.info("Vui lòng đăng ký!");
+  };
+
   return (
     <div className="navbar">
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        draggable
+        pauseOnHover
+      />
       <div>
         <img
           src="src/assets/logo.png"
@@ -46,7 +80,6 @@ export default function Navbar() {
               textDecoration: "none",
               paddingRight: "10px",
               color: "white",
-              paddingTop: "10px",
             }}
           >
             TRANG CHỦ
@@ -73,9 +106,7 @@ export default function Navbar() {
                   fontWeight: "bold",
                   fontSize: "25px",
                   textDecoration: "none",
-
                   color: "white",
-                  paddingTop: "10px",
                 }}
               >
                 GIỚI THIỆU
@@ -131,161 +162,36 @@ export default function Navbar() {
               unmountOnExit
             >
               <Dropdown.Menu className="custom-menu">
-                <Dropdown.Item
-                  href="/kohaku"
-                  onMouseEnter={() => setActiveItem("/kohaku")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/kohaku" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  CÁ KOI KOHAKU
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/ogon"
-                  onMouseEnter={() => setActiveItem("/ogon")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/ogon" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  CÁ KOI OGON
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/showa"
-                  onMouseEnter={() => setActiveItem("/showa")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/showa" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  CÁ KOI SHOWA
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/tancho"
-                  onMouseEnter={() => setActiveItem("/tancho")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/tancho" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  CÁ KOI TANCHO
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/bekko"
-                  onMouseEnter={() => setActiveItem("/bekko")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/bekko" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  CÁ KOI BEKKO
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/doitsu"
-                  onMouseEnter={() => setActiveItem("/doitsu")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/doitsu" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  CÁ KOI DOITSU
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/ginrin"
-                  onMouseEnter={() => setActiveItem("/ginrin")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/ginrin" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  CÁ KOI GINRIN
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/goshiki"
-                  onMouseEnter={() => setActiveItem("/goshiki")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/goshiki" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  CÁ KOI GOSHIKI
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/benigoi"
-                  onMouseEnter={() => setActiveItem("/benigoi")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/benigoi" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  CÁ KOI BENIGOI
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/asagi"
-                  onMouseEnter={() => setActiveItem("/asag")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/asag" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  CÁ KOI ASAGI
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/platinum"
-                  onMouseEnter={() => setActiveItem("/platinum")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/platinum" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  CÁ KOI PLATINUM
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/shusui"
-                  onMouseEnter={() => setActiveItem("/shusui")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/shusui" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  CÁ KOI SHUSUI
-                </Dropdown.Item>
+                {[
+                  "kohaku",
+                  "ogon",
+                  "showa",
+                  "tancho",
+                  "bekko",
+                  "doitsu",
+                  "ginrin",
+                  "goshiki",
+                  "benigoi",
+                  "asagi",
+                  "platinum",
+                  "shusui",
+                ].map((fish, index) => (
+                  <React.Fragment key={fish}>
+                    <Dropdown.Item
+                      href={`/${fish}`}
+                      onMouseEnter={() => setActiveItem(`/${fish}`)}
+                      onMouseLeave={() => setActiveItem(null)}
+                      style={{
+                        color: activeItem === `/${fish}` ? "red" : "black",
+                        fontWeight: "bold",
+                        fontSize: "15px",
+                      }}
+                    >
+                      CÁ KOI {fish.toUpperCase()}
+                    </Dropdown.Item>
+                    {index < 11 && <hr />}
+                  </React.Fragment>
+                ))}
               </Dropdown.Menu>
             </CSSTransition>
           </Dropdown>
@@ -316,45 +222,27 @@ export default function Navbar() {
               unmountOnExit
             >
               <Dropdown.Menu className="custom-menu">
-                <Dropdown.Item
-                  href="/kienthuckoi"
-                  onMouseEnter={() => setActiveItem("/kienthuckoi")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/kienthuckoi" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  KIẾN THỨC KOI
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/khuyenmai"
-                  onMouseEnter={() => setActiveItem("/khuyenmaiz")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/khuyenmai" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  {" "}
-                  KHUYẾN MÃI
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/tintuc"
-                  onMouseEnter={() => setActiveItem("/tintuc")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/tintuc" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  TIN TỨC CÔNG TY
-                </Dropdown.Item>
+                {["kienthuckoi", "khuyenmai", "tintuc"].map((news, index) => (
+                  <React.Fragment key={news}>
+                    <Dropdown.Item
+                      href={`/${news}`}
+                      onMouseEnter={() => setActiveItem(`/${news}`)}
+                      onMouseLeave={() => setActiveItem(null)}
+                      style={{
+                        color: activeItem === `/${news}` ? "red" : "black",
+                        fontWeight: "bold",
+                        fontSize: "15px",
+                      }}
+                    >
+                      {news === "kienthuckoi"
+                        ? "KIẾN THỨC KOI"
+                        : news === "khuyenmai"
+                        ? "KHUYẾN MÃI"
+                        : "TIN TỨC CÔNG TY"}
+                    </Dropdown.Item>
+                    {index < 2 && <hr />}
+                  </React.Fragment>
+                ))}
               </Dropdown.Menu>
             </CSSTransition>
           </Dropdown>
@@ -396,20 +284,7 @@ export default function Navbar() {
                     fontSize: "15px",
                   }}
                 >
-                  KÝ GỬI
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/koidangban"
-                  onMouseEnter={() => setActiveItem("/koidangban")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/koidangban" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  KOI ĐANG BÁN
+                  KOI KÝ GỬI
                 </Dropdown.Item>
                 <hr />
                 <Dropdown.Item
@@ -422,7 +297,7 @@ export default function Navbar() {
                     fontSize: "15px",
                   }}
                 >
-                  KOI KÝ GỬI
+                  KOI ĐANG BÁN
                 </Dropdown.Item>
               </Dropdown.Menu>
             </CSSTransition>
@@ -444,15 +319,53 @@ export default function Navbar() {
             </Link>
           </div>
         </div>
-        <div style={{ paddingLeft: "20px" }}>
-          <div style={{ paddingTop: "6px" }}>
-            <Button onClick={handleStateSignIn}>Sign In</Button>
-          </div>
-        </div>
-        <div style={{ paddingLeft: "20px" }}>
-          <div style={{ paddingTop: "6px" }}>
-            <Button onClick={handleStateSignUp}>Sign Up</Button>
-          </div>
+        <div
+          style={{ display: "flex", paddingLeft: "20px", fontWeight: "600" }}
+        >
+          {isLoggedIn ? (
+            <Dropdown className="custom-dropdown">
+              <Dropdown.Toggle
+                variant="secondary"
+                className="custom-dropdown-toggle"
+              >
+                Tài khoản
+              </Dropdown.Toggle>
+              <Dropdown.Menu className="custom-dropdown-menu">
+                <Dropdown.Item href="/profile" className="custom-dropdown-item">
+                  Xem hồ sơ
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item href="/donhang" className="custom-dropdown-item">
+                  Đơn hàng
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item
+                  onClick={handleLogout}
+                  className="custom-dropdown-item"
+                >
+                  Đăng xuất
+                </Dropdown.Item>
+                <Dropdown.Divider />
+              </Dropdown.Menu>
+            </Dropdown>
+          ) : (
+            <>
+              <Button
+                onClick={handleStateSignIn}
+                variant="danger"
+                className="custom-button"
+              >
+                Sign In
+              </Button>
+              <Button
+                onClick={handleStateSignUp}
+                variant="danger"
+                className="custom-button"
+              >
+                Sign Up
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </div>

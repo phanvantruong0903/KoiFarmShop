@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Thêm import cho Firebase Storage
-import "./Kyguikoi.css";
+
 import axios from "axios";
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -105,7 +105,7 @@ export default function Kyguikoi() {
         Breed: formData.get("Breed"),
         DailyFoodAmount: parseFloat(formData.get("DailyFoodAmount")),
         FilteringRatio: parseFloat(formData.get("FilteringRatio")),
-        Age: formData.get("Age"),
+        Age: parseInt(formData.get("Age")),
         email: formData.get("email"),
         phone_number: formData.get("phone_number"),
         name: formData.get("name"),
@@ -148,10 +148,10 @@ export default function Kyguikoi() {
       try {
         const response = await axios.get("http://localhost:4000/getAllKoi");
         console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
-        if (Array.isArray(response.data.koisList)) {
-          setCardData(response.data.koisList); // Lấy mảng từ thuộc tính 'result'
+        if (Array.isArray(response.data.result)) {
+          setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
           setCategoryData(response.data.cateogryList);
-          console.log("Card data set successfully:", response.data.koisList); // Kiểm tra sau khi set
+          console.log("Card data set successfully:", response.data.result); // Kiểm tra sau khi set
           console.log(
             "Category Data set successfully:",
             response.data.cateogryList

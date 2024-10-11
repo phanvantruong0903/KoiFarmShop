@@ -4,12 +4,15 @@ import { Container } from "react-bootstrap";
 import CardGrid from "../Cardgrid";
 import Footer from "../Footer";
 import axios from "axios";
+import "../Css/koiStyle.css";
 export default function Koiasagi() {
   const [menu, setMenu] = useState("home");
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [idAsagi, setIDAsagi] = useState(null);
+  const [filteredCards, setFilteredCards] = useState([]);
+  const [categoryData, setCategoryData] = useState([]);
   const handleScroll1 = () => {
     const element = document.getElementById("1");
 
@@ -80,7 +83,12 @@ export default function Koiasagi() {
         console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
         if (Array.isArray(response.data.result)) {
           setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
-          console.log("Card data set successfully:", response.data.result); // Kiểm tra sau khi set
+          setCategoryData(response.data.cateogryList);
+          console.log("Card data set successfully:", response.data.result9); // Kiểm tra sau khi set
+          console.log(
+            "Category Data set successfully:",
+            response.data.cateogryList
+          );
         } else {
           console.error("Dữ liệu không phải là mảng:", response.data);
         }
@@ -94,9 +102,25 @@ export default function Koiasagi() {
 
     fetchData();
   }, []);
+  useEffect(() => {
+    const asagiCard = categoryData.find(
+      (card) => card.CategoryName === "Asagi"
+    );
+
+    if (asagiCard) {
+      setIDAsagi(asagiCard._id);
+    }
+  }, [categoryData]); // Run this effect when categoryData changes
+
+  useEffect(() => {
+    if (idAsagi) {
+      const filtered = cardData.filter((card) => card.CategoryID === idAsagi);
+      setFilteredCards(filtered);
+    }
+  }, [idAsagi, cardData]);
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  const filteredCards = cardData.filter((card) => card.CategoryID === "10");
+
   return (
     <>
       <div>
@@ -108,144 +132,59 @@ export default function Koiasagi() {
             <div style={{ paddingTop: "110px", textAlign: "center" }}>
               <img
                 src="src/assets/Red_Modern_Travel_Presentation__6_-removebg-preview.png"
-                style={{ paddingLeft: "1000px", marginTop: "-15px" }}
+                className="img1Style"
               />
-              <h1
-                style={{ marginTop: "-330px", fontWeight: "800", color: "red" }}
-              >
-                CÁ KOI ASAGI
-              </h1>
+              <h1 className="nameOfKoi">CÁ KOI ASAGI</h1>
               <hr />
             </div>
             <div>
-              <div
-                style={{
-                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
-                  padding: "20px",
-                  borderRadius: "10px",
-                  border: "2px solid rgba(0, 0, 0, 0.1)",
-                  border: "1px solid #797979",
-                  color: "black",
-                }}
-              >
+              <div className="body_StyleKoiOfPage">
                 <h2 style={{ color: "red" }}>Nội Dung Bài Viết</h2>
                 <ul style={{ marginTop: "10px" }}>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll1}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll1} className="contentBox">
                       1. Giới thiệu về cá Koi Asagi
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll2}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll2} className="contentBox">
                       2. Cách nhận biết Asagi Koi
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll3}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll3} className="contentBox">
                       3. Cách chọn mua Cá Asagi Koi
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll4}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll4} className="contentBox">
                       4. Cách chăm sóc cá Koi Asagi Doitsu
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll5}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll5} className="contentBox">
                       5. Các dòng cá Asagi koi trên thị trường
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll6}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll6} className="contentBox">
                       6. Giá cá koi Asagi bao nhiêu?
                     </span>
                     <ul>
                       <li style={{ paddingTop: "10px" }}>
-                        <span
-                          onClick={handleScroll61}
-                          style={{
-                            color: "blue",
-                            cursor: "pointer",
-                            fontWeight: "600",
-                            fontSize: "20px",
-                          }}
-                        >
+                        <span onClick={handleScroll61} className="contentBox">
                           6.1 Giá cá koi Asagi F1
                         </span>
                       </li>
                       <li style={{ paddingTop: "10px" }}>
-                        <span
-                          onClick={handleScroll62}
-                          style={{
-                            color: "blue",
-                            cursor: "pointer",
-                            fontWeight: "600",
-                            fontSize: "20px",
-                          }}
-                        >
+                        <span onClick={handleScroll62} className="contentBox">
                           6.2 Giá cá koi Asagi Nhật chuẩn
                         </span>
                       </li>
                     </ul>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll7}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll7} className="contentBox">
                       7. Tại sao nên mua cá Koi Asagi Doitsu tại Siêu thị Cá Koi
                       VN
                     </span>

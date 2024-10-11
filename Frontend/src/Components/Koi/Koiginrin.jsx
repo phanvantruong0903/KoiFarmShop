@@ -9,6 +9,9 @@ export default function Koiginrin() {
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [idGinrin, setIDGinrin] = useState(null);
+  const [filteredCards, setFilteredCards] = useState([]);
+  const [categoryData, setCategoryData] = useState([]);
   const handleScroll1 = () => {
     const element = document.getElementById("1");
 
@@ -65,7 +68,12 @@ export default function Koiginrin() {
         console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
         if (Array.isArray(response.data.result)) {
           setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
-          console.log("Card data set successfully:", response.data.result); // Kiểm tra sau khi set
+          setCategoryData(response.data.cateogryList);
+          console.log("Card data set successfully:", response.data.result9); // Kiểm tra sau khi set
+          console.log(
+            "Category Data set successfully:",
+            response.data.cateogryList
+          );
         } else {
           console.error("Dữ liệu không phải là mảng:", response.data);
         }
@@ -79,9 +87,25 @@ export default function Koiginrin() {
 
     fetchData();
   }, []);
+  useEffect(() => {
+    const ginrinCard = categoryData.find(
+      (card) => card.CategoryName === "Ginrin"
+    );
+
+    if (ginrinCard) {
+      setIDGinrin(ginrinCard._id);
+    }
+  }, [categoryData]); // Run this effect when categoryData changes
+
+  useEffect(() => {
+    if (idGinrin) {
+      const filtered = cardData.filter((card) => card.CategoryID === idGinrin);
+      setFilteredCards(filtered);
+    }
+  }, [idGinrin, cardData]);
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  const filteredCards = cardData.filter((card) => card.CategoryID === "7");
+
   return (
     <>
       <div>

@@ -10,7 +10,9 @@ export default function Koitancho() {
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [idTancho, setIDTancho] = useState(null);
+  const [filteredCards, setFilteredCards] = useState([]);
+  const [categoryData, setCategoryData] = useState([]);
   const handleScroll1 = () => {
     const element = document.getElementById("1");
 
@@ -109,7 +111,12 @@ export default function Koitancho() {
         console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
         if (Array.isArray(response.data.result)) {
           setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
-          console.log("Card data set successfully:", response.data.result); // Kiểm tra sau khi set
+          setCategoryData(response.data.cateogryList);
+          console.log("Card data set successfully:", response.data.result9); // Kiểm tra sau khi set
+          console.log(
+            "Category Data set successfully:",
+            response.data.cateogryList
+          );
         } else {
           console.error("Dữ liệu không phải là mảng:", response.data);
         }
@@ -123,9 +130,25 @@ export default function Koitancho() {
 
     fetchData();
   }, []);
+  useEffect(() => {
+    const tanchoCard = categoryData.find(
+      (card) => card.CategoryName === "Tancho"
+    );
+
+    if (tanchoCard) {
+      setIDTancho(tanchoCard._id);
+    }
+  }, [categoryData]); // Run this effect when categoryData changes
+
+  useEffect(() => {
+    if (idTancho) {
+      const filtered = cardData.filter((card) => card.CategoryID === idTancho);
+      setFilteredCards(filtered);
+    }
+  }, [idTancho, cardData]);
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  const filteredCards = cardData.filter((card) => card.CategoryID === "4");
+
   return (
     <>
       <div style={{}}>
@@ -153,7 +176,7 @@ export default function Koitancho() {
                   padding: "20px",
                   borderRadius: "10px",
                   border: "2px solid rgba(0, 0, 0, 0.1)",
-                  border: "1px solid #797979",
+
                   color: "black",
                 }}
               >

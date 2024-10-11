@@ -22,6 +22,7 @@ import DashBoard from "./An/Pages/DashBoard";
 import Home from "./Home";
 import Login from "./Login";
 import LoginPage from "./An/Pages/Login";
+import OrderPage from "./Components/OrderPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 const Staff = lazy(() => import("../src/An/Pages/Staff"));
 const Manager = lazy(() => import("./An/Pages/Manager/Manager"));
@@ -108,6 +109,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />, // Home component
+  },
+  {
+    path: "/order",
+    element: <OrderPage />, // Home component
   },
   {
     path: "/login/oauth",

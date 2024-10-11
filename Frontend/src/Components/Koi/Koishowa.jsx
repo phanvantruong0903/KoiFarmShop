@@ -9,6 +9,9 @@ export default function Koishowa() {
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [idShowa, setIDShowa] = useState(null);
+  const [filteredCards, setFilteredCards] = useState([]);
+  const [categoryData, setCategoryData] = useState([]);
   const handleScroll1 = () => {
     const element = document.getElementById("1");
 
@@ -100,7 +103,12 @@ export default function Koishowa() {
         console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
         if (Array.isArray(response.data.result)) {
           setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
-          console.log("Card data set successfully:", response.data.result); // Kiểm tra sau khi set
+          setCategoryData(response.data.cateogryList);
+          console.log("Card data set successfully:", response.data.result9); // Kiểm tra sau khi set
+          console.log(
+            "Category Data set successfully:",
+            response.data.cateogryList
+          );
         } else {
           console.error("Dữ liệu không phải là mảng:", response.data);
         }
@@ -114,9 +122,25 @@ export default function Koishowa() {
 
     fetchData();
   }, []);
+  useEffect(() => {
+    const showaCard = categoryData.find(
+      (card) => card.CategoryName === "Showa"
+    );
+
+    if (showaCard) {
+      setIDShowa(showaCard._id);
+    }
+  }, [categoryData]); // Run this effect when categoryData changes
+
+  useEffect(() => {
+    if (idShowa) {
+      const filtered = cardData.filter((card) => card.CategoryID === idShowa);
+      setFilteredCards(filtered);
+    }
+  }, [idShowa, cardData]);
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  const filteredCards = cardData.filter((card) => card.CategoryID === "3");
+
   return (
     <>
       <div>
@@ -128,186 +152,76 @@ export default function Koishowa() {
             <div style={{ paddingTop: "110px", textAlign: "center" }}>
               <img
                 src="src/assets/Red_Modern_Travel_Presentation__6_-removebg-preview.png"
-                style={{ paddingLeft: "1000px", marginTop: "-15px" }}
+                className="img1Style"
               />
-              <h1
-                style={{ marginTop: "-330px", fontWeight: "800", color: "red" }}
-              >
-                CÁ KOI SHOWA
-              </h1>
+              <h1 className="nameOfKoi">CÁ KOI SHOWA</h1>
               <hr />
             </div>
             <div>
-              <div
-                style={{
-                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
-                  padding: "20px",
-                  borderRadius: "10px",
-                  border: "2px solid rgba(0, 0, 0, 0.1)",
-                  border: "1px solid #797979",
-                  color: "black",
-                  fontWeight: "600",
-                }}
-              >
+              <div className="body_StyleKoiOfPage">
                 <h2>Nội Dung Bài Viết</h2>
                 <ul style={{ marginTop: "10px" }}>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll1}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll1} className="contentBox">
                       1. Giới thiệu về Cá Koi Showa
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll2}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll2} className="contentBox">
                       2. Các giống cá Koi Showa Nhật và cách xách định
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll3}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll3} className="contentBox">
                       3. Đặc điểm của cá koi showa
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll4}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll4} className="contentBox">
                       4.Cách chọn cá Koi Showa đẹp
                     </span>
                     <ul>
                       <li style={{ paddingTop: "10px" }}>
-                        <span
-                          onClick={handleScroll41}
-                          style={{
-                            color: "blue",
-                            cursor: "pointer",
-                            fontWeight: "600",
-                            fontSize: "20px",
-                          }}
-                        >
+                        <span onClick={handleScroll41} className="contentBox">
                           4.1 Dựa vào hình dáng:
                         </span>
                       </li>
                       <li style={{ paddingTop: "10px" }}>
-                        <span
-                          onClick={handleScroll42}
-                          style={{
-                            color: "blue",
-                            cursor: "pointer",
-                            fontWeight: "600",
-                            fontSize: "20px",
-                          }}
-                        >
+                        <span onClick={handleScroll42} className="contentBox">
                           4.2 Dựa vào màu sắc:
                         </span>
                       </li>
                     </ul>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll5}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll5} className="contentBox">
                       5. Cách chăm sóc cá Koi showa
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll6}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll6} className="contentBox">
                       6. Phong thủy cá koi Showa
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll7}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll7} className="contentBox">
                       7. Tại sao nên mua cá Platinum Koi tại Siêu thị Cá Koi VN?
                     </span>
                     <ul>
                       <li style={{ paddingTop: "10px" }}>
-                        <span
-                          onClick={handleScroll71}
-                          style={{
-                            color: "blue",
-                            cursor: "pointer",
-                            fontWeight: "600",
-                            fontSize: "20px",
-                          }}
-                        >
+                        <span onClick={handleScroll71} className="contentBox">
                           7.1 Giá cá koi Platinum F1
                         </span>
                       </li>
                       <li style={{ paddingTop: "10px" }}>
-                        <span
-                          onClick={handleScroll72}
-                          style={{
-                            color: "blue",
-                            cursor: "pointer",
-                            fontWeight: "600",
-                            fontSize: "20px",
-                          }}
-                        >
+                        <span onClick={handleScroll72} className="contentBox">
                           7.2 Giá cá koi Platinum Nhật chuẩn
                         </span>
                       </li>
                     </ul>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll8}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll8} className="contentBox">
                       8. Tại sao nên mua Showa Koi tại siêu thị cá Koi VN:
                     </span>
                   </li>
@@ -315,15 +229,7 @@ export default function Koishowa() {
               </div>
 
               <div>
-                <h2
-                  style={{
-                    textAlign: "center",
-                    color: "red",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Nội dung chi tiết
-                </h2>
+                <h2 className="noidungchitiet">Nội dung chi tiết</h2>
                 <p style={{ fontSize: "15px", fontWeight: "400" }}>
                   Trên thị trường hiện nay do muốn đáp ứng được nhu cầu của
                   người dân khi muốn sở hữu trong không gian của mình một bể, hồ

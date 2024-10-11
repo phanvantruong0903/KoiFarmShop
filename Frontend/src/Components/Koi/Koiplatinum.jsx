@@ -9,7 +9,9 @@ export default function Koiplatinum() {
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedBreed, setSelectedBreed] = useState("KOI PLATINUM");
+  const [idPlatinum, setIDPlatinum] = useState(null);
+  const [filteredCards, setFilteredCards] = useState([]);
+  const [categoryData, setCategoryData] = useState([]);
   const handleScroll1 = () => {
     const element = document.getElementById("1");
 
@@ -73,7 +75,12 @@ export default function Koiplatinum() {
         console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
         if (Array.isArray(response.data.result)) {
           setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
-          console.log("Card data set successfully:", response.data.result); // Kiểm tra sau khi set
+          setCategoryData(response.data.cateogryList);
+          console.log("Card data set successfully:", response.data.result9); // Kiểm tra sau khi set
+          console.log(
+            "Category Data set successfully:",
+            response.data.cateogryList
+          );
         } else {
           console.error("Dữ liệu không phải là mảng:", response.data);
         }
@@ -87,9 +94,27 @@ export default function Koiplatinum() {
 
     fetchData();
   }, []);
+  useEffect(() => {
+    const platinumCard = categoryData.find(
+      (card) => card.CategoryName === "Platinum"
+    );
+
+    if (platinumCard) {
+      setIDPlatinum(platinumCard._id);
+    }
+  }, [categoryData]); // Run this effect when categoryData changes
+
+  useEffect(() => {
+    if (idPlatinum) {
+      const filtered = cardData.filter(
+        (card) => card.CategoryID === idPlatinum
+      );
+      setFilteredCards(filtered);
+    }
+  }, [idPlatinum, cardData]);
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  const filteredCards = cardData.filter((card) => card.CategoryID === "11");
+
   return (
     <>
       <div style={{}}>

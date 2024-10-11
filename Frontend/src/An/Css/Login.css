@@ -278,3 +278,6 @@ footer a {
   color: #3c97bf;
   text-decoration: none;
 }
+.Toastify__Toast {
+  margin: 10px 0; /* Adjust margin as needed */
+}

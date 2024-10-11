@@ -9,7 +9,9 @@ export default function Koikohaku() {
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [idKohaku, setIdKohaku] = useState(null);
+  const [filteredCards, setFilteredCards] = useState([]);
+  const [categoryData, setCategoryData] = useState([]);
   const handleScroll1 = () => {
     const element = document.getElementById("1");
 
@@ -87,7 +89,12 @@ export default function Koikohaku() {
         console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
         if (Array.isArray(response.data.result)) {
           setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
-          console.log("Card data set successfully:", response.data.result); // Kiểm tra sau khi set
+          setCategoryData(response.data.cateogryList);
+          console.log("Card data set successfully:", response.data.result9); // Kiểm tra sau khi set
+          console.log(
+            "Category Data set successfully:",
+            response.data.cateogryList
+          );
         } else {
           console.error("Dữ liệu không phải là mảng:", response.data);
         }
@@ -101,19 +108,28 @@ export default function Koikohaku() {
 
     fetchData();
   }, []);
+  useEffect(() => {
+    const kohakuCard = categoryData.find(
+      (card) => card.CategoryName === "Kohaku"
+    );
+
+    if (kohakuCard) {
+      setIdKohaku(kohakuCard._id);
+    }
+  }, [categoryData]); // Run this effect when categoryData changes
+
+  useEffect(() => {
+    if (idKohaku) {
+      const filtered = cardData.filter((card) => card.CategoryID === idKohaku);
+      setFilteredCards(filtered);
+    }
+  }, [idKohaku, cardData]);
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  const filteredCards = cardData.filter((card) => card.CategoryID === "1");
 
   return (
     <>
-      <div
-        style={{
-          fontSize: "20px",
-
-          color: "black",
-        }}
-      >
+      <div>
         <div>
           <Navbar menu={menu} setMenu={setMenu} />
         </div>
@@ -133,147 +149,58 @@ export default function Koikohaku() {
               <hr />
             </div>
             <div>
-              <div
-                style={{
-                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
-                  padding: "20px",
-                  borderRadius: "10px",
-                  border: "2px solid rgba(0, 0, 0, 0.1)",
-                  border: "1px solid #797979",
-                  color: "black",
-                }}
-              >
+              <div className="body_StyleKoiOfPage">
                 <h2 style={{ color: "red" }}>Nội Dung Bài Viết</h2>
                 <ul style={{ marginTop: "10px" }}>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll1}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll1} className="contentBox">
                       1. Giới thiệu cá Koi Kohaku
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll2}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll2} className="contentBox">
                       2. Các đặc điểm thường gặp trên cá Koi Kohaku
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll3}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll3} className="contentBox">
                       3. Các giống Koi Kohaku phổ biến nhất
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll4}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll4} className="contentBox">
                       4. Sự khác nhau giữa Koi Kohaku Nhật, Koi Kohaku F1
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll5}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll5} className="contentBox">
                       5. Cách chọn cá Koi Kohaku
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll6}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll6} className="contentBox">
                       6. Cách chăm sóc Koi Kohaku
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll7}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll7} className="contentBox">
                       7. Giá coi Koi Kohaku bao nhiêu?
                     </span>
                     <ul>
                       <li style={{ paddingTop: "10px" }}>
-                        <span
-                          onClick={handleScroll71}
-                          style={{
-                            color: "blue",
-                            cursor: "pointer",
-                            fontWeight: "600",
-                            fontSize: "20px",
-                          }}
-                        >
+                        <span onClick={handleScroll71} className="contentBox">
                           7.1 Giá Koi Kohaku F1
                         </span>
                       </li>
                       <li style={{ paddingTop: "10px" }}>
-                        <span
-                          onClick={handleScroll72}
-                          style={{
-                            color: "blue",
-                            cursor: "pointer",
-                            fontWeight: "600",
-                            fontSize: "20px",
-                          }}
-                        >
+                        <span onClick={handleScroll72} className="contentBox">
                           7.2 Giá Koi Kohaku Nhật chuẩn
                         </span>
                       </li>
                     </ul>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll8}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll8} className="contentBox">
                       8. Tại sao nên mua Koi Kohaku tại KoiVNStore
                     </span>
                   </li>
@@ -281,15 +208,7 @@ export default function Koikohaku() {
               </div>
 
               <div>
-                <h2
-                  style={{
-                    fontWeight: "bold",
-                    color: "red",
-                    textAlign: "center",
-                  }}
-                >
-                  Nội dung chi tiết
-                </h2>
+                <h2 className="noidungchitiet">Nội dung chi tiết</h2>
                 <p style={{ fontSize: "15px", fontWeight: "400" }}>
                   <span style={{ fontWeight: "bold", fontSize: "20px" }}>
                     Cá Koi{" "}
@@ -309,9 +228,8 @@ export default function Koikohaku() {
                 <div>
                   <p style={{ fontWeight: "400", fontSize: "15px" }}>
                     Kohaku hay Nishikigoi là một loài cá chép Nhật có thân hình
-                    hai màu đỏ và trắng. Phần thân màu trắng được gọi là
-                    "shiro", các dấu đỏ được gọi là "hi". Chúng là một trong
-                    "big three", gồm{" "}
+                    hai màu đỏ và trắng. Phần thân màu trắng được gọi là shiro,
+                    các dấu đỏ được gọi là hi. Chúng là một trong big three, gồm{" "}
                     <span style={{ fontWeight: "600", fontSize: "20px" }}>
                       Kohaku, Sanke
                     </span>{" "}
@@ -339,7 +257,7 @@ export default function Koikohaku() {
 
                   <p style={{ fontWeight: "400", fontSize: "15px" }}>
                     Kohaku là một trong những giống cá chép phổ biến nhất ở Nhật
-                    Bản. Các dấu màu đỏ tươi trên thân cá được gọi là "hi". Các
+                    Bản. Các dấu màu đỏ tươi trên thân cá được gọi là hi. Các
                     dòng cá như Tomoin, Sensuke, Yagozen và Manzo hiện nay đều
                     bắt nguồn từ giống cá chép Gosuke ban đầu.
                   </p>

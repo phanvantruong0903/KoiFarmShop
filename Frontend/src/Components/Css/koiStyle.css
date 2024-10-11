@@ -1,0 +1,27 @@
+.img1Style {
+  padding-left: 1000px;
+  margin-top: -15px;
+}
+.nameOfKoi {
+  margin-top: -330px;
+  font-weight: 800;
+  color: red;
+}
+.body_StyleKoiOfPage {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  color: black;
+}
+.contentBox {
+  color: blue;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 20px;
+}
+.noidungchitiet {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
