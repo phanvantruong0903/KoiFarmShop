@@ -28,7 +28,9 @@ function SignUpForm() {
         if (response.status === 200) {
           const { access_token, refresh_token } = response.data.result;
           setAuthenticatedUser(access_token, refresh_token);
-          navigate("/");
+          navigate(`/profile`, {
+            state: { message: "Sign Up Account Successfull" },
+          });
         }
       })
       .catch((error) => {

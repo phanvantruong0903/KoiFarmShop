@@ -50,7 +50,7 @@ export default function Navbar() {
   return (
     <div className="navbar">
       <ToastContainer
-        position="top-right"
+        position="bottom-right"
         autoClose={3000}
         hideProgressBar={false}
         closeOnClick
@@ -355,14 +355,14 @@ export default function Navbar() {
                 variant="danger"
                 className="custom-button"
               >
-                Sign In
+                Đăng Nhập
               </Button>
               <Button
                 onClick={handleStateSignUp}
                 variant="danger"
                 className="custom-button"
               >
-                Sign Up
+                Đăng Ký
               </Button>
             </>
           )}

@@ -23,10 +23,11 @@ import Home from "./Home";
 import Login from "./Login";
 import LoginPage from "./An/Pages/Login";
 import OrderPage from "./Components/OrderPage";
+import TrackingOrderPage from "./Components/trackingOrderPage";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-const Staff = lazy(() => import('../src/An/Pages/Staff'));
-const Manager = lazy(() => import('./An/Pages/Manager/Manager'));
+import Profile from "./Components/Profile";
+const Staff = lazy(() => import("../src/An/Pages/Staff"));
+const Manager = lazy(() => import("./An/Pages/Manager/Manager"));
 const Profiles = lazy(() => import("../src/An/Pages/Staff/Profiles"));
 const Orders = lazy(() => import("../src/An/Pages/Staff/Orders"));
 
@@ -114,6 +115,14 @@ const router = createBrowserRouter([
   {
     path: "/order",
     element: <OrderPage />, // Home component
+  },
+  {
+    path: "/trackingorder",
+    element: <TrackingOrderPage />, // Home component
+  },
+  {
+    path: "/profile",
+    element: <Profile />, // Home component
   },
   {
     path: "/login/oauth",
