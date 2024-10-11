@@ -1,5 +1,7 @@
 import { useState, useContext, createContext, useEffect } from "react";
 import axios from "axios";
+import axiosInstance from "../An/Utils/axiosJS";
+;
 const AuthContext = createContext();
 export function useAuth() {
   return useContext(AuthContext);
@@ -7,15 +9,29 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(false); // cái này đụng vào sau 
-
+  
  
-
+  const  checkRole = async () => {
+    const response = await axiosInstance.post("http://localhost:4000/authorization");
+    const result = response.data.result;
+      switch(result){
+        case 1:
+          return "User";
+        case 2:
+          return "Staff";
+        case 3:
+          return "Manager";
+        default:
+          return null;
+      }
+  }
   // Function to sign in with Google
  const login = async (email, password) => {
     const response = await axios.post("http://localhost:4000/users/login", { email, password });
     if (response.status === 200) {
       localStorage.setItem("accessToken", response.data.result.access_token);
       localStorage.setItem("refreshToken", response.data.result.refresh_token);
+      
       return true;
     }
     return false;
@@ -63,7 +79,8 @@ export function AuthProvider({ children }) {
     googleAuthUrl, // dùng link này để login với google,
     register,
     login,
-    setAuthenticatedUser
+    setAuthenticatedUser,
+    checkRole
   };
   return (
     <AuthContext.Provider value={value}>

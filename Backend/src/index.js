@@ -8,13 +8,14 @@ import { defaultErrorHandler } from './middlewares/error.middlewares.js'
 import cors from 'cors' // Thêm import cho cors
 
 import managerRouter from './routes/manager.routes.js'
-import { createNewKoiKiGuiController, getCategory } from './controllers/common.controllers.js'
+import { authorizationController, createNewKoiKiGuiController, getCategory } from './controllers/common.controllers.js'
 import { getKoiByCategoryIDController } from './controllers/home.controllers.js'
 
 import { createNewKoiKiGuiValidator } from './middlewares/common.middlewares.js'
 import { wrapAsync } from './utils/handle.js'
 
 import { getKois } from './controllers/admin.controllers.js'
+import { accessTokenValidator } from './middlewares/users.middlewares.js'
 
 config()
 const app = express()
@@ -41,6 +42,8 @@ app.get('/categories/getCategory', getCategory)
 app.use('/manager', managerRouter)
 app.use('/kois/:CategoryID', getKoiByCategoryIDController)
 app.use('/getAllKoi', getKois)
+
+app.post('/authorization', accessTokenValidator, authorizationController)
 
 app.use(defaultErrorHandler)
 
