@@ -37,11 +37,16 @@ const CardGrid = ({ cardData }) => {
   const cards = cardData.map((card) => (
     <Col key={card._id} md={3} className="mb-4">
       <Card style={cardStyle}>
-        <Card.Img variant="top" src={card.Image} style={imgStyle} />
+        <Card.Img
+          variant="top"
+          src={card.Image}
+          style={imgStyle}
+          onClick={() => handleOrderClick(card)}
+        />
         <Card.Body>
           <Card.Title style={titleStyle}>{card.CategoryName}</Card.Title>
           <Card.Text style={textStyle}>
-            <span style={boldTextStyle}>KoiName:</span> {card.KoiName || "N/A"}
+            <span style={boldTextStyle}>Koi Name:</span> {card.KoiName || "N/A"}
           </Card.Text>
           <Card.Text style={textStyle}>
             <span style={boldTextStyle}>Age:</span> {card.Age || "N/A"}
@@ -55,6 +60,28 @@ const CardGrid = ({ cardData }) => {
           <Card.Text style={textStyle}>
             <span style={boldTextStyle}>Size:</span> {card.Size || "N/A"}
           </Card.Text>
+
+          {/* Status Rendering */}
+          {card.Status === 4 && (
+            <Card.Text style={textStyle}>
+              <span style={boldTextStyle}>Trạng thái:</span> Cá Ký Gửi
+            </Card.Text>
+          )}
+          {card.Status === 1 && (
+            <Card.Text style={textStyle}>
+              <span style={boldTextStyle}>Trạng thái:</span> Nhập Khẩu
+            </Card.Text>
+          )}
+          {card.Status === 2 && (
+            <Card.Text style={textStyle}>
+              <span style={boldTextStyle}>Trạng thái:</span> F1
+            </Card.Text>
+          )}
+          {card.Status === 3 && (
+            <Card.Text style={textStyle}>
+              <span style={boldTextStyle}>Trạng thái:</span>Việt
+            </Card.Text>
+          )}
         </Card.Body>
         <Button
           style={{ color: "white", backgroundColor: "red", border: "none" }}
