@@ -196,7 +196,7 @@ export const oAuthController = async (req, res, next) => {
 //   })
 // }
 
-export const getAllConsignController = async (req, res) => {
+export const getAllConsignFromUserController = async (req, res) => {
   try {
     const { user_id } = req.decoded_authorization
     const user = await databaseService.users.findOne({ _id: new ObjectId(user_id) })
@@ -206,7 +206,7 @@ export const getAllConsignController = async (req, res) => {
         status: HTTP_STATUS.NOT_FOUND
       })
     }
-    const result = await consignsService.getAllConsign(user_id)
+    const result = await consignsService.getAllConsignFromUser(user_id)
     return res.json({
       message: USERS_MESSAGES.GET_ALL_CONSIGNS_SUCCESS,
       result

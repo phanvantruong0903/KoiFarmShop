@@ -148,7 +148,7 @@ class ConsignsService {
     }
   }
 
-  async getAllConsign(userid) {
+  async getAllConsignFromUser(userid) {
     //tìm consign dựa vào userid
     // const userObjectId = new ObjectId(userid)
     const consigns = await databaseService.consigns.find({ UserID: userid }).toArray()
