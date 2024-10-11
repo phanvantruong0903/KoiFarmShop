@@ -152,7 +152,27 @@ class ConsignsService {
     //tìm consign dựa vào userid
     // const userObjectId = new ObjectId(userid)
     const consigns = await databaseService.consigns.find({ UserID: userid }).toArray()
-    return consigns
+
+    // Lấy tất cả các KoiID từ consigns
+    const koiIDFromConsigns = consigns.map((consign) => consign.KoiID)
+
+    // Tìm tất cả các koi dựa vào KoiID
+    const kois = await databaseService.kois
+      .find({ _id: { $in: koiIDFromConsigns.map((id) => new ObjectId(id)) } })
+      .toArray()
+
+    // Trả về mảng consign và koi tương ứng
+    const data = consigns.map((consign) => {
+      const koi = kois.find((k) => k._id.toString() === consign.KoiID.toString())
+      return {
+        consign,
+        koi
+      }
+    })
+
+    return {
+      data
+    }
   }
 }
 
