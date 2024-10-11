@@ -5,6 +5,7 @@ import usersService from '../services/users.services.js'
 import { UserVerifyStatus } from '../constants/enums.js'
 import { ErrorWithStatus } from '../models/Errors.js'
 import HTTP_STATUS from '../constants/httpStatus.js'
+import consignsService from '../services/consigns.services.js'
 
 export const loginController = async (req, res) => {
   //lấy user_id từ user của req
@@ -194,3 +195,25 @@ export const oAuthController = async (req, res, next) => {
 //     result
 //   })
 // }
+
+export const getAllConsignController = async (req, res) => {
+  try {
+    const { user_id } = req.decoded_authorization
+    const user = await databaseService.users.findOne({ _id: new ObjectId(user_id) })
+    if (user === null) {
+      throw new ErrorWithStatus({
+        message: USERS_MESSAGES.USER_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+    const result = await consignsService.getAllConsign(user_id)
+    return res.json({
+      message: USERS_MESSAGES.GET_ALL_CONSIGNS_SUCCESS,
+      result
+    })
+  } catch (error) {
+    res.status(error.status || HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
+      message: error.message || 'Internal Server Error'
+    })
+  }
+}

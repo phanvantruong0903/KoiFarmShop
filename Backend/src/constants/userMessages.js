@@ -112,10 +112,12 @@ export const USERS_MESSAGES = {
   //koi video
   KOI_VIDEO_IS_REQUIRED: 'Koi video is required',
   //check authorization
-  CHECK_AUTHORIZATION_SUCCESS: 'Check authorization success'
+  CHECK_AUTHORIZATION_SUCCESS: 'Check authorization success',
+  //get all consign
+  GET_ALL_CONSIGNS_SUCCESS: 'Get all consigns success'
 }
 export const ADMINS_MESSAGES = {
-  ADD_KOI_SUCCESS: "Add Fish success",
-  ADD_KOI_FAIL: "Add Fish Fail",
-  UPDATE_KOI_SUCCESS: "Update Fish success"
+  ADD_KOI_SUCCESS: 'Add Fish success',
+  ADD_KOI_FAIL: 'Add Fish Fail',
+  UPDATE_KOI_SUCCESS: 'Update Fish success'
 }

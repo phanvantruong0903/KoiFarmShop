@@ -16,6 +16,7 @@ import {
   changePasswordController,
   emailVerifyTokenController,
   forgotPasswordController,
+  getAllConsignController,
   getMeController,
   getProfileController,
   loginController,
@@ -37,7 +38,7 @@ usersRouter.post('/register', registerValidator, wrapAsync(registerController))
 
 usersRouter.post('/login', loginValidator, wrapAsync(loginController)) // đã được
 
-usersRouter.post('/logout', accessTokenValidator, refreshTokenValidator, wrapAsync(logoutController)) 
+usersRouter.post('/logout', accessTokenValidator, refreshTokenValidator, wrapAsync(logoutController))
 
 usersRouter.get('/verify-email', emailVerifyTokenValidator, wrapAsync(emailVerifyTokenController))
 
@@ -109,5 +110,7 @@ g}
 usersRouter.post('/refresh-token', refreshTokenValidator, wrapAsync(refreshController))
 
 usersRouter.get('/oauth/google', wrapAsync(oAuthController))
+
+usersRouter.get('/tat-ca-don-ki-gui', accessTokenValidator, wrapAsync(getAllConsignController))
 
 export default usersRouter
