@@ -36,7 +36,7 @@ export default function Home() {
 
   // const googleAuthUrl = getGoogleAuthUrl();
   const [menu, setMenu] = useState("home");
-
+  console.log(localStorage);
   useEffect(() => {
     const sections = document.querySelectorAll(".animated-section");
 

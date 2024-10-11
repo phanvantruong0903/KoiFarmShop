@@ -31,8 +31,7 @@ export default function Navbar() {
   }, [isLoggedIn]);
 
   const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("hasShownToast"); //
+    localStorage.clear(); // Clears all items from localStorage
     setIsLoggedIn(false);
     setHasShownToast(false); // Reset toast state on logout
     toast.success("Đăng xuất thành công!");
