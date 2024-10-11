@@ -147,6 +147,13 @@ class ConsignsService {
       koi: koiUpdate
     }
   }
+
+  async getAllConsign(userid) {
+    //tìm consign dựa vào userid
+    // const userObjectId = new ObjectId(userid)
+    const consigns = await databaseService.consigns.find({ UserID: userid }).toArray()
+    return consigns
+  }
 }
 
 const consignsService = new ConsignsService()
