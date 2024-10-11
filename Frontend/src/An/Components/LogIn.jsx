@@ -6,7 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function SignInForm() {
-  const { googleAuthUrl, login } = useAuth();
+  const { googleAuthUrl, login, checkRole } = useAuth();
   const [state, setState] = React.useState({
     email: "",
     password: "",
@@ -29,11 +29,18 @@ function SignInForm() {
     // Perform the login and navigate after a successful login
     login(email, password).then((result) => {
       if (result) {
+        checkRole().then(result =>{
+          if (result === "Staff") {
+            navigate("/DashBoard/staff/Profiles");
+          }
+          else if (result === "Manager") {
+            navigate("/DashBoard/manager/Consign");
+          }
+        })
+        navigate("/");
         toast.success("Login successfully");
         // Use a timeout to ensure the toast is shown before navigating
-        setTimeout(() => {
-          navigate("/DashBoard/staff/Profiles");
-        }, 1000); // Delay to allow the toast to be seen
+        // Delay to allow the toast to be seen
       }
     });
 
@@ -75,7 +82,7 @@ function SignInForm() {
         <button>Sign In</button>
       </form>
       <ToastContainer
-        position="top-right"
+        position="bottom-right"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}

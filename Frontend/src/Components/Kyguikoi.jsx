@@ -137,7 +137,7 @@ export default function Kyguikoi() {
 
       const result = await response.json();
       alert(result.message);
-      navigate("/");
+      navigate(`/trackingorder`, { state: { message: result.message } });
     } catch (error) {
       console.error("Error uploading files or sending data: ", error);
       alert("Có lỗi xảy ra. Vui lòng thử lại.");

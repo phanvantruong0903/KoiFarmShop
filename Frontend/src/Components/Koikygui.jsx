@@ -11,7 +11,7 @@ export default function Koikygui() {
   const [cardData, setCardData] = useState([]); // Dữ liệu danh mục
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState("ALL");
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [categoryData, setCategoryData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -48,7 +48,7 @@ export default function Koikygui() {
   if (error) return <div>Error: {error.message}</div>;
 
   const filteredCards =
-    selectedCategory === "ALL"
+    selectedCategory === "All"
       ? cardData
       : cardData.filter((card) => card.CategoryID === selectedCategory); // So sánh với selectedCategory
   const breedCounts = cardData.reduce((accumulator, card) => {
@@ -69,9 +69,9 @@ export default function Koikygui() {
               <Form.Check
                 style={{ paddingBottom: "20px" }}
                 type="radio"
-                label={`ALL (${cardData.length})`}
-                value="ALL"
-                checked={selectedCategory === "ALL"}
+                label={`All (${cardData.length})`}
+                value="All"
+                checked={selectedCategory === "All"}
                 onChange={handleCategoryChange}
               />
               {categoryData.map((card) => {
