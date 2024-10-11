@@ -4,7 +4,6 @@ import { USERS_MESSAGES } from '../constants/userMessages.js'
 import { ErrorWithStatus } from '../models/Errors.js'
 import databaseService from '../services/database.service.js'
 import koisService from '../services/kois.services.js'
-import databaseService from '../services/database.service.js'
 import { ObjectId } from 'mongodb'
 
 export const createNewKoiKiGuiController = async (req, res) => {
