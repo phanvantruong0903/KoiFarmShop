@@ -34,9 +34,7 @@ const useSignUpForm = (initialState) => {
         if (state.password !== state.confirm_password) {
             newErrors.confirm_password = "Passwords don't match";
         }
-        if (!state.date_of_birth.trim()) {
-            newErrors.date_of_birth = "Date of birth is required";
-        }
+        
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;

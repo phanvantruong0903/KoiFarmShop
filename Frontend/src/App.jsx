@@ -24,8 +24,9 @@ import Login from "./Login";
 import LoginPage from "./An/Pages/Login";
 import OrderPage from "./Components/OrderPage";
 import "bootstrap/dist/css/bootstrap.min.css";
-const Staff = lazy(() => import("../src/An/Pages/Staff"));
-const Manager = lazy(() => import("./An/Pages/Manager/Manager"));
+
+const Staff = lazy(() => import('../src/An/Pages/Staff'));
+const Manager = lazy(() => import('./An/Pages/Manager/Manager'));
 const Profiles = lazy(() => import("../src/An/Pages/Staff/Profiles"));
 const Orders = lazy(() => import("../src/An/Pages/Staff/Orders"));
 

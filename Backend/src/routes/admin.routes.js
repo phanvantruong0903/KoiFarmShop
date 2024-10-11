@@ -10,18 +10,20 @@ import {
   updateKoi,
   updateStatusKoi,
   updateUser,
-  updateStatusUser
+  updateStatusUser,
+  createCategory
 } from '../controllers/admin.controllers.js'
 import { accessTokenValidator } from '../middlewares/users.middlewares.js'
 import { isAdminValidator } from '../middlewares/manager.middlewares.js'
 
 adminRouter.get('/getUsers', accessTokenValidator, isAdminValidator, getUser)
 adminRouter.get('/getOrder', accessTokenValidator, isAdminValidator, getOrder)
-adminRouter.get('/getKois', getKois)
+adminRouter.get('/getKois', accessTokenValidator, isAdminValidator, getKois)
 
 adminRouter.post('/addKoi', accessTokenValidator, isAdminValidator, addKoi)
 adminRouter.put('/updateKoi/:KoiID', accessTokenValidator, isAdminValidator, updateKoi)
-adminRouter.put('/disable-enable/:KoiID', accessTokenValidator, isAdminValidator, updateStatusKoi)
+adminRouter.put('/disable-enable/:KoiID', accessTokenValidator, accessTokenValidator, updateStatusKoi)
+adminRouter.post('/createCategory', accessTokenValidator, accessTokenValidator, createCategory)
 
 adminRouter.put('/updateUser/:UserID', accessTokenValidator, isAdminValidator, updateUser)
 adminRouter.put('/disable-enable-User/:UserID', accessTokenValidator, isAdminValidator, updateStatusUser)
