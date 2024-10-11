@@ -69,7 +69,7 @@ const CardGrid = ({ cardData }) => {
           )}
           {card.Status === 1 && (
             <Card.Text style={textStyle}>
-              <span style={boldTextStyle}>Trạng thái:</span> Nhập Khẩu
+              <span style={boldTextStyle}>Trạng thái:</span> Nhập Khẩu Nhật
             </Card.Text>
           )}
           {card.Status === 2 && (
