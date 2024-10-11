@@ -5,6 +5,7 @@ import adminRouter from './routes/admin.routes.js'
 import categoryRouter from './routes/category.routes.js'
 import databaseService from './services/database.service.js'
 import { defaultErrorHandler } from './middlewares/error.middlewares.js'
+import cookieParser from 'cookie-parser';
 
 import cors from 'cors' // Thêm import cho cors
 
@@ -16,8 +17,9 @@ import { createNewKoiKiGuiValidator } from './middlewares/common.middlewares.js'
 import { wrapAsync } from './utils/handle.js'
 
 import { getKois } from './controllers/admin.controllers.js'
+import orderRouter from './routes/order.routes.js'
 
-config()
+config()    
 const app = express()
 app.use(
   cors({
@@ -25,6 +27,7 @@ app.use(
   })
 )
 const PORT = process.env.PORT || 4000
+app.use(cookieParser())
 app.use(express.json())
 databaseService.connect().then(() => {
   databaseService.indexUsers()
@@ -43,6 +46,7 @@ app.use('/categories', categoryRouter)
 app.use('/manager', managerRouter)
 app.use('/kois/:CategoryID', getKoiByCategoryIDController)
 app.use('/getAllKoi', getKois)
+app.use('/order', orderRouter)
 
 app.use(defaultErrorHandler)
 

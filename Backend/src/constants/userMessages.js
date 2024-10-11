@@ -110,7 +110,14 @@ export const USERS_MESSAGES = {
   //koi image
   KOI_IMAGE_IS_REQUIRED: 'Koi image is required',
   //koi video
-  KOI_VIDEO_IS_REQUIRED: 'Koi video is required'
+  KOI_VIDEO_IS_REQUIRED: 'Koi video is required',
+  /* Order */
+  //make order
+  MAKE_ORDER_SUCCESS: 'Make order success',
+  //get order
+  GET_ORDER_SUCCESS: 'Get order success',
+  //update order
+  UPDATE_ORDER_SUCCESS: 'Update order success'
 }
 export const ADMINS_MESSAGES = {
   ADD_KOI_SUCCESS: "Add Fish success",
