@@ -82,7 +82,7 @@ class KoisService {
       UserID: userId,
       KoiID: koiID.toString(),
       _id: consignID,
-      status: 1
+      State: 1
     }
     const consignResult = await databaseService.consigns.insertOne(new ConsignSchema(consignPayload))
 

@@ -163,3 +163,13 @@ export const getConsignDetailController = async (req, res) => {
     result: consign
   })
 }
+
+export const updateConsignDetailController = async (req, res) => {
+  //tìm user theo username
+  const { _id } = req.params
+  const consign = await consignsService.updateConsignDetail(_id, req.body)
+  return res.json({
+    message: MANAGER_MESSAGES.UPDATE_CONSIGN_DETAIL_SUCCESS,
+    result: consign
+  })
+}

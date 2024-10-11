@@ -4,6 +4,7 @@ import {
   getAllConsignController,
   getAllUserController,
   getConsignDetailController,
+  updateConsignDetailController,
   getAllKoiController,
   getAllOrderController,
   updateKoiController,
@@ -76,5 +77,7 @@ managerRouter.post(
   accessTokenValidator,
   wrapAsync(updateStatusUserController)
 )
+
+managerRouter.put('/manage-ki-gui/:_id', accessTokenValidator, isAdminValidator, wrapAsync(updateConsignDetailController))
 
 export default managerRouter
