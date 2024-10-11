@@ -1,4 +1,5 @@
 import adminService from '../services/admin.service.js'
+import consignsService from '../services/consigns.services.js'
 import databaseService from '../services/database.service.js'
 
 export const getUser = async (req, res) => {
@@ -66,6 +67,7 @@ export const updateKoi = async (req, res) => {
 export const updateStatusKoi = async (req, res) => {
   try {
     const { KoiID } = req.params
+
     const result = await adminService.updateStatusKoi(KoiID)
     // result trả về success "true" nếu thành công và ngược lại trả về false khi validate dữ liệu đầu vào fail
     // message do Joi trả về khi validate

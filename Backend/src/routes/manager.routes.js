@@ -57,8 +57,7 @@ managerRouter.put('/manage-koi/updateKoi/:KoiID', accessTokenValidator, isAdminV
 
 managerRouter.put(
   '/manage-koi/disable-enable/:KoiID',
-  accessTokenValidator,
-  accessTokenValidator,
+
   wrapAsync(updateStatusKoiController)
 )
 
