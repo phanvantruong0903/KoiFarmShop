@@ -34,15 +34,15 @@ export const getAllKoiController = async (req, res) => {
 }
 
 export const createNewKoiController = async (req, res) => {
-  try {
-    const result = await koisService.createNewKoi(req.body)
-    return res.json({
-      message: MANAGER_MESSAGES.CREATE_NEW_KOI_SUCCESS,
-      result
-    })
-  } catch (error) {
-    return res.status(500).json({ error: error.message })
-  }
+    try {
+      const result = await koisService.createNewKoi(req.body)
+      return res.json({
+        message: MANAGER_MESSAGES.CREATE_NEW_KOI_SUCCESS,
+        result
+      })
+    } catch (error) {
+      return res.status(500).json({ error: error.message })
+    }
 }
 
 export const getAllConsignController = async (req, res) => {

@@ -111,6 +111,13 @@ export const USERS_MESSAGES = {
   KOI_IMAGE_IS_REQUIRED: 'Koi image is required',
   //koi video
   KOI_VIDEO_IS_REQUIRED: 'Koi video is required',
+
+  //order
+  GET_ORDER_SUCCESS: 'Get order success',
+  UPDATE_ORDER_SUCCESS: 'Update order success',
+  MAKE_ORDER_SUCCESS: 'Make order success',
+  CREATE_ORDER_SUCCESS: 'Create order success',
+
   //check authorization
   CHECK_AUTHORIZATION_SUCCESS: 'Check authorization success',
   //get all consign
