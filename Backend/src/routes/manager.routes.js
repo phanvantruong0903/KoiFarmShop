@@ -53,11 +53,17 @@ managerRouter.get('/manage-order/get-all', accessTokenValidator, isAdminValidato
 
 managerRouter.get('/manage-koi/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getAllKoiController))
 
-managerRouter.put('/manage-koi/updateKoi/:KoiID', accessTokenValidator, isAdminValidator, wrapAsync(updateKoiController))
+managerRouter.put(
+  '/manage-koi/updateKoi/:KoiID',
+  accessTokenValidator,
+  isAdminValidator,
+  wrapAsync(updateKoiController)
+)
 
 managerRouter.put(
   '/manage-koi/disable-enable/:KoiID',
-
+  accessTokenValidator,
+  accessTokenValidator,
   wrapAsync(updateStatusKoiController)
 )
 
@@ -68,7 +74,12 @@ managerRouter.post(
   wrapAsync(createCategoryController)
 )
 
-managerRouter.post('/manage-user/updateUser/:UserID', accessTokenValidator, accessTokenValidator, wrapAsync(updateUserController))
+managerRouter.post(
+  '/manage-user/updateUser/:UserID',
+  accessTokenValidator,
+  accessTokenValidator,
+  wrapAsync(updateUserController)
+)
 
 managerRouter.post(
   '/manage-user/disable-enable/:UserID',
@@ -77,6 +88,11 @@ managerRouter.post(
   wrapAsync(updateStatusUserController)
 )
 
-managerRouter.put('/manage-ki-gui/:_id', accessTokenValidator, isAdminValidator, wrapAsync(updateConsignDetailController))
+managerRouter.put(
+  '/manage-ki-gui/:_id',
+  accessTokenValidator,
+  isAdminValidator,
+  wrapAsync(updateConsignDetailController)
+)
 
 export default managerRouter
