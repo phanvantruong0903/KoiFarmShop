@@ -15,7 +15,7 @@ const zaloPayment = async (req, res) => {
   }
 
   const items = [{}]
-  const transID = req.body.orderID
+  const transID = Math.floor(Math.random() * 1000000)
   const order = {
     app_id: config.app_id,
     app_trans_id: `${moment().format('YYMMDD')}_${transID}`,
@@ -24,7 +24,7 @@ const zaloPayment = async (req, res) => {
     item: JSON.stringify(items),
     embed_data: JSON.stringify(embed_data),
     amount: req.body.total,
-    description: `KOI Shop - Payment for the order #${transID}`,
+    description: `KOI Shop - Payment for the order #${req.body.orderID}`,
     bank_code: '',
     callback_url: 'localhost:4000//callback'
   }
