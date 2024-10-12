@@ -1,9 +1,9 @@
 import PropTypes from "prop-types"; // Import PropTypes
+import React from "react";
 import { Card, Row, Col, Container } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+
 const CardGrid = ({ cardData }) => {
-  const navigate = useNavigate();
   const cardStyle = {
     width: "100%",
     border: "2px solid gold",
@@ -22,31 +22,150 @@ const CardGrid = ({ cardData }) => {
   };
 
   const textStyle = {
-    fontSize: "15px",
-    fontWeight: "400",
+    fontSize: "1rem",
   };
 
   const boldTextStyle = {
     fontWeight: "bold",
-    fontSize: "20px",
+    color: "black",
   };
-  const handleOrderClick = (card) => {
-    navigate("/order", { state: { selectedItem: card } }); // Pass the card as state
-  };
-  const cardCount = cardData.length; // Total number of koi
-  const cards = cardData.map((card) => (
+
+  const cardCount = cardData.length;
+
+  // Grouping logic for status 2 and 3 by CategoryID
+  const groupedCards = {};
+  const japanCards = [];
+
+  cardData.map((card) => {
+    if (card.Status === 2 || card.Status === 3) {
+      const key = card.CategoryID; // Use CategoryID as the key
+      if (!groupedCards[key]) {
+        groupedCards[key] = { ...card, count: 1 }; // Initialize count
+      } else {
+        groupedCards[key].count += 1; // Increment count
+      }
+    } else if (card.Status === 1) {
+      // Collect cards with Status 1 (Cá Nhật)
+      japanCards.push(card);
+    }
+  });
+
+  const cards = cardData.map((card) => {
+    let statusText = "";
+
+    // Chỉ hiển thị thẻ Card nếu Status là 4
+    if (card.Status === 4) {
+      statusText = "Cá ký gửi";
+
+      return (
+        <Col key={card._id} md={3} className="mb-4">
+          <Card style={cardStyle}>
+            <Card.Img variant="top" src={card.Image} style={imgStyle} />
+            <Card.Body>
+              <Card.Title style={titleStyle}>{card.CategoryName}</Card.Title>
+              <Card.Text style={textStyle}>
+                <span style={boldTextStyle}>Koi Name:</span>{" "}
+                {card.KoiName || "N/A"}
+              </Card.Text>
+              <Card.Text style={textStyle}>
+                <span style={boldTextStyle}>Age:</span> {card.Age || "N/A"}
+              </Card.Text>
+              <Card.Text style={textStyle}>
+                <span style={boldTextStyle}>Origin:</span>{" "}
+                {card.Origin || "N/A"}
+              </Card.Text>
+              <Card.Text style={textStyle}>
+                <span style={boldTextStyle}>Giới tính:</span>{" "}
+                {card.Gender || "N/A"}
+              </Card.Text>
+              <Card.Text style={textStyle}>
+                <span style={boldTextStyle}>Size:</span> {card.Size || "N/A"}
+              </Card.Text>
+              <Card.Text style={textStyle}>
+                <span style={boldTextStyle}>Status:</span>{" "}
+                {card.Status || "N/A"}
+              </Card.Text>
+              <Card.Text style={textStyle}>
+                <span style={boldTextStyle}>Trạng thái:</span> {statusText}
+              </Card.Text>
+            </Card.Body>
+            <Button
+              href="/chitietcakoi"
+              active
+              style={{
+                width: "100%",
+                backgroundColor: "rgb(184, 0, 31)",
+                border: "none",
+                borderRadius: "0",
+              }}
+            >
+              Chi tiết
+            </Button>
+          </Card>
+        </Col>
+      );
+    }
+
+    return null; // Không hiển thị nếu không đạt điều kiện
+  });
+
+  // Render grouped cards for status 2 and 3
+  const groupedCardComponents = Object.values(groupedCards).map(
+    (groupedCard) => (
+      <Col key={groupedCard.CategoryID} md={3} className="mb-4">
+        <Card style={cardStyle}>
+          <Card.Img variant="top" src={groupedCard.Image} style={imgStyle} />
+          <Card.Body>
+            <Card.Title style={titleStyle}>
+              {groupedCard.CategoryName}
+            </Card.Title>
+            <Card.Text style={textStyle}>
+              <span style={boldTextStyle}>KoiName:</span>{" "}
+              {groupedCard.KoiName || "N/A"}
+            </Card.Text>
+            <Card.Text style={textStyle}>
+              <span style={boldTextStyle}>Số lượng:</span> {groupedCard.count}
+            </Card.Text>
+            <Card.Text style={textStyle}>
+              <span style={boldTextStyle}>Size:</span> {"15cm-75cm"}
+            </Card.Text>
+            <Card.Text style={textStyle}>
+              <span style={boldTextStyle}>Status:</span>{" "}
+              {groupedCard.Status || "N/A"}
+            </Card.Text>
+            <Card.Text style={textStyle}>
+              <span style={boldTextStyle}>Price:</span> {"19.000-850.000"}
+            </Card.Text>
+            <Card.Text style={textStyle}>
+              <span style={boldTextStyle}>Trạng thái:</span>
+            </Card.Text>
+          </Card.Body>
+          <Button
+            href="/chitietcakoi"
+            active
+            style={{
+              width: "100%",
+              backgroundColor: "rgb(184, 0, 31)",
+              border: "none",
+              borderRadius: "0",
+            }}
+          >
+            Chi tiết
+          </Button>
+        </Card>
+      </Col>
+    )
+  );
+
+  // Render Cá Nhật cards
+  const japanCardComponents = japanCards.map((card) => (
     <Col key={card._id} md={3} className="mb-4">
       <Card style={cardStyle}>
-        <Card.Img
-          variant="top"
-          src={card.Image}
-          style={imgStyle}
-          onClick={() => handleOrderClick(card)}
-        />
+        <Card.Img variant="top" src={card.Image} style={imgStyle} />
         <Card.Body>
           <Card.Title style={titleStyle}>{card.CategoryName}</Card.Title>
           <Card.Text style={textStyle}>
-            <span style={boldTextStyle}>Koi Name:</span> {card.KoiName || "N/A"}
+            <span style={boldTextStyle}>KoiName:</span> {card.KoiName || "N/A"}
           </Card.Text>
           <Card.Text style={textStyle}>
             <span style={boldTextStyle}>Age:</span> {card.Age || "N/A"}
@@ -60,34 +179,24 @@ const CardGrid = ({ cardData }) => {
           <Card.Text style={textStyle}>
             <span style={boldTextStyle}>Size:</span> {card.Size || "N/A"}
           </Card.Text>
-
-          {/* Status Rendering */}
-          {card.Status === 4 && (
-            <Card.Text style={textStyle}>
-              <span style={boldTextStyle}>Trạng thái:</span> Cá Ký Gửi
-            </Card.Text>
-          )}
-          {card.Status === 1 && (
-            <Card.Text style={textStyle}>
-              <span style={boldTextStyle}>Trạng thái:</span> Nhập Khẩu Nhật
-            </Card.Text>
-          )}
-          {card.Status === 2 && (
-            <Card.Text style={textStyle}>
-              <span style={boldTextStyle}>Trạng thái:</span> F1
-            </Card.Text>
-          )}
-          {card.Status === 3 && (
-            <Card.Text style={textStyle}>
-              <span style={boldTextStyle}>Trạng thái:</span>Việt
-            </Card.Text>
-          )}
+          <Card.Text style={textStyle}>
+            <span style={boldTextStyle}>Status:</span> {card.Status || "N/A"}
+          </Card.Text>
+          <Card.Text style={textStyle}>
+            <span style={boldTextStyle}>Trạng thái:</span>
+          </Card.Text>
         </Card.Body>
         <Button
-          style={{ color: "white", backgroundColor: "red", border: "none" }}
-          onClick={() => handleOrderClick(card)}
+          href="/chitietcakoi"
+          active
+          style={{
+            width: "100%",
+            backgroundColor: "rgb(184, 0, 31)",
+            border: "none",
+            borderRadius: "0",
+          }}
         >
-          Order
+          Chi tiết
         </Button>
       </Card>
     </Col>
@@ -100,12 +209,19 @@ const CardGrid = ({ cardData }) => {
           <h5>Tổng số cá koi: {cardCount}</h5>
         </Col>
       </Row>
+      <h1>Cá Ký Gửi</h1>
       <Row>{cards}</Row>
+      <hr />
+      <h1>Cá Bên IKoi</h1>
+      <Row>{groupedCardComponents}</Row>
+      <hr />
+      <h1>Cá Nhật</h1>
+      <Row>{japanCardComponents}</Row>
     </Container>
   );
 };
 
-// Kiếm tra các dữ liệu props được truyền vào trong CardGrid
+// Kiểm tra các dữ liệu props được truyền vào trong CardGrid
 CardGrid.propTypes = {
   cardData: PropTypes.arrayOf(
     PropTypes.shape({
@@ -116,6 +232,7 @@ CardGrid.propTypes = {
       Origin: PropTypes.string.isRequired,
       Gender: PropTypes.string.isRequired,
       Size: PropTypes.number.isRequired,
+      Price: PropTypes.number.isRequired, // Thêm trường Price
       Breed: PropTypes.string.isRequired,
       Description: PropTypes.string,
       DailyFoodAmount: PropTypes.number.isRequired,
