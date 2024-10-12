@@ -4,6 +4,8 @@ import { koiValidate } from '../middlewares/kois.middleware.js'
 import { MESSAGES } from '../constants/message.js'
 import { ObjectId } from 'mongodb'
 import CategorySchema from '../models/schemas/Category.schema.js'
+import ServiceSchema from '../models/schemas/Service.schema.js'
+import { serviceValidate } from '../middlewares/service.middlewares.js'
 
 class AdminsService {
   async getUser() {
@@ -119,6 +121,29 @@ class AdminsService {
         })
       )
       return { success: true, message: 'Creat Category Success' }
+    } catch (error) {
+      return { success: false, message: error.message }
+    }
+  }
+
+  async createNewService(payload) {
+    try {
+      const { error } = serviceValidate(payload)
+      if (error) {
+        return { success: false, message: error.details[0].message }
+      }
+
+      const checkService = await databaseService.services.findOne({ ServiceName: payload.ServiceName })
+      if (checkService) {
+        return { success: false, message: 'Service Name đã tồn tại' }
+      }
+
+      await databaseService.services.insertOne(
+        new ServiceSchema({
+          ...payload
+        })
+      )
+      return { success: true, message: 'Creat Service Success' }
     } catch (error) {
       return { success: false, message: error.message }
     }

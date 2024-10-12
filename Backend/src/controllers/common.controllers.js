@@ -18,7 +18,7 @@ export const createNewKoiKiGuiController = async (req, res) => {
   }
 }
 
-export const getCategory = async (req,res)=>{
+export const getCategory = async (req, res) => {
   try {
     const category = await databaseService._db.collection(process.env.DB_CATEGORY_COLLECTION).find().toArray()
     res.json({
@@ -43,6 +43,19 @@ export const authorizationController = async (req, res) => {
     const result = user.roleid
     return res.json({
       message: USERS_MESSAGES.CHECK_AUTHORIZATION_SUCCESS,
+      result
+    })
+  } catch (error) {
+    res.status(error.status || HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
+      message: error.message || 'Internal Server Error'
+    })
+  }
+}
+
+export const getAllServiceController = async (req, res) => {
+  try {
+    const result = await databaseService.services.find().toArray()
+    res.json({
       result
     })
   } catch (error) {
