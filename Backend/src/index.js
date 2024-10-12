@@ -45,7 +45,7 @@ app.use('/getAllKoi', getAllKoiController)
 
 app.post('/authorization', accessTokenValidator, authorizationController)
 
-app.use('/payment',paymentRouter)
+app.use('/payment', paymentRouter)
 
 app.use(defaultErrorHandler)
 
