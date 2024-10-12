@@ -1,21 +1,34 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "../Css/Login.css";
 import SignInForm from "../Components/LogIn";
 import SignUpForm from "../Components/SignUp";
+import { useLocation } from "react-router-dom";
 
 export default function LoginPage() {
-  const [type, setType] = useState("signIn");
-  const handleOnClick = text => {
+  const location = useLocation(); // Get the location object
+  const initialType = location.state?.type || "signIn";
+  const [type, setType] = useState(initialType);
+  const handleOnClick = (text) => {
     if (text !== type) {
       setType(text);
       return;
     }
   };
+
   const containerClass =
-    "container_login " + (type === "signUp" ? "right-panel-active" : "");
+    "container-form " + (type === "signUp" ? "right-panel-active" : "");
+
   return (
-    <div className="App" >
-      <div className={containerClass} id="container" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+    <div className="App">
+      <div
+        className={containerClass}
+        id="container"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <SignUpForm />
         <SignInForm />
         <div className="overlay-container">

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer";
-import { Form } from "react-bootstrap";
+import { Form, FormCheck } from "react-bootstrap";
 import CardGrid from "./Cardgrid";
 import axios from "axios";
 import "./Koikygui.css";
@@ -11,8 +11,8 @@ export default function Koikygui() {
   const [cardData, setCardData] = useState([]); // Dữ liệu danh mục
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState("ALL");
-
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [categoryData, setCategoryData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -20,7 +20,12 @@ export default function Koikygui() {
         console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
         if (Array.isArray(response.data.result)) {
           setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
-          console.log("Card data set successfully:", response.data.result); // Kiểm tra sau khi set
+          setCategoryData(response.data.cateogryList);
+          console.log("Card data set successfully:", response.data.result9); // Kiểm tra sau khi set
+          console.log(
+            "Category Data set successfully:",
+            response.data.cateogryList
+          );
         } else {
           console.error("Dữ liệu không phải là mảng:", response.data);
         }
@@ -43,14 +48,12 @@ export default function Koikygui() {
   if (error) return <div>Error: {error.message}</div>;
 
   const filteredCards =
-    selectedCategory === "ALL"
+    selectedCategory === "All"
       ? cardData
-      : cardData.filter((card) => card.KoiName === selectedCategory);
-
-  // Đếm số lượng cá cho từng giống
+      : cardData.filter((card) => card.CategoryID === selectedCategory); // So sánh với selectedCategory
   const breedCounts = cardData.reduce((accumulator, card) => {
-    if (card.KoiName) {
-      accumulator[card.KoiName] = (accumulator[card.KoiName] || 0) + 1;
+    if (card.CategoryID) {
+      accumulator[card.CategoryID] = (accumulator[card.CategoryID] || 0) + 1;
     }
     return accumulator;
   }, {});
@@ -66,22 +69,26 @@ export default function Koikygui() {
               <Form.Check
                 style={{ paddingBottom: "20px" }}
                 type="radio"
-                label={`ALL (${cardData.length})`}
-                value="ALL"
-                checked={selectedCategory === "ALL"}
+                label={`All (${cardData.length})`}
+                value="All"
+                checked={selectedCategory === "All"}
                 onChange={handleCategoryChange}
               />
-              {Object.keys(breedCounts).map((KoiName) => (
-                <Form.Check
-                  style={{ paddingBottom: "20px" }}
-                  key={KoiName}
-                  type="radio"
-                  label={`${KoiName} (${breedCounts[KoiName]})`}
-                  value={KoiName}
-                  checked={selectedCategory === KoiName}
-                  onChange={handleCategoryChange}
-                />
-              ))}
+              {categoryData.map((card) => {
+                const categoryName = card.CategoryName;
+                const count = breedCounts[card._id] ?? 0;
+                return (
+                  <FormCheck
+                    style={{ paddingBottom: "20px" }}
+                    key={card._id}
+                    type="radio"
+                    label={`${categoryName} (${count})`} // Sử dụng count ở đây
+                    value={card._id} // Sử dụng _id làm value
+                    checked={selectedCategory === card._id}
+                    onChange={handleCategoryChange}
+                  />
+                );
+              })}
             </Form.Group>
           </div>
         </div>

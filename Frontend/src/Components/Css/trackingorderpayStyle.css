@@ -1,0 +1,20 @@
+.button-group {
+  border: 2px; /* Blue border around the group */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Box shadow */
+  padding: 10px; /* Padding inside the group */
+  display: inline-block; /* Center the group */
+}
+
+.button-group .btn {
+  margin: 5px; /* Spacing between buttons */
+  border: 1px solid transparent; /* Default button border */
+  color: black; /* Button text color */
+  background-color: transparent; /* No background color */
+}
+
+.button-group .btn:hover {
+  background-color: red; /* Blue background on hover */
+  color: white; /* White text on hover */
+  border-color: black; /* Border color on hover */
+}

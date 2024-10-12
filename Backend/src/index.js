@@ -2,7 +2,6 @@ import express from 'express'
 import { config } from 'dotenv'
 import usersRouter from './routes/users.routes.js'
 import adminRouter from './routes/admin.routes.js'
-import categoryRouter from './routes/category.routes.js'
 import databaseService from './services/database.service.js'
 import { defaultErrorHandler } from './middlewares/error.middlewares.js'
 import cookieParser from 'cookie-parser';
@@ -10,14 +9,13 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors' // Thêm import cho cors
 
 import managerRouter from './routes/manager.routes.js'
-import { createNewKoiKiGuiController } from './controllers/common.controllers.js'
+import { authorizationController, createNewKoiKiGuiController, getCategory } from './controllers/common.controllers.js'
 import { getKoiByCategoryIDController } from './controllers/home.controllers.js'
 
 import { createNewKoiKiGuiValidator } from './middlewares/common.middlewares.js'
 import { wrapAsync } from './utils/handle.js'
 
 import { getKois } from './controllers/admin.controllers.js'
-import orderRouter from './routes/order.routes.js'
 
 config()    
 const app = express()
@@ -40,13 +38,11 @@ app.get('/', (req, res) => {
 app.post('/ki-gui', createNewKoiKiGuiValidator, wrapAsync(createNewKoiKiGuiController))
 
 app.use('/users', usersRouter)
-app.use('/admins', adminRouter)
-app.use('/categories', categoryRouter)
+app.get('/categories/getCategory', getCategory)
 
 app.use('/manager', managerRouter)
 app.use('/kois/:CategoryID', getKoiByCategoryIDController)
 app.use('/getAllKoi', getKois)
-app.use('/order', orderRouter)
 
 app.use(defaultErrorHandler)
 

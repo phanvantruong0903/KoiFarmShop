@@ -8,8 +8,23 @@ export default function FilterBar({ initialTitle, NavItems, handleFilterChange, 
     }
     return false;
   }
+  function filterMapping (filter,e){
+    if (filter === 'Status'){
+      const statusMapping = {
+        "All": "",
+        "Deposit Requests": "1",
+        "Koi Checks": "2",
+        "Price Agreements": "3",
+        "Fish Deliveries": "4",
+        "Fish Sales": "5"
+      };
+      return statusMapping[e];      
+
+    }
+    return e;
+  }
   return (
-    <DropdownButton id="dropdown-basic-button" title={initialTitle} onSelect={(e) => handleFilterChange(filter, e)}>
+    <DropdownButton id="dropdown-basic-button" title={initialTitle} onSelect={(e) => handleFilterChange(filter, filterMapping( filter,e))}>
       {NavItems.map((item) => (
         <Dropdown.Item key={item} eventKey={checkEmptyString(item)  ? '' : item} >
           {item}

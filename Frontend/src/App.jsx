@@ -22,9 +22,12 @@ import DashBoard from "./An/Pages/DashBoard";
 import Home from "./Home";
 import Login from "./Login";
 import LoginPage from "./An/Pages/Login";
+import OrderPage from "./Components/OrderPage";
+import TrackingOrderPage from "./Components/trackingOrderPage";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Profile from "./Components/Profile";
 const Staff = lazy(() => import("../src/An/Pages/Staff"));
-const Manager = lazy(() => import("../src/An/Pages/Manager"));
+const Manager = lazy(() => import("./An/Pages/Manager/Manager"));
 const Profiles = lazy(() => import("../src/An/Pages/Staff/Profiles"));
 const Orders = lazy(() => import("../src/An/Pages/Staff/Orders"));
 
@@ -110,6 +113,18 @@ const router = createBrowserRouter([
     element: <Home />, // Home component
   },
   {
+    path: "/order",
+    element: <OrderPage />, // Home component
+  },
+  {
+    path: "/trackingorder",
+    element: <TrackingOrderPage />, // Home component
+  },
+  {
+    path: "/profile",
+    element: <Profile />, // Home component
+  },
+  {
     path: "/login/oauth",
     element: <Login />, // OAuth login route
   },
@@ -134,7 +149,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "manager",
+        path: "manager/Consign",
         element: (
           <Suspense fallback={<Spinner />}>
             <Manager /> {/* Manager component */}

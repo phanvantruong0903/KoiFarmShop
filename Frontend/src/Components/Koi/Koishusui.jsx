@@ -10,7 +10,9 @@ export default function Koishusui() {
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedBreed, setSelectedBreed] = useState("KOI SHUSUI"); // Thay thế với giống cá bạn muốn lọc
+  const [idShusui, setIdKohaku] = useState(null);
+  const [filteredCards, setFilteredCards] = useState([]);
+  const [categoryData, setCategoryData] = useState([]);
   const handleScroll1 = () => {
     const element = document.getElementById("1");
 
@@ -71,11 +73,21 @@ export default function Koishusui() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://66fd0298c3a184a84d18b799.mockapi.io/Koi"
-        );
-        setCardData(response.data);
+        const response = await axios.get("http://localhost:4000/getAllKoi");
+        console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
+        if (Array.isArray(response.data.result)) {
+          setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
+          setCategoryData(response.data.cateogryList);
+          console.log("Card data set successfully:", response.data.result9); // Kiểm tra sau khi set
+          console.log(
+            "Category Data set successfully:",
+            response.data.cateogryList
+          );
+        } else {
+          console.error("Dữ liệu không phải là mảng:", response.data);
+        }
       } catch (err) {
+        console.error("Error fetching data:", err); // Ghi lại lỗi
         setError(err);
       } finally {
         setLoading(false);
@@ -84,10 +96,25 @@ export default function Koishusui() {
 
     fetchData();
   }, []);
+  useEffect(() => {
+    const shuisuiCard = categoryData.find(
+      (card) => card.CategoryName === "Shusui"
+    );
 
+    if (shuisuiCard) {
+      setIdKohaku(shuisuiCard._id);
+    }
+  }, [categoryData]); // Run this effect when categoryData changes
+
+  useEffect(() => {
+    if (idShusui) {
+      const filtered = cardData.filter((card) => card.CategoryID === idShusui);
+      setFilteredCards(filtered);
+    }
+  }, [idShusui, cardData]);
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  const filteredCards = cardData.filter((card) => card.Breed === selectedBreed); // Ví dụ: lọc theo độ tuổi lớn hơn 20000
+
   return (
     <>
       <div>
@@ -128,6 +155,7 @@ export default function Koishusui() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       1. Giới thiệu về Cá Koi Shusui
@@ -140,6 +168,7 @@ export default function Koishusui() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       2. Cách nhận biết Cá Koi Shusui
@@ -152,6 +181,7 @@ export default function Koishusui() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       3. Cách chọn Cá Koi Shusui
@@ -164,6 +194,7 @@ export default function Koishusui() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       4. Cách chăm sóc Cá Koi Shusui
@@ -176,6 +207,7 @@ export default function Koishusui() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       5. Giá cá koi Shusui bao nhiêu?
@@ -188,6 +220,7 @@ export default function Koishusui() {
                             color: "blue",
                             cursor: "pointer",
                             fontWeight: "600",
+                            fontSize: "20px",
                           }}
                         >
                           5.1 Giá cá koi Shusui F1
@@ -200,6 +233,7 @@ export default function Koishusui() {
                             color: "blue",
                             cursor: "pointer",
                             fontWeight: "600",
+                            fontSize: "20px",
                           }}
                         >
                           5.2 Giá cá koi Shusui Nhật chuẩn
@@ -214,6 +248,7 @@ export default function Koishusui() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       6. Tại sao nên mua Cá Koi Shusui tại Siêu thị Cá Koi VN?
@@ -227,7 +262,7 @@ export default function Koishusui() {
                   Nội dung chi tiết
                 </h2>
                 <div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Cá Koi đã không còn quá xa lạ với cộng đồng những người có
                     niềm đam mê với cá cảnh. Loài cá này thường có ưu điểm là
                     đẹp, dễ dàng cho việc chăm sóc, và nổi bật hơn rất nhiều
@@ -241,25 +276,33 @@ export default function Koishusui() {
               <div id="1">
                 <h3 style={{ color: "red" }}>1. Giới thiệu về Cá Koi Shusui</h3>
                 <div>
-                  Cá Koi Shusui là dòng cá Koi đẹp đến từ Nhật Bản và có chất
-                  lượng tốt hơn so với các dòng cá Koi từ các nước Đông Nam Á
-                  khác. Shusui xuất hiện từ năm 1910, trước xuất hiện giống cá
-                  Koi Kohaku hay KOI Showa.
-                  <br />
-                  Koi Shusui là một loại cá tạo ấn tượng từ cái nhìn đầu tiên
-                  đối với khách hàng bởi 3 màu mạnh là đen, đỏ và trắng. Đây là
-                  một trong số dòng cá có vảy đầu tiên, với làn da trắng trong
-                  suốt. Hơn nữa màu sắc chủ đạo của cá còn tạo nên phong thủy
-                  cho chủ sở hữu, màu sắc tạo nên sự phú quý, cao sang và đem
-                  đến nhiều may mắn, tài lộc.
-                  <br />
-                  Thuộc dòng cá xuất hiện tương đối sớm cùng với sự nuôi dưỡng
-                  và nghiên cứu để cá phát triển toàn diện nhất, nên hiện nay
-                  giống Shusui Koi có giá trị kinh tế rất cao và được nhiều
-                  người săn đón.
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                    Cá Koi Shusui là dòng cá Koi đẹp đến từ Nhật Bản và có chất
+                    lượng tốt hơn so với các dòng cá Koi từ các nước Đông Nam Á
+                    khác. Shusui xuất hiện từ năm 1910, trước xuất hiện giống cá
+                    Koi Kohaku hay KOI Showa.
+                    <br />
+                    Koi Shusui là một loại cá tạo ấn tượng từ cái nhìn đầu tiên
+                    đối với khách hàng bởi 3 màu mạnh là đen, đỏ và trắng. Đây
+                    là một trong số dòng cá có vảy đầu tiên, với làn da trắng
+                    trong suốt. Hơn nữa màu sắc chủ đạo của cá còn tạo nên phong
+                    thủy cho chủ sở hữu, màu sắc tạo nên sự phú quý, cao sang và
+                    đem đến nhiều may mắn, tài lộc.
+                    <br />
+                    Thuộc dòng cá xuất hiện tương đối sớm cùng với sự nuôi dưỡng
+                    và nghiên cứu để cá phát triển toàn diện nhất, nên hiện nay
+                    giống Shusui Koi có giá trị kinh tế rất cao và được nhiều
+                    người săn đón.
+                  </p>
                 </div>
                 <div>
-                  <Table striped bordered hover responsive>
+                  <Table
+                    striped
+                    bordered
+                    hover
+                    responsive
+                    style={{ fontSize: "15px", fontWeight: "400" }}
+                  >
                     <thead>
                       <tr>
                         <th>Tiêu chí</th>
@@ -312,51 +355,96 @@ export default function Koishusui() {
                 <h3 style={{ color: "red" }}>
                   2. Các đặc điểm thường gặp trên cá Koi Kohaku
                 </h3>
-                <img />
-                <p>
+
+                <p style={{ fontSize: "15px", fontWeight: "400" }}>
                   Các tiêu chuẩn này chỉ áp dụng cho các loài cá trưng bày tại
                   triển lãm ở Nhật Bản. Các loài cá được giữ làm vật nuôi tại
                   nhà riêng không cần phải tuân thủ các tiêu chuẩn này. Có một
                   số từ được sử dụng để mô tả các đặc điểm trên một con cá
                   Kohaku như sau:
                 </p>
-                <ul>
+                <ul style={{ fontSize: "15px", fontWeight: "400" }}>
                   <li>
-                    Akamuji: là một loài cá đỏ thông thường và thường xuất hiện
-                    trong quá trình sinh sản của loài Kohaku. Trước đây, ở Nhật
-                    Bản, các con cá Akamuji thường bị đánh bại để làm cá bột.
-                    Tuy nhiên, từ năm 1990, chúng trở nên phổ biến và thường
-                    được trưng bày trong thể loại Kawarimono như Benigoi hoặc
-                    Hiaka tại triển lãm. Một con cá Akamuji có các mảng trắng
-                    trên đầu vây được gọi là Aka Hajiro.
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "600",
+                        color: "red",
+                      }}
+                    >
+                      Akamuji: {""}
+                    </span>{" "}
+                    là một loài cá đỏ thông thường và thường xuất hiện trong quá
+                    trình sinh sản của loài Kohaku. Trước đây, ở Nhật Bản, các
+                    con cá Akamuji thường bị đánh bại để làm cá bột. Tuy nhiên,
+                    từ năm 1990, chúng trở nên phổ biến và thường được trưng bày
+                    trong thể loại Kawarimono như Benigoi hoặc Hiaka tại triển
+                    lãm. Một con cá Akamuji có các mảng trắng trên đầu vây được
+                    gọi là Aka Hajiro.
                   </li>
                   <li>
-                    Shiromuji: Shiromuji đối lập với Akamuji khi có thân hình
-                    trắng toàn phần và xuất hiện trong quá trình sinh sản của
-                    loài Kohaku. Ở Nhật Bản, các con cá Shiromuji không được coi
-                    là có giá trị. Thay vào đó, loài cá koi tương tự có vảy kim
-                    loại - bạch kim koi lại được ưa chuộng.
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "600",
+                        color: "red",
+                      }}
+                    >
+                      Shiromuji: {""}
+                    </span>{" "}
+                    đối lập với Akamuji khi có thân hình trắng toàn phần và xuất
+                    hiện trong quá trình sinh sản của loài Kohaku. Ở Nhật Bản,
+                    các con cá Shiromuji không được coi là có giá trị. Thay vào
+                    đó, loài cá koi tương tự có vảy kim loại - bạch kim koi lại
+                    được ưa chuộng.
                   </li>
                   <li>
-                    Komoyō: Với loài cá Komoyō, kích thước của các dấu đỏ rất
-                    nhỏ, chỉ chiếm ít hơn ¼ chiều dài của chúng. Chúng không
-                    được đánh giá cao.
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "600",
+                        color: "red",
+                      }}
+                    >
+                      Komoyō:{""}
+                    </span>{" "}
+                    Với loài cá Komoyō, kích thước của các dấu đỏ rất nhỏ, chỉ
+                    chiếm ít hơn ¼ chiều dài của chúng. Chúng không được đánh
+                    giá cao.
                   </li>
                   <li>
-                    Ōmoyō: Ngược lại với Komoyō, loài cá Ōmoyō có các dấu đỏ
-                    lớn, ít nhất là một phần tư chiều dài của cá. Điều này được
-                    đánh giá cao và theo lứa tuổi của cá, các dấu hiệu sẽ tách
-                    biệt để tạo ra những mô hình thú vị.
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "600",
+                        color: "red",
+                      }}
+                    >
+                      Ōmoyō:{""}
+                    </span>{" "}
+                    Ngược lại với Komoyō, loài cá Ōmoyō có các dấu đỏ lớn, ít
+                    nhất là một phần tư chiều dài của cá. Điều này được đánh giá
+                    cao và theo lứa tuổi của cá, các dấu hiệu sẽ tách biệt để
+                    tạo ra những mô hình thú vị.
                   </li>
                   <li>
-                    Dangara: là một mô hình dấu hiệu tách biệt giống như bước đá
-                    trong một hồ bơi. Đây là những giá trị rất lớn trong cạnh
-                    tranh. Một sọc đơn từ đầu đến đuôi không có giá trị ở Nhật
-                    Bản, nhưng nếu nó tạo thành một mô hình zig-zag thì được gọi
-                    là inazuma. Tên này bắt nguồn từ triển lãm All Nippon Show
-                    năm 1970, khi người chiến thắng đã tạo ra một hình mẫu
-                    inazuma nổi bật. Dangara cũng có thể có hai đốm đỏ, được gọi
-                    là Hai bước.
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "600",
+                        color: "red",
+                      }}
+                    >
+                      Dangara:{""}
+                    </span>{" "}
+                    là một mô hình dấu hiệu tách biệt giống như bước đá trong
+                    một hồ bơi. Đây là những giá trị rất lớn trong cạnh tranh.
+                    Một sọc đơn từ đầu đến đuôi không có giá trị ở Nhật Bản,
+                    nhưng nếu nó tạo thành một mô hình zig-zag thì được gọi là
+                    inazuma. Tên này bắt nguồn từ triển lãm All Nippon Show năm
+                    1970, khi người chiến thắng đã tạo ra một hình mẫu inazuma
+                    nổi bật. Dangara cũng có thể có hai đốm đỏ, được gọi là Hai
+                    bước.
                   </li>
                 </ul>
               </div>
@@ -369,13 +457,29 @@ export default function Koishusui() {
                 </div>
                 <ul>
                   <li>
-                    <span style={{ fontWeight: "bold" }}>Menkaburi Kohaku</span>
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "600",
+                        color: "red",
+                      }}
+                    >
+                      Menkaburi Kohaku:{""}
+                    </span>{" "}
                     : dấu hiệu nhận biết của giống Kohaku này là toàn bộ phần
                     đầu cá được bao phủ bởi màu đỏ, phần đỏ trên đầu sẽ tách
                     biệt với màu đỏ ờ phần thân
                   </li>
                   <li>
-                    <span style={{ fontWeight: "bold" }}>Hanatsuke Kohaku</span>
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "600",
+                        color: "red",
+                      }}
+                    >
+                      Hanatsuke Kohaku:{""}
+                    </span>{" "}
                     : cách để phân biệt giống này cũng khá là đơn giản đó là có
                     màu đỏ ở phần mũi của cá kéo dài lên phần đầu và thân.
                     <br />
@@ -384,12 +488,22 @@ export default function Koishusui() {
                         src="src/assets/hanatsukekohaku.webp"
                         style={{ width: "50%" }}
                       />
-                      <p>Giống Hanatsuke Kohaku Koi</p>
+                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                        Giống Hanatsuke Kohaku Koi
+                      </p>
                     </div>
                   </li>
 
                   <li>
-                    <span style={{ fontWeight: "bold" }}>Inazuma Kohaku</span>:
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "600",
+                        color: "red",
+                      }}
+                    >
+                      Inazuma Kohaku:{""}
+                    </span>{" "}
                     Vùng đỏ của giống cá này trải dài từ đầu thới đôi theo hình
                     ziczac vô cùng đặc biệt
                     <div style={{ textAlign: "center" }}>
@@ -397,14 +511,22 @@ export default function Koishusui() {
                         src="src/assets/inazumakohaku.webp"
                         style={{ width: "50%" }}
                       />
-                      <p>Giống Inazuma Kohaku Koi</p>
+                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                        Giống Inazuma Kohaku Koi
+                      </p>
                     </div>
                   </li>
 
                   <li>
-                    <span style={{ fontWeight: "bold" }}>
-                      Goten Sakura Kohaku
-                    </span>
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "600",
+                        color: "red",
+                      }}
+                    >
+                      Goten Sakura Kohaku:{""}
+                    </span>{" "}
                     : Phần đỏ trên đầu tương đối giống tancho kohaku. Ngoài ra
                     trên thân còn có các đốm đỏ phân bổ đều trên thân
                     <div style={{ textAlign: "center" }}>
@@ -412,12 +534,22 @@ export default function Koishusui() {
                         src="src/assets/gotensakurakohaku.webpp"
                         style={{ width: "50%" }}
                       />
-                      <p>Giống Goten Kohaku Koi</p>
+                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                        Giống Goten Kohaku Koi
+                      </p>
                     </div>
                   </li>
 
                   <li>
-                    <span style={{ fontWeight: "bold" }}>Tancho Kohaku</span>:
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "600",
+                        color: "red",
+                      }}
+                    >
+                      Tancho Kohaku:{""}
+                    </span>{" "}
                     Dòng cá này rất được coi trọng ở nhật vì nó trong giống là
                     quốc kỳ của họ. Toàn thân cá có màu trắng, không có một vết
                     gì, đồng thời trên đầu có khoang đỏ với nhiều hình dạng khác
@@ -427,12 +559,22 @@ export default function Koishusui() {
                         src="src/assets/tanchokohaku.webp"
                         style={{ width: "50%" }}
                       />
-                      <p>Giống Tancho Koi</p>
+                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                        Giống Tancho Koi
+                      </p>
                     </div>
                   </li>
 
                   <li>
-                    <span style={{ fontWeight: "bold" }}>Kuchibeni kohaku</span>
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "600",
+                        color: "red",
+                      }}
+                    >
+                      Kuchibeni kohaku:{""}
+                    </span>{" "}
                     : giống cá này đặc biệt ở chỗ khi có một chấm đỏ ở mũi, tách
                     biệt với các khoang đỏ khác trên thân cá. Điều này khác với
                     Hanatsuke Kohaku Koi khi có chấm đỏ ở mũi và kéo dài lên
@@ -442,14 +584,22 @@ export default function Koishusui() {
                         src="src/assets/kuchibenikohaku.webp"
                         style={{ width: "50%" }}
                       />
-                      <p>Giống Kuchibeni Koi</p>
+                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                        Giống Kuchibeni Koi
+                      </p>
                     </div>
                   </li>
 
                   <li>
-                    <span style={{ fontWeight: "bold" }}>
-                      Straight Hi Kohaku
-                    </span>
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "600",
+                        color: "red",
+                      }}
+                    >
+                      Straight Hi Kohaku:{""}
+                    </span>{" "}
                     : Điểm đặc biệt của giống cá này là phần đỏ chiếm nhiều trên
                     thân cá, không ngắt quãng từ phần đầu cho tới phần chân.
                     <div style={{ textAlign: "center" }}>
@@ -457,12 +607,22 @@ export default function Koishusui() {
                         src="src/assets/straighthikohaku.webp"
                         style={{ width: "50%" }}
                       />
-                      <p>Giống Straight Hi Kohaku Koi</p>
+                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                        Giống Straight Hi Kohaku Koi
+                      </p>
                     </div>
                   </li>
 
                   <li>
-                    <span style={{ fontWeight: "bold" }}>Nidan Kohaku</span>:
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "600",
+                        color: "red",
+                      }}
+                    >
+                      Nidan Kohaku:{""}
+                    </span>{" "}
                     Cũng giống như Straight Hi Kohaku khi màu đỏ chiếm đa số
                     trên thân. Tuy nhiên dòng cá này khác biệt ở chỗ sẽ có phần
                     trắng ở giữa thân chia phần đỏ thành 2 phần
@@ -471,12 +631,22 @@ export default function Koishusui() {
                         src="src/assets/nidankohaku.webp"
                         style={{ width: "50%" }}
                       />
-                      <p>Giống Nidan Kohaku Koi</p>
+                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                        Giống Nidan Kohaku Koi
+                      </p>
                     </div>
                   </li>
 
                   <li>
-                    <span style={{ fontWeight: "bold" }}>Sandan Kohaku</span>:
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "600",
+                        color: "red",
+                      }}
+                    >
+                      Sandan Kohaku:{""}
+                    </span>{" "}
                     phần màu đỏ sẽ chia thành 3 khoang riêng biệt là đầu, thân
                     và đuôi
                     <div style={{ textAlign: "center" }}>
@@ -484,26 +654,44 @@ export default function Koishusui() {
                         src="src/assets/sandankohaku.webp"
                         style={{ width: "50%" }}
                       />
-                      <p>Giống Sandan Kohaku Koi</p>
+                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                        Giống Sandan Kohaku Koi
+                      </p>
                     </div>
                   </li>
 
                   <li>
-                    <span style={{ fontWeight: "bold" }}>
-                      Yondan Kohaku Koi
-                    </span>
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "600",
+                        color: "red",
+                      }}
+                    >
+                      Yondan Kohaku Koi:{""}
+                    </span>{" "}
                     : Phần khoang đỏ sẽ chia thành 4 phần khác với Sandan Kohaku
                     <div style={{ textAlign: "center" }}>
                       <img
                         src="src/assets/yandankohakukoi.webp"
                         style={{ width: "50%" }}
                       />
-                      <p>Giống Yondan Kohaku Koi</p>
+                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                        Giống Yondan Kohaku Koi
+                      </p>
                     </div>
                   </li>
 
                   <li>
-                    <span style={{ fontWeight: "bold" }}>Kanoko Kohaku</span>:
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "600",
+                        color: "red",
+                      }}
+                    >
+                      Kanoko Kohaku:{""}
+                    </span>{" "}
                     Vùng đầu của cá là một khoang màu đỏ sẫm khá đậm, trên thân
                     cá xuất hiện những chấm đỏ li ti.
                     <div style={{ textAlign: "center" }}>
@@ -511,12 +699,22 @@ export default function Koishusui() {
                         src="src/assets/kanokokohaku.webp"
                         style={{ width: "50%" }}
                       />
-                      <p>Giống Kanoko Kohaku Koi</p>
+                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                        Giống Kanoko Kohaku Koi
+                      </p>
                     </div>
                   </li>
 
                   <li>
-                    <span style={{ fontWeight: "bold" }}>Maruten Kohaku</span>:
+                    <span
+                      style={{
+                        fontSize: "20px",
+                        fontWeight: "600",
+                        color: "red",
+                      }}
+                    >
+                      Maruten Kohaku:{""}
+                    </span>{" "}
                     Cơ thể giống loài cá này có 3-4 ngăn màu đỏ nằm cách xa nhau
                     hoặc thông với nhau. Chấm đỏ trên đầu không được tiếp giáp
                     với khoang đỏ trên cơ thể.
@@ -525,7 +723,9 @@ export default function Koishusui() {
                         src="src/assets/marutenkohaku.webp"
                         style={{ width: "50%" }}
                       />
-                      <p>Giống Maruten Kohaku Koi</p>
+                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                        Giống Maruten Kohaku Koi
+                      </p>
                     </div>
                   </li>
                 </ul>
@@ -585,11 +785,11 @@ export default function Koishusui() {
               </div>
               <div id="5">
                 <h3 style={{ color: "red" }}>5. Cách chọn cá Koi Kohaku</h3>
-                <p>
+                <p style={{ fontWeight: "400", fontSize: "15px" }}>
                   Cách chọn cá Koi Kohaku đẹp thì bạn cần phải dựa vào màu sắc
                   và dáng bơi để chọn mua cá chuẩn.
                 </p>
-                <ul>
+                <ul style={{ fontWeight: "400", fontSize: "15px" }}>
                   <li>
                     <span style={{ fontWeight: "bold" }}>Màu sắc cá</span>
                     <br />
@@ -624,13 +824,11 @@ export default function Koishusui() {
                     </p>
                   </li>
                 </ul>
-                <div>
-                  <img />
-                </div>
+
                 <div>
                   Ngoài ra bạn có thể dựa vào một số đặc điểm sau khi chọn cá
                   Koi Kohaku gồm:
-                  <ul>
+                  <ul style={{ fontWeight: "400", fontSize: "15px" }}>
                     <li>
                       Màu rõ ràng là màu trắng tinh như tuyệt, đỏ đậm, lớn.
                     </li>
@@ -652,13 +850,13 @@ export default function Koishusui() {
               </div>
               <div id="6">
                 <h3 style={{ color: "red" }}>5. Cách chăm sóc cá Koi Kohaku</h3>
-                <p>
+                <p style={{ fontWeight: "400", fontSize: "15px" }}>
                   Vì Kohaku koi là loài thông minh có thể sống trong nhiều thập
                   kỷ vì thế khi chăm sóc cá Koi Kohaku bạn cần lưu ý về điều
                   kiện môi trường và yếu tố xung quanh sẽ làm ảnh hưởng tới quá
                   trình phát triển của chúng.
                 </p>
-                <ul>
+                <ul style={{ fontWeight: "400", fontSize: "15px" }}>
                   <li>
                     Cá koi có thể tồn tại trong nhiều nhiệt độ nước, khả năng
                     chịu lạnh tốt. Tuy nhiên không nên để đáy hồ bị đóng băng để
@@ -707,7 +905,7 @@ export default function Koishusui() {
                 <h3 style={{ color: "red" }}>
                   7. Giá cá Koi Kohaku bao nhiêu ?{" "}
                 </h3>
-                <p>
+                <p style={{ fontWeight: "400", fontSize: "15px" }}>
                   Hiện tại Siêu thị Cá Koi Vn đang cung cấp dòng cá koi Kohaku
                   chuẩn từ cá nhật đến cá F1 với giá cực kỳ ưu đãi. Có thể nói
                   Siêu thị Cá Koi VN là một trong những đơn vị cung cấp cá koi
@@ -716,7 +914,7 @@ export default function Koishusui() {
                 </p>
                 <div id="71">
                   <h4>7.1 Giá Koi Kohaku F1</h4>
-                  <p>
+                  <p style={{ fontWeight: "400", fontSize: "15px" }}>
                     Đối với những con Kohaku f1 có kích thước từ 18cm – 40cm,
                     giá cá koi dao động từ 150.000 – 500.000 VNĐ tùy loại. Cao
                     cấp hơn là những con Kohaku f1 có kích thước từ 50cm – 55cm,
@@ -726,7 +924,7 @@ export default function Koishusui() {
                 </div>
                 <div id="72">
                   <h4>7.2 Giá cá koi Kohaku Nhật chuẩn</h4>
-                  <p>
+                  <p style={{ fontWeight: "400", fontSize: "15px" }}>
                     Một con cá Koi trưởng thành Nhật Bản như Kohaku koi với kích
                     thước từ 10-15cm sẽ có giá từ 600.000 – 2.000.000VNĐ/con.
                     Ngoài ra còn có con Kohaku Koi thuần chủng … được xếp vào
@@ -740,7 +938,7 @@ export default function Koishusui() {
                 <h3 style={{ color: "red" }}>
                   8. Tại sao nên mua Koi Kohaku ở shop chúng tôi ?{" "}
                 </h3>
-                <p>
+                <p style={{ fontWeight: "400", fontSize: "15px" }}>
                   Hiện nay có khá nhiều đơn vị cung cấp các dòng Koi Kohaku giá
                   thành và chất lượng trên thị trường. Đặc biệt là người mới bắt
                   đầu chơi cá Koi Kohaku sẽ rất khó khăn khi lựa chọn đơn vị
@@ -775,60 +973,6 @@ export default function Koishusui() {
           </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            backgroundImage: `url("src/assets/pexels-quang-nguyen-vinh-222549-2131828.jpg")`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          <div
-            style={{
-              width: "100%",
-              margin: "100px",
-              color: "white",
-              display: "flex",
-            }}
-          >
-            <div
-              style={{
-                width: "100%",
-                color: "black",
-                fontSize: "20px",
-                marginTop: "70px",
-                marginLeft: "20px",
-              }}
-            >
-              <h1 style={{ color: "white" }}>Điểm nổi bật của KoiStoreVN</h1>
-
-              <ul style={{ fontSize: "16px", color: "white" }}>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  Cá nhập khẩu chất lượng cao, nhập trực tiếp tại các trang trại
-                  Cá Koi Nhật Bản
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  Khách hàng yên tâm nuôi cá vì luôn có chuyên gia đồng hành
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  Đa dạng sản phẩm, dịch vụ chăm sóc Cá Koi và Hồ Cá Koi
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  KoiStoreVN tự hào là đơn vị đầu tiên tại miền bắc được chuyển
-                  giao công nghệ mô hình trại SAKAI (Sakai fish farm, Hiroshima,
-                  Japan)
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  Trại gồm 120 hồ lớn chuẩn theo mô hình trại SAKAI
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
         <div>
           <CardGrid cardData={filteredCards} />
         </div>

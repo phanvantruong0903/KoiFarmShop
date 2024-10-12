@@ -6,11 +6,7 @@ import Kyguikoi from "./Kyguikoi";
 export default function Gioithieusankygui() {
   return (
     <>
-      <div
-        style={{
-          backgroundColor: "rgb(71,1,19)",
-        }}
-      >
+      <div style={{}}>
         <Navbar />
         <Container
           style={{

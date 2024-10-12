@@ -3,6 +3,7 @@ import KoiSchema from '../models/schemas/Koi.schema.js'
 import { koiValidate } from '../middlewares/kois.middleware.js'
 import { MESSAGES } from '../constants/message.js'
 import { ObjectId } from 'mongodb'
+import CategorySchema from '../models/schemas/Category.schema.js'
 
 class AdminsService {
   async getUser() {
@@ -48,13 +49,31 @@ class AdminsService {
     return { success: true, message: MESSAGES.UPDATE_KOI_SUCCESS }
   }
 
-  async updateStatusKoi(KoiID) {
+  async updateStatusKoi(KoiIDInput) {
     try {
-      const result = await databaseService.kois.findOneAndUpdate(
-        { _id: new ObjectId(KoiID) },
-        { $bit: { Status: { xor: 1 } } },
-        { new: true }
-      )
+      // check koi là nhập khẩu hay được ký gửi
+      const checkKoi = await databaseService.consigns.find({ KoiID: KoiIDInput }).toArray()
+      if (checkKoi) {
+        await databaseService.kois.findOneAndUpdate(
+          { _id: new ObjectId(KoiIDInput) },
+          { $bit: { Status: { xor: 4 } } },
+          { new: true }
+        )
+      } else {
+        // nếu koi không phải là ký gửi vì không tồn tại trong collection consigns
+        // check xem nó có phải là nhập khẩu hay không vì origin là f1 hoặc việt thì không disable
+        checkKoi = await databaseService.kois.findOne({ _id: new ObjectId(KoiIDInput), Status: 1 })
+        if (checkKoi) {
+          await databaseService.kois.findOneAndUpdate(
+            { _id: new ObjectId(KoiIDInput) },
+            { $bit: { Status: { xor: 1 } } },
+            { new: true }
+          )
+        } else {
+          return { success: true, message: 'Koi có nguồn gốc F1 hoặc thuần việt không thể update' }
+        }
+      }
+
       return { success: true, message: MESSAGES.UPDATE_KOI_SUCCESS }
     } catch (error) {
       return { success: false, message: 'FAIL' }
@@ -85,6 +104,23 @@ class AdminsService {
       return { success: true, message: MESSAGES.UPDATE_USER_SUCCESS }
     } catch (error) {
       return { success: false, message: 'FAIL' }
+    }
+  }
+
+  async addCategory(payload) {
+    try {
+      if (!payload.CategoryName) {
+        return { success: false, message: 'Category Name is required' }
+      }
+
+      await databaseService.category.insertOne(
+        new CategorySchema({
+          ...payload
+        })
+      )
+      return { success: true, message: 'Creat Category Success' }
+    } catch (error) {
+      return { success: false, message: error.message }
     }
   }
 }

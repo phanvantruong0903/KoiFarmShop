@@ -1,8 +1,9 @@
-import React from "react";
+import PropTypes from "prop-types"; // Import PropTypes
 import { Card, Row, Col, Container } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 const CardGrid = ({ cardData }) => {
+  const navigate = useNavigate();
   const cardStyle = {
     width: "100%",
     border: "2px solid gold",
@@ -21,27 +22,31 @@ const CardGrid = ({ cardData }) => {
   };
 
   const textStyle = {
-    fontSize: "1rem",
+    fontSize: "15px",
+    fontWeight: "400",
   };
 
   const boldTextStyle = {
     fontWeight: "bold",
-    color: "black",
+    fontSize: "20px",
   };
-
-  const cardCount = cardData.length; // Số lượng cá koi
+  const handleOrderClick = (card) => {
+    navigate("/order", { state: { selectedItem: card } }); // Pass the card as state
+  };
+  const cardCount = cardData.length; // Total number of koi
   const cards = cardData.map((card) => (
     <Col key={card._id} md={3} className="mb-4">
-      {" "}
-      {/* Sử dụng _id làm key */}
       <Card style={cardStyle}>
-        <Card.Img variant="top" src={card.Image} style={imgStyle} />{" "}
-        {/* Đảm bảo rằng card.Image tồn tại */}
+        <Card.Img
+          variant="top"
+          src={card.Image}
+          style={imgStyle}
+          onClick={() => handleOrderClick(card)}
+        />
         <Card.Body>
-          <Card.Title style={titleStyle}>{card.CategoryName}</Card.Title>{" "}
-          {/* Thay đổi từ KoiName sang CategoryName */}
+          <Card.Title style={titleStyle}>{card.CategoryName}</Card.Title>
           <Card.Text style={textStyle}>
-            <span style={boldTextStyle}>KoiName:</span> {card.KoiName || "N/A"}{" "}
+            <span style={boldTextStyle}>Koi Name:</span> {card.KoiName || "N/A"}
           </Card.Text>
           <Card.Text style={textStyle}>
             <span style={boldTextStyle}>Age:</span> {card.Age || "N/A"}
@@ -55,18 +60,34 @@ const CardGrid = ({ cardData }) => {
           <Card.Text style={textStyle}>
             <span style={boldTextStyle}>Size:</span> {card.Size || "N/A"}
           </Card.Text>
+
+          {/* Status Rendering */}
+          {card.Status === 4 && (
+            <Card.Text style={textStyle}>
+              <span style={boldTextStyle}>Trạng thái:</span> Cá Ký Gửi
+            </Card.Text>
+          )}
+          {card.Status === 1 && (
+            <Card.Text style={textStyle}>
+              <span style={boldTextStyle}>Trạng thái:</span> Nhập Khẩu Nhật
+            </Card.Text>
+          )}
+          {card.Status === 2 && (
+            <Card.Text style={textStyle}>
+              <span style={boldTextStyle}>Trạng thái:</span> F1
+            </Card.Text>
+          )}
+          {card.Status === 3 && (
+            <Card.Text style={textStyle}>
+              <span style={boldTextStyle}>Trạng thái:</span>Việt
+            </Card.Text>
+          )}
         </Card.Body>
         <Button
-          href="/chitietcakoi"
-          active
-          style={{
-            width: "100%",
-            backgroundColor: "rgb(184, 0, 31)",
-            border: "none",
-            borderRadius: "0",
-          }}
+          style={{ color: "white", backgroundColor: "red", border: "none" }}
+          onClick={() => handleOrderClick(card)}
         >
-          Chi tiết
+          Order
         </Button>
       </Card>
     </Col>
@@ -76,12 +97,33 @@ const CardGrid = ({ cardData }) => {
     <Container>
       <Row>
         <Col>
-          <h5>Tổng số cá koi: {cardCount}</h5> {/* Hiển thị số lượng cá koi */}
+          <h5>Tổng số cá koi: {cardCount}</h5>
         </Col>
       </Row>
       <Row>{cards}</Row>
     </Container>
   );
+};
+
+// Kiếm tra các dữ liệu props được truyền vào trong CardGrid
+CardGrid.propTypes = {
+  cardData: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      CategoryID: PropTypes.string.isRequired,
+      KoiName: PropTypes.string.isRequired,
+      Age: PropTypes.number.isRequired,
+      Origin: PropTypes.string.isRequired,
+      Gender: PropTypes.string.isRequired,
+      Size: PropTypes.number.isRequired,
+      Breed: PropTypes.string.isRequired,
+      Description: PropTypes.string,
+      DailyFoodAmount: PropTypes.number.isRequired,
+      FilteringRatio: PropTypes.number.isRequired,
+      Image: PropTypes.string.isRequired,
+      Video: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default CardGrid;

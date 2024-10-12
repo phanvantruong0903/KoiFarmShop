@@ -9,7 +9,9 @@ export default function Koigoshiki() {
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedBreed, setSelectedBreed] = useState("KOI GOSHIKI");
+  const [idGoshiki, setIDGoshiki] = useState(null);
+  const [filteredCards, setFilteredCards] = useState([]);
+  const [categoryData, setCategoryData] = useState([]);
   const handleScroll1 = () => {
     const element = document.getElementById("1");
 
@@ -84,11 +86,21 @@ export default function Koigoshiki() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "https://66fd0298c3a184a84d18b799.mockapi.io/Koi"
-        );
-        setCardData(response.data);
+        const response = await axios.get("http://localhost:4000/getAllKoi");
+        console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
+        if (Array.isArray(response.data.result)) {
+          setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
+          setCategoryData(response.data.cateogryList);
+          console.log("Card data set successfully:", response.data.result9); // Kiểm tra sau khi set
+          console.log(
+            "Category Data set successfully:",
+            response.data.cateogryList
+          );
+        } else {
+          console.error("Dữ liệu không phải là mảng:", response.data);
+        }
       } catch (err) {
+        console.error("Error fetching data:", err); // Ghi lại lỗi
         setError(err);
       } finally {
         setLoading(false);
@@ -97,10 +109,25 @@ export default function Koigoshiki() {
 
     fetchData();
   }, []);
+  useEffect(() => {
+    const goshikiCard = categoryData.find(
+      (card) => card.CategoryName === "Goshiki"
+    );
 
+    if (goshikiCard) {
+      setIDGoshiki(goshikiCard._id);
+    }
+  }, [categoryData]); // Run this effect when categoryData changes
+
+  useEffect(() => {
+    if (idGoshiki) {
+      const filtered = cardData.filter((card) => card.CategoryID === idGoshiki);
+      setFilteredCards(filtered);
+    }
+  }, [idGoshiki, cardData]);
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  const filteredCards = cardData.filter((card) => card.Breed === selectedBreed); // Ví dụ: lọc theo độ tuổi lớn hơn 20000
+
   return (
     <>
       <div>
@@ -141,6 +168,7 @@ export default function Koigoshiki() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       1. Giới thiệu về cá koi Goshiki
@@ -153,6 +181,7 @@ export default function Koigoshiki() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       2. Cách nhận biết Goshiki Koi
@@ -165,6 +194,7 @@ export default function Koigoshiki() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       3. Cách chọn Goshiki Koi
@@ -177,6 +207,7 @@ export default function Koigoshiki() {
                             color: "blue",
                             cursor: "pointer",
                             fontWeight: "600",
+                            fontSize: "20px",
                           }}
                         >
                           3.1 Hình dáng
@@ -190,6 +221,7 @@ export default function Koigoshiki() {
                             color: "blue",
                             cursor: "pointer",
                             fontWeight: "600",
+                            fontSize: "20px",
                           }}
                         >
                           3.2 Màu sắc
@@ -203,6 +235,7 @@ export default function Koigoshiki() {
                             color: "blue",
                             cursor: "pointer",
                             fontWeight: "600",
+                            fontSize: "20px",
                           }}
                         >
                           3.3 Tiêu chí để chọn koi Goshiki nhỏ
@@ -217,6 +250,7 @@ export default function Koigoshiki() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       4. Cách chăm sóc Cá Koi Goshiki
@@ -229,6 +263,7 @@ export default function Koigoshiki() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       5. Ý nghĩa đối với phong thủy
@@ -241,6 +276,7 @@ export default function Koigoshiki() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       6. Giá cá koi Goshiki bao nhiêu?
@@ -253,6 +289,7 @@ export default function Koigoshiki() {
                         color: "blue",
                         cursor: "pointer",
                         fontWeight: "600",
+                        fontSize: "20px",
                       }}
                     >
                       7. Tại sao nên mua Goshiki Koi tại Siêu thị Cá koi VN?
@@ -271,7 +308,7 @@ export default function Koigoshiki() {
                 >
                   Nội dung chi tiết
                 </h2>
-                <p>
+                <p style={{ fontSize: "15px", fontWeight: "400" }}>
                   Xuất xứ từ Nhật với vẻ đẹp thuần khiết và những ưu điểm nổi
                   trội, Cá Koi Goshiki đảm bảo sẽ đem đến cho các bạn những trải
                   nghiệm thú vị với những màu sắc tươi đẹp kết hợp lại tạo sức
@@ -285,7 +322,7 @@ export default function Koigoshiki() {
                   1. Giới thiệu về cá koi Goshiki{" "}
                 </h3>
                 <div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Trong tiếng Nhật, Goshiki có nghĩa là "ngũ sắc". Khi kết hợp
                     một con cá koi Asagi và một con cá koi Kohaku, ta sẽ tạo ra
                     dòng cá koi Goshiki. Điều này khiến cho những nhà tạo giống
@@ -301,8 +338,10 @@ export default function Koigoshiki() {
                   </p>
                 </div>
                 <div>
-                  <p>Hiện có ba dòng cá koi Goshiki khác nhau.</p>
-                  <ul>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                    Hiện có ba dòng cá koi Goshiki khác nhau.
+                  </p>
+                  <ul style={{ fontSize: "15px", fontWeight: "400" }}>
                     <li>
                       Dòng đầu tiên mang nhiều đặc điểm của Asagi, với dấu Ai
                       xuất hiện trên toàn thân và cả trên Hi và Shiroji. Vùng Hi
@@ -324,7 +363,7 @@ export default function Koigoshiki() {
                   </ul>
                 </div>
                 <div style={{ textAlign: "center" }}>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Ginrin Goshiki được tạo ra thông qua việc phối giống giữa
                     một con Ginrin Kohaku và một con Goishiki. Chogoroun là một
                     nhà nhân giống nổi tiếng nhưng chỉ sản xuất được ít con lai
@@ -336,14 +375,16 @@ export default function Koigoshiki() {
                     src="src/assets/Koi-Goshiki/ca-koi-goshiki-3 (1).webp"
                     style={{ width: "50%" }}
                   />
-                  <p>Cá Koi Goshiki vô cùng nổi bật</p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                    Cá Koi Goshiki vô cùng nổi bật
+                  </p>
                 </div>
               </div>
 
               <div id="2">
                 <h3 style={{ color: "red" }}>2. Cách nhận biết Goshiki Koi</h3>
                 <div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Để trở thành một con cá koi Goshiki đẹp, nó cần phải có nét
                     đẹp của dòng máu Kohaku với những vết Ai chỉ nên xuất hiện
                     trên vùng Shiroji. Nếu một con cá có nhiều dòng máu Asagi,
@@ -352,7 +393,7 @@ export default function Koigoshiki() {
                     với một con Kujaku hoặc một con koi Goromo, hai loại cá chỉ
                     có vệt màu khác duy nhất trên vùng Hi.
                   </p>
-                  <ul>
+                  <ul style={{ fontSize: "15px", fontWeight: "400" }}>
                     <li>
                       Điểm đầu tiên để nhận biết một con Goshiki đẹp là khuôn
                       màu của nó giống như Kohaku, với những bệt màu Hi lớn trên
@@ -370,13 +411,15 @@ export default function Koigoshiki() {
                 </div>
                 <div style={{ textAlign: "center" }}>
                   <img src="src/assets/Koi-Goshiki/ca-koi-goshiki-2.webp" />
-                  <p>Dòng cá Koi Kuro Goshiki</p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                    Dòng cá Koi Kuro Goshiki
+                  </p>
                 </div>
               </div>
               <div id="3">
                 <h3 style={{ color: "red" }}>3. Cách chọn mua cá Koi Ginrin</h3>
                 <div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Những người đã có kinh nghiệm với việc nuôi và chơi Koi sẽ
                     hiểu được rằng, để đánh giá được phẩm chất tương lai của một
                     con cá Koi Goshiki, ta cần phải quan sát kỹ càng và chăm sóc
@@ -384,8 +427,13 @@ export default function Koigoshiki() {
                   </p>
                   <ul>
                     <li>
-                      <span id="31">3.1 Hình dáng</span>
-                      <p>
+                      <span
+                        id="31"
+                        style={{ fontSize: "20px", fontWeight: "600" }}
+                      >
+                        3.1 Hình dáng
+                      </span>
+                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
                         Về hình dáng, Koi Goshiki cần có thân hình như một chiếc
                         tàu ngầm, với bụng không quá phệ, phình hay ngắt quãng
                         quá sâu như dáng cá nóc. Điểm đầu và điểm kết thúc của
@@ -399,8 +447,13 @@ export default function Koigoshiki() {
                       </p>
                     </li>
                     <li>
-                      <span id="32">3.2 Màu sắc</span>
-                      <p>
+                      <span
+                        id="32"
+                        style={{ fontSize: "20px", fontWeight: "600" }}
+                      >
+                        3.2 Màu sắc
+                      </span>
+                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
                         Về màu sắc, Koi Goshiki cần có khuôn màu đẹp của Kohaku,
                         với khoang màu đậm và rõ nét. Đường biên của các khoang
                         màu cần được xác định rõ ràng, không bị lem nhem. Vệt Ai
@@ -409,8 +462,13 @@ export default function Koigoshiki() {
                       </p>
                     </li>
                     <li>
-                      <span id="33">3.3 Tiêu chí để chọn koi Goshiki nhỏ</span>
-                      <p>
+                      <span
+                        id="33"
+                        style={{ fontSize: "20px", fontWeight: "600" }}
+                      >
+                        3.3 Tiêu chí để chọn koi Goshiki nhỏ
+                      </span>
+                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
                         Khi chọn một con Koi Goshiki nhỏ, ta cần chọn con cá
                         mang dòng máu của Kohaku nhiều hơn và điểm Ai nên được
                         giới hạn ở trên vùng Shiroji. Nếu Koi Goshiki mang dòng
@@ -431,7 +489,9 @@ export default function Koigoshiki() {
                 </div>
                 <div style={{ textAlign: "center" }}>
                   <img src="src/assets/Koi-Goshiki/ca-koi-goshiki-1.webp" />
-                  <p>Các dòng Cá Koi Goshiki</p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                    Các dòng Cá Koi Goshiki
+                  </p>
                 </div>
               </div>
               <div id="4">
@@ -439,7 +499,7 @@ export default function Koigoshiki() {
                   4. Cách chăm sóc Cá Koi Goshiki
                 </h3>
                 <div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Cá Koi Goshiki là dòng cá đẹp xuất xứ từ Nhật bản mang lại
                     sự sung túc, may mắn. Được rất nhiều người yêu thích và nuôi
                     dưỡng trong gia đình, có ý nghĩa về cả phong thủy lẫn thẩm
@@ -481,7 +541,7 @@ export default function Koigoshiki() {
                       nguồn gốc, đảm bảo an toàn.
                     </li>
                   </ul>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Trên đây là một số cách chăm sóc cá koi Goshiki đơn giản và
                     khoa học mà bên siêu thị Cá Koi VN muốn gửi đến quý khách
                     hàng. Chúc bạn sẽ áp dụng và chăm sóc đàn cá khỏe mạnh.
@@ -491,7 +551,7 @@ export default function Koigoshiki() {
               <div id="5">
                 <h3 style={{ color: "red" }}>5. Ý nghĩa đối với phong thủy </h3>
                 <div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Trong văn hóa Nhật Bản, Koi Goshiki được coi là mang lại sự
                     mạnh mẽ, giàu có và sức khỏe cho gia đình chủ nhân. Được tạo
                     ra bằng cách kết hợp giữa bố mẹ Koi Kohaku và Koi Asagi, Koi
@@ -509,7 +569,7 @@ export default function Koigoshiki() {
                   6. Giá cá koi Goshiki bao nhiêu?{" "}
                 </h3>
                 <div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Hiện tại Siêu thị Cá Koi Vn đang cung cấp dòng cá koi
                     Goshiki chuẩn từ cá nhật đến cá F1 với giá cực kỳ ưu đãi. Có
                     thể nói Siêu thị Cá Koi VN là một trong những đơn vị cung
@@ -536,14 +596,13 @@ export default function Koigoshiki() {
                   7. Tại sao nên mua Goshiki Koi tại Siêu thị Cá koi VN?
                 </h3>
                 <div>
-                  <p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
                     Cá Koi Goshiki và cá koi Karashi không chỉ là loài cá đẹp mà
                     nó còn mang ý nghĩa đem đến sức mạnh, tiền bạc cho chủ nhân.
                     Vì vậy Goshiki được rất nhiều người quan tâm để mua nuôi.
                     Hiện nay có rất nhiều nơi cung cấp giống Goshiki nhưng đều
                     chưa đem lại sự yên tâm cho khách hàng về chất lượng của cá.
                     <br />
-                    <img src="src/assets/Koi-Goshiki/ca-koi-goshiki.webp" />
                     Siêu thị Cá Koi VN là nơi cung cấp những chú cá koi Goshiki
                     có chất lượng đẹp và đạt chuẩn. Với nhiều năm kinh nghiệm
                     tiếp cận, cung cấp cho thị trường cá koi thì Cá Koi VN đang
@@ -577,60 +636,6 @@ export default function Koigoshiki() {
           </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            backgroundImage: `url("src/assets/pexels-quang-nguyen-vinh-222549-2131828.jpg")`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
-          <div
-            style={{
-              width: "100%",
-              margin: "100px",
-              color: "white",
-              display: "flex",
-            }}
-          >
-            <div
-              style={{
-                width: "100%",
-                color: "black",
-                fontSize: "20px",
-                marginTop: "70px",
-                marginLeft: "20px",
-              }}
-            >
-              <h1 style={{ color: "white" }}>Điểm nổi bật của KoiStoreVN</h1>
-
-              <ul style={{ fontSize: "16px", color: "white" }}>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  Cá nhập khẩu chất lượng cao, nhập trực tiếp tại các trang trại
-                  Cá Koi Nhật Bản
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  Khách hàng yên tâm nuôi cá vì luôn có chuyên gia đồng hành
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  Đa dạng sản phẩm, dịch vụ chăm sóc Cá Koi và Hồ Cá Koi
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  {" "}
-                  KoiStoreVN tự hào là đơn vị đầu tiên tại miền bắc được chuyển
-                  giao công nghệ mô hình trại SAKAI (Sakai fish farm, Hiroshima,
-                  Japan)
-                </li>
-                <li style={{ marginTop: "10px" }}>
-                  Trại gồm 120 hồ lớn chuẩn theo mô hình trại SAKAI
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
         <div>
           <CardGrid cardData={filteredCards} />
         </div>

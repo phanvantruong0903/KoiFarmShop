@@ -1,17 +1,62 @@
 import React, { useState, useEffect } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../Navbar/Navbar.css";
-import { Link } from "react-router-dom";
+import "../Navbar/Navbar.css"; // Make sure this CSS file exists
+import { Link, useNavigate } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
+import { Button } from "react-bootstrap";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function Navbar() {
   const [showDropdown1, setShowDropdown1] = useState(false);
   const [showDropdown2, setShowDropdown2] = useState(false);
   const [showDropdown3, setShowDropdown3] = useState(false);
   const [showDropdown4, setShowDropdown4] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [hasShownToast, setHasShownToast] = useState(false); // Initialize to false
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    setIsLoggedIn(!!accessToken);
+
+    // Check if the toast has been shown before
+    const hasShownToast = localStorage.getItem("hasShownToast");
+    if (isLoggedIn && !hasShownToast) {
+      toast.success("Đăng nhập thành công");
+      localStorage.setItem("hasShownToast", "true"); // Set the flag
+    }
+  }, [isLoggedIn]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("hasShownToast"); //
+    setIsLoggedIn(false);
+    setHasShownToast(false); // Reset toast state on logout
+    toast.success("Đăng xuất thành công!");
+  };
+
+  const handleStateSignIn = () => {
+    navigate("/Login");
+  };
+
+  const handleStateSignUp = () => {
+    navigate("/Login", { state: { type: "signUp" } });
+    toast.info("Vui lòng đăng ký!");
+  };
+
   return (
     <div className="navbar">
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        draggable
+        pauseOnHover
+      />
       <div>
         <img
           src="src/assets/logo.png"
@@ -35,10 +80,9 @@ export default function Navbar() {
               textDecoration: "none",
               paddingRight: "10px",
               color: "white",
-              paddingTop: "10px",
             }}
           >
-            Trang Chủ
+            TRANG CHỦ
           </Link>
         </div>
         <div style={{ display: "flex" }}>
@@ -54,15 +98,18 @@ export default function Navbar() {
                 fontWeight: "bold",
                 fontSize: "25px",
                 color: "white",
-                paddingRight: "10px",
               }}
             >
               <Link
                 to="/gioithieu"
-                style={{ textDecoration: "none", color: "white" }}
+                style={{
+                  fontWeight: "bold",
+                  fontSize: "25px",
+                  textDecoration: "none",
+                  color: "white",
+                }}
               >
-                {" "}
-                Giới Thiệu
+                GIỚI THIỆU
               </Link>
             </Dropdown.Toggle>
             <CSSTransition
@@ -74,43 +121,16 @@ export default function Navbar() {
             >
               <Dropdown.Menu className="custom-menu">
                 <Dropdown.Item
-                  href="/gioithieusankygui"
-                  onMouseEnter={() => setActiveItem("/gioithieusankygui")}
+                  href="/ogon"
+                  onMouseEnter={() => setActiveItem("/ogon")}
                   onMouseLeave={() => setActiveItem(null)}
                   style={{
-                    color:
-                      activeItem === "/gioithieusankygui" ? "red" : "black",
+                    color: activeItem === "/ogon" ? "red" : "black",
                     fontWeight: "bold",
                     fontSize: "15px",
                   }}
                 >
-                  Giới Thiệu Sàn Ký Gửi
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/cacdonvibancakoi"
-                  onMouseEnter={() => setActiveItem("/cacdonvibancakoi")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/cacdonvibancakoi" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  Các Đơn Vị Bán Cá Koi
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/nguonkoi"
-                  onMouseEnter={() => setActiveItem("/nguonkoi")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/nguonkoi" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  Nguồn Koi Của Koi Store
+                  NGUỒN GỐC CỦA IKOI
                 </Dropdown.Item>
               </Dropdown.Menu>
             </CSSTransition>
@@ -142,161 +162,36 @@ export default function Navbar() {
               unmountOnExit
             >
               <Dropdown.Menu className="custom-menu">
-                <Dropdown.Item
-                  href="/kohaku"
-                  onMouseEnter={() => setActiveItem("/kohaku")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/kohaku" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  Cá Koi Kohaku
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/ogon"
-                  onMouseEnter={() => setActiveItem("/ogon")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/ogon" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  Cá Koi Ogon
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/showa"
-                  onMouseEnter={() => setActiveItem("/showa")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/showa" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  Cá Koi Showa
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/tancho"
-                  onMouseEnter={() => setActiveItem("/tancho")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/tancho" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  Cá Koi Tancho
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/bekko"
-                  onMouseEnter={() => setActiveItem("/bekko")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/bekko" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  Cá Koi Bekko
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/doitsu"
-                  onMouseEnter={() => setActiveItem("/doitsu")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/doitsu" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  Cá Koi Doitsu
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/ginrin"
-                  onMouseEnter={() => setActiveItem("/ginrin")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/ginrin" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  Cá Koi Ginrin
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/goshiki"
-                  onMouseEnter={() => setActiveItem("/goshiki")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/goshiki" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  Cá Koi Goshiki
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/benigoi"
-                  onMouseEnter={() => setActiveItem("/benigoi")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/benigoi" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  Cá Koi Benigoi
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/asagi"
-                  onMouseEnter={() => setActiveItem("/asag")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/asag" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  Cá Koi Asagi
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/platinum"
-                  onMouseEnter={() => setActiveItem("/platinum")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/platinum" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  Cá Koi Platinum
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/shusui"
-                  onMouseEnter={() => setActiveItem("/shusui")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/shusui" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  Cá Koi Shusui
-                </Dropdown.Item>
+                {[
+                  "kohaku",
+                  "ogon",
+                  "showa",
+                  "tancho",
+                  "bekko",
+                  "doitsu",
+                  "ginrin",
+                  "goshiki",
+                  "benigoi",
+                  "asagi",
+                  "platinum",
+                  "shusui",
+                ].map((fish, index) => (
+                  <React.Fragment key={fish}>
+                    <Dropdown.Item
+                      href={`/${fish}`}
+                      onMouseEnter={() => setActiveItem(`/${fish}`)}
+                      onMouseLeave={() => setActiveItem(null)}
+                      style={{
+                        color: activeItem === `/${fish}` ? "red" : "black",
+                        fontWeight: "bold",
+                        fontSize: "15px",
+                      }}
+                    >
+                      CÁ KOI {fish.toUpperCase()}
+                    </Dropdown.Item>
+                    {index < 11 && <hr />}
+                  </React.Fragment>
+                ))}
               </Dropdown.Menu>
             </CSSTransition>
           </Dropdown>
@@ -317,7 +212,7 @@ export default function Navbar() {
                 color: "white",
               }}
             >
-              Tin Tức
+              TIN TỨC
             </Dropdown.Toggle>
             <CSSTransition
               in={showDropdown3}
@@ -327,45 +222,27 @@ export default function Navbar() {
               unmountOnExit
             >
               <Dropdown.Menu className="custom-menu">
-                <Dropdown.Item
-                  href="/kienthuckoi"
-                  onMouseEnter={() => setActiveItem("/kienthuckoi")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/kienthuckoi" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  Kiến Thức Koi
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/khuyenmai"
-                  onMouseEnter={() => setActiveItem("/khuyenmaiz")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/khuyenmai" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  {" "}
-                  Khuyễn Mãi
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/tintuc"
-                  onMouseEnter={() => setActiveItem("/tintuc")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/tintuc" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  Tin Tức Công Ty
-                </Dropdown.Item>
+                {["kienthuckoi", "khuyenmai", "tintuc"].map((news, index) => (
+                  <React.Fragment key={news}>
+                    <Dropdown.Item
+                      href={`/${news}`}
+                      onMouseEnter={() => setActiveItem(`/${news}`)}
+                      onMouseLeave={() => setActiveItem(null)}
+                      style={{
+                        color: activeItem === `/${news}` ? "red" : "black",
+                        fontWeight: "bold",
+                        fontSize: "15px",
+                      }}
+                    >
+                      {news === "kienthuckoi"
+                        ? "KIẾN THỨC KOI"
+                        : news === "khuyenmai"
+                        ? "KHUYẾN MÃI"
+                        : "TIN TỨC CÔNG TY"}
+                    </Dropdown.Item>
+                    {index < 2 && <hr />}
+                  </React.Fragment>
+                ))}
               </Dropdown.Menu>
             </CSSTransition>
           </Dropdown>
@@ -387,7 +264,7 @@ export default function Navbar() {
                 color: "white",
               }}
             >
-              Dịch Vụ
+              DỊCH VỤ
             </Dropdown.Toggle>
             <CSSTransition
               in={showDropdown4}
@@ -407,20 +284,7 @@ export default function Navbar() {
                     fontSize: "15px",
                   }}
                 >
-                  Ký Gửi
-                </Dropdown.Item>
-                <hr />
-                <Dropdown.Item
-                  href="/koidangban"
-                  onMouseEnter={() => setActiveItem("/koidangban")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  style={{
-                    color: activeItem === "/koidangban" ? "red" : "black",
-                    fontWeight: "bold",
-                    fontSize: "15px",
-                  }}
-                >
-                  Koi Đang Bán
+                  KOI KÝ GỬI
                 </Dropdown.Item>
                 <hr />
                 <Dropdown.Item
@@ -433,7 +297,7 @@ export default function Navbar() {
                     fontSize: "15px",
                   }}
                 >
-                  Koi Ký Gửi
+                  KOI ĐANG BÁN
                 </Dropdown.Item>
               </Dropdown.Menu>
             </CSSTransition>
@@ -451,9 +315,57 @@ export default function Navbar() {
                 color: "white",
               }}
             >
-              Liên Hệ
+              LIÊN HỆ
             </Link>
           </div>
+        </div>
+        <div
+          style={{ display: "flex", paddingLeft: "20px", fontWeight: "600" }}
+        >
+          {isLoggedIn ? (
+            <Dropdown className="custom-dropdown">
+              <Dropdown.Toggle
+                variant="secondary"
+                className="custom-dropdown-toggle"
+              >
+                Tài khoản
+              </Dropdown.Toggle>
+              <Dropdown.Menu className="custom-dropdown-menu">
+                <Dropdown.Item href="/profile" className="custom-dropdown-item">
+                  Xem hồ sơ
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item href="/donhang" className="custom-dropdown-item">
+                  Đơn hàng
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item
+                  onClick={handleLogout}
+                  className="custom-dropdown-item"
+                >
+                  Đăng xuất
+                </Dropdown.Item>
+                <Dropdown.Divider />
+              </Dropdown.Menu>
+            </Dropdown>
+          ) : (
+            <>
+              <Button
+                onClick={handleStateSignIn}
+                variant="danger"
+                className="custom-button"
+              >
+                Đăng Nhập
+              </Button>
+              <Button
+                onClick={handleStateSignUp}
+                variant="danger"
+                className="custom-button"
+              >
+                Đăng Ký
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </div>

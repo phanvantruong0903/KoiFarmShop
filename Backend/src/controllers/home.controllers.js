@@ -4,7 +4,7 @@ export const getKoiByCategoryIDController = async (req, res) => {
   try {
     const { CategoryID } = req.params
     const result = await databaseService.kois.find({ CategoryID: Number(CategoryID) }).toArray()
-
+    
     if (result.length === 0) {
       console.log('khong tim duoc')
     }
