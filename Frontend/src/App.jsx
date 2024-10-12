@@ -26,6 +26,11 @@ import OrderPage from "./Components/OrderPage";
 import TrackingOrderPage from "./Components/trackingOrderPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Profile from "./Components/Profile";
+import DonKyGuiPage from "./Components/Donkygui";
+import NguonGocCuaIKoi from "./Components/Nguongoccuaikoi";
+import GioiThieuVeKoiViet from "./Components/GioiThieuVeKoiViet";
+import GioiThieuVeKoiNhat from "./Components/GioiThieuVeKoiNhat";
+import GioiThieuVeKoiF1 from "./Components/GioitThieuVeKoiF1";
 const Staff = lazy(() => import("../src/An/Pages/Staff"));
 const Manager = lazy(() => import("./An/Pages/Manager/Manager"));
 const Profiles = lazy(() => import("../src/An/Pages/Staff/Profiles"));
@@ -125,8 +130,28 @@ const router = createBrowserRouter([
     element: <Profile />, // Home component
   },
   {
-    path: "/login/oauth",
-    element: <Login />, // OAuth login route
+    path: "/donkygui",
+    element: <DonKyGuiPage />, // Home component
+  },
+  {
+    path: "/nguongocIKoi",
+    element: <NguonGocCuaIKoi />, // Home component
+  },
+  {
+    path: "/gioithieuvekoiviet",
+    element: <GioiThieuVeKoiViet />, // Home component
+  },
+  {
+    path: "/gioithieuvekoinhat",
+    element: <GioiThieuVeKoiNhat />, // Home component
+  },
+  {
+    path: "/gioithieuvekoif1",
+    element: <GioiThieuVeKoiF1 />,
+  },
+  {
+    path: "/gioithieuvekoiviet",
+    element: <GioiThieuVeKoiViet />,
   },
   {
     path: "/DashBoard",

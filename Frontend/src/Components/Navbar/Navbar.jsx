@@ -31,8 +31,7 @@ export default function Navbar() {
   }, [isLoggedIn]);
 
   const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("hasShownToast"); //
+    localStorage.clear(); // Clears all items from localStorage
     setIsLoggedIn(false);
     setHasShownToast(false); // Reset toast state on logout
     toast.success("Đăng xuất thành công!");
@@ -102,10 +101,11 @@ export default function Navbar() {
             >
               <Link
                 to="/gioithieu"
+                id="dropdown-basic"
                 style={{
                   fontWeight: "bold",
                   fontSize: "25px",
-                  textDecoration: "none",
+                  paddingRight: "10px",
                   color: "white",
                 }}
               >
@@ -119,9 +119,12 @@ export default function Navbar() {
               mountOnEnter
               unmountOnExit
             >
-              <Dropdown.Menu className="custom-menu">
+              <Dropdown.Menu
+                className="custom-menu"
+                style={{ minWidth: "250px", maxWidth: "300px" }}
+              >
                 <Dropdown.Item
-                  href="/ogon"
+                  href="/nguongocIKoi"
                   onMouseEnter={() => setActiveItem("/ogon")}
                   onMouseLeave={() => setActiveItem(null)}
                   style={{
@@ -131,6 +134,45 @@ export default function Navbar() {
                   }}
                 >
                   NGUỒN GỐC CỦA IKOI
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item
+                  href="/gioithieuvekoif1"
+                  onMouseEnter={() => setActiveItem("/ogon")}
+                  onMouseLeave={() => setActiveItem(null)}
+                  style={{
+                    color: activeItem === "/ogon" ? "red" : "black",
+                    fontWeight: "bold",
+                    fontSize: "15px",
+                  }}
+                >
+                  GIỚI THIỆU VỀ CÁ KOI F1
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item
+                  href="/gioithieuvekoiviet"
+                  onMouseEnter={() => setActiveItem("/ogon")}
+                  onMouseLeave={() => setActiveItem(null)}
+                  style={{
+                    color: activeItem === "/ogon" ? "red" : "black",
+                    fontWeight: "bold",
+                    fontSize: "15px",
+                  }}
+                >
+                  GIỚI THIỆU VỀ CÁ KOI VIỆT
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item
+                  href="/gioithieuvekoinhat"
+                  onMouseEnter={() => setActiveItem("/ogon")}
+                  onMouseLeave={() => setActiveItem(null)}
+                  style={{
+                    color: activeItem === "/ogon" ? "red" : "black",
+                    fontWeight: "bold",
+                    fontSize: "15px",
+                  }}
+                >
+                  GIỚI THIỆU VỀ CÁ KOI NHẬT
                 </Dropdown.Item>
               </Dropdown.Menu>
             </CSSTransition>
@@ -161,7 +203,10 @@ export default function Navbar() {
               mountOnEnter
               unmountOnExit
             >
-              <Dropdown.Menu className="custom-menu">
+              <Dropdown.Menu
+                className="custom-menu"
+                style={{ minWidth: "250px", maxWidth: "300px" }}
+              >
                 {[
                   "kohaku",
                   "ogon",
@@ -221,7 +266,10 @@ export default function Navbar() {
               mountOnEnter
               unmountOnExit
             >
-              <Dropdown.Menu className="custom-menu">
+              <Dropdown.Menu
+                className="custom-menu"
+                style={{ minWidth: "250px", maxWidth: "300px" }}
+              >
                 {["kienthuckoi", "khuyenmai", "tintuc"].map((news, index) => (
                   <React.Fragment key={news}>
                     <Dropdown.Item
@@ -273,7 +321,10 @@ export default function Navbar() {
               mountOnEnter
               unmountOnExit
             >
-              <Dropdown.Menu className="custom-menu">
+              <Dropdown.Menu
+                className="custom-menu"
+                style={{ minWidth: "250px", maxWidth: "300px" }}
+              >
                 <Dropdown.Item
                   href="/kygui"
                   onMouseEnter={() => setActiveItem("/kygui")}
@@ -325,18 +376,31 @@ export default function Navbar() {
           {isLoggedIn ? (
             <Dropdown className="custom-dropdown">
               <Dropdown.Toggle
-                variant="secondary"
+                variant="success"
                 className="custom-dropdown-toggle"
               >
                 Tài khoản
               </Dropdown.Toggle>
-              <Dropdown.Menu className="custom-dropdown-menu">
+              <Dropdown.Menu
+                className="custom-dropdown-menu"
+                style={{ minWidth: "250px", maxWidth: "300px" }}
+              >
                 <Dropdown.Item href="/profile" className="custom-dropdown-item">
                   Xem hồ sơ
                 </Dropdown.Item>
                 <Dropdown.Divider />
-                <Dropdown.Item href="/donhang" className="custom-dropdown-item">
+                <Dropdown.Item
+                  href="/trackingorder"
+                  className="custom-dropdown-item"
+                >
                   Đơn hàng
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item
+                  href="/donkygui"
+                  className="custom-dropdown-item"
+                >
+                  Đơn ký gửi
                 </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item
@@ -345,7 +409,6 @@ export default function Navbar() {
                 >
                   Đăng xuất
                 </Dropdown.Item>
-                <Dropdown.Divider />
               </Dropdown.Menu>
             </Dropdown>
           ) : (
