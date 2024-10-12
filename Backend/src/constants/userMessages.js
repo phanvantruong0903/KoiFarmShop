@@ -111,18 +111,17 @@ export const USERS_MESSAGES = {
   KOI_IMAGE_IS_REQUIRED: 'Koi image is required',
   //koi video
   KOI_VIDEO_IS_REQUIRED: 'Koi video is required',
-<<<<<<< HEAD
+
   //order
   GET_ORDER_SUCCESS: 'Get order success',
   UPDATE_ORDER_SUCCESS: 'Update order success',
   MAKE_ORDER_SUCCESS: 'Make order success',
-  CREATE_ORDER_SUCCESS: 'Create order success'
-=======
+  CREATE_ORDER_SUCCESS: 'Create order success',
+
   //check authorization
   CHECK_AUTHORIZATION_SUCCESS: 'Check authorization success',
   //get all consign
   GET_ALL_CONSIGNS_SUCCESS: 'Get all consigns success'
->>>>>>> 88eba21ad89eaf46e9308599a134b284b9362670
 }
 export const ADMINS_MESSAGES = {
   ADD_KOI_SUCCESS: 'Add Fish success',

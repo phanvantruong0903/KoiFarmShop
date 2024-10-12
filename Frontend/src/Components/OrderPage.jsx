@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer";
+
 const OrderPage = () => {
   const location = useLocation();
   const { selectedItem } = location.state || {}; // Get the selected item from state
 
+  useEffect(() => {
+    window.scrollTo(0, 0); // Cuộn lên đầu trang khi component được render
+  }, []);
+
   return (
     <>
-      {" "}
       <div>
         <Navbar />
       </div>

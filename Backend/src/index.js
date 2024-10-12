@@ -3,7 +3,7 @@ import { config } from 'dotenv'
 import usersRouter from './routes/users.routes.js'
 import databaseService from './services/database.service.js'
 import { defaultErrorHandler } from './middlewares/error.middlewares.js'
-import cookieParser from 'cookie-parser';
+import cookieParser from 'cookie-parser'
 
 import cors from 'cors' // Thêm import cho cors
 
@@ -17,7 +17,7 @@ import { wrapAsync } from './utils/handle.js'
 import { getKois } from './controllers/admin.controllers.js'
 import { accessTokenValidator } from './middlewares/users.middlewares.js'
 
-config()    
+config()
 const app = express()
 app.use(
   cors({
