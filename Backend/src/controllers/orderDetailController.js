@@ -48,4 +48,16 @@ export const updateOrderDetailController = async (req, res) => {
       return res.status(500).json({ error: error.message })
     }
 };
+export const calculateKoiPriceController = async(req,res)=>{
+  try {
+    const result = await orderDetailService.calKoiPrice(req.body, req.params);
+    console.log("result: ",result)
+      return res.json({
+        message: USERS_MESSAGES.UPDATE_ORDER_SUCCESS,
+        result
+      })
+    } catch (error) {
+      return res.status(500).json({ error: error.message })
+    }
+}
 
