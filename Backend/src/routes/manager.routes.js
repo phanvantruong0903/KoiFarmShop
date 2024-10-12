@@ -1,3 +1,4 @@
+import { createNewServiceController } from '../controllers/manager.controllers.js'
 import {
   createCategoryController,
   createNewKoiController,
@@ -94,5 +95,7 @@ managerRouter.put(
   isAdminValidator,
   wrapAsync(updateConsignDetailController)
 )
+
+managerRouter.post('/manage-service/create-new-service',createNewServiceController)
 
 export default managerRouter

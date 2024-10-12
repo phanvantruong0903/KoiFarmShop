@@ -144,10 +144,10 @@ export const createCategoryController = async (req, res) => {
     const category = await adminService.addCategory(req.body)
     // nếu tạo thành công category trả về json success: true và ngược lại
     if (!category.success) {
-      res.status(400).json({ message: 'Lỗi khi tạo category' })
+      return res.status(400).json({ message: 'Lỗi khi tạo category' })
     }
 
-    res.status(200).json({ message: 'Create Categort Successfully' })
+    return res.status(200).json({ message: 'Create Categort Successfully' })
   } catch (error) {
     console.log('Error at create new Category')
   }
@@ -172,4 +172,17 @@ export const updateConsignDetailController = async (req, res) => {
     message: MANAGER_MESSAGES.UPDATE_CONSIGN_DETAIL_SUCCESS,
     result: consign
   })
+}
+
+export const createNewServiceController = async (req, res) => {
+  try {
+    const newService = await adminService.createNewService(req.body)
+    if (!newService.success) {
+      return res.status(400).json({ message: newService.message })
+    }
+
+    return res.status(200).json({ message: newService.message })
+  } catch (error) {
+    console.log(error + 'Error at create new Category')
+  }
 }
