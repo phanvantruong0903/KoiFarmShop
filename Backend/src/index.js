@@ -15,6 +15,7 @@ import { wrapAsync } from './utils/handle.js'
 
 import { getAllKoiController } from './controllers/manager.controllers.js'
 import { accessTokenValidator } from './middlewares/users.middlewares.js'
+import paymentRouter from './routes/payments.routes.js'
 
 config()
 const app = express()
@@ -43,6 +44,8 @@ app.use('/kois/:CategoryID', getKoiByCategoryIDController)
 app.use('/getAllKoi', getAllKoiController)
 
 app.post('/authorization', accessTokenValidator, authorizationController)
+
+app.use('/payment',paymentRouter)
 
 app.use(defaultErrorHandler)
 
