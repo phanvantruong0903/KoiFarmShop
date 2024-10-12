@@ -4,7 +4,7 @@ import orderDetailService from '../services/orderDetail.services.js';
 
 export const makeOrderDetailController = async (req, res) => {
     try {
-      const reqCookie = req.cookies.order ? JSON.parse(req.cookies.order) : {};
+      const reqCookie = req.cookies && req.cookies.order ? JSON.parse(req.cookies.order) : {}; // fix phải check có trong cookies trước
       console.log("reqCookie: ",reqCookie)
       const result = await orderDetailService.makeOrder(req.body, reqCookie);
       res.cookie('order', JSON.stringify(result.order), {

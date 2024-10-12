@@ -4,6 +4,6 @@ import { Router } from "express";
 
 const paymentRouter = Router()
 
-paymentRouter.post("/paymentZalopay", zaloPayment);
+paymentRouter.post("/paymentZalopay", wrapAsync(zaloPayment));
 
 export default paymentRouter

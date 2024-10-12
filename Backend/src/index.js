@@ -16,6 +16,7 @@ import { wrapAsync } from './utils/handle.js'
 import { getAllKoiController } from './controllers/manager.controllers.js'
 import { accessTokenValidator } from './middlewares/users.middlewares.js'
 import paymentRouter from './routes/payments.routes.js'
+import orderRouter from './routes/order.routes.js'
 
 config()
 const app = express()
@@ -42,6 +43,7 @@ app.get('/categories/getCategory', getCategory)
 app.use('/manager', managerRouter)
 app.use('/kois/:CategoryID', getKoiByCategoryIDController)
 app.use('/getAllKoi', getAllKoiController)
+app.use('/order', orderRouter)
 
 app.post('/authorization', accessTokenValidator, authorizationController)
 
