@@ -7,7 +7,7 @@ import { CSSTransition } from "react-transition-group";
 import { Button } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { FaShoppingCart } from "react-icons/fa"; // Import shopping cart icon
 export default function Navbar() {
   const [showDropdown1, setShowDropdown1] = useState(false);
   const [showDropdown2, setShowDropdown2] = useState(false);
@@ -429,6 +429,11 @@ export default function Navbar() {
               </Button>
             </>
           )}
+        </div>
+        <div style={{ paddingLeft: "20px" }}>
+          <Link to="/cart" style={{ color: "white", fontSize: "25px" }}>
+            <FaShoppingCart />
+          </Link>
         </div>
       </div>
     </div>

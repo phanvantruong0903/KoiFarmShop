@@ -39,6 +39,7 @@ const Profiles = lazy(() => import("../src/An/Pages/Staff/Profiles"));
 const Orders = lazy(() => import("../src/An/Pages/Staff/Orders"));
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import style cho toast
+import ShoppingCart from "./Components/ShoppingCart";
 const router = createBrowserRouter([
   {
     path: "/kohaku",
@@ -163,6 +164,10 @@ const router = createBrowserRouter([
   {
     path: "/orderingjapankoi",
     element: <OrderingJapanKoi />,
+  },
+  {
+    path: "/cart",
+    element: <ShoppingCart />,
   },
   {
     path: "/DashBoard",

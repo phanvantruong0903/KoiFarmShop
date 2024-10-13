@@ -4,21 +4,22 @@ import { Button, Container, Row, Col } from "react-bootstrap";
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer";
 import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Import style cho toast
+import "react-toastify/dist/ReactToastify.css";
 
 const OrderPage = () => {
   const location = useLocation();
   const { selectedItem } = location.state || {};
-  const [loading, setLoading] = useState(false); // State để quản lý trạng thái đang tải
-
+  const [loading, setLoading] = useState(false);
+  const [cartItems, setCartItems] = useState([]); // State để lưu trữ các mục trong giỏ hàng
+  const [quantity, setQuantity] = useState([]);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   const handleAddToCart = async () => {
-    if (!selectedItem || loading) return; // Kiểm tra nếu đang tải
+    if (!selectedItem || loading) return;
 
-    setLoading(true); // Bắt đầu trạng thái tải
+    setLoading(true);
     try {
       const response = await fetch("http://localhost:4000/order/detail/make", {
         method: "POST",
@@ -29,16 +30,18 @@ const OrderPage = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to add to cart"); // Kiểm tra phản hồi
+        throw new Error("Failed to add to cart");
       }
 
       const data = await response.json();
+
+      setQuantity(data.result.order.Items);
+      console.log(quantity);
       console.log(data);
-      toast.success("Thêm vào giỏ hàng thành công!"); // Hiển thị thông báo thành công
     } catch (error) {
-      toast.error("Có lỗi xảy ra. Vui lòng thử lại!"); // Hiển thị thông báo lỗi
+      console.log(error);
     } finally {
-      setLoading(false); // Kết thúc trạng thái tải
+      setLoading(false);
     }
   };
 
@@ -130,9 +133,9 @@ const OrderPage = () => {
                   </Button>
                   <Button
                     variant="danger"
-                    onClick={handleAddToCart} // Gọi hàm thêm vào giỏ hàng
+                    onClick={handleAddToCart}
                     style={{ flex: 1, padding: "15px" }}
-                    disabled={loading} // Vô hiệu hóa nút khi đang tải
+                    disabled={loading}
                   >
                     {loading ? "Đang thêm..." : "Thêm Vào Giỏ Hàng"}
                   </Button>
@@ -247,7 +250,7 @@ const OrderPage = () => {
           </p>
         </Container>
       </div>
-      <ToastContainer autoClose={3000} /> {/* Thêm ToastContainer vào đây */}
+
       <div style={{ paddingTop: "20px" }}>
         <Footer />
       </div>
