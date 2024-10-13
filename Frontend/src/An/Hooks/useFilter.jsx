@@ -28,7 +28,7 @@ export default function useFilter(data, filterType) {
 
   const [filterList, setFilterList] = useState(initialFilterList);
 
-  console.log (filterList);
+  // console.log (filterList); // Debugging
   
   const filteredData = data.filter((item) => {
     if (filterType === 'profile') {
