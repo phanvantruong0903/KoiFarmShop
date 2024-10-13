@@ -2,8 +2,9 @@ import PropTypes from "prop-types"; // Import PropTypes
 import React from "react";
 import { Card, Row, Col, Container } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 const CardGrid = ({ cardData }) => {
+  const navigate = useNavigate();
   const cardStyle = {
     width: "100%",
     border: "2px solid gold",
@@ -35,7 +36,14 @@ const CardGrid = ({ cardData }) => {
   // Grouping logic for status 2 and 3 by CategoryID
   const groupedCards = {};
   const japanCards = [];
+  const handleOrderingConsignKoi = (card) => {
+    navigate("/order", { state: { selectedItem: card } }); // Pass the card as state
+  };
 
+  // Chuyển đến trang đặt hàng khi nhấn vào hình ảnh koi (IKoi Fish)
+  const handleOrderingForIKoi = (card) => {
+    navigate("/order", { state: { selectedItem: card } }); // Pass the card as state
+  };
   cardData.map((card) => {
     if (card.Status === 2 || card.Status === 3) {
       const key = card.CategoryID; // Use CategoryID as the key
@@ -89,17 +97,8 @@ const CardGrid = ({ cardData }) => {
                 <span style={boldTextStyle}>Trạng thái:</span> {statusText}
               </Card.Text>
             </Card.Body>
-            <Button
-              href="/chitietcakoi"
-              active
-              style={{
-                width: "100%",
-                backgroundColor: "rgb(184, 0, 31)",
-                border: "none",
-                borderRadius: "0",
-              }}
-            >
-              Chi tiết
+            <Button onClick={() => handleOrderingConsignKoi(card)}>
+              Chi Tiết
             </Button>
           </Card>
         </Col>
@@ -140,17 +139,8 @@ const CardGrid = ({ cardData }) => {
               <span style={boldTextStyle}>Trạng thái:</span>
             </Card.Text>
           </Card.Body>
-          <Button
-            href="/chitietcakoi"
-            active
-            style={{
-              width: "100%",
-              backgroundColor: "rgb(184, 0, 31)",
-              border: "none",
-              borderRadius: "0",
-            }}
-          >
-            Chi tiết
+          <Button onClick={() => handleOrderingForIKoi(groupedCard)}>
+            Chi Tiết
           </Button>
         </Card>
       </Col>
@@ -186,18 +176,7 @@ const CardGrid = ({ cardData }) => {
             <span style={boldTextStyle}>Trạng thái:</span>
           </Card.Text>
         </Card.Body>
-        <Button
-          href="/chitietcakoi"
-          active
-          style={{
-            width: "100%",
-            backgroundColor: "rgb(184, 0, 31)",
-            border: "none",
-            borderRadius: "0",
-          }}
-        >
-          Chi tiết
-        </Button>
+        <Button onClick={() => handleOrderingForIKoi(card)}>Chi Tiết</Button>
       </Card>
     </Col>
   ));

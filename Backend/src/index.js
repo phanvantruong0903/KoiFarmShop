@@ -1,7 +1,6 @@
 import express from 'express'
 import { config } from 'dotenv'
 import usersRouter from './routes/users.routes.js'
-import adminRouter from './routes/admin.routes.js'
 import databaseService from './services/database.service.js'
 import { defaultErrorHandler } from './middlewares/error.middlewares.js'
 
@@ -14,8 +13,10 @@ import { getKoiByCategoryIDController } from './controllers/home.controllers.js'
 import { createNewKoiKiGuiValidator } from './middlewares/common.middlewares.js'
 import { wrapAsync } from './utils/handle.js'
 
-import { getKois } from './controllers/admin.controllers.js'
+import { getAllKoiController } from './controllers/manager.controllers.js'
 import { accessTokenValidator } from './middlewares/users.middlewares.js'
+import paymentRouter from './routes/payments.routes.js'
+import orderRouter from './routes/order.routes.js'
 
 config()
 const app = express()
@@ -41,9 +42,12 @@ app.get('/categories/getCategory', getCategory)
 
 app.use('/manager', managerRouter)
 app.use('/kois/:CategoryID', getKoiByCategoryIDController)
-app.use('/getAllKoi', getKois)
+app.use('/getAllKoi', getAllKoiController)
+app.use('/order', orderRouter)
 
 app.post('/authorization', accessTokenValidator, authorizationController)
+
+app.use('/payment', paymentRouter)
 
 app.use(defaultErrorHandler)
 

@@ -6,7 +6,7 @@ import { FaLocationDot } from "react-icons/fa6";
 export default function Footer() {
   return (
     <>
-      <div>
+      <div className="footer">
         <div
           style={{
             display: "flex",

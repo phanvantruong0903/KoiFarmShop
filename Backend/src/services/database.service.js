@@ -36,7 +36,7 @@ class DatabaseService {
   get order() {
     try {
       return this._db.collection('Order')
-    } catch (error){
+    } catch (error) {
       console.log(error + 'lỗi ở database service - get orders')
       throw error
     }
@@ -44,16 +44,15 @@ class DatabaseService {
   get kois() {
     try {
       return this._db.collection('kois')
-    } catch (error){
+    } catch (error) {
       console.log(error + 'lỗi ở database service - get kois')
       throw error
     }
   }
-  
+
   async indexUsers() {
     await this.users.createIndex({ email: 1 }, { unique: true }) //register
     await this.users.createIndex({ username: 1 }, { unique: true }) //getProfile
-    await this.users.createIndex({ email: 1, password: 1 }) //login
   }
 
   get refreshTokens() {
@@ -89,6 +88,14 @@ class DatabaseService {
       return this._db.collection(process.env.DB_CONSIGNS_COLLECTION)
     } catch (error) {
       console.log(error + 'lỗi ở database service - get consigns')
+    }
+  }
+
+  get services() {
+    try {
+      return this._db.collection(process.env.DB_SERVICES_COLLECTION)
+    } catch (error) {
+      console.log(error + 'lỗi ở database service - get services')
     }
   }
 }
