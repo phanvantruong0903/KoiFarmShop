@@ -1,4 +1,4 @@
-import { createNewServiceController } from '../controllers/manager.controllers.js'
+import { createNewServiceController, updateServiceController } from '../controllers/manager.controllers.js'
 import {
   createCategoryController,
   createNewKoiController,
@@ -96,6 +96,18 @@ managerRouter.put(
   wrapAsync(updateConsignDetailController)
 )
 
-managerRouter.post('/manage-service/create-new-service',createNewServiceController)
+managerRouter.post(
+  '/manage-service/create-new-service',
+  accessTokenValidator,
+  isAdminValidator,
+  wrapAsync(createNewServiceController)
+)
+
+managerRouter.put(
+  '/manage-service/update-service/:ServiceID',
+  accessTokenValidator,
+  isAdminValidator,
+  wrapAsync(updateServiceController)
+)
 
 export default managerRouter

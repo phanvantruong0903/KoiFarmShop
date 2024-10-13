@@ -4,8 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { ResetPasswordModal } from "../Pages/ResetPasswordPage ";
 function SignInForm() {
+  const [showResetPasswordModal, setShowResetPasswordModal] = React.useState(false);
   const { googleAuthUrl, login, checkRole } = useAuth();
   const [state, setState] = React.useState({
     email: "",
@@ -20,29 +21,38 @@ function SignInForm() {
     });
   };
 
-  const handleOnSubmit = (evt) => {
+  const handleOnSubmit = async (evt) => {
     evt.preventDefault();
 
     const { email, password } = state;
-    toast.success(`You have logged in with email: ${email}`);
+
 
     // Perform the login and navigate after a successful login
-    login(email, password).then((result) => {
-      if (result) {
-        checkRole().then(result =>{
+    try {
+      const reponse = await login(email, password);
+
+      if (reponse) {
+        checkRole().then(result => {
           if (result === "Staff") {
+            toast.success("Login successfully");
             navigate("/DashBoard/staff/Profiles");
           }
           else if (result === "Manager") {
+            toast.success("Login successfully");
             navigate("/DashBoard/manager/Consign");
           }
         })
-        navigate("/");
-        toast.success("Login successfully");
-        // Use a timeout to ensure the toast is shown before navigating
-        // Delay to allow the toast to be seen
+      navigate('/')
+      toast.success("Login successfully");
       }
-    });
+    } catch (error) {
+      console.error("Failed to login", error.response.data);
+      if (error.response.data.message === "Validation error") {
+        toast.error("Password or Email is required");
+      }
+    }
+
+
 
     // Clear the input fields
     setState({ email: "", password: "" });
@@ -55,7 +65,9 @@ function SignInForm() {
   };
 
   return (
+    
     <div className="form-container sign-in-container">
+      <ResetPasswordModal show={showResetPasswordModal} handleClose={()=>{setShowResetPasswordModal(false)}} signInLink="/login" buttonLink="/login" />
       <form onSubmit={handleOnSubmit}>
         <h1>Sign in</h1>
         <div className="social-container">
@@ -78,7 +90,9 @@ function SignInForm() {
           value={state.password}
           onChange={handleChange}
         />
-        <a href="#">Forgot your password?</a>
+        <p onClick={()=>{setShowResetPasswordModal(true)}}>
+          forgot your password?
+        </p>
         <button>Sign In</button>
       </form>
       <ToastContainer
