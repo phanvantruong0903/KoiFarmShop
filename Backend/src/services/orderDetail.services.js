@@ -12,8 +12,9 @@ class OrderDetailService {
         }
 
         let order, newPrice;
-        if (reqCookie) {
+        if (reqCookie && reqCookie.Items) {
             order = reqCookie;
+            console.log("order: ", order)
 
             if (!order.Items) {
                 order.Items = []
@@ -36,11 +37,44 @@ class OrderDetailService {
         const savedOrder = await this.saveOrderToDatabase(order);
         return { order: savedOrder, koi }
     }
+    // async buyNow(payload, reqCookie) {
+    //     const koi = await databaseService.kois.findOne({ _id: new ObjectId(payload.KoiID) });
+    //     console.log("koi", koi)
+    //     if (!koi) {
+    //         HTTP_STATUS.NOT_FOUND;
+    //         throw new Error("Koi not found!");
+    //     }
+
+    //     let order, newPrice;
+    //     if (reqCookie) {
+    //         order = reqCookie;
+
+    //         if (!order.Items) {
+    //             order.Items = []
+    //         }
+
+    //         const itemIndex = order.Items.findIndex(item => item.KoiID === payload.KoiID);
+    //         if (itemIndex > -1) {
+    //             order.Items[itemIndex].Quantity++;
+    //         } else {
+    //             order.Items.push({ KoiID: payload.KoiID, Quantity: 1 });
+    //         }
+    //     } else {
+    //         order = {
+    //             Items: [{ KoiID: payload.KoiID, Quantity: 1 }],
+    //             TotalPrice: koi.Price
+    //         };
+    //     }
+    //     newPrice = Number(koi.Price + payload.Quantity)
+    //     order.TotalPrice += newPrice
+    //     const savedOrder = await this.saveOrderToDatabase(order);
+    //     return { order: savedOrder, koi }
+    // }
 
     async saveOrderToDatabase(order) {
         if (order._id) {
             // If the order already has an _id, update it in the database
-            const result = await databaseService.order.findOneAndUpdate(
+            const result = await databaseService.orderDetail.findOneAndUpdate(
                 { _id: new ObjectId(order._id) },
                 {
                     $set: {
@@ -52,24 +86,24 @@ class OrderDetailService {
             );
             return result;
         } else {
-            const result = await databaseService.order.insertOne(order);
+            const result = await databaseService.orderDetail.insertOne(order);
             order._id = result.insertedId; // Attach the new _id to the order
             return order;
         }
     }
 
     async fetchOrder(payload) {
-        const result = await databaseService.order.findOne({ _id: new ObjectId(payload.orderID) })
+        const result = await databaseService.orderDetail.findOne({ _id: new ObjectId(payload.orderID) })
         return result ? result : {}
     }
 
     async updateOrder(payload, reqParams) {
         const koi = await databaseService.kois.findOne({ _id: new ObjectId(payload.KoiID) })
-        const order = await databaseService.order.findOne({ _id: new ObjectId(reqParams.orderID) })
+        const order = await databaseService.orderDetail.findOne({ _id: new ObjectId(reqParams.orderID) })
         console.log("order: ", order)
         let result
         if (order) {
-            result = await databaseService.order.findOneAndUpdate(
+            result = await databaseService.orderDetail.findOneAndUpdate(
                 { _id: new ObjectId(reqParams.orderID) },
                 {
                     $set: {
@@ -94,72 +128,82 @@ class OrderDetailService {
         return result
     }
 
-    getPrice(breed, size) {
+    async getKoiPrice(payload) {
+        // let koi = await databaseService.kois.findOne({_id: new ObjectId(payload.KoiID)})
+        let koisList, quantity
+        koisList = await databaseService.kois.find({
+            $and: [
+                { CategoryID: payload.CategoryID },
+                { Breed: payload.Breed },
+                { Size: payload.Size }
+            ]
+        }).toArray()
+        console.log("list: ", koisList)
+        quantity = koisList?.length
+        console.log("quantity: ", quantity)
         const koiPrices = {
-            vietnamese: [
-                {
-                    condition: '>',
-                    size: 15,
-                    price: 19000
-                }
-            ],
-            japanese: [
-                {
-                    condition: '>',
-                    size: 15,
-                    price: 1199000
-                }
+            Việt: [
+                { min: 0, max: 15, price: 500000, description: 'Lô 39 con mix tất cả các loại' },
+                { min: 15, max: 18, price: 500000, description: 'Lô 20 con (Tặng 5 con)' },
+                { min: 18, max: 20, price: 500000, description: 'Lô 12 con (Tặng 3 con)' },
+                { min: 20, max: 25, price: 50000, description: '20cm - <25cm' },
+                { min: 25, max: 30, price: 90000, description: '25cm' },
+                { min: 30, max: 35, price: 130000, description: '30cm' },
+                { min: 35, max: 40, price: 180000, description: '35cm' },
+                { min: 40, max: 45, price: 230000, description: '40cm' },
+                { min: 45, max: 50, price: 300000, description: '45cm' },
+                { min: 50, max: 55, price: 370000, description: '50cm' },
+                { min: 55, max: 60, price: 450000, description: '55cm' },
+                { min: 60, max: 65, price: 530000, description: '60cm' },
+                { min: 65, max: 70, price: 620000, description: '65cm' },
+                { min: 70, max: 75, price: 710000, description: '70cm' },
+                { min: 75, max: Infinity, price: 850000, description: '>75cm' }
             ],
             F1: [
-                { condition: '<', size: 15, price: 1000000, description: 'Combo 39 con mix tất cả các loại' },
-                { condition: 'between', min: 15, max: 18, price: 1000000, description: 'Combo 20 con (Tặng 5 con)' },
-                { condition: 'between', min: 18, max: 20, price: 1000000, description: 'Combo 12 con (Tặng 3 con)' },
-                { condition: '=', size: 20, price: 75000 },
-                { condition: '=', size: 25, price: 99000 },
-                { condition: '=', size: 30, price: 179000 },
-                { condition: '=', size: 35, price: 239000 },
-                { condition: '=', size: 40, price: 379000 },
-                { condition: '=', size: 45, price: 579000 },
-                { condition: '=', size: 50, price: 679000 },
-                { condition: '=', size: 55, price: 779000 },
-                { condition: '=', size: 60, price: 879000 },
-                { condition: '=', size: 65, price: 979000 },
-                { condition: '=', size: 70, price: 1079000 },
-                { condition: '>', size: 75, price: 1179000 }
+                { min: 0, max: 15, price: 1000000, description: 'Lô 39 con mix tất cả các loại' },
+                { min: 15, max: 18, price: 1000000, description: 'Lô 20 con (Tặng 5 con)' },
+                { min: 18, max: 20, price: 1000000, description: 'Lô 12 con (Tặng 3 con)' },
+                { min: 20, max: 25, price: 120000, description: '20cm' },
+                { min: 25, max: 30, price: 175000, description: '25cm' },
+                { min: 30, max: 35, price: 250000, description: '30cm' },
+                { min: 35, max: 40, price: 340000, description: '35cm' },
+                { min: 40, max: 45, price: 420000, description: '40cm' },
+                { min: 45, max: 50, price: 550000, description: '45cm' },
+                { min: 50, max: 55, price: 680000, description: '50cm' },
+                { min: 55, max: 60, price: 830000, description: '55cm' },
+                { min: 60, max: 65, price: 1000000, description: '60cm' },
+                { min: 65, max: 70, price: 1200000, description: '65cm' },
+                { min: 70, max: 75, price: 1420000, description: '70cm' },
+                { min: 75, max: Infinity, price: 1700000, description: '>75cm' },
+            ],
+            Japan: [
+                { min: 0, max: 15, priceMin: 750000, priceMax: 1500000, description: '<15cm' },
+                { min: 15, max: 18, priceMin: 1000000, priceMax: 2500000, description: '15-18cm' },
+                { min: 18, max: 20, priceMin: 1400000, priceMax: 3000000, description: '18-20cm' },
+                { min: 20, max: 25, priceMin: 1700000, priceMax: 3400000, description: '20cm' },
+                { min: 25, max: 30, priceMin: 2250000, priceMax: 4050000, description: '25cm' },
+                { min: 30, max: 35, priceMin: 3000000, priceMax: 4900000, description: '30cm' },
+                { min: 35, max: 40, priceMin: 3900000, priceMax: 5900000, description: '35cm' },
+                { min: 40, max: 45, priceMin: 4200000, priceMax: 6300000, description: '40cm' },
+                { min: 45, max: 50, priceMin: 6000000, priceMax: 8200000, description: '45cm' },
+                { min: 50, max: 55, priceMin: 7300000, priceMax: 9600000, description: '50cm' },
+                { min: 55, max: 60, priceMin: 8800000, priceMax: 11200000, description: '55cm' },
+                { min: 60, max: 65, priceMin: 10500000, priceMax: 13000000, description: '60cm' },
+                { min: 65, max: 70, priceMin: 12500000, priceMax: 15000000, description: '65cm' },
+                { min: 70, max: 75, priceMin: 14700000, priceMax: 17700000, description: '70cm' },
+                { min: 75, max: Infinity, priceMin: 17000000, priceMax: 20000000, description: '>75cm' },
             ]
         };
-        const breedPricing = koiPrices[breed]
-        if (!breedPricing) {
-            return 'Breed not found'
-        }
-        for (const pricing of breedPricing) {
-            if (pricing.condition === '>' && size > pricing.size) {
-                return pricing
+        const breedPricing = koiPrices[payload.Breed]
+        const priceCheck = breedPricing?.find(range => payload.Size >= range.min && payload.Size < range.max)
+        if (priceCheck)
+            return {
+                CategoryName: {
+                    Size: payload.Size,
+                    Price: priceCheck.price,
+                    Quantity: quantity
+                }
             }
-            if (pricing.condition === '<' && size < pricing.size) {
-                return pricing
-            }
-            if (pricing.condition === '=' && size === pricing.size) {
-                return pricing
-            }
-            if (pricing.condition === 'between' && size >= pricing.min && size <= pricing.max) {
-                return pricing
-            }
-        }
-    }
-
-    getNewPrice(quantity, koi, order) {
-        let newTotalPrice = order.totalPrice
-        order.items?.map(item => {
-            if (item.koiId.toString() === koi?._id.toString()) {
-                newTotalPrice += koi.price * (quantity - item.quantity)
-            }
-        })
-        return newTotalPrice
-    }
-    async calKoiPrice(payload, reqParams){
-        const koi = await databaseService.kois.findOne({_id: new ObjectId(reqParams.KoiID)})
-        
     }
 }
 
