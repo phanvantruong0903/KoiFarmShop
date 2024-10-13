@@ -42,7 +42,10 @@ const CardGrid = ({ cardData }) => {
 
   // Chuyển đến trang đặt hàng khi nhấn vào hình ảnh koi (IKoi Fish)
   const handleOrderingForIKoi = (card) => {
-    navigate("/order", { state: { selectedItem: card } }); // Pass the card as state
+    navigate("/orderingikoi", { state: { selectedItem: groupedCards } }); // Pass the card as state
+  };
+  const handleOrderingForJapanKoi = (card) => {
+    navigate("/orderingjapankoi", { state: { selectedItem: card } }); // Pass the card as state
   };
   cardData.map((card) => {
     if (card.Status === 2 || card.Status === 3) {
