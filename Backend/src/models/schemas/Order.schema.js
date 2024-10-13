@@ -7,8 +7,9 @@ export default class OrdersSchema {
   ShipAddress = ''
   Description = ''
   OrderDate = ''
-  Status = ''
   TotalPrice = ''
+  Type = 'cart' || 'buyNow'
+  Status = ''
 
   constructor(order) {
     this._id = order?._id ?? new ObjectId() // tự tạo id
@@ -17,6 +18,8 @@ export default class OrdersSchema {
     this.ShipAddress = order.ShipAddress || ""
     this.Description = order.Description || ""
     this.OrderDate = order?.OrderDate ?? new Date()
+    this.TotalPrice = order.TotalPrice || 0
+    this.Type = order?.Type || 'cart'
     this.Status = order.Status || "1"
   }
 }

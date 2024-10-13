@@ -41,6 +41,14 @@ class DatabaseService {
       throw error
     }
   }
+  get orderDetail() {
+    try {
+      return this._db.collection('orderDetail')
+    } catch (error) {
+      console.log(error + 'lỗi ở database service - get orderDetail')
+      throw error
+    }
+  }
   get kois() {
     try {
       return this._db.collection('kois')

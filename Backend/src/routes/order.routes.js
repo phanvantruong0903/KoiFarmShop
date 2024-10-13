@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { getOrderDetailController, makeOrderDetailController, updateOrderDetailController } from '../controllers/orderDetailController.js'
+import { getKoiPriceController, getOrderDetailController, makeOrderDetailController, updateOrderDetailController } from '../controllers/orderDetailController.js'
 import { createOrderController } from '../controllers/order.controllers.js'
 
 const orderRouter = Router()
@@ -8,6 +8,7 @@ const orderRouter = Router()
 orderRouter.post('/detail/make', makeOrderDetailController)
 orderRouter.get('/detail/:orderID', getOrderDetailController)
 orderRouter.patch('/detail/edit/:orderID',updateOrderDetailController)
+orderRouter.post('/detail/price',getKoiPriceController)
 //Order
 orderRouter.post('/create/:orderDTID', createOrderController)
 

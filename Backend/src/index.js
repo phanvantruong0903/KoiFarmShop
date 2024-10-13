@@ -17,6 +17,7 @@ import { getAllKoiController } from './controllers/manager.controllers.js'
 import { accessTokenValidator } from './middlewares/users.middlewares.js'
 import paymentRouter from './routes/payments.routes.js'
 import orderRouter from './routes/order.routes.js'
+import cookieParser from 'cookie-parser'
 
 config()
 const app = express()
@@ -27,6 +28,7 @@ app.use(
 )
 const PORT = process.env.PORT || 4000
 app.use(express.json())
+app.use(cookieParser())
 databaseService.connect().then(() => {
   databaseService.indexUsers()
 })
