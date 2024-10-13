@@ -105,9 +105,9 @@ export const resendEmailVerifyController = async (req, res) => {
 
 export const forgotPasswordController = async (req, res) => {
   //lấy user_id từ user của req
-  const { _id, verify } = req.user
+  const { _id, verify, email } = req.user
   //dùng _id tìm và cập nhật lại user thêm vào forgot_password_token
-  const result = await usersService.forgotPassword({ user_id: _id.toString(), verify })
+  const result = await usersService.forgotPassword({ user_id: _id.toString(), verify, email })
   return res.json(result)
 }
 
