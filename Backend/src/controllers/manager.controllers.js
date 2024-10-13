@@ -26,10 +26,10 @@ export const getAllOrderController = async (req, res) => {
 }
 
 export const getAllKoiController = async (req, res) => {
-  const koisList = await adminService.getKoi()
+  const result = await adminService.getKoi()
   const cateogryList = await databaseService.category.find().toArray()
   res.json({
-    koisList,
+    result,
     cateogryList
   })
 }
