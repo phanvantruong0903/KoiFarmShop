@@ -37,7 +37,8 @@ const Staff = lazy(() => import("../src/An/Pages/Staff"));
 const Manager = lazy(() => import("./An/Pages/Manager/Manager"));
 const Profiles = lazy(() => import("../src/An/Pages/Staff/Profiles"));
 const Orders = lazy(() => import("../src/An/Pages/Staff/Orders"));
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import style cho toast
 const router = createBrowserRouter([
   {
     path: "/kohaku",
@@ -196,7 +197,12 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <ToastContainer />
+    </>
+  );
 }
 
 export default App;
