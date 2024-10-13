@@ -42,13 +42,20 @@ class AdminsService {
   async updateKoi(KoiID, payload) {
     // validate input trước khi insert
     // nếu xảy ra lỗi trả về message
-    const { error } = koiValidate(payload)
-    if (error) {
-      return { success: false, message: error.details[0].message }
-    }
+    try {
+      const { error } = koiValidate(payload)
+      if (error) {
+        return { success: false, message: error.details[0].message }
+      }
 
-    await databaseService.kois.findOneAndUpdate({ _id: new ObjectId(KoiID) }, { $set: payload })
-    return { success: true, message: MESSAGES.UPDATE_KOI_SUCCESS }
+      const updateKoi = await databaseService.kois.findOneAndUpdate({ _id: new ObjectId(KoiID) }, { $set: payload })
+      if (!updateKoi) {
+        return { success: false, message: 'Koi not found' }
+      }
+      return { success: true, message: MESSAGES.UPDATE_KOI_SUCCESS }
+    } catch (error) {
+      return { success: false, message: 'Koi not found' }
+    }
   }
 
   async updateStatusKoi(KoiIDInput) {
@@ -71,6 +78,8 @@ class AdminsService {
             { $bit: { Status: { xor: 1 } } },
             { new: true }
           )
+        } else if (!checkKoi) {
+          return { success: false, message: 'Koi not found' }
         } else {
           return { success: true, message: 'Koi có nguồn gốc F1 hoặc thuần việt không thể update' }
         }
@@ -78,7 +87,7 @@ class AdminsService {
 
       return { success: true, message: MESSAGES.UPDATE_KOI_SUCCESS }
     } catch (error) {
-      return { success: false, message: 'FAIL' }
+      return { success: false, message: 'Koi not found' }
     }
   }
 
@@ -89,9 +98,13 @@ class AdminsService {
         { $set: payload },
         { new: true }
       )
+
+      if (!result) {
+        return { success: false, message: 'User not found' }
+      }
       return { success: true, message: MESSAGES.UPDATE_USER_SUCCESS }
     } catch (error) {
-      return { success: false, message: 'FAIL' }
+      return { success: false, message: 'User not found' }
     }
   }
 
@@ -102,10 +115,14 @@ class AdminsService {
         { $bit: { Status: { xor: 1 } } },
         { new: true }
       )
-      console.log(result)
+
+      if (!result) {
+        return { success: false, message: 'User not found' }
+      }
+
       return { success: true, message: MESSAGES.UPDATE_USER_SUCCESS }
     } catch (error) {
-      return { success: false, message: 'FAIL' }
+      return { success: false, message: 'User not found' }
     }
   }
 
@@ -146,6 +163,29 @@ class AdminsService {
       return { success: true, message: 'Creat Service Success' }
     } catch (error) {
       return { success: false, message: error.message }
+    }
+  }
+
+  async updateService(ServiceID, payload) {
+    try {
+      const { error } = serviceValidate(payload)
+      if (error) {
+        return { success: false, message: error.details[0].message }
+      }
+
+      const result = await databaseService.services.findOneAndUpdate(
+        { _id: new ObjectId(ServiceID) },
+        { $set: payload },
+        { new: true }
+      )
+
+      if (!result) {
+        return { success: false, message: 'Service not found' }
+      }
+
+      return { success: true, message: 'Update Service Successfully' }
+    } catch (error) {
+      return { success: false, message: 'Service not found' }
     }
   }
 }

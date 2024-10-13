@@ -4,6 +4,7 @@ import koisService from '../services/kois.services.js'
 import usersService from '../services/users.services.js'
 import adminService from '../services/admin.service.js'
 import databaseService from '../services/database.service.js'
+import { serviceValidate } from '../middlewares/service.middlewares.js'
 
 export const getAllUserController = async (req, res) => {
   try {
@@ -34,15 +35,15 @@ export const getAllKoiController = async (req, res) => {
 }
 
 export const createNewKoiController = async (req, res) => {
-    try {
-      const result = await koisService.createNewKoi(req.body)
-      return res.json({
-        message: MANAGER_MESSAGES.CREATE_NEW_KOI_SUCCESS,
-        result
-      })
-    } catch (error) {
-      return res.status(500).json({ error: error.message })
-    }
+  try {
+    const result = await koisService.createNewKoi(req.body)
+    return res.json({
+      message: MANAGER_MESSAGES.CREATE_NEW_KOI_SUCCESS,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
 }
 
 export const getAllConsignController = async (req, res) => {
@@ -153,7 +154,6 @@ export const createCategoryController = async (req, res) => {
   }
 }
 
-
 export const getConsignDetailController = async (req, res) => {
   //tìm user theo username
   const { _id } = req.params
@@ -185,4 +185,14 @@ export const createNewServiceController = async (req, res) => {
   } catch (error) {
     console.log(error + 'Error at create new Category')
   }
+}
+
+export const updateServiceController = async (req, res) => {
+  const { ServiceID } = req.params
+  const Service = await adminService.updateService(ServiceID, req.body)
+  if (!Service.success) {
+    return res.status(400).json({ message: Service.message })
+  }
+
+  return res.status(200).json({message: Service.message})
 }
