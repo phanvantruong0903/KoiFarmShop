@@ -25,24 +25,24 @@ export const getAllOrderController = async (req, res) => {
 }
 
 export const getAllKoiController = async (req, res) => {
-  const koisList = await adminService.getKoi()
+  const result = await adminService.getKoi()
   const cateogryList = await databaseService.category.find().toArray()
   res.json({
-    koisList,
+    result,
     cateogryList
   })
 }
 
 export const createNewKoiController = async (req, res) => {
-    try {
-      const result = await koisService.createNewKoi(req.body)
-      return res.json({
-        message: MANAGER_MESSAGES.CREATE_NEW_KOI_SUCCESS,
-        result
-      })
-    } catch (error) {
-      return res.status(500).json({ error: error.message })
-    }
+  try {
+    const result = await koisService.createNewKoi(req.body)
+    return res.json({
+      message: MANAGER_MESSAGES.CREATE_NEW_KOI_SUCCESS,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
 }
 
 export const getAllConsignController = async (req, res) => {
@@ -152,7 +152,6 @@ export const createCategoryController = async (req, res) => {
     console.log('Error at create new Category')
   }
 }
-
 
 export const getConsignDetailController = async (req, res) => {
   //tìm user theo username

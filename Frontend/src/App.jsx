@@ -31,6 +31,8 @@ import NguonGocCuaIKoi from "./Components/Nguongoccuaikoi";
 import GioiThieuVeKoiViet from "./Components/GioiThieuVeKoiViet";
 import GioiThieuVeKoiNhat from "./Components/GioiThieuVeKoiNhat";
 import GioiThieuVeKoiF1 from "./Components/GioitThieuVeKoiF1";
+import OrderingIKoi from "./Components/OrderingIKoi";
+import OrderingJapanKoi from "./Components/OrderingJapanKoi";
 const Staff = lazy(() => import("../src/An/Pages/Staff"));
 const Manager = lazy(() => import("./An/Pages/Manager/Manager"));
 const Profiles = lazy(() => import("../src/An/Pages/Staff/Profiles"));
@@ -152,6 +154,14 @@ const router = createBrowserRouter([
   {
     path: "/gioithieuvekoiviet",
     element: <GioiThieuVeKoiViet />,
+  },
+  {
+    path: "/orderingikoi",
+    element: <OrderingIKoi />,
+  },
+  {
+    path: "/orderingjapankoi",
+    element: <OrderingJapanKoi />,
   },
   {
     path: "/DashBoard",

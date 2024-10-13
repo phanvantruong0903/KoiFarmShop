@@ -24,19 +24,17 @@ function SignInForm() {
     evt.preventDefault();
 
     const { email, password } = state;
-    toast.success(`You have logged in with email: ${email}`);
 
     // Perform the login and navigate after a successful login
     login(email, password).then((result) => {
       if (result) {
-        checkRole().then(result =>{
+        checkRole().then((result) => {
           if (result === "Staff") {
             navigate("/DashBoard/staff/Profiles");
-          }
-          else if (result === "Manager") {
+          } else if (result === "Manager") {
             navigate("/DashBoard/manager/Consign");
           }
-        })
+        });
         navigate("/");
         toast.success("Login successfully");
         // Use a timeout to ensure the toast is shown before navigating
