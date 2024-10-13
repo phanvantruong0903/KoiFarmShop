@@ -22,12 +22,17 @@ export default function Profiles() {
   const [isLoading, setIsLoading] = useState(true);
   const [isActive, setIsActive] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [userID , setUserID] = useState(null);
   const headers = ['#', 'User_ID', 'Name', 'Role', 'Email', 'Email Status', 'Address', 'Phone Number'];
   const fieldMapping = ['_id', 'name', 'role', 'email', 'verify', 'address', 'phone_number'];
   const handleRowAction = (id, actionType) => {
     if (actionType === 'delete') {
 
       console.log(`Delete user with ID: ${id}`);
+    }
+    else if (actionType === 'view') {
+      setUserID(id)
+      
     }
   };
   const [intialData, setIntialData] = useState([])
@@ -85,7 +90,7 @@ export default function Profiles() {
 
   return (
     <div>
-      <ViewProfile actions={showModal} setactions={setShowModal} />
+      <ViewProfile actions={showModal} setactions={setShowModal} id={userID}/>
       <div className='fw-bold fs-1 ms-5 mb-5'>Profiles</div>
 
       <div className='d-flex ms-5 me-5 mb-3 Card-Container' style={{ height: '100px', gap: '1rem' }}>

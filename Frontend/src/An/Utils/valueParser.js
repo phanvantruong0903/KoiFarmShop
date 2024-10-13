@@ -7,7 +7,7 @@
         case 3:
             return 'Manager';
         default:
-            return 'Unknown';
+            return 'User';
     }
 }
 function isVerified(data) {
@@ -22,20 +22,20 @@ function isVerified(data) {
 }
 function isAddress(data){
     if (data === null) {
-        console.log('data is null');
+      
         return false;
     }
     else if (data === undefined) {
-        console.log('data is undefined');
+       
         return false;
     }
     else if (data === '') {
-        console.log('data is empty');
+       
         return false;
     }
     return true;
 }
 function countCategory(data, field, category) {
-    return data.filter((item) => item[field] === category).length;
+    return 
 }
 export { whatRole, isVerified,isAddress,countCategory };
