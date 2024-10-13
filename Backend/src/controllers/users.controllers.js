@@ -112,6 +112,22 @@ export const forgotPasswordController = async (req, res) => {
 }
 
 export const verifyForgotPasswordTokenController = async (req, res) => {
+  const { user_id } = req.decoded_forgot_password_token
+  //dựa vào user_id tìm user
+  const user = await databaseService.users.findOne({ _id: new ObjectId(user_id) })
+  //nếu user === null thì ném lỗi 404
+  if (user === null) {
+    throw new ErrorWithStatus({
+      message: USERS_MESSAGES.USER_NOT_FOUND,
+      status: HTTP_STATUS.NOT_FOUND
+    })
+  }
+  if (user.forgot_password_token !== req.query.forgot_password_token) {
+    throw new ErrorWithStatus({
+      message: USERS_MESSAGES.FORGOT_PASSWORD_TOKEN_IS_INCORRECT,
+      status: HTTP_STATUS.UNAUTHORIZED
+    })
+  }
   return res.json({
     message: USERS_MESSAGES.VERIFY_FORGOT_PASSWORD_TOKEN_SUCCESS
   })
