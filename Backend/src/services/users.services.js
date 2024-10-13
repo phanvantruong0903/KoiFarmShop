@@ -260,6 +260,36 @@ class UsersService {
       }
     ])
     //giả gửi mail, nếu đc thì làm visa (aws, ses)
+    
+    //chỗ này để gửi mail
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_APP, // Thay thế bằng email của bạn
+        pass: process.env.EMAIL_PASSWORD_APP // Thay thế bằng mật khẩu của bạn
+      }
+    })
+
+    // Cấu hình và gửi email
+    const verifyURL = `http://localhost:${process.env.PORT}/users/verify-forgot-password?forgot_password_token=${forgot_password_token}` // Đường dẫn xác nhận email
+    let mailOptions = {
+      from: process.env.EMAIL_APP, // Thay thế bằng email của bạn
+      to: payload.email, // Địa chỉ email của người nhận (người dùng đăng ký)
+      subject: 'Xác nhận forgot password token',
+      text: 'Nội dung xác nhận forgot password token...', // Hoặc sử dụng `html` để tạo nội dung email dạng HTML
+      html: `<p>Nhấn vào <a href="${verifyURL}">đây</a> để xác nhận forgot password token.</p>` // Sử dụng HTML để tạo nội dung email
+    }
+
+    // Gửi email
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error)
+        // Xử lý lỗi gửi email ở đây
+      } else {
+        console.log('Email sent: ' + info.response)
+        // Xử lý thành công gửi email ở đây
+      }
+    })
     //gửi mail chỗ này
     console.log(forgot_password_token)
     return { message: USERS_MESSAGES.CHECK_EMAIL_TO_RESET_PASSWORD }
