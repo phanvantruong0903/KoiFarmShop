@@ -288,7 +288,8 @@ class UsersService {
         projection: {
           password: 0,
           email_verify_token: 0,
-          forgot_password_token: 0
+          forgot_password_token: 0,
+          roleid: 0
         }
       }
     )
@@ -484,7 +485,6 @@ class UsersService {
       throw error
     }
   }
-
 }
 
 const usersService = new UsersService()
