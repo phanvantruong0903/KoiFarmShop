@@ -12,22 +12,37 @@ export default function Profile() {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const location = useLocation();
-  const message = location.state?.message;
 
-  useEffect(() => {
-    if (message) {
-      toast.success(message);
+  const maskEmail = (email) => {
+    const atIndex = email.indexOf("@");
+    if (atIndex > 2) {
+      const firstPart = email.slice(0, 2);
+      const maskedPart = "*".repeat(atIndex - 2);
+      return `${firstPart}${maskedPart}${email.slice(atIndex)}`;
     }
-  }, [message]);
+    return email; // Trả về email gốc nếu không đủ ký tự
+  };
+  const handleUpdate = async (field, value) => {
+    try {
+      await fetch(`http://localhost:4000/users/me`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ [field]: value }),
+      });
+      alert("Cập nhật thành công!");
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("Cập nhật thất bại.");
+    }
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
       setLoading(true);
       try {
-        const response = await axiosInstance.get(
-          "http://localhost:4000/users/me"
-        );
-        console.log("Data received from API:", response.data);
+        const response = await axiosInstance.get("users/me");
         if (response.data) {
           setUserData(response.data.result);
         } else {
@@ -43,13 +58,8 @@ export default function Profile() {
     fetchUserData();
   }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setUserData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  const maskedEmail =
+    userData && userData.email ? maskEmail(userData.email) : "";
 
   if (loading) {
     return (
@@ -62,115 +72,238 @@ export default function Profile() {
       <div>
         <Navbar />
       </div>
-      <Container style={{ paddingTop: "100px", textAlign: "center" }}>
-        <h1>Profile</h1>
-        {userData ? (
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <div style={{ marginRight: "50px" }}>
-              {[
-                {
-                  label: "Email",
-                  name: "email",
-                  type: "email",
-                  value: userData.email,
-                },
-                {
-                  label: "Tên Đăng Nhập",
-                  name: "username",
-                  type: "text",
-                  value: userData.username,
-                },
-                {
-                  label: "Tên",
-                  name: "name",
-                  type: "text",
-                  value: userData.name,
-                },
-                {
-                  label: "Địa chỉ",
-                  name: "address",
-                  type: "text",
-                  value: userData.address,
-                },
-                {
-                  label: "Số điện thoại",
-                  name: "phone_number",
-                  type: "tel",
-                  value: userData.phone_number,
-                },
-              ].map((field) => (
-                <div
-                  key={field.name}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    marginBottom: "15px",
-                    justifyContent: "center",
-                  }}
-                >
-                  <label
-                    htmlFor={field.name}
+      <div style={{ backgroundColor: "grey", paddingTop: "150px" }}>
+        <div>
+          <Container
+            style={{
+              paddingTop: "50px",
+              textAlign: "center",
+              backgroundColor: "white",
+              borderRadius: "10px",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+            }}
+          >
+            <h1>Profile</h1>
+            {userData ? (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  width: "100%",
+                }}
+              >
+                {/* Bảng thông tin người dùng */}
+                <div style={{ flex: 2, marginRight: "20px" }}>
+                  <table
                     style={{
-                      marginRight: "20px",
-                      width: "150px",
-                      textAlign: "right",
+                      width: "100%",
+                      margin: "20px 0",
+                      borderCollapse: "collapse",
                     }}
                   >
-                    {field.label}:
-                  </label>
-                  <input
-                    type={field.type}
-                    name={field.name}
-                    id={field.name}
-                    style={{ flex: 1, padding: "8px" }}
-                    value={field.value}
-                    onChange={handleInputChange}
-                  />
-                  <span style={{ color: "orange", marginLeft: "10px" }}>
-                    Thay đổi
-                  </span>
+                    <tbody>
+                      <tr>
+                        <td
+                          style={{
+                            fontWeight: "bold",
+                            fontSize: "20px",
+                            padding: "10px",
+                          }}
+                        >
+                          Tên đăng nhập:
+                        </td>
+                        <input
+                          value={userData.username}
+                          onChange={(e) =>
+                            setUserData({
+                              ...userData,
+                              username: e.target.value,
+                            })
+                          }
+                          style={{
+                            width: "100%",
+                            backgroundColor: "white",
+                            border: "0.5px solid",
+                            borderRadius: "4px",
+                            padding: "5px",
+                          }}
+                        />
+                        <button
+                          onClick={() =>
+                            handleUpdate("username", userData.name)
+                          }
+                        >
+                          Thay đổi
+                        </button>
+                      </tr>
+                      <tr>
+                        <td
+                          style={{
+                            fontWeight: "bold",
+                            fontSize: "20px",
+                            padding: "10px",
+                          }}
+                        >
+                          Tên:
+                        </td>
+                        <td>
+                          <input
+                            value={userData.name}
+                            onChange={(e) =>
+                              setUserData({ ...userData, name: e.target.value })
+                            }
+                            style={{
+                              width: "100%",
+                              backgroundColor: "white",
+                              border: "0.5px solid",
+                              borderRadius: "4px",
+                              padding: "5px",
+                            }}
+                          />
+                          <button
+                            onClick={() => handleUpdate("name", userData.name)}
+                          >
+                            Thay đổi
+                          </button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          style={{
+                            fontWeight: "bold",
+                            fontSize: "20px",
+                            padding: "10px",
+                          }}
+                        >
+                          Email:
+                        </td>
+                        <td>
+                          <input
+                            value={maskedEmail}
+                            readOnly
+                            style={{
+                              width: "100%",
+                              backgroundColor: "white",
+                              border: "0.5px solid",
+                              borderRadius: "4px",
+                              padding: "5px",
+                            }}
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          style={{
+                            fontWeight: "bold",
+                            fontSize: "20px",
+                            padding: "10px",
+                          }}
+                        >
+                          Địa chỉ:
+                        </td>
+                        <td>
+                          <input
+                            value={userData.address}
+                            onChange={(e) =>
+                              setUserData({
+                                ...userData,
+                                address: e.target.value,
+                              })
+                            }
+                            style={{
+                              width: "100%",
+                              backgroundColor: "white",
+                              border: "0.5px solid",
+                              borderRadius: "4px",
+                              padding: "5px",
+                            }}
+                          />
+                          <button
+                            onClick={() =>
+                              handleUpdate("address", userData.address)
+                            }
+                          >
+                            Thay đổi
+                          </button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          style={{
+                            fontWeight: "bold",
+                            fontSize: "20px",
+                            padding: "10px",
+                          }}
+                        >
+                          SĐT:
+                        </td>
+                        <td>
+                          <input
+                            value={userData.phone_number}
+                            onChange={(e) =>
+                              setUserData({
+                                ...userData,
+                                phone_number: e.target.value,
+                              })
+                            }
+                            style={{
+                              width: "100%",
+                              backgroundColor: "white",
+                              border: "0.5px solid",
+                              borderRadius: "4px",
+                              padding: "5px",
+                            }}
+                          />
+                          <button
+                            onClick={() =>
+                              handleUpdate(
+                                "phone_number",
+                                userData.phone_number
+                              )
+                            }
+                          >
+                            Thay đổi
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-              ))}
-            </div>
-            <hr
-              style={{
-                height: "150px",
-                width: "1px",
-                backgroundColor: "black",
-                margin: "0 20px",
-              }}
-            />
-            <div>
-              {/* Hiển thị ảnh đại diện */}
-              {userData.picture && (
-                <img
-                  src={userData.picture}
-                  alt="Avatar"
-                  style={{
-                    width: "150px",
-                    height: "150px",
-                    borderRadius: "50%",
-                  }}
-                />
-              )}
-            </div>
-          </div>
-        ) : (
-          <p>Không có thông tin người dùng.</p>
-        )}
-      </Container>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      <div>
+
+                {/* Hình ảnh profile */}
+                <div
+                  style={{ flex: 1, display: "flex", justifyContent: "center" }}
+                >
+                  <img
+                    src={userData.picture}
+                    alt="Profile"
+                    style={{
+                      width: "150px",
+                      height: "150px",
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
+              </div>
+            ) : (
+              <p>Không có thông tin người dùng.</p>
+            )}
+          </Container>
+        </div>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+      </div>
+      <div style={{ paddingTop: "50px", backgroundColor: "grey" }}>
         <Footer />
       </div>
     </>

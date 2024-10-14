@@ -392,22 +392,7 @@ export const verifyForgotPasswordTokenValidator = validate(
               //sau khi verify thành công ta đc payload của email_verify_token: decoded_email_verify_token
               req.decoded_forgot_password_token = decoded_forgot_password_token
 
-              const { user_id } = decoded_forgot_password_token
-              //dựa vào user_id tìm user
-              const user = await databaseService.users.findOne({ _id: new ObjectId(user_id) })
-              //nếu user === null thì ném lỗi 404
-              if (user === null) {
-                throw new ErrorWithStatus({
-                  message: USERS_MESSAGES.USER_NOT_FOUND,
-                  status: HTTP_STATUS.NOT_FOUND
-                })
-              }
-              if (user.forgot_password_token !== value) {
-                throw new ErrorWithStatus({
-                  message: USERS_MESSAGES.FORGOT_PASSWORD_TOKEN_IS_INCORRECT,
-                  status: HTTP_STATUS.UNAUTHORIZED
-                })
-              }
+              
             } catch (error) {
               if (error instanceof JsonWebTokenError) {
                 //
@@ -423,7 +408,7 @@ export const verifyForgotPasswordTokenValidator = validate(
         }
       }
     },
-    ['body']
+    ['query']
   )
 )
 

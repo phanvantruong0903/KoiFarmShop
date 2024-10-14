@@ -49,48 +49,50 @@ export default function DonKyGuiPage() {
         {consignList.length > 0 ? (
           <ListGroup>
             {consignList.map((item) => {
-              const { consign, koi } = item; // Giải nén consign và koi từ item
-
-              return (
-                <ListGroup.Item
-                  key={consign._id}
-                  style={{ marginBottom: "10px" }}
-                >
-                  <div style={{ display: "flex" }}>
-                    <h3 style={{ margin: 0, marginRight: "10px" }}>IKoi</h3>
-                    <Button variant="primary" style={{ marginRight: "20px" }}>
-                      Chat Ngay
-                    </Button>
-                  </div>
-                  <div style={{ textAlign: "right" }}>
-                    <p style={{ fontWeight: "bold" }}>
-                      State: {consign.Status}
-                    </p>
-                  </div>
-                  <hr />
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <img
-                      src={koi.Image} // Sử dụng hình ảnh từ đối tượng koi
-                      alt={koi.KoiName}
-                      style={{
-                        width: "100px",
-                        height: "auto",
-                        marginRight: "20px",
-                      }}
-                    />
-                    <div>
-                      <h5 style={{ margin: 0 }}>{koi.KoiName}</h5>
-                      <p style={{ margin: 0 }}>{koi.Description}</p>
-                      <p>Age: {koi.Age} years</p>
-                      <p>Price: {koi.Price || "N/A"}</p>
+              const { consign, koi } = item;
+              if (consign.State === 4) {
+                return (
+                  <ListGroup.Item
+                    key={consign._id}
+                    style={{ marginBottom: "10px" }}
+                  >
+                    <div style={{ display: "flex" }}>
+                      <h3 style={{ margin: 0, marginRight: "10px" }}>IKoi</h3>
+                      <Button variant="primary" style={{ marginRight: "20px" }}>
+                        Chat Ngay
+                      </Button>
                     </div>
-                  </div>
-                  <hr />
-                  <div style={{ textAlign: "right" }}>
-                    <span>TotalPrice: {consign.TotalPrice || "N/A"}</span>
-                  </div>
-                </ListGroup.Item>
-              );
+                    <div style={{ textAlign: "right" }}>
+                      <p style={{ fontWeight: "bold" }}>
+                        State: {consign.Status}
+                      </p>
+                    </div>
+                    <hr />
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <img
+                        src={koi.Image} // Sử dụng hình ảnh từ đối tượng koi
+                        alt={koi.KoiName}
+                        style={{
+                          width: "100px",
+                          height: "auto",
+                          marginRight: "20px",
+                        }}
+                      />
+                      <div>
+                        <h5 style={{ margin: 0 }}>{koi.KoiName}</h5>
+                        <p style={{ margin: 0 }}>{koi.Description}</p>
+                        <p>Age: {koi.Age} years</p>
+                        <p>Price: {koi.Price || "N/A"}</p>
+                      </div>
+                    </div>
+                    <hr />
+                    <div style={{ textAlign: "right" }}>
+                      <span>TotalPrice: {consign.TotalPrice || "N/A"}</span>
+                    </div>
+                  </ListGroup.Item>
+                );
+              }
+              return null;
             })}
           </ListGroup>
         ) : (
