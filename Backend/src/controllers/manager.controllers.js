@@ -197,7 +197,7 @@ export const updateServiceController = async (req, res) => {
 }
 
 export const updateOrderStatusController = async (req, res) => {
-  const { OrderID } = req.params
+  const { OrderID } = req.params 
   const Order = await adminService.updateOrderStatus(OrderID)
   if (!Order.success) {
     return res.status(400).json({ message: Order.message })
