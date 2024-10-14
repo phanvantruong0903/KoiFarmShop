@@ -26,7 +26,7 @@ const zaloPayment = async (req, res) => {
     amount: req.body.total,
     description: `KOI Shop - Payment for the order #${req.body.orderID}`,
     bank_code: '',
-    callback_url: 'localhost:4000//callback'
+    callback_url: 'http://localhost:4000/callback'
   }
 
   const data = `${config.app_id}|${order.app_trans_id}|${order.app_user}|${order.amount}|${order.app_time}|${order.embed_data}|${order.item}`
