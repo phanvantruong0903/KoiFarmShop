@@ -33,8 +33,8 @@ export default function Manager() {
   const handleMouseLeave = () => {
     setHoveredRow(null);
   };
-  const headers = ['#', 'Consign ID', 'Shipped Date', 'Receipt Date', 'Description', 'Status', 'Method', 'Position Care'];
-  const fieldMapping = ['_id', 'ShippedDate', 'ReceiptDate', 'Description', 'Status', 'Method', 'PositionCare']
+  const headers = ['#', 'Consign ID', 'Shipped Date', 'Receipt Date', 'Description', 'State', 'Method', 'Position Care'];
+  const fieldMapping = ['_id', 'ShippedDate', 'ReceiptDate', 'Description', 'State', 'Method', 'PositionCare']
   useEffect(() => {
     setIsLoading(true);
     const fetchData = async () => {
@@ -53,7 +53,7 @@ export default function Manager() {
   function totalKoiChecks(data) {
     let count = 0;
     data.forEach(element => {
-      if (element.Status === 1) {
+      if (element.State === 1) {
         count++;
       }
     });
@@ -62,7 +62,7 @@ export default function Manager() {
   function totalPriceAgreements(data) {
     let count = 0;
     data.forEach(element => {
-      if (element.Status === 2) {
+      if (element.State === 2) {
         count++;
       }
     });
@@ -71,7 +71,7 @@ export default function Manager() {
   function totalFishDeliveries(data) {
     let count = 0;
     data.forEach(element => {
-      if (element.Status === 3) {
+      if (element.State === 3) {
         count++;
       }
     });
@@ -80,12 +80,14 @@ export default function Manager() {
   function totalFishSales(data) {
     let count = 0;
     data.forEach(element => {
-      if (element.Status === 4) {
-        count++;
+      if (element.State === 4) {
+          count++;
+          console.log(element)
       }
     });
     return count;
   }
+  
 
   return (
     <div>
@@ -123,51 +125,51 @@ export default function Manager() {
         {/* ==============================Filter Button========================================= */}
         <FilterButton
           label="All"
-          filterType="Status"
+          filterType="State"
           filterValue=""
-          currentFilter={filterList.Status}
+          currentFilter={filterList.State}
           onFilterChange={handleFilterChange}
           count={intialData.length}
         />
         <FilterButton
           label=" Deposit Requests"
-          filterType="Status"
+          filterType="State"
           filterValue="1"
-          currentFilter={filterList.Status}
+          currentFilter={filterList.State}
           onFilterChange={handleFilterChange}
           count={totalKoiChecks(intialData)}
         />
         <FilterButton
           label="Koi Checks"
-          filterType="Status"
+          filterType="State"
           filterValue="2"
-          currentFilter={filterList.Status}
+          currentFilter={filterList.State}
           onFilterChange={handleFilterChange}
           count={totalPriceAgreements(intialData)}
         />
 
         <FilterButton
           label="Price Agreements"
-          filterType="Status"
+          filterType="State"
           filterValue="3"
-          currentFilter={filterList.Status}
+          currentFilter={filterList.State}
           onFilterChange={handleFilterChange}
           count={totalFishDeliveries(intialData)}
 
         />
         <FilterButton
           label="Fish Deliveries"
-          filterType="Status"
+          filterType="State"
           filterValue="4"
-          currentFilter={filterList.Status}
+          currentFilter={filterList.State}
           onFilterChange={handleFilterChange}
           count={totalFishSales(intialData)}
         />
         <FilterButton
           label="Fish Sales"
-          filterType="Status"
+          filterType="State"
           filterValue="5"
-          currentFilter={filterList.Status}
+          currentFilter={filterList.State}
           onFilterChange={handleFilterChange}
           count={totalFishSales(intialData)}
         />
@@ -183,10 +185,10 @@ export default function Manager() {
         />
 
         <FilterBar
-          initialTitle="Consign Status"
+          initialTitle="Consign State"
           NavItems={["All", "Deposit Requests", "Koi Checks", "Price Agreements", "Fish Deliveries", "Fish Sales"]}
           handleFilterChange={handleFilterChange}
-          filter="Status"
+          filter="State"
         />
 
 
@@ -225,7 +227,7 @@ export default function Manager() {
             handleMouseLeave={handleMouseLeave}
             whatRole={whatRole}
             showModal={setShowModal}
-
+            Table={'Consign'}
           />
         )}
       </div>
