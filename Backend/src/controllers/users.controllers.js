@@ -129,7 +129,8 @@ export const verifyForgotPasswordTokenController = async (req, res) => {
     })
   }
   return res.json({
-    message: USERS_MESSAGES.VERIFY_FORGOT_PASSWORD_TOKEN_SUCCESS
+    message: USERS_MESSAGES.VERIFY_FORGOT_PASSWORD_TOKEN_SUCCESS,
+    result: req.query.forgot_password_token
   })
 }
 

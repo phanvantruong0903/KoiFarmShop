@@ -56,7 +56,7 @@ usersRouter.post('/forgot-password', forgotPasswordValidator, wrapAsync(forgotPa
 //nếu token không hợp lệ thì báo lỗi
 //nếu token hết hạn thì báo lỗi
 //nếu token đã sử dụng rồi thì báo lỗi
-usersRouter.post(
+usersRouter.get(
   '/verify-forgot-password',
   verifyForgotPasswordTokenValidator,
   wrapAsync(verifyForgotPasswordTokenController)
