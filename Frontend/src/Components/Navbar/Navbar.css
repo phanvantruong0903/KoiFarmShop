@@ -4,54 +4,80 @@
   position: fixed;
   top: 0;
   left: 0; /* Đẩy sang trái */
+  height: 80px;
   width: 100%; /* Giữ chiều rộng 100% */
   z-index: 1000;
-  padding: 10px 20px;
-  
+  padding: 5px 20px; /* Giảm padding để giảm chiều cao */
+  opacity: 0.92;
 }
 
 .navbar-content {
   display: flex;
-  align-items: center;
-  justify-content: flex-start; /* Đẩy các mục sang bên trái */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  justify-content: space-between; /* Phân bổ không gian giữa các mục */
   width: 90%;
   margin: 0 auto;
+  height: 80px; /* Đảm bảo chiều cao của navbar */
 }
 
 .logo {
-  width: 100px;
+  width: 80px; /* Giảm kích thước logo */
   height: auto;
-  margin-right: 20px; /* Khoảng cách giữa logo và các liên kết */
+  margin-right: 15px; /* Giảm khoảng cách giữa logo và các liên kết */
 }
 
 .nav-links {
-  display: flex;
-  align-items: center;
+  display: flex; /* Đảm bảo các liên kết được hiển thị trên một hàng */
+  align-items: center; /* Căn giữa theo chiều dọc */
 }
 
-.nav-link {
-  color: white;
+/* Hiệu ứng cho nav-link và nav-dropdown-toggle giống nhau */
+.nav-link,
+.nav-dropdown-toggle {
+  position: relative; /* Để tạo vị trí cho pseudo-element */
+  color: white; /* Màu chữ */
+  text-decoration: none; /* Bỏ gạch chân */
+  padding: 10px 15px; /* Padding cho liên kết */
+  transition: color 0.3s ease; /* Hiệu ứng chuyển đổi màu chữ */
   font-weight: bold;
-  font-size: 18px;
-  padding: 10px;
-  text-decoration: none;
-  transition: color 0.5s;
 }
 
-.nav-link:hover {
-  color: #ff9800; /* Màu hover */
+.nav-link:hover,
+.nav-dropdown-toggle:hover {
+  color: white; /* Đặt màu chữ là trắng khi hover */
+}
+
+.nav-link::after,
+.nav-dropdown-toggle::after {
+  content: ""; /* Tạo pseudo-element */
+  position: absolute; /* Đặt nó tuyệt đối */
+  left: 50%; /* Đặt nó ở giữa */
+  bottom: 0; /* Đặt nó ở dưới cùng */
+  width: 50%; /* Đặt chiều rộng bằng một nửa chiều rộng của liên kết */
+  height: 2px; /* Độ dày của thanh */
+  background-color: white; /* Màu của thanh */
+  transform: translateX(-50%) scaleX(0); /* Ẩn thanh */
+  transition: transform 0.3s ease; /* Hiệu ứng chuyển đổi cho thanh */
+}
+
+.nav-link:hover::after,
+.nav-dropdown-toggle:hover::after {
+  transform: translateX(-50%) scaleX(1); /* Hiện thanh khi hover */
 }
 
 .nav-dropdown {
-  margin-left: 20px;
+  margin-left: 15px; /* Giảm khoảng cách giữa dropdown và các liên kết */
 }
 
 .nav-dropdown-toggle {
-  background-color: transparent;
+  background-color: transparent; /* Đảm bảo nền trong suốt */
   border: none;
-  color: white;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 16px; /* Kích thước font */
+}
+
+.nav-dropdown-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Màu nền hover cho mục dropdown */
 }
 
 .custom-menu {
@@ -59,22 +85,49 @@
   border: none;
 }
 
+/* Hiệu ứng hover cho các mục trong dropdown */
 .custom-menu .dropdown-item {
-  color: white;
+  position: relative; /* Để tạo vị trí cho pseudo-element */
+  color: white; /* Màu chữ */
+  font-size: 14px; /* Kích thước font */
+  padding: 5px 10px; /* Padding cho các mục trong dropdown */
+  transition: color 0.3s ease; /* Hiệu ứng chuyển đổi màu chữ */
+}
+
+.custom-menu .dropdown-item::after {
+  content: ""; /* Tạo pseudo-element */
+  position: absolute; /* Đặt nó tuyệt đối */
+  left: 50%; /* Đặt nó ở giữa */
+  bottom: 0; /* Đặt nó ở dưới cùng */
+  width: 50%; /* Đặt chiều rộng bằng một nửa chiều rộng của mục */
+  height: 2px; /* Độ dày của thanh */
+  background-color: whitesmoke; /* Màu của thanh */
+  transform: translateX(-50%) scaleX(0); /* Ẩn thanh */
+  transition: transform 0.3s ease; /* Hiệu ứng chuyển đổi cho thanh */
 }
 
 .custom-menu .dropdown-item:hover {
-  background-color: #ff9800; /* Màu hover cho mục dropdown */
+  background-color: rgba(0, 0, 0, 0.1); /* Màu nền hover cho mục dropdown, độ mờ 10% */
+  color: white; /* Màu chữ hover */
 }
 
-.auth-buttons {
+.custom-menu .dropdown-item:hover::after {
+  transform: translateX(-50%) scaleX(1); /* Hiện thanh khi hover */
+}
+
+.auth-links {
   display: flex;
   align-items: center;
   margin-left: auto; /* Đẩy các nút đăng nhập và giỏ hàng sang bên phải */
 }
 
+.custom-link {
+  font-size: 14px; /* Giảm kích thước font cho nút */
+  padding: 5px 10px; /* Giảm padding cho nút */
+}
+
 .cart-icon {
   color: white;
-  font-size: 25px;
+  font-size: 20px; /* Giảm kích thước icon giỏ hàng */
   margin-left: 20px;
 }
