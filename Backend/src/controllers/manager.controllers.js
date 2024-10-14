@@ -1,6 +1,7 @@
 import { MANAGER_MESSAGES } from '../constants/managerMessage.js'
 import consignsService from '../services/consigns.services.js'
 import koisService from '../services/kois.services.js'
+import suplliersService from '../services/suppliers.services.js'
 import usersService from '../services/users.services.js'
 
 export const getAllUserController = async (req, res) => {
@@ -57,4 +58,16 @@ export const updateConsignDetailController = async (req, res) => {
     message: MANAGER_MESSAGES.UPDATE_CONSIGN_DETAIL_SUCCESS,
     result: consign
   })
+}
+
+export const createNewSupplierController = async (req, res) => {
+  try {
+    const result = await suplliersService.createNewSupplier(req.body)
+    return res.json({
+      message: MANAGER_MESSAGES.CREATE_NEW_SUPPLIER_SUCCESS,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
 }
