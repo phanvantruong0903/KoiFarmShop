@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Footer from "./Footer";
 import Navbar from "./Navbar/Navbar";
+import axios from "axios";
 import axiosInstance from "../An/Utils/axiosJS";
 import { Container } from "react-bootstrap";
 
@@ -23,14 +24,21 @@ export default function Profile() {
     return email; // Trả về email gốc nếu không đủ ký tự
   };
   const handleUpdate = async (field, value) => {
+    console.log(value);
+    console.log(field);
     try {
-      await fetch(`http://localhost:4000/users/me`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
+      await axiosInstance.patch(
+        `http://localhost:4000/users/me`,
+        {
+          [field]: String(value), // Convert value to string
         },
-        body: JSON.stringify({ [field]: value }),
-      });
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
       alert("Cập nhật thành công!");
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -72,7 +80,7 @@ export default function Profile() {
       <div>
         <Navbar />
       </div>
-      <div style={{ backgroundColor: "grey", paddingTop: "150px" }}>
+      <div style={{ backgroundColor: "whitesmoke", paddingTop: "150px" }}>
         <div>
           <Container
             style={{
@@ -108,40 +116,54 @@ export default function Profile() {
                             fontWeight: "bold",
                             fontSize: "20px",
                             padding: "10px",
+                            minWidth: "150px", // Set a minimum width for label cells
+                            textAlign: "left", // Align text to the left
                           }}
                         >
                           Tên đăng nhập:
                         </td>
-                        <input
-                          value={userData.username}
-                          onChange={(e) =>
-                            setUserData({
-                              ...userData,
-                              username: e.target.value,
-                            })
-                          }
-                          style={{
-                            width: "100%",
-                            backgroundColor: "white",
-                            border: "0.5px solid",
-                            borderRadius: "4px",
-                            padding: "5px",
-                          }}
-                        />
-                        <button
-                          onClick={() =>
-                            handleUpdate("username", userData.name)
-                          }
-                        >
-                          Thay đổi
-                        </button>
+                        <td>
+                          <input
+                            value={userData.username}
+                            onChange={(e) =>
+                              setUserData({
+                                ...userData,
+                                username: e.target.value,
+                              })
+                            }
+                            style={{
+                              width: "100%",
+                              backgroundColor: "white",
+                              border: "0.5px solid",
+                              borderRadius: "4px",
+                              padding: "5px",
+                            }}
+                          />
+                        </td>
+                        <td>
+                          <button
+                            style={{
+                              backgroundColor: "white",
+                              color: "blue",
+                              border: "none",
+                            }}
+                            onClick={() =>
+                              handleUpdate("username", userData.username)
+                            }
+                          >
+                            Thay đổi
+                          </button>
+                        </td>
                       </tr>
+
                       <tr>
                         <td
                           style={{
                             fontWeight: "bold",
                             fontSize: "20px",
                             padding: "10px",
+                            minWidth: "150px", // Set a minimum width for label cells
+                            textAlign: "left", // Align text to the left
                           }}
                         >
                           Tên:
@@ -160,7 +182,14 @@ export default function Profile() {
                               padding: "5px",
                             }}
                           />
+                        </td>
+                        <td>
                           <button
+                            style={{
+                              backgroundColor: "white",
+                              color: "blue",
+                              border: "none",
+                            }}
                             onClick={() => handleUpdate("name", userData.name)}
                           >
                             Thay đổi
@@ -173,6 +202,8 @@ export default function Profile() {
                             fontWeight: "bold",
                             fontSize: "20px",
                             padding: "10px",
+                            minWidth: "150px", // Set a minimum width for label cells
+                            textAlign: "left", // Align text to the left
                           }}
                         >
                           Email:
@@ -197,6 +228,8 @@ export default function Profile() {
                             fontWeight: "bold",
                             fontSize: "20px",
                             padding: "10px",
+                            minWidth: "150px", // Set a minimum width for label cells
+                            textAlign: "left", // Align text to the left
                           }}
                         >
                           Địa chỉ:
@@ -218,7 +251,14 @@ export default function Profile() {
                               padding: "5px",
                             }}
                           />
+                        </td>
+                        <td>
                           <button
+                            style={{
+                              backgroundColor: "white",
+                              color: "blue",
+                              border: "none",
+                            }}
                             onClick={() =>
                               handleUpdate("address", userData.address)
                             }
@@ -233,6 +273,8 @@ export default function Profile() {
                             fontWeight: "bold",
                             fontSize: "20px",
                             padding: "10px",
+                            minWidth: "150px", // Set a minimum width for label cells
+                            textAlign: "left", // Align text to the left
                           }}
                         >
                           SĐT:
@@ -254,7 +296,14 @@ export default function Profile() {
                               padding: "5px",
                             }}
                           />
+                        </td>
+                        <td>
                           <button
+                            style={{
+                              backgroundColor: "white",
+                              color: "blue",
+                              border: "none",
+                            }}
                             onClick={() =>
                               handleUpdate(
                                 "phone_number",
@@ -303,7 +352,7 @@ export default function Profile() {
           pauseOnHover
         />
       </div>
-      <div style={{ paddingTop: "50px", backgroundColor: "grey" }}>
+      <div style={{ paddingTop: "50px", backgroundColor: "whitesmoke" }}>
         <Footer />
       </div>
     </>
