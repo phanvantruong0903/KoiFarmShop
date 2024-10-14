@@ -17,26 +17,28 @@ export default function Navbar() {
   const [activeItem, setActiveItem] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     setIsLoggedIn(!!accessToken);
 
-    if (isLoggedIn) {
-      toast.success("Đăng nhập thành công");
+    // Check localStorage for toast state
+    const hashShowToastState = localStorage.getItem("hashShowToast");
+    if (isLoggedIn && hashShowToastState !== "true") {
+      toast.success("Đăng nhập thành công!");
+      localStorage.setItem("hashShowToast", "true");
     }
   }, [isLoggedIn]);
-
+  //Function Log Out
   const handleLogout = () => {
     localStorage.clear();
     setIsLoggedIn(false);
     toast.success("Đăng xuất thành công!");
   };
-
+  //Function Sign In
   const handleStateSignIn = () => {
     navigate("/Login");
   };
-
+  // Function đăng ký
   const handleStateSignUp = () => {
     navigate("/Login", { state: { type: "signUp" } });
     toast.info("Vui lòng đăng ký!");
@@ -49,9 +51,12 @@ export default function Navbar() {
     >
       <ToastContainer
         position="bottom-right"
-        autoClose={3000}
+        autoClose={5000}
         hideProgressBar={false}
+        newestOnTop={false}
         closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
         draggable
         pauseOnHover
       />
