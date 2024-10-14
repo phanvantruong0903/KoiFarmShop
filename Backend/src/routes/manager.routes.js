@@ -1,4 +1,4 @@
-import { createNewServiceController, updateServiceController } from '../controllers/manager.controllers.js'
+import { createNewServiceController, updateOrderStatusController, updateServiceController } from '../controllers/manager.controllers.js'
 import {
   createCategoryController,
   createNewKoiController,
@@ -109,5 +109,7 @@ managerRouter.put(
   isAdminValidator,
   wrapAsync(updateServiceController)
 )
+
+managerRouter.patch('/order/updateOrderStatus/:OrderID',wrapAsync(updateOrderStatusController))
 
 export default managerRouter

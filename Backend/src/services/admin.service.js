@@ -188,6 +188,20 @@ class AdminsService {
       return { success: false, message: 'Service not found' }
     }
   }
+
+  async updateOrderStatus(orderID) {
+    try {
+      await databaseService.order.findOneAndUpdate(
+        { _id: new ObjectId(orderID) },
+        { $inc: { Status: 1 } },
+        { new: true }
+      )
+
+      return { success: true, message: 'Update Order Status Successfully' }
+    } catch (error) {
+      return { success: false, message: 'OderID not found' }
+    }
+  }
 }
 
 const adminService = new AdminsService()
