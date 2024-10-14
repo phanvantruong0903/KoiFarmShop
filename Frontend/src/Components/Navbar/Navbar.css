@@ -1,203 +1,80 @@
-/* custom.css */
-
-/* Loại bỏ bất kỳ kiểu caret mặc định nào */
-.no-caret .dropdown-toggle {
-  background-image: none;
-  color: black; /* custom.css */
-
-  /* Ẩn caret */
-  .no-caret .dropdown-toggle::after {
-    display: none;
-  }
-
-  /* Loại bỏ bất kỳ kiểu caret mặc định nào */
-  .no-caret .dropdown-toggle {
-    background-image: none;
-    color: black;
-    background-color: transparent;
-  }
-
-  /* Loại bỏ viền và bóng */
-  .no-border .dropdown-toggle {
-    border: none;
-    box-shadow: none;
-  }
-
-  /* Loại bỏ màu xanh khi nhấn vào nút */
-  .no-border .dropdown-toggle:active {
-    background-color: transparent;
-    box-shadow: none;
-  }
-
-  /* Làm đậm chữ khi hover */
-  .dropdown-menu .dropdown-item:hover {
-    font-weight: bold;
-  }
-
-  /* Đảm bảo các dropdown không bị đè lên nhau */
-  .dropdown {
-    position: relative;
-  }
-
-  background-color: transparent;
-}
-
-/* Loại bỏ viền và bóng */
-.no-border .dropdown-toggle {
-  border: none;
-  box-shadow: none;
-}
-
-/* Loại bỏ màu xanh khi nhấn vào nút */
-.no-border .dropdown-toggle:active {
-  background-color: transparent;
-  box-shadow: none;
-}
-
-/* Làm đậm chữ khi hover */
-.dropdown-menu .dropdown-item:hover {
-  font-weight: bold;
-}
-
 .navbar {
-  display: flex;
-  width: 100vw;
-  justify-content: center;
-  align-items: center;
-  height: 100px;
-  background-color: black;
+  background-color: #1d1d1d; /* Màu nền giống trang ví dụ */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   position: fixed;
-  z-index: 9999;
-  right: 0;
-  left: 0;
+  top: 0;
+  left: 0; /* Đẩy sang trái */
+  width: 100%; /* Giữ chiều rộng 100% */
+  z-index: 1000;
+  padding: 10px 20px;
+  
 }
 
-.navbar.shrink {
-  height: 50px;
-  top: 10px;
-  animation: stuckMoveDown 0.6s;
+.navbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Đẩy các mục sang bên trái */
+  width: 90%;
+  margin: 0 auto;
 }
 
-.dropdown-menu-columns .dropdown-item {
-  flex: 1; /* Chia đều thành 3 cột */
-  white-space: 150px;
-}
-.dropdown-enter {
-  opacity: 0;
-  transform: translateY(-20px);
+.logo {
+  width: 100px;
+  height: auto;
+  margin-right: 20px; /* Khoảng cách giữa logo và các liên kết */
 }
 
-.dropdown-enter-active {
-  opacity: 1;
-  transform: translateY(0);
-  transition: all 300ms ease-in-out;
+.nav-links {
+  display: flex;
+  align-items: center;
 }
 
-.dropdown-exit {
-  opacity: 1;
-  transform: translateY(0);
+.nav-link {
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 10px;
+  text-decoration: none;
+  transition: color 0.5s;
 }
 
-.dropdown-exit-active {
-  opacity: 0;
-  transform: translateY(-20px);
-  transition: all 300ms ease-in-out;
-}
-@keyframes fallDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0px);
-  }
+.nav-link:hover {
+  color: #ff9800; /* Màu hover */
 }
 
-.dropdown-menu {
-  display: none;
-  opacity: 0;
-  transition: all 0.3s ease-in-out;
+.nav-dropdown {
+  margin-left: 20px;
 }
 
-.dropdown-menu.show {
-  display: block;
-  opacity: 1;
-}
-.custom-dropdown {
-  position: relative;
-}
-
-.custom-toggle {
-  background-color: transparent !important;
-  border: none !important;
-  color: #f2e8c6 !important;
-  font-weight: 400 !important;
-  font-size: 25px !important;
-  padding-right: 10px !important;
+.nav-dropdown-toggle {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
 }
 
 .custom-menu {
-  min-width: 200px;
-  border-radius: 0px;
-  width: 100%;
+  background-color: #1d1d1d; /* Màu nền cho dropdown */
+  border: none;
 }
 
-.custom-button {
-  border: none; /* Remove default border */
-  border-radius: 50px; /* Rounded corners */
-  padding: 10px 20px; /* Padding for better size */
-  font-weight: bold; /* Bold text */
-  font-size: 16px; /* Font size */
-  color: black; /* Text color */
-  background-color: #dc3545; /* Bootstrap danger color */
-  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+.custom-menu .dropdown-item {
+  color: white;
 }
 
-.custom-button:hover {
-  background-color: #c82333; /* Darker shade on hover */
-  transform: scale(1.05); /* Slightly enlarge on hover */
+.custom-menu .dropdown-item:hover {
+  background-color: #ff9800; /* Màu hover cho mục dropdown */
 }
 
-.custom-button:focus {
-  outline: none; /* Remove focus outline */
-}
-.custom-dropdown {
-  position: relative; /* Allows positioning of the dropdown */
-}
-
-.custom-dropdown-toggle {
-  background-color: #6c757d; /* Bootstrap secondary color */
-  border: none; /* Remove default border */
-  color: white; /* Text color */
-  font-weight: bold; /* Bold text */
-  padding: 10px 20px; /* Padding for better size */
-  border-radius: 5px; /* Rounded corners */
-  transition: background-color 0.3s; /* Smooth transition */
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* Đẩy các nút đăng nhập và giỏ hàng sang bên phải */
 }
 
-.custom-dropdown-toggle:hover {
-  background-color: #5a6268; /* Darker shade on hover */
-}
-
-.custom-dropdown-menu {
-  background-color: #ffffff; /* White background for menu */
-  border-radius: 5px; /* Rounded corners for menu */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
-
-.custom-dropdown-item {
-  color: #212529; /* Dark text color */
-  padding: 10px 20px; /* Padding for menu items */
-  font-weight: normal; /* Normal font weight */
-}
-
-.custom-dropdown-item:hover {
-  background-color: #f8f9fa; /* Light gray on hover */
-  color: #dc3545; /* Change text color on hover */
-}
-
-.custom-dropdown-item:focus {
-  outline: none; /* Remove focus outline */
-  background-color: #e9ecef; /* Light gray for focus */
+.cart-icon {
+  color: white;
+  font-size: 25px;
+  margin-left: 20px;
 }
