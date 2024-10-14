@@ -1,7 +1,7 @@
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Navbar from "./Components/Navbar/Navbar";
 import Footer from "./Components/Footer";
 import "../src/Home.css";
@@ -21,6 +21,7 @@ export default function Home() {
   //   window.location.reload();
   // };
   const { googleAuthUrl, logout } = useAuth();
+  const toastShownRef = useRef(false);
   // const getGoogleAuthUrl = () => {
   //   const { VITE_GOOGLE_CLIENT_ID, VITE_GOOGLE_REDIRECT_URI } = import.meta.env;
   //   const url = "https://accounts.google.com/o/oauth2/v2/auth";
@@ -72,8 +73,9 @@ export default function Home() {
   }, [formData]);
 
   useEffect(() => {
-    if (message) {
+    if (message && !toastShownRef.current) {
       toast.success(message);
+      toastShownRef.current = true;
     }
   }, [message]);
 

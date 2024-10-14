@@ -13,6 +13,8 @@ export default function Profile() {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const location = useLocation();
+  const [showModal, setShowModal] = useState(false);
+  const [currentField, setCurrentField] = useState("");
 
   const maskEmail = (email) => {
     const atIndex = email.indexOf("@");
@@ -23,12 +25,25 @@ export default function Profile() {
     }
     return email; // Trả về email gốc nếu không đủ ký tự
   };
-  const handleUpdate = async (field, value) => {
+
+  const handleUpdate = (field, value) => {
+    if (userData.verify !== 1) {
+      // Hiện modal nếu chưa xác minh
+      setCurrentField(field);
+      setShowModal(true);
+      return;
+    } else {
+      updateUser(field, value);
+    }
+    // Nếu đã xác minh, gọi API để cập nhật dữ liệu người dùng
+  };
+
+  const updateUser = async (field, value) => {
     console.log(value);
     console.log(field);
     try {
       await axiosInstance.patch(
-        `http://localhost:4000/users/me`,
+        `/users/me`,
         {
           [field]: String(value), // Convert value to string
         },
@@ -38,11 +53,23 @@ export default function Profile() {
           },
         }
       );
-
       alert("Cập nhật thành công!");
     } catch (error) {
       console.error("Error updating profile:", error);
       alert("Cập nhật thất bại.");
+    }
+  };
+
+  const handleResendVerification = async () => {
+    try {
+      await axiosInstance.post("users/resend-verify-email", {
+        email: userData.email,
+      });
+      toast.success("Email xác minh đã được gửi lại.");
+      setShowModal(false); // Đóng modal sau khi gửi
+    } catch (error) {
+      console.error("Lỗi khi gửi lại email xác minh:", error);
+      toast.error("Gửi lại email xác minh thất bại.");
     }
   };
 
@@ -53,6 +80,7 @@ export default function Profile() {
         const response = await axiosInstance.get("users/me");
         if (response.data) {
           setUserData(response.data.result);
+          console.log("Verify:", response.data.result.verify);
         } else {
           console.error("Dữ liệu không hợp lệ:", response.data);
         }
@@ -111,17 +139,7 @@ export default function Profile() {
                   >
                     <tbody>
                       <tr>
-                        <td
-                          style={{
-                            fontWeight: "bold",
-                            fontSize: "20px",
-                            padding: "10px",
-                            minWidth: "150px", // Set a minimum width for label cells
-                            textAlign: "left", // Align text to the left
-                          }}
-                        >
-                          Tên đăng nhập:
-                        </td>
+                        <td style={cellStyle}>Tên đăng nhập:</td>
                         <td>
                           <input
                             value={userData.username}
@@ -131,22 +149,12 @@ export default function Profile() {
                                 username: e.target.value,
                               })
                             }
-                            style={{
-                              width: "100%",
-                              backgroundColor: "white",
-                              border: "0.5px solid",
-                              borderRadius: "4px",
-                              padding: "5px",
-                            }}
+                            style={inputStyle}
                           />
                         </td>
                         <td>
                           <button
-                            style={{
-                              backgroundColor: "white",
-                              color: "blue",
-                              border: "none",
-                            }}
+                            style={buttonStyle}
                             onClick={() =>
                               handleUpdate("username", userData.username)
                             }
@@ -157,39 +165,19 @@ export default function Profile() {
                       </tr>
 
                       <tr>
-                        <td
-                          style={{
-                            fontWeight: "bold",
-                            fontSize: "20px",
-                            padding: "10px",
-                            minWidth: "150px", // Set a minimum width for label cells
-                            textAlign: "left", // Align text to the left
-                          }}
-                        >
-                          Tên:
-                        </td>
+                        <td style={cellStyle}>Tên:</td>
                         <td>
                           <input
                             value={userData.name}
                             onChange={(e) =>
                               setUserData({ ...userData, name: e.target.value })
                             }
-                            style={{
-                              width: "100%",
-                              backgroundColor: "white",
-                              border: "0.5px solid",
-                              borderRadius: "4px",
-                              padding: "5px",
-                            }}
+                            style={inputStyle}
                           />
                         </td>
                         <td>
                           <button
-                            style={{
-                              backgroundColor: "white",
-                              color: "blue",
-                              border: "none",
-                            }}
+                            style={buttonStyle}
                             onClick={() => handleUpdate("name", userData.name)}
                           >
                             Thay đổi
@@ -197,43 +185,17 @@ export default function Profile() {
                         </td>
                       </tr>
                       <tr>
-                        <td
-                          style={{
-                            fontWeight: "bold",
-                            fontSize: "20px",
-                            padding: "10px",
-                            minWidth: "150px", // Set a minimum width for label cells
-                            textAlign: "left", // Align text to the left
-                          }}
-                        >
-                          Email:
-                        </td>
+                        <td style={cellStyle}>Email:</td>
                         <td>
                           <input
                             value={maskedEmail}
                             readOnly
-                            style={{
-                              width: "100%",
-                              backgroundColor: "white",
-                              border: "0.5px solid",
-                              borderRadius: "4px",
-                              padding: "5px",
-                            }}
+                            style={inputStyle}
                           />
                         </td>
                       </tr>
                       <tr>
-                        <td
-                          style={{
-                            fontWeight: "bold",
-                            fontSize: "20px",
-                            padding: "10px",
-                            minWidth: "150px", // Set a minimum width for label cells
-                            textAlign: "left", // Align text to the left
-                          }}
-                        >
-                          Địa chỉ:
-                        </td>
+                        <td style={cellStyle}>Địa chỉ:</td>
                         <td>
                           <input
                             value={userData.address}
@@ -243,22 +205,12 @@ export default function Profile() {
                                 address: e.target.value,
                               })
                             }
-                            style={{
-                              width: "100%",
-                              backgroundColor: "white",
-                              border: "0.5px solid",
-                              borderRadius: "4px",
-                              padding: "5px",
-                            }}
+                            style={inputStyle}
                           />
                         </td>
                         <td>
                           <button
-                            style={{
-                              backgroundColor: "white",
-                              color: "blue",
-                              border: "none",
-                            }}
+                            style={buttonStyle}
                             onClick={() =>
                               handleUpdate("address", userData.address)
                             }
@@ -268,17 +220,7 @@ export default function Profile() {
                         </td>
                       </tr>
                       <tr>
-                        <td
-                          style={{
-                            fontWeight: "bold",
-                            fontSize: "20px",
-                            padding: "10px",
-                            minWidth: "150px", // Set a minimum width for label cells
-                            textAlign: "left", // Align text to the left
-                          }}
-                        >
-                          SĐT:
-                        </td>
+                        <td style={cellStyle}>SĐT:</td>
                         <td>
                           <input
                             value={userData.phone_number}
@@ -288,22 +230,12 @@ export default function Profile() {
                                 phone_number: e.target.value,
                               })
                             }
-                            style={{
-                              width: "100%",
-                              backgroundColor: "white",
-                              border: "0.5px solid",
-                              borderRadius: "4px",
-                              padding: "5px",
-                            }}
+                            style={inputStyle}
                           />
                         </td>
                         <td>
                           <button
-                            style={{
-                              backgroundColor: "white",
-                              color: "blue",
-                              border: "none",
-                            }}
+                            style={buttonStyle}
                             onClick={() =>
                               handleUpdate(
                                 "phone_number",
@@ -338,6 +270,17 @@ export default function Profile() {
             ) : (
               <p>Không có thông tin người dùng.</p>
             )}
+            {/* Modal xác nhận */}
+            {showModal && (
+              <div style={modalStyle}>
+                <div style={modalContentStyle}>
+                  <h3>Xác nhận</h3>
+                  <p>Bạn có muốn gửi lại email xác minh không?</p>
+                  <button onClick={handleResendVerification}>Xác nhận</button>
+                  <button onClick={() => setShowModal(false)}>Hủy</button>
+                </div>
+              </div>
+            )}
           </Container>
         </div>
         <ToastContainer
@@ -358,3 +301,45 @@ export default function Profile() {
     </>
   );
 }
+
+// Styles
+const cellStyle = {
+  fontWeight: "bold",
+  fontSize: "20px",
+  padding: "10px",
+  minWidth: "150px", // Set a minimum width for label cells
+  textAlign: "left", // Align text to the left
+};
+
+const inputStyle = {
+  width: "100%",
+  backgroundColor: "white",
+  border: "0.5px solid",
+  borderRadius: "4px",
+  padding: "5px",
+};
+
+const buttonStyle = {
+  backgroundColor: "white",
+  color: "blue",
+  border: "none",
+};
+
+const modalStyle = {
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
+
+const modalContentStyle = {
+  background: "white",
+  padding: "20px",
+  borderRadius: "8px",
+  boxShadow: "0 0 10px rgba(0, 0, 0, 0.3)",
+};
