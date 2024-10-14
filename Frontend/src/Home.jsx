@@ -6,11 +6,15 @@ import Navbar from "./Components/Navbar/Navbar";
 import Footer from "./Components/Footer";
 import "../src/Home.css";
 import Slideshow from "./Components/Slideshow";
-
+import { useLocation } from "react-router-dom";
 import { useAuth } from "./Context/AuthContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function Home() {
   const isAuthenticated = localStorage.getItem("accessToken");
-
+  const location = useLocation();
+  const { message } = location.state || {}; // Access the message
   // const logout = () => {
   //   localStorage.removeItem("accessToken");
   //   localStorage.removeItem("refreshToken");
@@ -66,6 +70,13 @@ export default function Home() {
   useEffect(() => {
     console.log("Dữ liệu đã nhận:", formData);
   }, [formData]);
+
+  useEffect(() => {
+    if (message) {
+      toast.success(message);
+    }
+  }, [message]);
+
   return (
     <>
       <div>
@@ -196,6 +207,17 @@ export default function Home() {
       ></div>
       <div>
         <Footer />
+      </div>
+      <div>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          closeOnClick
+          pauseOnHover
+          draggable
+          pauseOnFocusLoss
+        />
       </div>
     </>
   );
