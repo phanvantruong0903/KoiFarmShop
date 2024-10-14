@@ -4,11 +4,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../Navbar/Navbar.css"; // Ensure this CSS file exists
 import { Link, useNavigate } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
-import { Button } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaShoppingCart } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
+
 export default function Navbar() {
   const [showDropdown1, setShowDropdown1] = useState(false);
   const [showDropdown2, setShowDropdown2] = useState(false);
@@ -16,6 +16,7 @@ export default function Navbar() {
   const [showDropdown4, setShowDropdown4] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false); // State to track scroll position
   const navigate = useNavigate();
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -28,17 +29,17 @@ export default function Navbar() {
       localStorage.setItem("hashShowToast", "true");
     }
   }, [isLoggedIn]);
-  //Function Log Out
+
   const handleLogout = () => {
     localStorage.clear();
     setIsLoggedIn(false);
     toast.success("Đăng xuất thành công!");
   };
-  //Function Sign In
+
   const handleStateSignIn = () => {
     navigate("/Login");
   };
-  // Function đăng ký
+
   const handleStateSignUp = () => {
     navigate("/Login", { state: { type: "signUp" } });
     toast.info("Vui lòng đăng ký!");
@@ -46,8 +47,7 @@ export default function Navbar() {
 
   return (
     <div
-      className="navbar"
-      style={{ position: "fixed", top: 0, width: "100%", zIndex: 1000 }}
+      className={`navbar ${isScrolled ? "navbar-scrolled" : ""}`} // Add class based on scroll
     >
       <ToastContainer
         position="bottom-right"
@@ -269,7 +269,7 @@ export default function Navbar() {
             LIÊN HỆ
           </Link>
         </div>
-        <div className="auth-buttons">
+        <div className="auth-links">
           {isLoggedIn ? (
             <Dropdown className="custom-dropdown">
               <Dropdown.Toggle
@@ -308,20 +308,21 @@ export default function Navbar() {
             </Dropdown>
           ) : (
             <>
-              <Button
-                onClick={handleStateSignIn}
-                variant="danger"
-                className="custom-button"
+              <Link
+                to="/Login"
+                className="nav-link"
+                style={{ marginLeft: "10px", color: "white" }}
               >
                 Đăng Nhập
-              </Button>
-              <Button
-                onClick={handleStateSignUp}
-                variant="danger"
-                className="custom-button"
+              </Link>
+              <Link
+                to="/Login"
+                state={{ type: "signUp" }}
+                className="nav-link"
+                style={{ marginLeft: "10px", color: "white" }}
               >
                 Đăng Ký
-              </Button>
+              </Link>
             </>
           )}
           <Link
