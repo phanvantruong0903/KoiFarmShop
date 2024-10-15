@@ -1,38 +1,61 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import axiosInstance from '../Utils/axiosJS';
 
-export const ResetPasswordModal = ({ show, handleClose, signInLink, buttonLink }) => {
+export const ResetPasswordModal = ({ show, handleClose, signInLink }) => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const [step, setStep] = useState(1);
+    const [step, setStep] = useState(1); // Step 1 = Email input, Step 2 = Password reset
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
     const confirmPasswordRef = useRef(null);
-
+    const [params] = useSearchParams(); 
+    const [forgotPasswordToken, setForgotPasswordToken] = useState(null);
+    const [isWaiting, setIsWaiting] = useState(false); // cais nay dung de cho cai spinner tam thoi de v
+    // Handle first step: Sending forgot password email
     const handleEmailSubmit = useCallback(async (e) => {
         e.preventDefault();
         setLoading(true);
 
         try {
             const email = emailRef.current.value.trim();
-
             if (email) {
+                setIsWaiting(true);
+                const response = await axiosInstance.post('/users/forgot-password', { 'email' : email });
+                alert('Reset link has been sent to your email.');
                 
-                await new Promise(resolve => setTimeout(resolve, 1000));
-
-              
-                setStep(2);
+            
             } else {
                 alert("Please enter your email address.");
             }
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error sending reset email:', error);
         } finally {
             setLoading(false);
         }
     }, []);
 
+    useEffect(() => {
+        const token = params.get('forgot_password_token');
+        if (token) {
+            setForgotPasswordToken(token);
+            setLoading(true);
+            axiosInstance.get('/users/verify-forgot-password', { params: { forgot_password_token: token } })
+                .then(() => {
+                    setStep(2); 
+                })
+                .catch(error => {
+                    alert('Invalid or expired reset token.');
+                    console.error('Token verification error:', error);
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
+        }
+    }, [params]);
+
+    
     const handlePasswordSubmit = useCallback(async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -40,15 +63,16 @@ export const ResetPasswordModal = ({ show, handleClose, signInLink, buttonLink }
         try {
             const password = passwordRef.current.value.trim();
             const confirmPassword = confirmPasswordRef.current.value.trim();
-
             if (password && confirmPassword) {
                 if (password === confirmPassword) {
-                  
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-
+                    await axiosInstance.post('/users/reset-password', {
+                        password:password,
+                        confirm_password: confirmPassword,
+                        forgot_password_token: forgotPasswordToken
+                    });
                     alert("Password reset successfully!");
-                    // navigate(signInLink); nếu thành thì đi đến gì đó later
                     handleClose(); 
+                    navigate(signInLink);
                 } else {
                     alert("Passwords do not match.");
                 }
@@ -56,11 +80,11 @@ export const ResetPasswordModal = ({ show, handleClose, signInLink, buttonLink }
                 alert("Please enter both password fields.");
             }
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error resetting password:', error);
         } finally {
             setLoading(false);
         }
-    }, [navigate, signInLink, handleClose]);
+    }, [forgotPasswordToken, navigate, signInLink, handleClose]);
 
     return (
         <Modal show={show} onHide={handleClose} centered>

@@ -42,6 +42,10 @@ import "react-toastify/dist/ReactToastify.css"; // Import style cho toast
 import ShoppingCart from "./Components/ShoppingCart";
 const router = createBrowserRouter([
   {
+    path: "/login/oauth",
+    element: <Login />,
+  },
+  {
     path: "/kohaku",
     element: <Koikohaku />,
   },
