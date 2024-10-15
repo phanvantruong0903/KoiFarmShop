@@ -6,25 +6,26 @@ import Kyguikoi from "./Kyguikoi";
 export default function Gioithieusankygui() {
   return (
     <>
-      <div style={{}}>
+      <div>
         <Navbar />
+      </div>
+      <div style={{ backgroundColor: "whitesmoke" }}>
         <Container
           style={{
             paddingTop: "200px",
             width: "100%",
-            color: "#f1be7c;",
+            backgroundColor: "whitesmoke",
           }}
         >
           <div
             style={{
-              backgroundRepeat: "no-repaet",
-              backgroundColor: "#180101",
-              color: "#f1be7c",
+              color: "red",
               padding: "15px 20px",
               backgroundSize: "cover",
               backgroundPosition: "top right",
               marginBottom: "20px",
-              borderRadius: "5px",
+              borderRadius: "10px",
+              border: "2px solid rgba(0, 0, 0, 0.1)",
             }}
           >
             <div>
@@ -32,7 +33,7 @@ export default function Gioithieusankygui() {
                 <h1>Ký Gửi</h1>
               </div>
               <div>
-                <p>
+                <p style={{ lineHeight: "25px", fontWeight: "400 " }}>
                   99% người nuôi cá Koi đều mong em koi của mình được “gả” vào
                   gia đình tốt, đảm bảo cuộc sống, tương lai. 1 số người chỉ
                   nuôi Koi bằng đam mê không đủ quan hệ rộng để trao đổi, bán
@@ -64,7 +65,7 @@ export default function Gioithieusankygui() {
                 </p>
               </div>
               <div>
-                <p>
+                <p style={{ lineHeight: "25px", fontWeight: "400 " }}>
                   <span style={{ fontWeight: "bold" }}>Lưu ý: </span> Ký gửi cá
                   Koi Offline phù hợp với người nuôi Koi chưa có website, chưa
                   có phần mềm quản lý dữ liệu Koi chuyên nghiệp. Các khách này
@@ -78,11 +79,11 @@ export default function Gioithieusankygui() {
               </div>
             </div>
             <div>
-              <p style={{ fontWeight: "bold" }}>
+              <p style={{ lineHeight: "25px", fontWeight: "400 " }}>
                 Dù áp dụng phương pháp ký gửi nào cũng phải thực hiện đúng quy
                 trình dưới đây:
               </p>
-              <ul>
+              <ul style={{ lineHeight: "25px", fontWeight: "400 " }}>
                 <li>
                   Bước 1: Chụp ảnh chi tiết Koi cần kí gửi, cung cấp video Koi
                   ký gửi thể hiện tình trạng Koi.
@@ -118,7 +119,7 @@ export default function Gioithieusankygui() {
             </div>
             <div>
               <h5>Chính sách Ký gửi cá Koi</h5>
-              <p>
+              <p style={{ lineHeight: "25px", fontWeight: "400 " }}>
                 Thứ nhất: Chỉ nhận Koi khỏe mạnh, không bệnh tật, đủ phẩm chất,
                 có giá trị. Kích thước tùy từng dòng (không nhận koi baby, koi
                 mini, koi giống), trung bình từ 35 – 90 cm.
@@ -143,7 +144,7 @@ export default function Gioithieusankygui() {
                 trình như trên.
               </p>
             </div>
-            <div>
+            <div style={{ lineHeight: "25px", fontWeight: "400 " }}>
               <h5>Ý nghĩa của việc ký gửi cá Koi</h5>
               <ul>
                 <li>
@@ -170,16 +171,18 @@ export default function Gioithieusankygui() {
               </ul>
             </div>
             <div>
-              OnKoi – Quang Minh là trang trại cá Koi với hệ thống hồ nuôi
-              chuyên nghiệp. Nằm giữa lòng Hà Nội, hồ nuôi được thiết kế theo
-              phong cách thủy cung có đường xuống ngắm koi trong hồ. Chủ hồ nuôi
-              là người có đam mêm Koi thực thụ, chuyên viên phụ trách hồ koi là
-              Kỹ sư Thủy Sản được đào tạo bài bản. Hệ thống marketing, truyền
-              thông lớn, được đông đảo người chơi Koi biết đến.
+              <p style={{ lineHeight: "25px", fontWeight: "400 " }}>
+                OnKoi – Quang Minh là trang trại cá Koi với hệ thống hồ nuôi
+                chuyên nghiệp. Nằm giữa lòng Hà Nội, hồ nuôi được thiết kế theo
+                phong cách thủy cung có đường xuống ngắm koi trong hồ. Chủ hồ
+                nuôi là người có đam mêm Koi thực thụ, chuyên viên phụ trách hồ
+                koi là Kỹ sư Thủy Sản được đào tạo bài bản. Hệ thống marketing,
+                truyền thông lớn, được đông đảo người chơi Koi biết đến.
+              </p>
             </div>
             <div>
               <h5>Chúng tôi cam kết:</h5>
-              <ul>
+              <ul style={{ lineHeight: "25px", fontWeight: "400 " }}>
                 <li>
                   100% giống F0 và F1 có nguồn gốc từ những trại nổi tiếng như
                   Daihichi Koi Farm
@@ -207,7 +210,7 @@ export default function Gioithieusankygui() {
                 Lưu ý: Đối với Koi baby đảm bảo khách NUÔI CÓ TƯƠNG LAI, không
                 vỡ, không lên màu, body chuẩn
               </h5>
-              <ul>
+              <ul style={{ lineHeight: "25px", fontWeight: "400 " }}>
                 <li>
                   Sẵn sàng cung cấp hình ảnh video chi tiết từng chi tiết nhỏ và
                   nguồn gốc xuất xứ của từng em Koi trước khi khách quyết định
@@ -218,7 +221,7 @@ export default function Gioithieusankygui() {
             </div>
             <div>
               <h5>Về bảo hành Koi:</h5>
-              <ul>
+              <ul style={{ lineHeight: "25px", fontWeight: "400 " }}>
                 <li>
                   Nếu khách tự làm hồ, tự mua tự thả, được bảo hành từ 2-5 ngày.
                 </li>
@@ -231,7 +234,13 @@ export default function Gioithieusankygui() {
             </div>
           </div>
           <div>
-            <Kyguikoi />
+            <Kyguikoi
+              style={{
+                backgroundColor: "whitesmoke",
+                borderRadius: "10px",
+                border: "2px solid rgba(0, 0, 0, 0.1)",
+              }}
+            />
           </div>
         </Container>
         <div style={{ paddingTop: "50px" }}>

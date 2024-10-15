@@ -4,7 +4,6 @@ import koisService from '../services/kois.services.js'
 import usersService from '../services/users.services.js'
 import adminService from '../services/admin.service.js'
 import databaseService from '../services/database.service.js'
-import { serviceValidate } from '../middlewares/service.middlewares.js'
 
 export const getAllUserController = async (req, res) => {
   try {
@@ -194,5 +193,15 @@ export const updateServiceController = async (req, res) => {
     return res.status(400).json({ message: Service.message })
   }
 
-  return res.status(200).json({message: Service.message})
+  return res.status(200).json({ message: Service.message })
+}
+
+export const updateOrderStatusController = async (req, res) => {
+  const { OrderID } = req.params 
+  const Order = await adminService.updateOrderStatus(OrderID)
+  if (!Order.success) {
+    return res.status(400).json({ message: Order.message })
+  }
+
+  return res.status(200).json({ message: Order.message })
 }

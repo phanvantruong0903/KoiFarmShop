@@ -28,7 +28,7 @@ export default function useFilter(data, filterType) {
 
   const [filterList, setFilterList] = useState(initialFilterList);
 
-  console.log (filterList);
+   console.log (filterList); // Debugging
   
   const filteredData = data.filter((item) => {
     if (filterType === 'profile') {
@@ -59,7 +59,7 @@ export default function useFilter(data, filterType) {
     }
     else if (filterType === 'consign') {
       // For consignments
-      const matchesStatus = filterList.Status ? item.Status == filterList.Status : true;
+      const matchesStatus = filterList.State ? item.State == filterList.State : true;
       const matchesMethod = filterList.Method ? item.method === filterList.Method : true;
       const matchesLocation = filterList.location ? item.location === filterList.location : true
       return matchesStatus && matchesMethod && matchesLocation;
@@ -72,7 +72,7 @@ export default function useFilter(data, filterType) {
     
     setFilterList((prevState) => ({
       ...prevState,
-      [type]: value,
+      [type]: value === undefined ? '' : value
     }));
   };
 

@@ -8,7 +8,7 @@ const orderRouter = Router()
 orderRouter.post('/detail/make', makeOrderDetailController)
 orderRouter.get('/detail/:orderID', getOrderDetailController)
 orderRouter.patch('/detail/edit/:orderID',updateOrderDetailController)
-orderRouter.post('/detail/price',getKoiPriceController)
+orderRouter.post('/detail/price',getKoiPriceController) 
 //Order
 orderRouter.post('/create/:orderDTID', createOrderController)
 
