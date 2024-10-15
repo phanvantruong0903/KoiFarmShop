@@ -5,6 +5,7 @@ import { useAuth } from "../../Context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
+import 'react-toastify/dist/ReactToastify.css';
 function SignUpForm() {
   const navigate = useNavigate();
   const { register, googleAuthUrl, setAuthenticatedUser } = useAuth();
@@ -29,7 +30,7 @@ function SignUpForm() {
           const { access_token, refresh_token } = response.data.result;
           setAuthenticatedUser(access_token, refresh_token);
           navigate(`/profile`, {
-            state: { message: "Sign Up Account Successfull" },
+            state: { message: "Sign Up Account Successfull Please check your email inbox for verification" },
           });
         }
       })

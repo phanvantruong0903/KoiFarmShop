@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaGoogle } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
@@ -20,7 +20,15 @@ function SignInForm() {
       [evt.target.name]: value,
     });
   };
+  useEffect(() => {
+    const token = localStorage.getItem('forgot_password_secrect_token'); 
+    if (token) {
+        console.log(token)
+        setShowResetPasswordModal(true)
+        return
+    }
 
+}, [])
   const handleOnSubmit = async (evt) => {
     evt.preventDefault();
 
@@ -28,6 +36,7 @@ function SignInForm() {
 
 
     // Perform the login and navigate after a successful login
+    
     try {
       const reponse = await login(email, password);
 

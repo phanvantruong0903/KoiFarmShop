@@ -114,6 +114,8 @@ class DatabaseService {
       console.log(error + 'lỗi ở database service - get consigns')
     }
   }
+
+  
 }
 
 const databaseService = new DatabaseService()
