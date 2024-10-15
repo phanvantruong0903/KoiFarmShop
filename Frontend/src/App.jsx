@@ -41,6 +41,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import style cho toast
 import ShoppingCart from "./Components/ShoppingCart";
 import ResetPassword from "./An/Components/resetpassword";
+import ManageKoi from "./An/Pages/Manager/ManageKoi";
 const router = createBrowserRouter([
   {
     path: "/login/oauth",
@@ -206,6 +207,14 @@ const router = createBrowserRouter([
           </Suspense>
         ),
       },
+      {
+        path: "manager/ManageKoi",
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <ManageKoi />
+          </Suspense>
+        ),
+      }
     ],
   },
 ]);

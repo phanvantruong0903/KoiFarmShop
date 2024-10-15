@@ -1,8 +1,9 @@
 import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { RxAvatar } from "react-icons/rx";
 import { Link } from "react-router-dom";
-
+import { useAuth } from "../../Context/AuthContext";
 export default function TopBar({ children, name, role }) {
+  const {logout} = useAuth();
   return (
     <>
       <Navbar bg="light" expand="lg">
@@ -21,9 +22,12 @@ export default function TopBar({ children, name, role }) {
                 <NavDropdown.Item as={Link} to="/DashBoard/manager/Consign">
                   Manage Consign Orders
                 </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/DashBoard/manager/ManageKoi">
+                  Manage Koi
+                </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-
+      
+                <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
                 {/* sm */}
                 <NavDropdown.Item className="d-lg-none">
                   <RxAvatar size={24} />

@@ -5,6 +5,7 @@ export default function Login() {
   const [params] = useSearchParams(); //lấy ra các params trong url
   const navigate = useNavigate(); //hàm dùng để chuyển hướng trang
   useEffect(() => {
+    console.log(params); //log thử xem params có gì
     const accessToken = params.get("access_token"); //lấy ra access_token từ params
     const refreshToken = params.get("refresh_token"); //lấy ra refresh_token từ params
     const new_user = params.get("new_user"); //lấy ra new_users từ params, để biết có phải lần đầu login hay không
