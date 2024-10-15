@@ -197,7 +197,7 @@ export const updateServiceController = async (req, res) => {
 }
 
 export const updateOrderStatusController = async (req, res) => {
-  const { OrderID } = req.params 
+  const { OrderID } = req.params
   const Order = await adminService.updateOrderStatus(OrderID)
   if (!Order.success) {
     return res.status(400).json({ message: Order.message })
@@ -216,3 +216,34 @@ export const createNewSupplierController = async (req, res) => {
     return res.status(500).json({ error: error.message })
   }
 }
+
+export const getRevenueController = async (req, res) => {
+  try {
+    const Orders = await databaseService.order.find({ Status: 5 }).toArray()
+    console.log(Orders)
+
+    const dailyRevenue = Orders.reduce((accumulator, order) => {
+      const orderDate = new Date(order.OrderDate).toISOString().split('T')[0] // ví dụ OrderDate trong db là 2024-10-13T07:40:36.198+00:00 thì tách chữ T ra 
+      const amount = order.TotalPrice || 0 
+
+      if (accumulator[orderDate]) {
+        accumulator[orderDate] += amount
+      } else {
+        accumulator[orderDate] = amount
+      }
+
+      return accumulator // return về các object chứa 2 field là date và total price
+    }, {}) // truyền đối số ini cho accumulator là 1 object rỗng
+
+    const dailyRevenueArray = Object.entries(dailyRevenue).map(([Date, TotalPrice]) => ({
+      Date,
+      TotalPrice
+    }))
+
+    return res.json(dailyRevenueArray);
+  } catch (error) {
+    console.error('Có lỗi xảy ra:', error)
+  }
+}
+
+export const getRevenueByMonthController = async (req, res) => {}

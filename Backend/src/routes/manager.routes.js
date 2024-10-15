@@ -1,4 +1,4 @@
-import { createNewServiceController, updateOrderStatusController, updateServiceController } from '../controllers/manager.controllers.js'
+import { createNewServiceController, getRevenueController, updateOrderStatusController, updateServiceController } from '../controllers/manager.controllers.js'
 import {
   createCategoryController,
   createNewKoiController,
@@ -111,8 +111,9 @@ managerRouter.put(
   wrapAsync(updateServiceController)
 )
 
-managerRouter.patch('/order/updateOrderStatus/:OrderID',wrapAsync(updateOrderStatusController))
+managerRouter.patch('/order/updateOrderStatus/:OrderID',accessTokenValidator,isAdminValidator,wrapAsync(updateOrderStatusController))
 
 managerRouter.post('/manage-supplier/create-new-supplier', accessTokenValidator, isAdminValidator, wrapAsync(createNewSupplierController))
 
+managerRouter.get('/getRevenue',accessTokenValidator,isAdminValidator,wrapAsync(getRevenueController))
 export default managerRouter
