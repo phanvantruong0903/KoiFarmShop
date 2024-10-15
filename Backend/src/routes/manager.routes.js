@@ -97,6 +97,8 @@ managerRouter.put(
   wrapAsync(updateConsignDetailController)
 )
 
+managerRouter.post('/manage-supplier/create-new-supplier', accessTokenValidator, isAdminValidator, wrapAsync(createNewSupplierController))
+
 managerRouter.post(
   '/manage-service/create-new-service',
   accessTokenValidator,
