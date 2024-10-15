@@ -10,9 +10,8 @@ export const ResetPasswordModal = ({ show, handleClose, signInLink }) => {
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
     const confirmPasswordRef = useRef(null);
-    const [params] = useSearchParams(); 
-    const [forgotPasswordToken, setForgotPasswordToken] = useState(null);
     const [isWaiting, setIsWaiting] = useState(false); // cais nay dung de cho cai spinner tam thoi de v
+    const [forgotPasswordToken, setForgotPasswordToken] = useState(null);
     // Handle first step: Sending forgot password email
     const handleEmailSubmit = useCallback(async (e) => {
         e.preventDefault();
@@ -37,13 +36,18 @@ export const ResetPasswordModal = ({ show, handleClose, signInLink }) => {
     }, []);
 
     useEffect(() => {
-        const token = params.get('forgot_password_token');
+        const token = localStorage.getItem('forgot_password_secrect_token');
+        console.log('secrect token is'+token);
+
         if (token) {
+            console.log('secrect token is'+token);
             setForgotPasswordToken(token);
             setLoading(true);
             axiosInstance.get('/users/verify-forgot-password', { params: { forgot_password_token: token } })
-                .then(() => {
+                .then((rep) => {
+                    console.log(rep);
                     setStep(2); 
+                    localStorage.removeItem('forgot_password_secrect_token');
                 })
                 .catch(error => {
                     alert('Invalid or expired reset token.');
@@ -53,7 +57,7 @@ export const ResetPasswordModal = ({ show, handleClose, signInLink }) => {
                     setLoading(false);
                 });
         }
-    }, [params]);
+    }, []);
 
     
     const handlePasswordSubmit = useCallback(async (e) => {
@@ -63,15 +67,18 @@ export const ResetPasswordModal = ({ show, handleClose, signInLink }) => {
         try {
             const password = passwordRef.current.value.trim();
             const confirmPassword = confirmPasswordRef.current.value.trim();
+            console.log(forgotPasswordToken);
             if (password && confirmPassword) {
                 if (password === confirmPassword) {
-                    await axiosInstance.post('/users/reset-password', {
-                        password:password,
-                        confirm_password: confirmPassword,
-                        forgot_password_token: forgotPasswordToken
+                    await axiosInstance.post(`/users/reset-password?forgot_password_token=${forgotPasswordToken}`, {
+                        'password':password,
+                        'confirm_password': confirmPassword,
+                        
                     });
                     alert("Password reset successfully!");
                     handleClose(); 
+                    localStorage.removeItem('forgot_password_secrect_token');
+                    setStep(1);
                     navigate(signInLink);
                 } else {
                     alert("Passwords do not match.");
@@ -80,7 +87,7 @@ export const ResetPasswordModal = ({ show, handleClose, signInLink }) => {
                 alert("Please enter both password fields.");
             }
         } catch (error) {
-            console.error('Error resetting password:', error);
+            console.error('Error resetting password:', error.data);
         } finally {
             setLoading(false);
         }

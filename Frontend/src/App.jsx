@@ -40,6 +40,7 @@ const Orders = lazy(() => import("../src/An/Pages/Staff/Orders"));
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import style cho toast
 import ShoppingCart from "./Components/ShoppingCart";
+import ResetPassword from "./An/Components/resetpassword";
 const router = createBrowserRouter([
   {
     path: "/login/oauth",
@@ -128,6 +129,10 @@ const router = createBrowserRouter([
   {
     path: "/order",
     element: <OrderPage />, // Home component
+  },
+  {
+    path:'users/reset-password',
+    element:<ResetPassword/>
   },
   {
     path: "/trackingorder",
