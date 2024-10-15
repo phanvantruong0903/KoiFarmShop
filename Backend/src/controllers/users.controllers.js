@@ -128,10 +128,14 @@ export const verifyForgotPasswordTokenController = async (req, res) => {
       status: HTTP_STATUS.UNAUTHORIZED
     })
   }
-  return res.json({
-    message: USERS_MESSAGES.VERIFY_FORGOT_PASSWORD_TOKEN_SUCCESS,
-    result: req.query.forgot_password_token
-  })
+  //res về forgot_password_token cho client
+  const urlRedirect = `${process.env.CLIENT_REDIRECT_CALLBACK_RESET_PASSWORD}?forgot_password_token=${user.forgot_password_token}`
+  return res.redirect(urlRedirect)
+
+  // return res.json({
+  //   message: USERS_MESSAGES.VERIFY_FORGOT_PASSWORD_TOKEN_SUCCESS,
+  //   result: req.query.forgot_password_token
+  // })
 }
 
 export const resetPasswordController = async (req, res) => {
