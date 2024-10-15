@@ -131,6 +131,42 @@ const userIdSchema = {
   }
 }
 
+const addressSchema = {
+  notEmpty: {
+    errorMessage: USERS_MESSAGES.ADDRESS_IS_REQUIRED
+  },
+  isString: {
+    errorMessage: USERS_MESSAGES.ADDRESS_MUST_BE_A_STRING
+  },
+  trim: true,
+  isLength: {
+    options: {
+      min: 1,
+      max: 200
+    },
+    errorMessage: USERS_MESSAGES.ADDRESS_LENGTH_MUST_BE_FROM_1_TO_200
+  }
+}
+
+const phoneNumberSchema = {
+  notEmpty: {
+    errorMessage: USERS_MESSAGES.PHONE_NUMBER_IS_REQUIRED
+  },
+  trim: true,
+  isLength: {
+    options: {
+      min: 1,
+      max: 20
+    },
+    errorMessage: USERS_MESSAGES.PHONE_NUMBER_LENGTH_MUST_BE_FROM_1_TO_20
+  },
+  isNumeric: {
+    errorMessage: USERS_MESSAGES.PHONE_NUMBER_MUST_BE_NUMERIC
+  }
+}
+
+
+
 export const loginValidator = validate(
   checkSchema(
     {
@@ -443,34 +479,15 @@ export const updateMeValidator = validate(
         ...nameSchema, //phân rã nameSchema ra
         notEmpty: undefined //ghi đè lên notEmpty của nameSchema
       },
-      bio: {
+      address:{
         optional: true,
-        isString: {
-          errorMessage: USERS_MESSAGES.BIO_MUST_BE_A_STRING ////messages.ts thêm BIO_MUST_BE_A_STRING: 'Bio must be a string'
-        },
-        trim: true, //trim phát đặt cuối, nếu k thì nó sẽ lỗi validatior
-        isLength: {
-          options: {
-            min: 1,
-            max: 200
-          },
-          errorMessage: USERS_MESSAGES.BIO_LENGTH_MUST_BE_LESS_THAN_200 //messages.ts thêm BIO_LENGTH_MUST_BE_LESS_THAN_200: 'Bio length must be less than 200'
-        }
+        ...addressSchema,
+        notEmpty: undefined
       },
-      //giống bio
-      location: {
+      phone_number:{
         optional: true,
-        isString: {
-          errorMessage: USERS_MESSAGES.LOCATION_MUST_BE_A_STRING ////messages.ts thêm LOCATION_MUST_BE_A_STRING: 'Location must be a string'
-        },
-        trim: true,
-        isLength: {
-          options: {
-            min: 1,
-            max: 200
-          },
-          errorMessage: USERS_MESSAGES.LOCATION_LENGTH_MUST_BE_LESS_THAN_200 //messages.ts thêm LOCATION_LENGTH_MUST_BE_LESS_THAN_200: 'Location length must be less than 200'
-        }
+        ...phoneNumberSchema,
+        notEmpty: undefined
       },
       //giống location
       website: {
@@ -486,6 +503,9 @@ export const updateMeValidator = validate(
           },
 
           errorMessage: USERS_MESSAGES.WEBSITE_LENGTH_MUST_BE_LESS_THAN_200 //messages.ts thêm WEBSITE_LENGTH_MUST_BE_LESS_THAN_200: 'Website length must be less than 200'
+        },
+        isURL: {
+          errorMessage: USERS_MESSAGES.WEBSITE_MUST_BE_A_VALID_URL // messages.ts thêm WEBSITE_MUST_BE_A_VALID_URL: 'Website must be a valid URL'
         }
       },
       username: {
@@ -510,7 +530,6 @@ export const updateMeValidator = validate(
         }
       },
       avatar: imageSchema,
-      cover_photo: imageSchema
     },
     ['body']
   )
