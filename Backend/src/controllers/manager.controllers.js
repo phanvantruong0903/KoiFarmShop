@@ -6,6 +6,7 @@ import suplliersService from '../services/suppliers.services.js'
 import usersService from '../services/users.services.js'
 import adminService from '../services/admin.service.js'
 import databaseService from '../services/database.service.js'
+import { ObjectId } from 'mongodb'
 
 export const getAllUserController = async (req, res) => {
   try {
@@ -221,11 +222,10 @@ export const createNewSupplierController = async (req, res) => {
 export const getRevenueController = async (req, res) => {
   try {
     const Orders = await databaseService.order.find({ Status: 5 }).toArray()
-    console.log(Orders)
 
     const dailyRevenue = Orders.reduce((accumulator, order) => {
-      const orderDate = new Date(order.OrderDate).toISOString().split('T')[0] // ví dụ OrderDate trong db là 2024-10-13T07:40:36.198+00:00 thì tách chữ T ra 
-      const amount = order.TotalPrice || 0 
+      const orderDate = new Date(order.OrderDate).toISOString().split('T')[0] // ví dụ OrderDate trong db là 2024-10-13T07:40:36.198+00:00 thì tách chữ T ra
+      const amount = order.TotalPrice || 0
 
       if (accumulator[orderDate]) {
         accumulator[orderDate] += amount
@@ -241,11 +241,34 @@ export const getRevenueController = async (req, res) => {
       TotalPrice
     }))
 
-    return res.json(dailyRevenueArray);
+    return res.json(dailyRevenueArray)
   } catch (error) {
     console.error('Có lỗi xảy ra:', error)
   }
 }
 
-export const getRevenueByMonthController = async (req, res) => {}
+export const getProfitController = async (req, res) => {
+  const orders = await databaseService.order.find({ Status: 5 }).toArray()
 
+  if (orders.length > 0) {
+    // Lấy mảng OrderDetailID từ các đơn hàng
+    const orderDetailIDs = orders.map((order) => ObjectId(order.OrderDetailID)) // Chuyển đổi thành ObjectId
+    console.log('OrderDetailIDs:', orderDetailIDs) // Log mảng OrderDetailID
+
+    // Log tất cả các OrderDetail trong DB để kiểm tra
+    const orderDetailsInDB = await databaseService.orderDetail.find().toArray()
+    console.log('Tất cả OrderDetail trong DB:', orderDetailsInDB)
+
+    // Tìm các OrderDetail có _id là các OrderDetailID (kiểu ObjectId)
+    const orderDetails = await databaseService.orderDetail.find({ _id: { $in: orderDetailIDs } }).toArray()
+
+    // Log kết quả OrderDetail tìm được
+    if (orderDetails.length > 0) {
+      console.log('OrderDetails tìm thấy:', orderDetails)
+    } else {
+      console.log('Không tìm thấy OrderDetail nào với các OrderDetailID đã cho.')
+    }
+  } else {
+    console.log('Không có đơn hàng nào có Status là 5')
+  }
+}
