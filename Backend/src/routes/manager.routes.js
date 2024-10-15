@@ -2,6 +2,7 @@ import {
   createNewKoiController,
   createNewSupplierController,
   getAllConsignController,
+  getAllSupplierController,
   getAllUserController,
   getConsignDetailController,
   updateConsignDetailController
@@ -46,5 +47,7 @@ managerRouter.get('/manage-ki-gui/:_id', accessTokenValidator, isAdminValidator,
 managerRouter.put('/manage-ki-gui/:_id', accessTokenValidator, isAdminValidator, wrapAsync(updateConsignDetailController))
 
 managerRouter.post('/manage-supplier/create-new-supplier', accessTokenValidator, isAdminValidator, wrapAsync(createNewSupplierController))
+
+managerRouter.get('/manage-supplier/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getAllSupplierController))
 
 export default managerRouter
