@@ -2,6 +2,7 @@ import { createNewServiceController, updateOrderStatusController, updateServiceC
 import {
   createCategoryController,
   createNewKoiController,
+  createNewSupplierController,
   getAllConsignController,
   getAllUserController,
   getConsignDetailController,
@@ -111,5 +112,7 @@ managerRouter.put(
 )
 
 managerRouter.patch('/order/updateOrderStatus/:OrderID',wrapAsync(updateOrderStatusController))
+
+managerRouter.post('/manage-supplier/create-new-supplier', accessTokenValidator, isAdminValidator, wrapAsync(createNewSupplierController))
 
 export default managerRouter
