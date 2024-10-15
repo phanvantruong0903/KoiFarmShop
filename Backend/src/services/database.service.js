@@ -43,7 +43,7 @@ class DatabaseService {
   }
   get orderDetail() {
     try {
-      return this._db.collection('orderDetail')
+      return this._db.collection('OrderDetail')
     } catch (error) {
       console.log(error + 'lỗi ở database service - get orderDetail')
       throw error

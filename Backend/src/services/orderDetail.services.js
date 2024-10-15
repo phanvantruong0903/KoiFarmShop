@@ -97,7 +97,7 @@ class OrderDetailService {
         return result ? result : {}
     }
 
-    async updateOrder(payload, reqParams) {
+    async updateItemQuantity(payload, reqParams) {
         const koi = await databaseService.kois.findOne({ _id: new ObjectId(payload.KoiID) })
         const order = await databaseService.orderDetail.findOne({ _id: new ObjectId(reqParams.orderID) })
         console.log("order: ", order)
@@ -124,9 +124,12 @@ class OrderDetailService {
                 { returnDocument: 'after' }
             )
         }
-
         return result
     }
+    
+    
+
+
 
     async getKoiPrice(payload) {
         // let koi = await databaseService.kois.findOne({_id: new ObjectId(payload.KoiID)})
