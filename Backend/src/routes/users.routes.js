@@ -78,7 +78,7 @@ usersRouter.patch(
   '/me',
   accessTokenValidator,
   verifiedUserValidator,
-  filterMiddleware(['name', 'date_of_birth', 'bio', 'location', 'website', 'username', 'avatar', 'cover_photo']), //lọc ra những key cần thiết để update
+  filterMiddleware(['name', 'address', 'phone_number', 'website', 'username', 'avatar']), //lọc ra những key cần thiết để update
   updateMeValidator,
   wrapAsync(updateMeController)
 )

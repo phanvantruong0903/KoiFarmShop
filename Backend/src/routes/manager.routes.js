@@ -10,6 +10,7 @@ import {
   createNewKoiController,
   createNewSupplierController,
   getAllConsignController,
+  getAllSupplierController,
   getAllUserController,
   getConsignDetailController,
   updateConsignDetailController,
@@ -136,5 +137,7 @@ managerRouter.post(
 managerRouter.get('/getRevenue', accessTokenValidator, isAdminValidator, wrapAsync(getRevenueController))
 
 managerRouter.get('/getProfit',wrapAsync(getProfitController))
+
+managerRouter.get('/manage-supplier/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getAllSupplierController))
 
 export default managerRouter

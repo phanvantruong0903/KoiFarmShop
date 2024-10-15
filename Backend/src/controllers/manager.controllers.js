@@ -219,6 +219,18 @@ export const createNewSupplierController = async (req, res) => {
   }
 }
 
+export const getAllSupplierController = async (req, res) => {
+  try {
+    const result = await suplliersService.getAllSupplier()
+    return res.json({
+      message: MANAGER_MESSAGES.GET_ALL_SUPPLIER_SUCCESS,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+
 export const getRevenueController = async (req, res) => {
   try {
     const Orders = await databaseService.order.find({ Status: 5 }).toArray()
