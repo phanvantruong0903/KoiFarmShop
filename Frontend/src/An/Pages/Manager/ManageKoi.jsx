@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import axiosInstance from '../../Utils/axiosJS';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import './ManageKoi.css'; // Assuming you add custom styles here
 
-/**
- * ManageKoi component fetches and displays a list of koi categories and koi details,
- * with collapsible functionality for each category card and smaller images.
- *
- * @component
- */
 export default function ManageKoi() {
     const [result, setResult] = useState([]);
     const [categoryList, setCategoryList] = useState([]);
@@ -44,6 +39,7 @@ export default function ManageKoi() {
                     <Col xs={12}>
                         <Card className="w-100">
                             <Card.Header>
+                                {category.CategoryName}
                                 <Button 
                                     variant="link"
                                     onClick={() => toggleCategory(category._id)}
@@ -53,19 +49,18 @@ export default function ManageKoi() {
                                 </Button>
                             </Card.Header>
                             <Card.Body>
-                                
                                 {expandedCategories[category._id] && (
                                     <div className="mt-3">
                                         <Row>
                                             {result.filter(koi => koi.CategoryID === category._id).map((koi) => (
-                                                <Col xs={12} md={6} lg={4} key={koi._id}>
-                                                    <Card className="mb-3">
+                                                <Col xs={12} md={8} lg={2} key={koi._id}>
+                                                    <Card className="mb-3" >
                                                         <Card.Img 
                                                             variant="top" 
                                                             src={koi.Image} 
                                                             alt={koi.KoiName}
                                                             className="img-fluid"
-                                                            style={{ maxHeight: '200px', }}
+                                                            style={{ maxHeight: '200px' }}
                                                         />
                                                         <Card.Body>
                                                             <Card.Title>{koi.KoiName}</Card.Title>
@@ -82,6 +77,18 @@ export default function ManageKoi() {
                                                     </Card>
                                                 </Col>
                                             ))}
+
+                                            {}
+                                            <Col xs={12} md={8} lg={2}>
+                                                <Card 
+                                                    className="mb-3 add-new-card" 
+                                                    style={{minHeight:'500px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+                                                >
+                                                    <div className="add-new-card-content">
+                                                        <span className="add-new-plus">+</span>
+                                                    </div>
+                                                </Card>
+                                            </Col>
                                         </Row>
                                     </div>
                                 )}
@@ -93,11 +100,3 @@ export default function ManageKoi() {
         </Container>
     );
 }
-
-
-const styles = `
-.max-width-200 {
-    max-width: 200px;
-    height: auto;
-}
-`;
