@@ -24,5 +24,4 @@ orderRouter.get('/',accessTokenValidator, wrapAsync(getOrderController))
 //Price
 orderRouter.post('/detail/price/minmax', getMinMaxPriceController)
 
-orderRouter.get('/testorder', testOrderController)
 export default orderRouter
