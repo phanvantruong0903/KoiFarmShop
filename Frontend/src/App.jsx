@@ -46,7 +46,7 @@ import ManageKoi from "./An/Pages/Manager/ManageKoi";
 import ManageSupplier from "./An/Pages/Manager/ManageSupplier";
 import ChangePassword from "./Components/ChangePassword";
 import FormFillInformation from "./Components/FormFillInformation";
-
+import ProfileChart from "./An/Pages/Charts/ProfileChart";
 const router = createBrowserRouter([
   {
     path: "/login/oauth",
@@ -201,6 +201,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Spinner />}>
             <Profiles /> {/* Profile component */}
+          </Suspense>
+        ),
+      },
+      {
+        path: "staff/Profiles/:chartType",
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <ProfileChart />
           </Suspense>
         ),
       },
