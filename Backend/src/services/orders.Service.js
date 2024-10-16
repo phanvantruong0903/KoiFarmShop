@@ -67,8 +67,8 @@ class OrdersService {
         return { user, order, orderDetail, koiList }
     }
 
-    async getOrder(payload){
-        const order = await databaseService.order.find({UserID: new ObjectId(payload.UserID)}).toArray()
+    async getOrder(user){
+        const order = await databaseService.order.find({UserID: new ObjectId(user._id)}).toArray()
         return order
     }
 

@@ -17,7 +17,15 @@ export const createOrderController = async (req, res) => {
 }
 export const getOrderController = async (req, res) => {
   try {
-    const result = await ordersService.getOrder(req.body)
+    const { user_id } = req.decoded_authorization
+    const user = await databaseService.users.findOne({ _id: new ObjectId(user_id) })
+    if (user === null) {
+      throw new ErrorWithStatus({
+        message: USERS_MESSAGES.USER_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+    const result = await ordersService.getOrder(user)
 
     console.log("result: ", result)
     return res.json({
