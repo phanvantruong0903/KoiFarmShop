@@ -260,27 +260,74 @@ export const getRevenueController = async (req, res) => {
 }
 
 export const getProfitController = async (req, res) => {
-  const orders = await databaseService.order.find({ Status: 5 }).toArray()
+  try {
+    const orders = await databaseService.order.find({ Status: 5 }).toArray()
 
-  if (orders.length > 0) {
-    // Lấy mảng OrderDetailID từ các đơn hàng
-    const orderDetailIDs = orders.map((order) => ObjectId(order.OrderDetailID)) // Chuyển đổi thành ObjectId
-    console.log('OrderDetailIDs:', orderDetailIDs) // Log mảng OrderDetailID
+    if (orders.length > 0) {
+      const orderDetailIDs = orders.map((order) => new ObjectId(order.OrderDetailID))
+      const orderDetails = await databaseService.orderDetail.find({ _id: { $in: orderDetailIDs } }).toArray()
 
-    // Log tất cả các OrderDetail trong DB để kiểm tra
-    const orderDetailsInDB = await databaseService.orderDetail.find().toArray()
-    console.log('Tất cả OrderDetail trong DB:', orderDetailsInDB)
+      if (orderDetails.length > 0) {
+        const dailyProfitStats = {} // Đối tượng để lưu lợi nhuận theo từng ngày
+        const dailyCostStats = {} // Đối tượng để lưu tổng vốn theo từng ngày
 
-    // Tìm các OrderDetail có _id là các OrderDetailID (kiểu ObjectId)
-    const orderDetails = await databaseService.orderDetail.find({ _id: { $in: orderDetailIDs } }).toArray()
+        for (const orderDetail of orderDetails) {
+          const items = orderDetail.Items
+          const koiID = items.map((item) => new ObjectId(item.KoiID))
 
-    // Log kết quả OrderDetail tìm được
-    if (orderDetails.length > 0) {
-      console.log('OrderDetails tìm thấy:', orderDetails)
+          const checkKoi = await databaseService.kois.find({ _id: { $in: koiID } }).toArray()
+          if (checkKoi.length > 0) {
+            const statuses = checkKoi.map((koi) => koi.Status)
+            const koiPrices = checkKoi.map((koi) => koi.TotalPrice) // Lưu giá từ bảng kois
+
+            for (let i = 0; i < statuses.length; i++) {
+              const status = statuses[i]
+              const orderDate = new Date(orderDetail.OrderDate)
+              const formattedDate = `${orderDate.getUTCDate().toString().padStart(2, '0')}/${(orderDate.getUTCMonth() + 1).toString().padStart(2, '0')}/${orderDate.getUTCFullYear()}`
+
+              if (status === 4) {
+                const consign = await databaseService.consigns.findOne({ KoiID: koiID[i] })
+                if (consign) {
+                  dailyProfitStats[formattedDate] =
+                    (dailyProfitStats[formattedDate] || 0) + (koiPrices[i] - (consign.TotalPrice || 0))
+                }
+              } else {
+                const invoice = await databaseService.invoice.findOne({ KoiID: koiID[i] })
+                if (invoice) {
+                  dailyCostStats[formattedDate] = (dailyCostStats[formattedDate] || 0) + (invoice.TotalPrice || 0)
+                }
+              }
+            }
+          }
+        }
+
+        for (const order of orders) {
+          const orderDate = new Date(order.OrderDate)
+          const formattedDate = `${orderDate.getUTCDate().toString().padStart(2, '0')}/${(orderDate.getUTCMonth() + 1).toString().padStart(2, '0')}/${orderDate.getUTCFullYear()}`
+          const orderDetail = orderDetails.find((detail) => detail._id.equals(order.OrderDetailID))
+
+          if (orderDetail) {
+            dailyProfitStats[formattedDate] = (dailyProfitStats[formattedDate] || 0) + orderDetail.TotalPrice
+          }
+        }
+
+        const finalDailyProfitStats = {}
+        for (const date in dailyProfitStats) {
+          const totalRevenue = dailyProfitStats[date]
+          const totalCost = dailyCostStats[date] || 0 // Nếu không có chi phí thì là 0
+          finalDailyProfitStats[date] = totalRevenue - totalCost // Lợi nhuận = Doanh thu - Chi phí
+        }
+
+        // Trả về lợi nhuận cho từng ngày
+        res.send(finalDailyProfitStats)
+      } else {
+        res.status(404).json({ message: 'Order Detail not found' })
+      }
     } else {
-      console.log('Không tìm thấy OrderDetail nào với các OrderDetailID đã cho.')
+      res.status(404).json({ message: 'Order not found' })
     }
-  } else {
-    console.log('Không có đơn hàng nào có Status là 5')
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'An error occurred', error: error.message })
   }
 }

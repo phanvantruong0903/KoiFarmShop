@@ -45,6 +45,7 @@ import ResetPassword from "./An/Components/resetpassword";
 import ManageKoi from "./An/Pages/Manager/ManageKoi";
 import ManageSupplier from "./An/Pages/Manager/ManageSupplier";
 import ChangePassword from "./Components/ChangePassword";
+import FormFillInformation from "./Components/FormFillInformation";
 
 const router = createBrowserRouter([
   {
@@ -186,6 +187,10 @@ const router = createBrowserRouter([
   {
     path: "/cart",
     element: <ShoppingCart />,
+  },
+  {
+    path: "/formfillinformation",
+    element: <FormFillInformation />,
   },
   {
     path: "/DashBoard",

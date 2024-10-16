@@ -10,7 +10,6 @@ export const makeOrderDetailController = async (req, res) => {
         httpOnly: true,
         maxAge: 1800000 // 30 mins
       });
-    console.log("result: ", result)
     return res.json({
       message: USERS_MESSAGES.MAKE_ORDER_SUCCESS,
       result
@@ -68,6 +67,18 @@ export const getKoiPriceController = async (req, res) => {
     console.log("result: ", result)
     return res.json({
       message: USERS_MESSAGES.GET_AVAILABLE_KOI_QUANTITY,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+export const getMinMaxPriceController = async (req, res) => {
+  try {
+    const result = await orderDetailService.getMinMaxPrice(req.body);
+    console.log("result: ", result)
+    return res.json({
+      message: USERS_MESSAGES.GET_MIN_MAX_PRICE,
       result
     })
   } catch (error) {
