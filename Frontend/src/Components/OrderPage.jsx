@@ -5,8 +5,10 @@ import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useOrder } from "../Context/OrderContext";
+import axios from "axios";
 const OrderPage = () => {
+  const { setOrderId } = useOrder();
   const location = useLocation();
   const { selectedItem } = location.state || {};
   const [loading, setLoading] = useState(false);
@@ -20,23 +22,30 @@ const OrderPage = () => {
     if (!selectedItem || loading) return;
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:4000/order/detail/make", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await axios.post(
+        "http://localhost:4000/order/detail/make",
+        {
+          KoiID: selectedItem._id,
         },
-        body: JSON.stringify({ KoiID: selectedItem._id }),
-      });
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true, // Thêm this line để gửi cookie
+        }
+      );
 
-      if (!response.ok) {
+      // Kiểm tra phản hồi và lấy dữ liệu
+      if (response.status !== 200) {
         throw new Error("Failed to add to cart");
       }
 
-      const data = await response.json();
-
+      const data = response.data;
       setQuantity(data.result.order.Items);
-      console.log(quantity);
+      console.log(data.result.order.Items);
       console.log(data);
+      console.log(data.result.order._id);
+      setOrderId(data.result.order._id); // Lưu order ID vào Context
     } catch (error) {
       console.log(error);
     } finally {
