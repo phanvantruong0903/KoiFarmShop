@@ -3,73 +3,72 @@ import databaseService from './database.service.js'
 import { ObjectId } from 'mongodb'
 
 class OrderDetailService {
-    async makeOrder(payload, reqCookie) {
+    async addToCart(payload, reqCookie) {
+        // Fetch the koi from the database
         const koi = await databaseService.kois.findOne({ _id: new ObjectId(payload.KoiID) });
-        console.log("koi", koi)
+        if (!koi) {
+            HTTP_STATUS.NOT_FOUND;
+            throw new Error("Koi not found!");
+        }
+    
+        // Initialize the order
+        let order = reqCookie?.Items ? reqCookie : { Items: [], TotalPrice: 0 };
+        console.log("Order on addToCart:", order); // Debugging log to check order initialization
+    
+        // Ensure the `Items` array exists in the order
+        if (!order.Items) {
+            order.Items = [];
+        }
+    
+        // Check if the koi is already in the cart
+        const itemIndex = order.Items.findIndex(item => item.KoiID === payload.KoiID);
+        if (itemIndex > -1) {
+            // Increment quantity if the koi already exists in the cart
+            order.Items[itemIndex].Quantity++;
+        } else {
+            // Add new koi to the cart
+            order.Items.push({ KoiID: payload.KoiID, Quantity: 1 });
+        }
+        console.log("reqCookie: ", reqCookie)
+        console.log("order: ", order)
+        // Update total price based on koi's price and quantity
+        const newPrice = Number(koi.Price);  // Correct price calculation
+        order.TotalPrice += newPrice;
+    
+        // Save the updated order (you can store it in the cookie or DB)
+        const savedOrder = await this.saveOrderToDatabase(order);
+    
+        // Return the saved order and koi details
+        return { order: savedOrder, koi };
+    }
+    
+
+
+    async buyNow(payload, reqCookie) {
+        const koi = await databaseService.kois.findOne({ _id: new ObjectId(payload.KoiID) });
         if (!koi) {
             HTTP_STATUS.NOT_FOUND;
             throw new Error("Koi not found!");
         }
 
-        let order, newPrice;
-        if (reqCookie && reqCookie.Items) {
-            order = reqCookie;
-            console.log("order: ", order)
+        let newPrice;
+        let order = reqCookie || {
+            Items: [],
+            TotalPrice: 0
+        };
 
-            if (!order.Items) {
-                order.Items = []
-            }
+        order = {
+            Items: [{ KoiID: payload.KoiID, Quantity: 1 }],
+            TotalPrice: koi.Price
+        };
+        newPrice = Number(koi.Price + payload.Quantity);
+        order.TotalPrice += newPrice;
 
-            const itemIndex = order.Items.findIndex(item => item.KoiID === payload.KoiID);
-            if (itemIndex > -1) {
-                order.Items[itemIndex].Quantity++;
-            } else {
-                order.Items.push({ KoiID: payload.KoiID, Quantity: 1 });
-            }
-        } else {
-            order = {
-                Items: [{ KoiID: payload.KoiID, Quantity: 1 }],
-                TotalPrice: koi.Price
-            };
-        }
-        newPrice = Number(koi.Price + payload.Quantity)
-        order.TotalPrice += newPrice
         const savedOrder = await this.saveOrderToDatabase(order);
-        return { order: savedOrder, koi }
+
+        return { order: savedOrder, koi };
+
     }
-    // async buyNow(payload, reqCookie) {
-    //     const koi = await databaseService.kois.findOne({ _id: new ObjectId(payload.KoiID) });
-    //     console.log("koi", koi)
-    //     if (!koi) {
-    //         HTTP_STATUS.NOT_FOUND;
-    //         throw new Error("Koi not found!");
-    //     }
-
-    //     let order, newPrice;
-    //     if (reqCookie) {
-    //         order = reqCookie;
-
-    //         if (!order.Items) {
-    //             order.Items = []
-    //         }
-
-    //         const itemIndex = order.Items.findIndex(item => item.KoiID === payload.KoiID);
-    //         if (itemIndex > -1) {
-    //             order.Items[itemIndex].Quantity++;
-    //         } else {
-    //             order.Items.push({ KoiID: payload.KoiID, Quantity: 1 });
-    //         }
-    //     } else {
-    //         order = {
-    //             Items: [{ KoiID: payload.KoiID, Quantity: 1 }],
-    //             TotalPrice: koi.Price
-    //         };
-    //     }
-    //     newPrice = Number(koi.Price + payload.Quantity)
-    //     order.TotalPrice += newPrice
-    //     const savedOrder = await this.saveOrderToDatabase(order);
-    //     return { order: savedOrder, koi }
-    // }
 
     async saveOrderToDatabase(order) {
         if (order._id) {
@@ -126,8 +125,8 @@ class OrderDetailService {
         }
         return result
     }
-    
-    
+
+
 
 
 
