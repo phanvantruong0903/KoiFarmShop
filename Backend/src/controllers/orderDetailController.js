@@ -38,7 +38,7 @@ export const getOrderDetailController = async (req, res) => {
 
 export const updateOrderDetailController = async (req, res) => {
   try {
-    const result = await orderDetailService.updateOrder(req.body, req.params);
+    const result = await orderDetailService.updateItemQuantity(req.body, req.params);
     console.log("result: ",result)
       return res.json({
         message: USERS_MESSAGES.UPDATE_ORDER_SUCCESS,
@@ -48,6 +48,7 @@ export const updateOrderDetailController = async (req, res) => {
       return res.status(500).json({ error: error.message })
     }
 };
+
 export const getKoiPriceController = async(req,res)=>{
   try {
     const result = await orderDetailService.getKoiPrice(req.body);

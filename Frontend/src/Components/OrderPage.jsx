@@ -26,7 +26,6 @@ const OrderPage = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ KoiID: selectedItem._id }),
-        credentials: "include",
       });
 
       if (!response.ok) {

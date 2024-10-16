@@ -1,9 +1,12 @@
 import { MANAGER_MESSAGES } from '../constants/managerMessage.js'
 import consignsService from '../services/consigns.services.js'
 import koisService from '../services/kois.services.js'
+import suplliersService from '../services/suppliers.services.js'
+
 import usersService from '../services/users.services.js'
 import adminService from '../services/admin.service.js'
 import databaseService from '../services/database.service.js'
+import { ObjectId } from 'mongodb'
 
 export const getAllUserController = async (req, res) => {
   try {
@@ -172,7 +175,6 @@ export const updateConsignDetailController = async (req, res) => {
     result: consign
   })
 }
-
 export const createNewServiceController = async (req, res) => {
   try {
     const newService = await adminService.createNewService(req.body)
@@ -197,11 +199,88 @@ export const updateServiceController = async (req, res) => {
 }
 
 export const updateOrderStatusController = async (req, res) => {
-  const { OrderID } = req.params 
+  const { OrderID } = req.params
   const Order = await adminService.updateOrderStatus(OrderID)
   if (!Order.success) {
     return res.status(400).json({ message: Order.message })
   }
 
   return res.status(200).json({ message: Order.message })
+}
+export const createNewSupplierController = async (req, res) => {
+  try {
+    const result = await suplliersService.createNewSupplier(req.body)
+    return res.json({
+      message: MANAGER_MESSAGES.CREATE_NEW_SUPPLIER_SUCCESS,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+
+export const getAllSupplierController = async (req, res) => {
+  try {
+    const result = await suplliersService.getAllSupplier()
+    return res.json({
+      message: MANAGER_MESSAGES.GET_ALL_SUPPLIER_SUCCESS,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+
+export const getRevenueController = async (req, res) => {
+  try {
+    const Orders = await databaseService.order.find({ Status: 5 }).toArray()
+
+    const dailyRevenue = Orders.reduce((accumulator, order) => {
+      const orderDate = new Date(order.OrderDate).toISOString().split('T')[0] // ví dụ OrderDate trong db là 2024-10-13T07:40:36.198+00:00 thì tách chữ T ra
+      const amount = order.TotalPrice || 0
+
+      if (accumulator[orderDate]) {
+        accumulator[orderDate] += amount
+      } else {
+        accumulator[orderDate] = amount
+      }
+
+      return accumulator // return về các object chứa 2 field là date và total price
+    }, {}) // truyền đối số ini cho accumulator là 1 object rỗng
+
+    const dailyRevenueArray = Object.entries(dailyRevenue).map(([Date, TotalPrice]) => ({
+      Date,
+      TotalPrice
+    }))
+
+    return res.json(dailyRevenueArray)
+  } catch (error) {
+    console.error('Có lỗi xảy ra:', error)
+  }
+}
+
+export const getProfitController = async (req, res) => {
+  const orders = await databaseService.order.find({ Status: 5 }).toArray()
+
+  if (orders.length > 0) {
+    // Lấy mảng OrderDetailID từ các đơn hàng
+    const orderDetailIDs = orders.map((order) => ObjectId(order.OrderDetailID)) // Chuyển đổi thành ObjectId
+    console.log('OrderDetailIDs:', orderDetailIDs) // Log mảng OrderDetailID
+
+    // Log tất cả các OrderDetail trong DB để kiểm tra
+    const orderDetailsInDB = await databaseService.orderDetail.find().toArray()
+    console.log('Tất cả OrderDetail trong DB:', orderDetailsInDB)
+
+    // Tìm các OrderDetail có _id là các OrderDetailID (kiểu ObjectId)
+    const orderDetails = await databaseService.orderDetail.find({ _id: { $in: orderDetailIDs } }).toArray()
+
+    // Log kết quả OrderDetail tìm được
+    if (orderDetails.length > 0) {
+      console.log('OrderDetails tìm thấy:', orderDetails)
+    } else {
+      console.log('Không tìm thấy OrderDetail nào với các OrderDetailID đã cho.')
+    }
+  } else {
+    console.log('Không có đơn hàng nào có Status là 5')
+  }
 }

@@ -41,8 +41,11 @@ const Orders = lazy(() => import("../src/An/Pages/Staff/Orders"));
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import style cho toast
 import ShoppingCart from "./Components/ShoppingCart";
-import ChangePassword from "./Components/ChangePassword";
 const router = createBrowserRouter([
+  {
+    path: "/login/oauth",
+    element: <Login />,
+  },
   {
     path: "/kohaku",
     element: <Koikohaku />,
@@ -128,6 +131,10 @@ const router = createBrowserRouter([
     element: <OrderPage />, // Home component
   },
   {
+    path: "users/reset-password",
+    element: <ResetPassword />,
+  },
+  {
     path: "/trackingorder",
     element: <TrackingOrderPage />, // Home component
   },
@@ -200,6 +207,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Spinner />}>
             <Manager /> {/* Manager component */}
+          </Suspense>
+        ),
+      },
+      {
+        path: "manager/ManageKoi",
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <ManageKoi />
           </Suspense>
         ),
       },

@@ -9,7 +9,7 @@ export const koiValidate = (data) => {
     Age: Joi.number().required(),
     Gender: Joi.string().required(),
     Size: Joi.number().greater(10).less(100),
-    Description: Joi.string().max(128),
+    Description: Joi.string(),
     DailyFoodAmount: Joi.number().positive(),
     FilteringRatio: Joi.number().required(),
     CertificateID: Joi.string().optional(),

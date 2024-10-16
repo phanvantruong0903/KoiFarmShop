@@ -43,7 +43,7 @@ class DatabaseService {
   }
   get orderDetail() {
     try {
-      return this._db.collection('orderDetail')
+      return this._db.collection('OrderDetail')
     } catch (error) {
       console.log(error + 'lỗi ở database service - get orderDetail')
       throw error
@@ -106,6 +106,16 @@ class DatabaseService {
       console.log(error + 'lỗi ở database service - get services')
     }
   }
+
+  get suppliers() {
+    try {
+      return this._db.collection(process.env.DB_SUPPLIERS_COLLECTION)
+    } catch (error) {
+      console.log(error + 'lỗi ở database service - get consigns')
+    }
+  }
+
+  
 }
 
 const databaseService = new DatabaseService()

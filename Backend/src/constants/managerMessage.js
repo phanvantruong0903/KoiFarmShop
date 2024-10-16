@@ -5,5 +5,8 @@ export const MANAGER_MESSAGES = {
   GET_CONSIGN_DETAIL_SUCCESS: 'Get consign detail success',
   CONSIGN_NOT_FOUND: 'Consign not found',
   KOI_NOT_FOUND: 'Koi not found',
-  UPDATE_CONSIGN_DETAIL_SUCCESS: 'Update consign detail success'
+  UPDATE_CONSIGN_DETAIL_SUCCESS: 'Update consign detail success',
+  //suplier
+  CREATE_NEW_SUPPLIER_SUCCESS: 'Create new supplier success',
+  GET_ALL_SUPPLIER_SUCCESS: 'Get all supplier success'
 }
