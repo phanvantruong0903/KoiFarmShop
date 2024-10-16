@@ -26,10 +26,11 @@ class OrdersService {
         return newUser
     }
 
-    async createOrder(payload, reqParams, type = 'cart') {
+    async createOrder(payload, reqParams) {
         const existedUser = await databaseService.users.findOne({ email: payload.email })
 
         let user, newOrder, user_id, orderPayload
+
 
         if (existedUser) {
             user_id = existedUser._id
@@ -42,55 +43,29 @@ class OrdersService {
             console.log("New user inserted: ", user);
         }
 
-        if (payload.type === 'buyNow') {
-            const koi = await databaseService.kois.findOne({ _id: new ObjectId(payload.KoiID) })
-            const newOrderDetail = {
-                _id: new ObjectId(),
-                Items: [{
-                    KoiID: koi._id,
-                    Quantity: 1
-                }],
-                TotalPrice: koi?.Price
-            }
-            console.log("new order detail: ", newOrderDetail)
-            const insertedOrderDetail = await databaseService.orderDetail.insertOne(new OrderDetailSchema(newOrderDetail))
-            orderPayload = {
-                _id: new ObjectId(),
-                UserID: user_id,
-                OrderDetailID: insertedOrderDetail?.insertedId,
-                ShipAddress: payload.ShipAddress,
-                Description: payload.Description,
-                OrderDate: new Date(),
-                Status: 1,
-                Type: payload.type
-            }
-        } else {
-            orderPayload = {
-                _id: new ObjectId(),
-                UserID: user_id,
-                OrderDetailID: reqParams.orderDTID,
-                ShipAddress: payload.ShipAddress,
-                Description: payload.Description,
-                OrderDate: new Date(),
-                Status: 1,
-                Type: payload.type
-            }
+
+        orderPayload = {
+            _id: new ObjectId(),
+            UserID: user_id,
+            OrderDetailID: reqParams.orderDTID,
+            ShipAddress: payload.ShipAddress,
+            Description: payload.Description,
+            OrderDate: new Date(),
+            Status: 1,
         }
+
 
         newOrder = await databaseService.order.insertOne(new OrdersSchema(orderPayload))
         const order = await databaseService.order.findOne({ _id: new ObjectId(newOrder.insertedId) })
-        return { user, order }
+        console.log("order detail id: ", order.OrderDetailID)
+        const orderDetail = await databaseService.orderDetail.findOne({_id: new ObjectId(order?.OrderDetailID)})
+        const koiList = await Promise.all(
+            orderDetail.Items.map(item => databaseService.kois.findOne({ _id: new ObjectId(item.KoiID) }))
+          );
+          
+        return { user, order, orderDetail, koiList }
     }
 
-    async createBuyNowOrder(payload) {
-        // Gọi createOrder với type là 'buyNow'
-        return await this.createOrder(payload, 'buyNow');
-    }
-
-    async createCartOrder(payload, reqParams) {
-        // Gọi createOrder với type là 'cart'
-        return await this.createOrder(payload, reqParams, 'cart');
-    }
     async updateOrderStatus(payload, reqParams) {
         const koi = await databaseService.kois.findOne({ _id: new ObjectId(payload.KoiID) })
         const order = await databaseService.orderDetail.findOne({ _id: new ObjectId(reqParams.orderID) })

@@ -1,6 +1,8 @@
 import { Router } from 'express'
 import {
+    buyNowController,
   getKoiPriceController,
+  getMinMaxPriceController,
   getOrderDetailController,
   makeOrderDetailController,
   updateOrderDetailController
@@ -12,10 +14,12 @@ const orderRouter = Router()
 
 //Order Detail
 orderRouter.post('/detail/make', makeOrderDetailController)
+orderRouter.post('/detail/buy', buyNowController)
 orderRouter.get('/detail/:orderID', accessTokenValidator, getOrderDetailController)
 orderRouter.patch('/detail/edit/:orderID', updateOrderDetailController)
 orderRouter.post('/detail/price', getKoiPriceController)
 //Order
 orderRouter.post('/create/:orderDTID', createOrderController)
-
+//Price
+orderRouter.post('/detail/price/minmax', getMinMaxPriceController)
 export default orderRouter
