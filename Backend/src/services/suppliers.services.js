@@ -44,6 +44,18 @@ class SuplliersService {
     ])
     return supplierUpdate
   }
+
+  async getSupplier(supplierid) {
+    const supplierObjectID = new ObjectId(supplierid)
+    const supplier = await databaseService.suppliers.findOne({ _id: supplierObjectID })
+    if (supplier == null) {
+      throw new ErrorWithStatus({
+        message: MANAGER_MESSAGES.SUPPLIER_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+    return supplier
+  }
 }
 
 const suplliersService = new SuplliersService()

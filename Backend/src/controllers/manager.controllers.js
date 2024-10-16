@@ -93,3 +93,15 @@ export const updateSupplierController = async (req, res) => {
     result: supplier
   })
 }
+export const getSupplierController = async (req, res) => {
+  try {
+    const { _id } = req.params
+    const result = await suplliersService.getSupplier(_id)
+    return res.json({
+      message: MANAGER_MESSAGES.GET_ALL_SUPPLIER_SUCCESS,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}

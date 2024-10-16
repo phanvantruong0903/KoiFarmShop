@@ -5,6 +5,7 @@ import {
   getAllSupplierController,
   getAllUserController,
   getConsignDetailController,
+  getSupplierController,
   updateConsignDetailController,
   updateSupplierController
 } from '../controllers/manager.controllers.js'
@@ -53,5 +54,6 @@ managerRouter.get('/manage-supplier/get-all', accessTokenValidator, isAdminValid
 
 managerRouter.put('/manage-supplier/:_id', accessTokenValidator, isAdminValidator, wrapAsync(updateSupplierController))
 
+managerRouter.get('/manage-supplier/:_id', accessTokenValidator, isAdminValidator, wrapAsync(getSupplierController))
 
 export default managerRouter
