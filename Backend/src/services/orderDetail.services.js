@@ -131,7 +131,7 @@ class OrderDetailService {
         return result
     }
 
-    async getKoiPrice(payload) {
+    async getKoiQuantity(payload) {
         // let koi = await databaseService.kois.findOne({_id: new ObjectId(payload.KoiID)})
         let koisList, quantity
         koisList = await databaseService.kois
@@ -207,12 +207,16 @@ class OrderDetailService {
             }
     }
 
-    async getMinMaxPrice(payload) {
-        const koiList = await databaseService.kois
+    async findKoi(payload){
+        return await databaseService.kois
         .find({
-            $and: [{ CategoryID: payload.CategoryID }, { Breed: payload.Breed }, { Size: payload.Size }]
+            $and: [{ CategoryID: payload.CategoryID }, { Breed: payload.Breed }, { Size: Number(payload.Size) }]
         })
         .toArray()
+    }
+
+    async getMinMaxPrice(payload) {
+        const koiList = await this.findKoi(payload) 
         console.log("list kois: ", koiList)
         const minPrice = Math.min(
             ...koiList
@@ -230,26 +234,8 @@ class OrderDetailService {
         } 
     }
     async getKoiByPrice(payload) {
-        const koiList = await databaseService.kois
-        .find({
-            $and: [{ CategoryID: payload.CategoryID }, { Breed: payload.Breed }, { Size: payload.Size }]
-        })
-        .toArray()
-        console.log("list kois: ", koiList)
-        const minPrice = Math.min(
-            ...koiList
-              .map(koi => Number(koi.Price))
-              .filter(price => !isNaN(price))
-          );
-        const maxPrice = Math.max(
-            ...koiList
-              .map(koi => Number(koi.Price))
-              .filter(price => !isNaN(price))
-          );
-        return {
-            min: minPrice,
-            max: maxPrice
-        } 
+        const koiList = (await this.findKoi(payload)).filter(koi=>koi.Price === payload.Price)
+        return koiList ? koiList : []
     }
 
 }
