@@ -11,7 +11,7 @@ import { accessTokenValidator } from '../middlewares/users.middlewares.js'
 const orderRouter = Router()
 
 //Order Detail
-orderRouter.post('/detail/make', accessTokenValidator, makeOrderDetailController)
+orderRouter.post('/detail/make', makeOrderDetailController)
 orderRouter.get('/detail/:orderID', accessTokenValidator, getOrderDetailController)
 orderRouter.patch('/detail/edit/:orderID', updateOrderDetailController)
 orderRouter.post('/detail/price', getKoiPriceController)
