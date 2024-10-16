@@ -152,6 +152,23 @@ export default function Koikohaku() {
       });
     }
   };
+  const handleScroll7 = () => {
+    const element = document.getElementById("7");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
   const handleScroll8 = () => {
     const element = document.getElementById("8");
 
