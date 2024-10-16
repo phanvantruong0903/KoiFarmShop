@@ -74,4 +74,16 @@ export const getKoiPriceController = async (req, res) => {
     return res.status(500).json({ error: error.message })
   }
 }
+export const getMinMaxPriceController = async (req, res) => {
+  try {
+    const result = await orderDetailService.getMinMaxPrice(req.body);
+    console.log("result: ", result)
+    return res.json({
+      message: USERS_MESSAGES.GET_MIN_MAX_PRICE,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
 

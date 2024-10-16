@@ -1,4 +1,3 @@
-import HTTP_STATUS from '../constants/httpStatus.js'
 import databaseService from './database.service.js'
 import { ObjectId } from 'mongodb'
 
@@ -202,6 +201,29 @@ class OrderDetailService {
                     Quantity: quantity
                 }
             }
+    }
+
+    async getMinMaxPrice(payload) {
+        const koiList = await databaseService.kois
+        .find({
+            $and: [{ CategoryID: payload.CategoryID }, { Breed: payload.Breed }, { Size: payload.Size }]
+        })
+        .toArray()
+        console.log("list kois: ", koiList)
+        const minPrice = Math.min(
+            ...koiList
+              .map(koi => Number(koi.Price))
+              .filter(price => !isNaN(price))
+          );
+        const maxPrice = Math.max(
+            ...koiList
+              .map(koi => Number(koi.Price))
+              .filter(price => !isNaN(price))
+          );
+        return {
+            min: minPrice,
+            max: maxPrice
+        } 
     }
 }
 
