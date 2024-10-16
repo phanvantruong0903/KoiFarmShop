@@ -33,6 +33,7 @@ import GioiThieuVeKoiNhat from "./Components/GioiThieuVeKoiNhat";
 import GioiThieuVeKoiF1 from "./Components/GioitThieuVeKoiF1";
 import OrderingIKoi from "./Components/OrderingIKoi";
 import OrderingJapanKoi from "./Components/OrderingJapanKoi";
+import changePassword from "./Components/ChangePassword";
 const Staff = lazy(() => import("../src/An/Pages/Staff"));
 const Manager = lazy(() => import("./An/Pages/Manager/Manager"));
 const Profiles = lazy(() => import("../src/An/Pages/Staff/Profiles"));
@@ -40,6 +41,7 @@ const Orders = lazy(() => import("../src/An/Pages/Staff/Orders"));
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import style cho toast
 import ShoppingCart from "./Components/ShoppingCart";
+import ChangePassword from "./Components/ChangePassword";
 const router = createBrowserRouter([
   {
     path: "/kohaku",
@@ -164,6 +166,10 @@ const router = createBrowserRouter([
   {
     path: "/orderingjapankoi",
     element: <OrderingJapanKoi />,
+  },
+  {
+    path: "/changepassword",
+    element: <ChangePassword />,
   },
   {
     path: "/cart",

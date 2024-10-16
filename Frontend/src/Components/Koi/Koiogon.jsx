@@ -5,6 +5,8 @@ import CardGrid from "../Cardgrid";
 import Footer from "../Footer";
 import axios from "axios";
 import "../Css/koiStyle.css";
+import { Layout, Typography } from "antd";
+const { Title, Text, Paragraph } = Typography;
 export default function Koiogon() {
   const [menu, setMenu] = useState("home");
   const [cardData, setCardData] = useState([]);
@@ -17,49 +19,119 @@ export default function Koiogon() {
     const element = document.getElementById("1");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll2 = () => {
     const element = document.getElementById("2");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll3 = () => {
     const element = document.getElementById("3");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll4 = () => {
     const element = document.getElementById("4");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll5 = () => {
     const element = document.getElementById("5");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll31 = () => {
     const element = document.getElementById("31");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll32 = () => {
     const element = document.getElementById("32");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
 
@@ -67,28 +139,68 @@ export default function Koiogon() {
     const element = document.getElementById("33");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll34 = () => {
     const element = document.getElementById("34");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll35 = () => {
     const element = document.getElementById("35");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll36 = () => {
     const element = document.getElementById("36");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   useEffect(() => {
@@ -135,10 +247,8 @@ export default function Koiogon() {
   if (error) return <div>Error: {error.message}</div>;
   return (
     <>
-      <div>
-        <div>
-          <Navbar menu={menu} setMenu={setMenu} />
-        </div>
+      <Layout>
+        <Navbar menu={menu} setMenu={setMenu} />
         <Container>
           <div>
             <div style={{ paddingTop: "110px", textAlign: "center" }}>
@@ -218,18 +328,13 @@ export default function Koiogon() {
               <div>
                 <h2 className="noidungchitiet">Nội dung chi tiết</h2>
                 <p style={{ fontSize: "15px", fontWeight: "400" }}>
-                  <span
-                    style={{
-                      fontWeight: "600",
-                      color: "blue",
-                      fontSize: "20px",
-                    }}
-                  >
-                    Koi Ogon
-                  </span>{" "}
-                  là dòng cá Koi được yêu thích nhất trên thế giới. Với vẻ ngoài
-                  lấp lánh tạo ra vẻ sang trọng cho không gian nuôi cá Koi. Hãy
-                  cùng chúng tôi tìm hiểu thông tin cụ thể về dòng cá này nhé!
+                  <span className="span-Style">Koi Ogon</span>{" "}
+                  <Paragraph className="paragraph-Style">
+                    là dòng cá Koi được yêu thích nhất trên thế giới. Với vẻ
+                    ngoài lấp lánh tạo ra vẻ sang trọng cho không gian nuôi cá
+                    Koi. Hãy cùng chúng tôi tìm hiểu thông tin cụ thể về dòng cá
+                    này nhé!
+                  </Paragraph>
                 </p>
               </div>
               <div id="1">
@@ -242,11 +347,11 @@ export default function Koiogon() {
                     src="src/assets/Koi-Ogon/ca-koi-platinum-3.webp"
                     style={{ width: "50%" }}
                   />
-                  <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                  <Paragraph className="paragraph-Style">
                     Giới thiệu về cá Koi Ogon
-                  </p>
+                  </Paragraph>
                 </div>
-                <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                <Paragraph className="paragraph-Style">
                   Koi Ogon có lịch sử từ 90 năm trước, ông Sawata Aoki tại Nhật
                   Bản đã có ý tưởng lai tạo một giống cá Koi đặc biệt. Có thể
                   nói sự xuất hiện của cá Koi Ogon gắn liền với lịch sử khai
@@ -254,14 +359,14 @@ export default function Koiogon() {
                   chú cá chép hoang với vẻ bề ngoài rất kì lạ, có 1 sọc vàng
                   trên lưng, ông đã lặn lội đường xa tìm đến thuyết phục cậu bé
                   bán cho ông chú cá cảnh.
-                </p>
+                </Paragraph>
                 <div style={{ textAlign: "center" }}>
                   <img src="src/assets/Koi-Ogon-1/bo-5.jpg" />
-                  <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                  <Paragraph className="paragraph-Style">
                     Nguồn gốc lịch sử của giống cá Koi Ogon
-                  </p>
+                  </Paragraph>
                 </div>
-                <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                <Paragraph className="paragraph-Style">
                   Đây cũng là lúc hành trình nuôi cá của ông bắt đầu, ông đã
                   nuôi dưỡng chú cá suốt 25 năm, trong suốt khoảng thời gian này
                   ông đã quan sát, theo dõi từng giai đoạn cá đẻ trứng, nhân đàn
@@ -269,12 +374,12 @@ export default function Koiogon() {
                   ông mong ước. Cho đến năm 1946, ông đã lai tạo thành công chú
                   cá Koi Yamabuki Ogon với màu vàng đặc trưng, chú cá Koi được
                   mệnh danh là ông tiên của dòng cá Koi Ogon.
-                </p>
+                </Paragraph>
               </div>
 
               <div id="2">
                 <h3 style={{ color: "red" }}>2.Đặc điểm của Koi ogon</h3>
-                <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                <Paragraph className="paragraph-Style">
                   Cá Koi Ogon được coi là một trong những giống cá Koi đẹp nhất
                   và độc đáo nhất trên trái đất với ngoại hình đặc trưng là màu
                   vàng óng ánh rực rỡ. Tên gọi Ogon được lấy theo từ tiếng Nhật,
@@ -288,14 +393,14 @@ export default function Koiogon() {
                   thể thay đổi theo mùa và phụ thuộc vào điều kiện môi trường
                   xung quanh. Ví dụ, nếu chúng được nuôi dưỡng trong môi trường
                   lạnh, màu sắc của chúng sẽ trở nên nhạt đi.
-                </p>
+                </Paragraph>
                 <div style={{ textAlign: "center" }}>
                   <img src="src/assets/Koi-Ogon-1/image14-1661495518-730-width801height889.jpg" />
-                  <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                  <Paragraph className="paragraph-Style">
                     Đặc điểm của Koi ogon
-                  </p>
+                  </Paragraph>
                 </div>
-                <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                <Paragraph className="paragraph-Style">
                   Ngoài màu sắc rực rỡ, Koi Ogon cũng được yêu thích bởi vẻ đẹp
                   tinh tế, sang trọng và thon gọn của chúng. Thân cá Koi Ogon
                   cũng có hình dạng khá dài, chúng có đầu tròn và mắt lớn, đuôi
@@ -309,7 +414,7 @@ export default function Koiogon() {
                   sóc Koi Ogon cần có kiến thức và sự chăm sóc kỹ càng. Việc tạo
                   dựng môi trường sống lý tưởng cho cá đòi hỏi hiểu biết về chăm
                   sóc cá cảnh cũng như tập tính sống của cá.
-                </p>
+                </Paragraph>
               </div>
               <div id="3">
                 <h3 style={{ color: "red" }}>
@@ -317,18 +422,9 @@ export default function Koiogon() {
                 </h3>
                 <ul>
                   <li>
-                    <span
-                      style={{
-                        fontWeight: "600",
-                        color: "blue",
-                        fontSize: "20px",
-                      }}
-                      id="31"
-                    >
-                      3.1 Cá Koi Platinum Ogon
-                    </span>
+                    <span className="span-Style">3.1 Cá Koi Platinum Ogon</span>
                     <br />
-                    <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                    <Paragraph className="paragraph-Style">
                       Cá Koi Platinum Ogon là một trong những dòng cá Koi Ogon
                       đẹp và đặc biệt nhất với màu trắng bạc sang trọng. Loại cá
                       Koi này được tạo ra từ sự pha trộn giữa các dòng Koi Ogon
@@ -345,27 +441,18 @@ export default function Koiogon() {
                       nên một sự độc đáo và quyến rũ. Một số loài Platinum Ogon
                       có thể có màu sắc pha trộn với màu vàng hoặc cam, tạo nên
                       sự sang trọng và quý phái đến từng tiểu tiết.
-                    </p>
+                    </Paragraph>
                     <div style={{ textAlign: "center" }}>
                       <img src="src/assets/Koi-Ogon-1/image14-1661495518-730-width801height889.jpg" />
-                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
-                        KOI PLATINUM OGON
-                      </p>
+                      <Text className="text-Style ">KOI PLATINUM OGON</Text>
                     </div>
                   </li>
                   <li>
-                    <span
-                      style={{
-                        fontWeight: "600",
-                        color: "blue",
-                        fontSize: "20px",
-                      }}
-                      id="32"
-                    >
+                    <span className="span-Style" id="32">
                       3.2 Cá Koi Yamabuki Ogon
                     </span>
                     <br />
-                    <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                    <Paragraph className="paragraph-Style">
                       Cá Koi Yamabuki Ogon là một trong những giống cá Koi Ogon
                       phổ biến và được ưa chuộng trên khắp thế giới. Đây là một
                       dòng cá có màu vàng kim rực rỡ với những đặc trưng màu sắc
@@ -384,28 +471,19 @@ export default function Koiogon() {
                       tính tình vô cùng hiền hoà và thân thiện. Chúng cũng rất
                       dễ nuôi, có thể sinh sống trong các bể cá ở nhiều điều
                       kiện khác nhau và không có quá nhiều yêu cầu về nước.
-                    </p>
+                    </Paragraph>
                     <div style={{ textAlign: "center" }}>
                       <img src="src/assets/Koi-Ogon-1/img_0095.png" />
-                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
-                        KOI YAMABUIKI OGON
-                      </p>
+                      <Text className="text-Style">KOI YAMABUIKI OGON</Text>
                     </div>
                   </li>
 
                   <li>
-                    <span
-                      style={{
-                        fontWeight: "600",
-                        color: "blue",
-                        fontSize: "20px",
-                      }}
-                      id="33"
-                    >
+                    <span className="span-Style" id="33">
                       3.3 Cá Koi Hi Ogon
                     </span>
                     <br />
-                    <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                    <Paragraph className="paragraph-Style">
                       Cá Koi Hi Ogon là một trong những giống cá Koi được yêu
                       thích trên toàn thế giới với màu sắc chủ đạo là màu đỏ
                       tươi. Tuy nhiên, nhiều người mới tập chơi cá hay gặp phải
@@ -419,28 +497,19 @@ export default function Koiogon() {
                       tuổi thọ lên tới 25-35 năm. Các triển lãm cá cảnh và cuộc
                       thi cá Koi cũng thường trưng bày những con cá Koi Hi Ogon
                       đẹp nhất để khán giả chiêm ngưỡng và thưởng thức.
-                    </p>
+                    </Paragraph>
                     <div style={{ textAlign: "center" }}>
                       <img src="src/assets/Koi-Ogon-1/hi-ogon.jpg" />
-                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
-                        KOI HI OGON{" "}
-                      </p>
+                      <Text className="text-Style">KOI HI OGON </Text>
                     </div>
                   </li>
 
                   <li>
-                    <span
-                      style={{
-                        fontWeight: "600",
-                        color: "blue",
-                        fontSize: "20px",
-                      }}
-                      id="34"
-                    >
+                    <span className="span-Style" id="34">
                       3.4 Cá Koi Orenji Ogon
                     </span>
                     <br />
-                    <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                    <Paragraph className="paragraph-Style">
                       Cá Koi Orenji Ogon là một trong những dòng cá Koi được yêu
                       thích nhất với màu sắc chủ đạo là cam. Thân cá của chúng
                       có vảy rồng óng ánh, tạo nên một vẻ ngoài vô cùng bắt mắt.
@@ -454,27 +523,18 @@ export default function Koiogon() {
                       nuôi cần được kiểm soát chặt chẽ độ pH, độ kiềm và nhiệt
                       độ thích hợp, cũng như nguồn thức ăn chất lượng cao để đảm
                       bảo nhu cầu phát triển của cá.
-                    </p>
+                    </Paragraph>
                     <div style={{ textAlign: "center" }}>
                       <img src="src/assets/Koi-Ogon-1/orenji-ogon.jpg" />
-                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
-                        KOI ORENJI OGON{" "}
-                      </p>
+                      <Text className="text-Style">KOI ORENJI OGON </Text>
                     </div>
                   </li>
                   <li>
-                    <span
-                      style={{
-                        fontWeight: "600",
-                        color: "blue",
-                        fontSize: "20px",
-                      }}
-                      id="35"
-                    >
+                    <span className="span-Style" id="35">
                       3.5 Cá Koi Mukashi Ogon
                     </span>
                     <br />
-                    <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                    <Paragraph className="paragraph-Style">
                       Cá Koi Mukashi Ogon là một trong những dòng cá Koi có lịch
                       sử lai tạo lâu đời và được yêu thích vì nét đẹp cổ xưa,
                       độc đáo của chúng. Mukashi Ogon có nghĩa là vàng xưa, bởi
@@ -486,27 +546,18 @@ export default function Koiogon() {
                       một hoặc hai vết trắng ở phần đầu của thân, tạo thành một
                       vẻ đẹp khác biệt và độc đáo. Ngoài ra, các vây của chú cá
                       cũng có màu vàng tươi, tạo nên sự đồng điệu với thân cá.
-                    </p>
+                    </Paragraph>
                     <div style={{ textAlign: "center" }}>
                       <img src="src/assets/Koi-Ogon-1/mukashi-ogon.webp" />
-                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
-                        KOI MUKASHI OGON{" "}
-                      </p>
+                      <Text className="text-Style">KOI MUKASHI OGON </Text>
                     </div>
                   </li>
                   <li>
-                    <span
-                      style={{
-                        fontWeight: "600",
-                        color: "blue",
-                        fontSize: "20px",
-                      }}
-                      id="36"
-                    >
+                    <span className="span-Style" id="36">
                       3.6 Nezu Ogon Koi
                     </span>
                     <br />
-                    <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                    <Paragraph className="paragraph-Style">
                       Cá Koi Nezu Ogon là một trong những dòng cá Koi được yêu
                       thích với màu sắc độc đáo và khác lạ. Nezu có nghĩa là
                       chuột đồng, vì vậy tên của chú cá được đặt theo hình dáng
@@ -517,12 +568,10 @@ export default function Koiogon() {
                       phấn trắng, tạo nên một vẻ đẹp sang trọng và khác lạ. Một
                       số vảy có thể có màu đen hoặc nâu, tạo nên một sự đồng
                       điệu và khác biệt đối với chú cá.
-                    </p>
+                    </Paragraph>
                     <div style={{ textAlign: "center" }}>
                       <img src="src/assets/Koi-Ogon-1/nezu-ogon.jpg" />
-                      <p style={{ fontWeight: "400", fontSize: "15px" }}>
-                        KOI NEZU OGON{" "}
-                      </p>
+                      <Text className="text-Style">KOI NEZU OGON </Text>
                     </div>
                   </li>
                 </ul>
@@ -531,107 +580,125 @@ export default function Koiogon() {
                 <h3 style={{ color: "red" }}>
                   4. Cách nuôi cá Koi ogon khỏe mạnh, phát triển tốt
                 </h3>
-                <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                <Paragraph className="paragraph-Style">
                   Sau đây là cách nuôi cá Koi Ogon phát triển khỏe mạnh:
-                </p>
-                <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                </Paragraph>
+                <Paragraph style={{ fontWeight: "400", fontSize: "15px" }}>
                   Chọn hồ nuôi phù hợp
-                </p>
-                <ul style={{ fontWeight: "400", fontSize: "15px" }}>
+                </Paragraph>
+                <ul>
                   <li>
-                    Về diện tích, hồ nuôi tối thiểu cần có diện tích 4-5m2 và độ
-                    sâu khoảng 1,2 đến 1,5 m.
+                    <Paragraph className="paragraph-Style">
+                      Về diện tích, hồ nuôi tối thiểu cần có diện tích 4-5m2 và
+                      độ sâu khoảng 1,2 đến 1,5 m.
+                    </Paragraph>
                   </li>
                   <li>
-                    Về vật liệu, hồ nuôi cá Koi Ogon nên được xây bằng bê tông
-                    hoặc nhựa PVC. Bề mặt hồ cần được phủ lớp chất tạo màu nhằm
-                    đảm bảo sạch sẽ và ngăn chặn sự tăng trưởng của tảo và vi
-                    khuẩn.
+                    <Paragraph className="paragraph-Style">
+                      Về vật liệu, hồ nuôi cá Koi Ogon nên được xây bằng bê tông
+                      hoặc nhựa PVC. Bề mặt hồ cần được phủ lớp chất tạo màu
+                      nhằm đảm bảo sạch sẽ và ngăn chặn sự tăng trưởng của tảo
+                      và vi khuẩn.
+                    </Paragraph>
                   </li>
                   <li>
-                    Cần lựa chọn đúng hình thức bơi lội cho cá Koi Ogon, bao gồm
-                    bơi lội tại mặt nước và bơi lội tại lòng hồ.
+                    <Paragraph className="paragraph-Style">
+                      Cần lựa chọn đúng hình thức bơi lội cho cá Koi Ogon, bao
+                      gồm bơi lội tại mặt nước và bơi lội tại lòng hồ.
+                    </Paragraph>
                   </li>
                   <li>
-                    Trang bị các hệ thống lọc nước phù hợp, giúp nước luôn sạch
-                    sẽ và cân đối dinh dưỡng.
+                    <Paragraph className="paragraph-Style">
+                      Trang bị các hệ thống lọc nước phù hợp, giúp nước luôn
+                      sạch sẽ và cân đối dinh dưỡng.
+                    </Paragraph>
                   </li>
                 </ul>
-                <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                <Paragraph className="paragraph-Style">
                   Đảm bảo chất lượng nước
-                </p>
-                <ul style={{ fontWeight: "400", fontSize: "15px" }}>
+                </Paragraph>
+                <ul>
                   <li>
-                    pH: Khoảng pH lý tưởng đối với cá Koi Ogon là 7.2-7.6. Nếu
-                    pH quá cao hoặc quá thấp, sẽ ảnh hưởng đến chất lượng của cá
-                    và khiến cho chúng dễ mắc bệnh.
+                    <Paragraph className="paragraph-Style">
+                      pH: Khoảng pH lý tưởng đối với cá Koi Ogon là 7.2-7.6. Nếu
+                      pH quá cao hoặc quá thấp, sẽ ảnh hưởng đến chất lượng của
+                      cá và khiến cho chúng dễ mắc bệnh.
+                    </Paragraph>
                   </li>
                   <li>
-                    Ammonia: Ammonia là một chất độc hại đối với cá Koi Ogon, có
-                    thể gây ra tổn thương gan và các bệnh đường hô hấp. Nên kiểm
-                    tra nồng độ ammonia trong nước định kỳ và thay đổi nước định
-                    kỳ để ngăn chặn sự tích tụ của amoniac.
+                    <Paragraph className="paragraph-Style">
+                      Ammonia: Ammonia là một chất độc hại đối với cá Koi Ogon,
+                      có thể gây ra tổn thương gan và các bệnh đường hô hấp. Nên
+                      kiểm tra nồng độ ammonia trong nước định kỳ và thay đổi
+                      nước định kỳ để ngăn chặn sự tích tụ của amoniac.
+                    </Paragraph>
                   </li>
                   <li>
-                    Nitrat và Nitrit: Những chất này có thể gây ngộ độc ở cá nếu
-                    nồng độ quá cao. Kiểm tra định kỳ và xử lý nước định kỳ nhằm
-                    hạn chế sự tích tụ của chúng.
+                    <Paragraph className="paragraph-Style">
+                      Nitrat và Nitrit: Những chất này có thể gây ngộ độc ở cá
+                      nếu nồng độ quá cao. Kiểm tra định kỳ và xử lý nước định
+                      kỳ nhằm hạn chế sự tích tụ của chúng.
+                    </Paragraph>
                   </li>
                   <li>
-                    Oxy: Nếu nồng độ oxy trong nước quá thấp, cá sẽ bị stress và
-                    dễ mắc các bệnh liên quan đến hô hấp. Để đảm bảo nồng độ oxy
-                    đủ, bạn có thể sử dụng máy bơm oxy hoặc đổ nước vào bể nhằm
-                    tăng cường hàm lượng oxy trong nước.
+                    <Paragraph className="paragraph-Style">
+                      Oxy: Nếu nồng độ oxy trong nước quá thấp, cá sẽ bị stress
+                      và dễ mắc các bệnh liên quan đến hô hấp. Để đảm bảo nồng
+                      độ oxy đủ, bạn có thể sử dụng máy bơm oxy hoặc đổ nước vào
+                      bể nhằm tăng cường hàm lượng oxy trong nước.
+                    </Paragraph>
                   </li>
                 </ul>
-                <p style={{ fontWeight: "600", fontSize: "20px" }}>Thức ăn</p>
+                <Text className="text-Style">Thức ăn</Text>
                 <ul style={{ fontWeight: "400", fontSize: "15px" }}>
                   <li>
-                    Thức ăn viên: được sản xuất từ các nguyên liệu thiên nhiên
-                    như rong biển, tôm, cá hú, cá diếc, . .. Thức ăn viên có
-                    kích cỡ khác nhau tuỳ thuộc vào kích thước cá Koi Ogon.
+                    <Paragraph className="paragraph-Style">
+                      Thức ăn viên: được sản xuất từ các nguyên liệu thiên nhiên
+                      như rong biển, tôm, cá hú, cá diếc, . .. Thức ăn viên có
+                      kích cỡ khác nhau tuỳ thuộc vào kích thước cá Koi Ogon.
+                    </Paragraph>
                   </li>
                   <li>
-                    Thức ăn nuôi: cá Koi Ogon cũng có thể ăn các loại thức ăn
-                    nuôi như dế, trùn, tôm, cá, . ..
+                    <Paragraph className="paragraph-Style">
+                      Thức ăn nuôi: cá Koi Ogon cũng có thể ăn các loại thức ăn
+                      nuôi như dế, trùn, tôm, cá, . ..
+                    </Paragraph>
                   </li>
                   <li>
-                    Thức ăn tự làm: nuôi cá Koi Ogon cũng có thể tự làm thức ăn
-                    bằng cách phối trộn các loại thức ăn từ tảo biển, tôm, cá
-                    hú, rau củ quả, . ..
+                    <Paragraph className="paragraph-Style">
+                      Thức ăn tự làm: nuôi cá Koi Ogon cũng có thể tự làm thức
+                      ăn bằng cách phối trộn các loại thức ăn từ tảo biển, tôm,
+                      cá hú, rau củ quả, . ..
+                    </Paragraph>
                   </li>
                 </ul>
                 <p>
-                  <span style={{ fontWeight: "600", fontSize: "20px" }}>
-                    Kiểm tra sức khoẻ
-                  </span>
+                  <span className="span-Style">Kiểm tra sức khoẻ</span>
                   <br />
-                  <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                  <Paragraph className="paragraph-Style">
                     Kiểm tra sức khỏe thường xuyên là vô cùng cần thiết nhằm bảo
                     vệ sức khoẻ của cá Koi Ogon. Bạn nên theo dõi thường xuyên
                     chú cá của mình nhằm phát hiện kịp thời các dấu hiệu của
                     bệnh tật và tiến hành chữa trị kịp thời.
-                  </p>
+                  </Paragraph>
                 </p>
                 <p>
-                  <span style={{ fontWeight: "600", fontSize: "20px" }}>
-                    Giám sát và quản lý
-                  </span>
+                  <span className="span-Style">Giám sát và quản lý</span>
                   <br />
-                  <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                  <Paragraph className="paragraph-Style">
                     Giám sát và quản lý là một phần cực kỳ cần thiết đối với quá
                     trình chăm sóc cá Koi Ogon. Bạn cần đảm bảo rằng các thông
                     số nước, thức ăn và sức khoẻ của chúng được giám sát và quản
                     lý nghiêm ngặt nhằm đảm bảo chúng phát triển tốt nhất có
                     thể.
-                  </p>
+                  </Paragraph>
                 </p>
               </div>
               <div id="5">
                 <h3 style={{ color: "red" }}>
                   5. Địa chỉ bán cá Koi Ogon đẹp, uy tín?{" "}
                 </h3>
-                <p style={{ fontWeight: "400", fontSize: "15px" }}>
+                <Paragraph className="paragraph-Style">
                   Siêu Thị Cá Koi VN là đơn vị thiết kế thi công hồ cá Koi
                   chuyên nghiệp, uy tín hiện nay. Ngoài ra, chúng tôi còn là đơn
                   vị chuyên cung cấp các dòng cá Koi Ogon siêu đẹp với mức giá
@@ -639,27 +706,37 @@ export default function Koiogon() {
                   vụ của chúng tôi:
                   <ul>
                     <li>
-                      Thiết kế hồ cá Koi Nhật đạt chuẩn trong thời gian nhanh
-                      nhất đúng tiến độ đã cam kết.{" "}
+                      <Paragraph className="paragraph-Style">
+                        Thiết kế hồ cá Koi Nhật đạt chuẩn trong thời gian nhanh
+                        nhất đúng tiến độ đã cam kết.{" "}
+                      </Paragraph>
                     </li>
                     <li>
-                      Tất cả yêu cầu của khách hàng được đáp ứng đầy đủ như đã
-                      thỏa thuận.
+                      <Paragraph className="paragraph-Style">
+                        Tất cả yêu cầu của khách hàng được đáp ứng đầy đủ như đã
+                        thỏa thuận.
+                      </Paragraph>
                     </li>
                     <li>
-                      Hỗ trợ chăm sóc bảo dưỡng công trình, tư vấn để khách hàng
-                      sử dụng hồ cá đúng chuẩn.{" "}
+                      <Paragraph className="paragraph-Style">
+                        Hỗ trợ chăm sóc bảo dưỡng công trình, tư vấn để khách
+                        hàng sử dụng hồ cá đúng chuẩn. s
+                      </Paragraph>
                     </li>
                     <li>
-                      Giá thành thiết kế, thi công hồ cá Koi cạnh tranh nhất thị
-                      trường hiện nay.{" "}
+                      <Paragraph className="paragraph-Style">
+                        Giá thành thiết kế, thi công hồ cá Koi cạnh tranh nhất
+                        thị trường hiện nay.{" "}
+                      </Paragraph>
                     </li>
                     <li>
-                      Đội ngũ kiến trúc sư, kỹ sư xây dựng giỏi và nhân viên tư
-                      vấn am hiểu chuyên môn.
+                      <Paragraph className="paragraph-Style">
+                        Đội ngũ kiến trúc sư, kỹ sư xây dựng giỏi và nhân viên
+                        tư vấn am hiểu chuyên môn.
+                      </Paragraph>
                     </li>
                   </ul>
-                </p>
+                </Paragraph>
               </div>
             </div>
           </div>
@@ -676,10 +753,9 @@ export default function Koiogon() {
         <div>
           <CardGrid cardData={filteredCards} />
         </div>
-        <div>
-          <Footer />
-        </div>
-      </div>
+
+        <Footer />
+      </Layout>
     </>
   );
 }

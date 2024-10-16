@@ -33,7 +33,7 @@ export default function Navbar() {
   const handleLogout = () => {
     localStorage.clear();
     setIsLoggedIn(false);
-    toast.success("Đăng xuất thành công!");
+    navigate("/", { state: { message: "Đăng Xuất Thành Công" } });
   };
 
   const handleStateSignIn = () => {
@@ -296,6 +296,13 @@ export default function Navbar() {
                   className="custom-dropdown-item"
                 >
                   Đơn ký gửi
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item
+                  href="/changepassword"
+                  className="custom-dropdown-item"
+                >
+                  Thay đổi mật khẩu
                 </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item

@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import React, { useEffect, useState, useRef } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Footer from "./Footer";
 import Navbar from "./Navbar/Navbar";
-import axios from "axios";
 import axiosInstance from "../An/Utils/axiosJS";
 import { Container } from "react-bootstrap";
 
@@ -15,6 +14,27 @@ export default function Profile() {
   const location = useLocation();
   const [showModal, setShowModal] = useState(false);
   const [currentField, setCurrentField] = useState("");
+  const navigate = useNavigate();
+  const toastIdRef = useRef(null);
+
+  useEffect(() => {
+    const { message } = location.state || {};
+    if (message) {
+      if (toastIdRef.current) {
+        toast.update(toastIdRef.current, {
+          render: message,
+          type: "success",
+          isLoading: false,
+          autoClose: 5000,
+        });
+      } else {
+        toastIdRef.current = toast.success(message, {
+          autoClose: 5000,
+          onClose: () => (toastIdRef.current = null),
+        });
+      }
+    }
+  }, [location.state]);
 
   const maskEmail = (email) => {
     const atIndex = email.indexOf("@");
@@ -23,50 +43,59 @@ export default function Profile() {
       const maskedPart = "*".repeat(atIndex - 2);
       return `${firstPart}${maskedPart}${email.slice(atIndex)}`;
     }
-    return email; // Trả về email gốc nếu không đủ ký tự
+    return email;
   };
 
-  const handleUpdate = (field, value) => {
+  const handleUpdate = async (field, value) => {
     if (userData.verify !== 1) {
-      // Hiện modal nếu chưa xác minh
       setCurrentField(field);
       setShowModal(true);
       return;
-    } else {
+    } else if (userData.verify === 1) {
+      console.log("Attempting to update:", field, "with value:", value);
       updateUser(field, value);
     }
-    // Nếu đã xác minh, gọi API để cập nhật dữ liệu người dùng
   };
 
   const updateUser = async (field, value) => {
-    console.log(value);
-    console.log(field);
     try {
-      await axiosInstance.patch(
-        `/users/me`,
-        {
-          [field]: String(value), // Convert value to string
-        },
+      console.log(
+        "Updating field:",
+        field,
+        "with value:",
+        value,
+        "User verify status:",
+        userData.verify
+      );
+
+      const response = await axiosInstance.patch(
+        `http://localhost:4000/users/me`,
+        { [field]: String(value) },
         {
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
-      alert("Cập nhật thành công!");
+
+      console.log("Update response:", response.data); // Log phản hồi từ server
     } catch (error) {
       console.error("Error updating profile:", error);
       alert("Cập nhật thất bại.");
+      // Log thông tin lỗi để kiểm tra lý do
+      if (error.response) {
+        console.error("Error response data:", error.response.data);
+        console.error("Error response status:", error.response.status);
+        alert(`Lỗi: ${error.response.data.message || "Vui lòng thử lại."}`); // Hiển thị thông điệp lỗi từ server
+      }
     }
   };
 
   const handleResendVerification = async () => {
     try {
-      await axiosInstance.post("users/resend-verify-email", {
-        email: userData.email,
-      });
+      await axiosInstance.post("users/resend-verify-email", {});
       toast.success("Email xác minh đã được gửi lại.");
-      setShowModal(false); // Đóng modal sau khi gửi
+      setShowModal(false);
     } catch (error) {
       console.error("Lỗi khi gửi lại email xác minh:", error);
       toast.error("Gửi lại email xác minh thất bại.");
@@ -80,7 +109,13 @@ export default function Profile() {
         const response = await axiosInstance.get("users/me");
         if (response.data) {
           setUserData(response.data.result);
-          console.log("Verify:", response.data.result.verify);
+          if (response.data.result.verify === 1) {
+            const isReloaded = localStorage.getItem("isReloaded");
+            if (!isReloaded) {
+              localStorage.setItem("isReloaded", "true");
+              window.location.reload();
+            }
+          }
         } else {
           console.error("Dữ liệu không hợp lệ:", response.data);
         }
@@ -90,7 +125,6 @@ export default function Profile() {
         setLoading(false);
       }
     };
-
     fetchUserData();
   }, []);
 
@@ -105,199 +139,199 @@ export default function Profile() {
 
   return (
     <>
-      <div>
-        <Navbar />
-      </div>
+      <Navbar />
       <div style={{ backgroundColor: "whitesmoke", paddingTop: "150px" }}>
-        <div>
-          <Container
-            style={{
-              paddingTop: "50px",
-              textAlign: "center",
-              backgroundColor: "white",
-              borderRadius: "10px",
-              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-            }}
-          >
-            <h1>Profile</h1>
-            {userData ? (
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "flex-start",
-                  width: "100%",
-                }}
-              >
-                {/* Bảng thông tin người dùng */}
-                <div style={{ flex: 2, marginRight: "20px" }}>
-                  <table
-                    style={{
-                      width: "100%",
-                      margin: "20px 0",
-                      borderCollapse: "collapse",
-                    }}
-                  >
-                    <tbody>
-                      <tr>
-                        <td style={cellStyle}>Tên đăng nhập:</td>
-                        <td>
-                          <input
-                            value={userData.username}
-                            onChange={(e) =>
-                              setUserData({
-                                ...userData,
-                                username: e.target.value,
-                              })
-                            }
-                            style={inputStyle}
-                          />
-                        </td>
-                        <td>
-                          <button
-                            style={buttonStyle}
-                            onClick={() =>
-                              handleUpdate("username", userData.username)
-                            }
-                          >
-                            Thay đổi
-                          </button>
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td style={cellStyle}>Tên:</td>
-                        <td>
-                          <input
-                            value={userData.name}
-                            onChange={(e) =>
-                              setUserData({ ...userData, name: e.target.value })
-                            }
-                            style={inputStyle}
-                          />
-                        </td>
-                        <td>
-                          <button
-                            style={buttonStyle}
-                            onClick={() => handleUpdate("name", userData.name)}
-                          >
-                            Thay đổi
-                          </button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style={cellStyle}>Email:</td>
-                        <td>
-                          <input
-                            value={maskedEmail}
-                            readOnly
-                            style={inputStyle}
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style={cellStyle}>Địa chỉ:</td>
-                        <td>
-                          <input
-                            value={userData.address}
-                            onChange={(e) =>
-                              setUserData({
-                                ...userData,
-                                address: e.target.value,
-                              })
-                            }
-                            style={inputStyle}
-                          />
-                        </td>
-                        <td>
-                          <button
-                            style={buttonStyle}
-                            onClick={() =>
-                              handleUpdate("address", userData.address)
-                            }
-                          >
-                            Thay đổi
-                          </button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style={cellStyle}>SĐT:</td>
-                        <td>
-                          <input
-                            value={userData.phone_number}
-                            onChange={(e) =>
-                              setUserData({
-                                ...userData,
-                                phone_number: e.target.value,
-                              })
-                            }
-                            style={inputStyle}
-                          />
-                        </td>
-                        <td>
-                          <button
-                            style={buttonStyle}
-                            onClick={() =>
-                              handleUpdate(
-                                "phone_number",
-                                userData.phone_number
-                              )
-                            }
-                          >
-                            Thay đổi
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                {/* Hình ảnh profile */}
-                <div
-                  style={{ flex: 1, display: "flex", justifyContent: "center" }}
+        <Container
+          style={{
+            paddingTop: "50px",
+            textAlign: "center",
+            backgroundColor: "white",
+            borderRadius: "10px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+          }}
+        >
+          <h1>Profile</h1>
+          {userData ? (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                width: "100%",
+              }}
+            >
+              <div style={{ flex: 2, marginRight: "20px" }}>
+                <table
+                  style={{
+                    width: "100%",
+                    margin: "20px 0",
+                    borderCollapse: "collapse",
+                  }}
                 >
-                  <img
-                    src={userData.picture}
-                    alt="Profile"
-                    style={{
-                      width: "150px",
-                      height: "150px",
-                      borderRadius: "50%",
-                      objectFit: "cover",
-                    }}
-                  />
-                </div>
+                  <tbody>
+                    <tr>
+                      <td style={cellStyle}>Tên đăng nhập:</td>
+                      <td>
+                        <input
+                          value={userData.username}
+                          onChange={(e) =>
+                            setUserData({
+                              ...userData,
+                              username: e.target.value,
+                            })
+                          }
+                          style={inputStyle}
+                        />
+                      </td>
+                      <td>
+                        <button
+                          style={buttonStyle}
+                          onClick={() =>
+                            handleUpdate("username", userData.username)
+                          }
+                        >
+                          Thay đổi
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style={cellStyle}>Tên:</td>
+                      <td>
+                        <input
+                          value={userData.name}
+                          onChange={(e) =>
+                            setUserData({ ...userData, name: e.target.value })
+                          }
+                          style={inputStyle}
+                        />
+                      </td>
+                      <td>
+                        <button
+                          style={buttonStyle}
+                          onClick={() => handleUpdate("name", userData.name)}
+                        >
+                          Thay đổi
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style={cellStyle}>Email:</td>
+                      <td>
+                        <input
+                          value={maskedEmail}
+                          readOnly
+                          style={inputStyle}
+                        />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style={cellStyle}>Địa chỉ:</td>
+                      <td>
+                        <input
+                          value={userData.address}
+                          onChange={(e) =>
+                            setUserData({
+                              ...userData,
+                              address: e.target.value,
+                            })
+                          }
+                          style={inputStyle}
+                        />
+                      </td>
+                      <td>
+                        <button
+                          style={buttonStyle}
+                          onClick={() =>
+                            handleUpdate("address", userData.address)
+                          }
+                        >
+                          Thay đổi
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style={cellStyle}>SĐT:</td>
+                      <td>
+                        <input
+                          value={userData.phone_number}
+                          onChange={(e) =>
+                            setUserData({
+                              ...userData,
+                              phone_number: e.target.value,
+                            })
+                          }
+                          style={inputStyle}
+                        />
+                      </td>
+                      <td>
+                        <button
+                          style={buttonStyle}
+                          onClick={() =>
+                            handleUpdate("phone_number", userData.phone_number)
+                          }
+                        >
+                          Thay đổi
+                        </button>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style={cellStyle}>Website</td>
+                      <td>
+                        <input
+                          value={userData.website}
+                          onChange={(e) =>
+                            setUserData({
+                              ...userData,
+                              website: e.target.value,
+                            })
+                          }
+                          style={inputStyle}
+                        />
+                      </td>
+                      <td>
+                        <button
+                          style={buttonStyle}
+                          onClick={() =>
+                            handleUpdate("phone_number", userData.website)
+                          }
+                        >
+                          Thay đổi
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-            ) : (
-              <p>Không có thông tin người dùng.</p>
-            )}
-            {/* Modal xác nhận */}
-            {showModal && (
-              <div style={modalStyle}>
-                <div style={modalContentStyle}>
-                  <h3>Xác nhận</h3>
-                  <p>Bạn có muốn gửi lại email xác minh không?</p>
-                  <button onClick={handleResendVerification}>Xác nhận</button>
-                  <button onClick={() => setShowModal(false)}>Hủy</button>
-                </div>
+              <div
+                style={{ flex: 1, display: "flex", justifyContent: "center" }}
+              >
+                <img
+                  src={userData.picture}
+                  alt="Profile"
+                  style={{
+                    width: "150px",
+                    height: "150px",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                  }}
+                />
               </div>
-            )}
-          </Container>
-        </div>
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
+            </div>
+          ) : (
+            <p>Không có thông tin người dùng.</p>
+          )}
+          {showModal && (
+            <div style={modalStyle}>
+              <div style={modalContentStyle}>
+                <h3>Xác nhận</h3>
+                <p>Bạn có muốn gửi lại email xác minh không?</p>
+                <button onClick={handleResendVerification}>Xác nhận</button>
+                <button onClick={() => setShowModal(false)}>Hủy</button>
+              </div>
+            </div>
+          )}
+        </Container>
       </div>
-      <div style={{ paddingTop: "50px", backgroundColor: "whitesmoke" }}>
-        <Footer />
-      </div>
+      <Footer />
     </>
   );
 }
@@ -307,10 +341,9 @@ const cellStyle = {
   fontWeight: "bold",
   fontSize: "20px",
   padding: "10px",
-  minWidth: "150px", // Set a minimum width for label cells
-  textAlign: "left", // Align text to the left
+  minWidth: "150px",
+  textAlign: "left",
 };
-
 const inputStyle = {
   width: "100%",
   backgroundColor: "white",
@@ -318,13 +351,11 @@ const inputStyle = {
   borderRadius: "4px",
   padding: "5px",
 };
-
 const buttonStyle = {
   backgroundColor: "white",
   color: "blue",
   border: "none",
 };
-
 const modalStyle = {
   position: "fixed",
   top: 0,
@@ -336,7 +367,6 @@ const modalStyle = {
   justifyContent: "center",
   alignItems: "center",
 };
-
 const modalContentStyle = {
   background: "white",
   padding: "20px",

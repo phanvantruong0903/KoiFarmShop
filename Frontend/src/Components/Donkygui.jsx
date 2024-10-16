@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from "react";
 import Footer from "./Footer";
 import Navbar from "./Navbar/Navbar";
-import { Button, ListGroup } from "react-bootstrap";
+import { Button, List, Typography, Spin, Alert, Layout } from "antd";
 import axiosInstance from "../An/Utils/axiosJS";
 
+const { Title, Text } = Typography;
+
 export default function DonKyGuiPage() {
-  const [consignList, setConsignList] = useState([]); // State cho danh sách consign
+  const [consignList, setConsignList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchConsignList = async () => {
       try {
-        const response = await axiosInstance(
+        const response = await axiosInstance.get(
           "http://localhost:4000/users/tat-ca-don-ki-gui"
         );
 
-        console.log("Data received from API:", response.data);
-
         if (response.data.result && response.data.result.data) {
-          console.log("Consign Data:", response.data.result.data);
           setConsignList(response.data.result.data);
         } else {
           console.error("No data found in result.");
@@ -35,71 +34,109 @@ export default function DonKyGuiPage() {
     fetchConsignList();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (loading) return <Spin size="large" />;
+  if (error) return <Alert message="Error" description={error} type="error" />;
 
   return (
     <>
-      <Navbar />
-      <div style={{ paddingTop: "100px", textAlign: "center" }}>
-        <h1>Ký Gửi</h1>
-      </div>
-      <div style={{ padding: "100px" }}>
-        <h2>Danh Sách Ký Gửi Của Khách Hàng</h2>
-        {consignList.length > 0 ? (
-          <ListGroup>
-            {consignList.map((item) => {
-              const { consign, koi } = item;
-              if (consign.State === 4) {
+      <Layout style={{ backgroundColor: "whitesmoke" }}>
+        <Navbar />
+        <div style={{ paddingTop: "100px", textAlign: "center" }}>
+          <Title>Ký Gửi</Title>
+        </div>
+        <div style={{ padding: "50px" }}>
+          <Title level={2}>Danh Sách Ký Gửi Của Khách Hàng</Title>
+          {consignList.length > 0 ? (
+            <List
+              itemLayout="vertical"
+              dataSource={consignList}
+              renderItem={(item) => {
+                const { consign, koi } = item;
                 return (
-                  <ListGroup.Item
+                  <List.Item
                     key={consign._id}
-                    style={{ marginBottom: "10px" }}
+                    style={{
+                      marginBottom: "10px",
+                      border: "1px solid #d9d9d9", // Light gray border
+                      borderRadius: "5px", // Rounded corners
+                      boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)", // Box shadow
+                      padding: "16px", // Padding inside the item
+                      backgroundColor: "#fff", // Background color
+                    }}
                   >
-                    <div style={{ display: "flex" }}>
-                      <h3 style={{ margin: 0, marginRight: "10px" }}>IKoi</h3>
-                      <Button variant="primary" style={{ marginRight: "20px" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <Text strong style={{ fontSize: "18px" }}>
+                        IKoi
+                      </Text>
+                      <Button type="primary" style={{ marginLeft: "20px" }}>
                         Chat Ngay
                       </Button>
                     </div>
                     <div style={{ textAlign: "right" }}>
-                      <p style={{ fontWeight: "bold" }}>
-                        State: {consign.Status}
-                      </p>
+                      {consign.State === 1 && (
+                        <Text strong>State: Yêu cầu ký gửi</Text>
+                      )}
+                      {consign.State === 2 && (
+                        <Text strong>State: Đang kiểm tra Koi</Text>
+                      )}
+                      {consign.State === 3 && (
+                        <Text strong>State: Đang thương thảo hợp đồng</Text>
+                      )}
+                      {consign.State === 4 && (
+                        <Text strong>State: Yêu cầu ký gửi</Text>
+                      )}
+                      {consign.State === 5 && (
+                        <Text strong>State: Đang tìm người mua</Text>
+                      )}
                     </div>
                     <hr />
                     <div style={{ display: "flex", alignItems: "center" }}>
                       <img
-                        src={koi.Image} // Sử dụng hình ảnh từ đối tượng koi
-                        alt={koi.KoiName}
+                        src={koi?.Image ?? ""}
+                        alt={koi?.KoiName ?? ""}
                         style={{
-                          width: "100px",
+                          width: "300px",
                           height: "auto",
                           marginRight: "20px",
                         }}
                       />
                       <div>
-                        <h5 style={{ margin: 0 }}>{koi.KoiName}</h5>
-                        <p style={{ margin: 0 }}>{koi.Description}</p>
-                        <p>Age: {koi.Age} years</p>
-                        <p>Price: {koi.Price || "N/A"}</p>
+                        <Text strong style={{ fontSize: "25px" }}>
+                          {koi?.KoiName ?? ""}
+                        </Text>
+                        <br />
+                        <Text strong style={{ fontSize: "25px" }}>
+                          Age: {koi?.Age ?? "N/A"} years
+                        </Text>
+                        <br />
+                        <Text strong style={{ fontSize: "25px" }}>
+                          Price: {koi?.Price ?? "N/A"}
+                        </Text>
+                        <br />
+                        <Text strong style={{ fontSize: "25px" }}>
+                          Description: {koi?.Description ?? "N/A"}
+                        </Text>
                       </div>
                     </div>
                     <hr />
                     <div style={{ textAlign: "right" }}>
-                      <span>TotalPrice: {consign.TotalPrice || "N/A"}</span>
+                      <Text>TotalPrice: {consign.TotalPrice || "N/A"}</Text>
                     </div>
-                  </ListGroup.Item>
+                  </List.Item>
                 );
-              }
-              return null;
-            })}
-          </ListGroup>
-        ) : (
-          <p>No consign items available.</p>
-        )}
-      </div>
-      <Footer />
+              }}
+            />
+          ) : (
+            <Text>No consign items available.</Text>
+          )}
+        </div>
+        <Footer />
+      </Layout>
     </>
   );
 }
