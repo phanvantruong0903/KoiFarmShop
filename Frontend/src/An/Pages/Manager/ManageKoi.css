@@ -23,3 +23,6 @@
 .add-new-card:hover .add-new-plus {
     color: #fff;
 }
+.do-not-show .dropdown-menu.show{
+    display: none;
+}
