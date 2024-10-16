@@ -16,7 +16,8 @@ export default function TableGen({
     isActive,
     setIsActive,
     handleRowAction,
-    showModal
+    showModal,
+    isSpecial
 }) {
 
     return (
@@ -85,14 +86,17 @@ export default function TableGen({
                                     </Dropdown.Item>
 
                                     <Dropdown.Item href="#/action-2">Edit</Dropdown.Item>
-                                    <Dropdown.Item
-                                        onMouseLeave={() => setIsActive(false)}
-                                        onMouseEnter={() => setIsActive(true)}
-                                        className={isActive ? 'bg-danger text-white' : ''}
-                                        onClick={() => handleRowAction(mock._id, 'delete')}
-                                    >
-                                        Delete
-                                    </Dropdown.Item>
+                                    
+                                    {!isSpecial && (
+                                        <Dropdown.Item
+                                            onMouseLeave={() => setIsActive(false)}
+                                            onMouseEnter={() => setIsActive(true)}
+                                            className={isActive ? 'bg-danger text-white' : ''}
+                                            onClick={() => handleRowAction(mock._id, 'delete')}
+                                        >
+                                            Delete
+                                        </Dropdown.Item>
+                                    )}
                                 </Dropdown.Menu>
                             </Dropdown>
                         </td>

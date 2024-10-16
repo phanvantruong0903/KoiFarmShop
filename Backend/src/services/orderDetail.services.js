@@ -41,10 +41,7 @@ class OrderDetailService {
                 TotalPrice: Number(koi.Price) // Khởi tạo với giá của koi
             }
         }
-
-        console.log('Updated TotalPrice:', order.TotalPrice) // Kiểm tra giá trị
-        const savedOrder = await this.saveOrderToDatabase(order)
-        return { order: savedOrder, koi }
+        return { order, koi }
     }
     async buyNow(payload, reqCookie) {
         const koi = await databaseService.kois.findOne({ _id: new ObjectId(payload.KoiID) })

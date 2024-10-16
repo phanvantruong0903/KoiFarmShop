@@ -9,7 +9,6 @@ import {
 } from '../controllers/orderDetailController.js'
 import { createOrderController, getOrderController } from '../controllers/order.controllers.js'
 import { accessTokenValidator } from '../middlewares/users.middlewares.js'
-import { wrapAsync } from '../utils/handle.js'
 
 const orderRouter = Router()
 
@@ -24,4 +23,6 @@ orderRouter.post('/create/:orderDTID', createOrderController)
 orderRouter.get('/',accessTokenValidator, wrapAsync(getOrderController))
 //Price
 orderRouter.post('/detail/price/minmax', getMinMaxPriceController)
+
+orderRouter.get('/testorder', testOrderController)
 export default orderRouter

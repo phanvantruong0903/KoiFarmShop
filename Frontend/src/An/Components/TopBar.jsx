@@ -1,17 +1,26 @@
 import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import { RxAvatar } from "react-icons/rx";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
+import { IoBarChartOutline } from "react-icons/io5";  
+import { PiChartLineUpLight } from "react-icons/pi";
 import "../Css/TopBar.css";
 
 export default function TopBar({ children, name, role }) {
   const { logout } = useAuth();
+  const location = useLocation(); 
+  const navigate = useNavigate();
+
+  const handleChartClick = () => {
+    const newPath = `${location.pathname}/barchart`; 
+    navigate(newPath);
+  };
 
   return (
     <>
       <Navbar bg="dark" expand="lg" className="TopBar">
         <Container fluid>
-          <Navbar.Brand style={{color:'white'}}  href="#home">IKOI</Navbar.Brand>
+          <Navbar.Brand style={{color:'white'}} href="#home">IKOI</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
@@ -44,6 +53,13 @@ export default function TopBar({ children, name, role }) {
                 >
                   Manage Koi
                 </NavDropdown.Item>
+                <NavDropdown.Item 
+                  as={Link} 
+                  to="/DashBoard/manager/ManageSupplier" 
+                  className="dropdown-item-custom"
+                >
+                  Manage Supplier
+                </NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item 
                   onClick={logout} 
@@ -56,12 +72,18 @@ export default function TopBar({ children, name, role }) {
                   {name} - {role}
                 </NavDropdown.Item>
               </NavDropdown>
+               <Nav.Link onClick={handleChartClick} className="chart-icon">
+                <IoBarChartOutline size={24} style={{ color: 'white', cursor: 'pointer' }} />
+              </Nav.Link>
+              <Nav.Link onClick={handleChartClick} className="chart-icon">
+                <PiChartLineUpLight size={24} style={{ color: 'white', cursor: 'pointer' }} />
+              </Nav.Link>
             </Nav>
 
             {/* Large screen layout */}
             <Nav className="ml-auto d-none d-lg-flex align-items-center">
               <span className="me-2 mobile-avatar">
-                Hello <br /> {name} - {role} world
+                Hello <br /> {name} Manager {role}
               </span>
               <Nav.Link href="#profile" >
                 <RxAvatar size={30} />

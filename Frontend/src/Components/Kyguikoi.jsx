@@ -236,7 +236,9 @@ export default function Kyguikoi() {
                     placeholder="Nhập địa chỉ email (name@example.com)"
                     required
                     name="email"
-                    value={userData && userData.email ? userData.email : ""} // Sử dụng email từ userData nếu có
+                    defaultValue={
+                      userData && userData.email ? userData.email : ""
+                    } // Sử dụng email từ userData nếu có
                   />
                 </Form.Group>
                 <Form.Group
@@ -250,7 +252,9 @@ export default function Kyguikoi() {
                     placeholder="Nhập địa chỉ"
                     required
                     name="address"
-                    value={userData && userData.address ? userData.address : ""} // Sử dụng địa chỉ từ userData nếu có
+                    defaultValue={
+                      userData && userData.address ? userData.address : ""
+                    } // Sử dụng địa chỉ từ userData nếu có
                   />
                 </Form.Group>
               </div>
@@ -266,7 +270,7 @@ export default function Kyguikoi() {
                     placeholder="Nhập Số Điện Thoại"
                     required
                     name="phone_number"
-                    value={
+                    defaultValue={
                       userData && userData.phone_number
                         ? userData.phone_number
                         : ""
@@ -284,7 +288,9 @@ export default function Kyguikoi() {
                     placeholder="Nhập FullName"
                     required
                     name="name"
-                    value={userData && userData.name ? userData.name : ""} // Sử dụng tên từ userData nếu có
+                    defaultValue={
+                      userData && userData.name ? userData.name : ""
+                    } // Sử dụng tên từ userData nếu có
                   />
                 </Form.Group>
               </div>
