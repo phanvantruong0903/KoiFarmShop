@@ -42,7 +42,7 @@ const CardGrid = ({ cardData }) => {
 
   // Chuyển đến trang đặt hàng khi nhấn vào hình ảnh koi (IKoi Fish)
   const handleOrderingForIKoi = (card) => {
-    navigate("/orderingikoi", { state: { selectedItem: groupedCards } }); // Pass the card as state
+    navigate("/orderingikoi", { state: { selectedItem: card } }); // Pass the card as state
   };
   const handleOrderingForJapanKoi = (card) => {
     navigate("/orderingjapankoi", { state: { selectedItem: card } }); // Pass the card as state
@@ -187,18 +187,32 @@ const CardGrid = ({ cardData }) => {
   return (
     <Container>
       <Row>
-        <Col>
-          <h5>Tổng số cá koi: {cardCount}</h5>
-        </Col>
+        {cardCount > 0 && (
+          <>
+            <h5>Tổng số cá koi: {cardCount}</h5>
+          </>
+        )}
       </Row>
-      <h1>Cá Ký Gửi</h1>
-      <Row>{cards}</Row>
+      {cards.length > 0 && (
+        <>
+          <h1>Cá Ký Gửi</h1>
+          <Row>{cards}</Row>
+        </>
+      )}
       <hr />
-      <h1>Cá Bên IKoi</h1>
-      <Row>{groupedCardComponents}</Row>
+      {groupedCardComponents.length > 0 && (
+        <>
+          <h1>Cá IKoi</h1>
+          <Row>{groupedCardComponents}</Row>
+        </>
+      )}
       <hr />
-      <h1>Cá Nhật</h1>
-      <Row>{japanCardComponents}</Row>
+      {japanCardComponents.length > 0 && (
+        <>
+          <h1>Cá Nhật</h1>
+          <Row>{japanCardComponents}</Row>
+        </>
+      )}
     </Container>
   );
 };

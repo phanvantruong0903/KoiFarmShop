@@ -33,6 +33,7 @@ import GioiThieuVeKoiNhat from "./Components/GioiThieuVeKoiNhat";
 import GioiThieuVeKoiF1 from "./Components/GioitThieuVeKoiF1";
 import OrderingIKoi from "./Components/OrderingIKoi";
 import OrderingJapanKoi from "./Components/OrderingJapanKoi";
+import changePassword from "./Components/ChangePassword";
 const Staff = lazy(() => import("../src/An/Pages/Staff"));
 const Manager = lazy(() => import("./An/Pages/Manager/Manager"));
 const Profiles = lazy(() => import("../src/An/Pages/Staff/Profiles"));
@@ -42,6 +43,8 @@ import "react-toastify/dist/ReactToastify.css"; // Import style cho toast
 import ShoppingCart from "./Components/ShoppingCart";
 import ResetPassword from "./An/Components/resetpassword";
 import ManageKoi from "./An/Pages/Manager/ManageKoi";
+import ChangePassword from "./Components/ChangePassword";
+
 const router = createBrowserRouter([
   {
     path: "/login/oauth",
@@ -132,8 +135,8 @@ const router = createBrowserRouter([
     element: <OrderPage />, // Home component
   },
   {
-    path:'users/reset-password',
-    element:<ResetPassword/>
+    path: "users/reset-password",
+    element: <ResetPassword />,
   },
   {
     path: "/trackingorder",
@@ -176,6 +179,10 @@ const router = createBrowserRouter([
     element: <OrderingJapanKoi />,
   },
   {
+    path: "/changepassword",
+    element: <ChangePassword />,
+  },
+  {
     path: "/cart",
     element: <ShoppingCart />,
   },
@@ -214,7 +221,7 @@ const router = createBrowserRouter([
             <ManageKoi />
           </Suspense>
         ),
-      }
+      },
     ],
   },
 ]);

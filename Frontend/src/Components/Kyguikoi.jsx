@@ -26,7 +26,7 @@ export default function Kyguikoi() {
   const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [categoryData, setCategoryData] = useState([]);
   const navigate = useNavigate();
-
+  const [userData, setUserData] = useState(null);
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -78,11 +78,21 @@ export default function Kyguikoi() {
         alert("Ngày nhận không được trước ngày gửi!");
         return;
       }
-      const imageRef = ref(storage, `images/${imageFile.name}`);
-      const videoRef = ref(storage, `videos/${videoFile.name}`);
+
+      const imageRef = ref(storage, `koiImages/${imageFile.name}`);
+      const videoRef = ref(storage, `koiVideos/${videoFile.name}`);
+
+      // Upload image
       await uploadBytes(imageRef, imageFile);
       const imageUrl = await getDownloadURL(imageRef);
+
+      // Upload video
+      await uploadBytes(videoRef, videoFile);
       const videoUrl = await getDownloadURL(videoRef);
+
+      console.log("Image URL:", imageUrl);
+      console.log("Video URL:", videoUrl);
+
       const dataToSend = {
         PositionCare: formData.get("PositionCare"),
         Method: formData.get("Method"),
@@ -99,8 +109,8 @@ export default function Kyguikoi() {
         address: formData.get("address"),
         KoiName: formData.get("KoiName"),
         Origin: formData.get("Origin"),
-        Image: imageUrl,
-        Video: videoUrl,
+        Image: imageUrl || "", // Ensure imageUrl is defined
+        Video: videoUrl || "", // Ensure videoUrl is defined
         CertificateID: formData.get("CertificateID"),
       };
       if (!phoneRegex.test(dataToSend.phone_number)) {
@@ -160,6 +170,25 @@ export default function Kyguikoi() {
     }
   };
   useEffect(() => {
+    const fetchUserData = async () => {
+      setLoading(true);
+      try {
+        const response = await axiosInstance.get("users/me");
+        if (response.data) {
+          setUserData(response.data.result);
+          console.log(userData);
+        } else {
+          console.error("Dữ liệu không hợp lệ:", response.data);
+        }
+      } catch (error) {
+        console.error("Có lỗi xảy ra khi lấy thông tin người dùng:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUserData();
+  }, []);
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:4000/getAllKoi");
@@ -201,12 +230,13 @@ export default function Kyguikoi() {
                   controlId="exampleForm.ControlInput1"
                   style={{ width: "100%" }}
                 >
-                  <Form.Label>Email Address (): </Form.Label>
+                  <Form.Label>Địa chỉ email (*): </Form.Label>
                   <Form.Control
                     type="email"
                     placeholder="Nhập địa chỉ email (name@example.com)"
                     required
                     name="email"
+                    value={userData && userData.email ? userData.email : ""} // Sử dụng email từ userData nếu có
                   />
                 </Form.Group>
                 <Form.Group
@@ -214,12 +244,13 @@ export default function Kyguikoi() {
                   controlId="exampleForm.ControlInput3"
                   style={{ width: "100%" }}
                 >
-                  <Form.Label>Địa chỉ (): </Form.Label>
+                  <Form.Label>Địa chỉ(*): </Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Nhập địa chỉ"
                     required
                     name="address"
+                    value={userData && userData.address ? userData.address : ""} // Sử dụng địa chỉ từ userData nếu có
                   />
                 </Form.Group>
               </div>
@@ -235,6 +266,11 @@ export default function Kyguikoi() {
                     placeholder="Nhập Số Điện Thoại"
                     required
                     name="phone_number"
+                    value={
+                      userData && userData.phone_number
+                        ? userData.phone_number
+                        : ""
+                    } // Sử dụng số điện thoại từ userData nếu có
                   />
                 </Form.Group>
                 <Form.Group
@@ -242,12 +278,13 @@ export default function Kyguikoi() {
                   controlId="exampleForm.ControlInput4"
                   style={{ width: "100%" }}
                 >
-                  <Form.Label>FullName (*): </Form.Label>
+                  <Form.Label>Tên người ký gửi (*): </Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Nhập FullName"
                     required
                     name="name"
+                    value={userData && userData.name ? userData.name : ""} // Sử dụng tên từ userData nếu có
                   />
                 </Form.Group>
               </div>
@@ -263,7 +300,7 @@ export default function Kyguikoi() {
                   controlId="exampleForm.ControlInput6"
                   style={{ width: "100%" }}
                 >
-                  <Form.Label>PositionCare (*): </Form.Label>
+                  <Form.Label>Nơi chăm sóc koi (*): </Form.Label>
                   <div
                     style={{
                       display: "flex",
@@ -294,7 +331,7 @@ export default function Kyguikoi() {
                   controlId="exampleForm.ControlInput6"
                   style={{ width: "100%" }}
                 >
-                  <Form.Label>Methods: </Form.Label>
+                  <Form.Label>Phương thức nhận koi(*): </Form.Label>
                   <div
                     style={{
                       display: "flex",
@@ -352,7 +389,7 @@ export default function Kyguikoi() {
               controlId="exampleForm.ControlInput9"
               style={{ width: "100%" }}
             >
-              <Form.Label>Description: </Form.Label>
+              <Form.Label>Chi tiết: </Form.Label>
               <Form.Control
                 as="textarea" // Thay đổi kiểu thành textarea
                 name="Description"
@@ -369,7 +406,7 @@ export default function Kyguikoi() {
             controlId="exampleForm.ControlSelect1"
             style={{ width: "100%" }}
           >
-            <Form.Label>Category(*): </Form.Label>
+            <Form.Label>Loại Cá(*): </Form.Label>
 
             <Form.Control as="select" name="CategoryID">
               <option value="">Chọn danh mục...</option>
@@ -385,7 +422,7 @@ export default function Kyguikoi() {
             controlId="exampleForm.ControlInput10"
             style={{ width: "100%" }}
           >
-            <Form.Label>KoiName (*): </Form.Label>
+            <Form.Label>Tên Loại Cá Koi (*): </Form.Label>
             <Form.Control
               type="text"
               placeholder="Nhập KoiName ( Category + Origin )"
@@ -413,7 +450,7 @@ export default function Kyguikoi() {
             controlId="exampleForm.ControlInput12"
             style={{ width: "100%" }}
           >
-            <Form.Label>Origin (*): </Form.Label>
+            <Form.Label>Nguồn Gốc (*): </Form.Label>
             <Form.Control
               type="text"
               placeholder="Nhập nguồn gốc"
@@ -426,7 +463,7 @@ export default function Kyguikoi() {
             controlId="exampleForm.ControlInput6"
             style={{ width: "100%" }}
           >
-            <Form.Label>Gender (*): </Form.Label>
+            <Form.Label>Giới Tính (*): </Form.Label>
             <div
               style={{
                 display: "flex",
@@ -457,7 +494,7 @@ export default function Kyguikoi() {
             controlId="exampleForm.ControlInput14"
             style={{ width: "100%" }}
           >
-            <Form.Label>Size (*): </Form.Label>
+            <Form.Label>Kích Thước (*) (cm): </Form.Label>
             <Form.Control
               type="number"
               placeholder="Nhập kích thước(cm)"
@@ -472,7 +509,7 @@ export default function Kyguikoi() {
             controlId="exampleForm.ControlInput6"
             style={{ width: "100%" }}
           >
-            <Form.Label>Breed (*): </Form.Label>
+            <Form.Label>Trạng Thái (*): </Form.Label>:
             <div
               style={{
                 display: "flex",
@@ -511,7 +548,9 @@ export default function Kyguikoi() {
             controlId="exampleForm.ControlInput17"
             style={{ width: "100%" }}
           >
-            <Form.Label>DailyFoodAmount(*) (đơn vị kg/ngày)</Form.Label>
+            <Form.Label>
+              Nhập lượng thức ăn / ngày(*) (đơn vị kg/ngày)
+            </Form.Label>
             <Form.Control
               type="number"
               placeholder="Nhập lượng thức ăn / ngày"
@@ -525,7 +564,7 @@ export default function Kyguikoi() {
             controlId="exampleForm.ControlInput18"
             style={{ width: "100%" }}
           >
-            <Form.Label>FilteringRatio(*) (%):</Form.Label>
+            <Form.Label>Nhập tỷ lệ lọc(*) (%):</Form.Label>
             <Form.Control
               type="number"
               placeholder="Nhập tỷ lệ lọc"

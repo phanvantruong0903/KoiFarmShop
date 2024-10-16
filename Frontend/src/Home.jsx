@@ -12,14 +12,14 @@ import "react-toastify/dist/ReactToastify.css";
 export default function Home() {
   const isAuthenticated = localStorage.getItem("accessToken");
   const location = useLocation();
-  const { message } = location.state || {}; // Access the message
+  const [lastMessage, setLastMessage] = useState("");
   // const logout = () => {
   //   localStorage.removeItem("accessToken");
   //   localStorage.removeItem("refreshToken");
   //   window.location.reload();
   // };
   const { googleAuthUrl, logout } = useAuth();
-  const toastShownRef = useRef(false);
+
   // const getGoogleAuthUrl = () => {
   //   const { VITE_GOOGLE_CLIENT_ID, VITE_GOOGLE_REDIRECT_URI } = import.meta.env;
   //   const url = "https://accounts.google.com/o/oauth2/v2/auth";
@@ -38,6 +38,19 @@ export default function Home() {
   // };
 
   // const googleAuthUrl = getGoogleAuthUrl();
+
+  useEffect(() => {
+    const { message } = location.state || {};
+
+    // Kiểm tra message từ localStorage
+    const storedMessage = localStorage.getItem("toastMessage");
+
+    if (message && message !== lastMessage && message !== storedMessage) {
+      toast.success(message); // Hiển thị toast chỉ khi message mới
+      setLastMessage(message); // Cập nhật lastMessage
+      localStorage.setItem("toastMessage", message); // Lưu message vào localStorage
+    }
+  }, [location.state, lastMessage]);
   const [menu, setMenu] = useState("home");
   console.log(localStorage);
   useEffect(() => {
@@ -69,13 +82,6 @@ export default function Home() {
   useEffect(() => {
     console.log("Dữ liệu đã nhận:", formData);
   }, [formData]);
-
-  useEffect(() => {
-    if (message && !toastShownRef.current) {
-      toast.success(message);
-      toastShownRef.current = true;
-    }
-  }, [message]);
 
   return (
     <>
@@ -205,19 +211,9 @@ export default function Home() {
           height: "100vh", // Đảm bảo chiều cao đủ để chiếm toàn bộ không gian
         }}
       ></div>
+
       <div>
         <Footer />
-      </div>
-      <div>
-        <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          closeOnClick
-          pauseOnHover
-          draggable
-          pauseOnFocusLoss
-        />
       </div>
     </>
   );

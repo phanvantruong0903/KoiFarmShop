@@ -17,6 +17,8 @@
     "dotenv": "^16.4.5",
     "firebase": "^10.14.0",
     "frontend": "file:",
+    "less": "^4.2.0",
+    "less-loader": "^12.2.0",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.4",

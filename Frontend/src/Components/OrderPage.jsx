@@ -15,10 +15,9 @@ const OrderPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
+  console.log(selectedItem);
   const handleAddToCart = async () => {
     if (!selectedItem || loading) return;
-
     setLoading(true);
     try {
       const response = await fetch("http://localhost:4000/order/detail/make", {
@@ -27,7 +26,6 @@ const OrderPage = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ KoiID: selectedItem._id }),
-        credentials: 'include',
       });
 
       if (!response.ok) {

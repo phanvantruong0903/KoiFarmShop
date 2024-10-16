@@ -25,3 +25,17 @@
   color: red;
   font-weight: bold;
 }
+.text-Style {
+  font-size: 20px;
+  font-weight: 400;
+}
+.paragraph-Style {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+}
+.span-Style {
+  font-weight: 600;
+  color: red;
+  font-size: 25px;
+}
