@@ -54,6 +54,7 @@ export const USERS_MESSAGES = {
   LOCATION_LENGTH_MUST_BE_LESS_THAN_200: 'Location length must be less than 200',
   WEBSITE_MUST_BE_A_STRING: 'Website must be a string',
   WEBSITE_LENGTH_MUST_BE_LESS_THAN_200: 'Website length must be less than 200',
+  WEBSITE_MUST_BE_A_VALID_URL: 'Website must be a valid URL',
   USERNAME_MUST_BE_A_STRING: 'Username must be a string',
   USERNAME_LENGTH_MUST_BE_LESS_THAN_50: 'Username length must be less than 50',
   UPDATE_ME_SUCCESS: 'Update me success',
@@ -117,6 +118,7 @@ export const USERS_MESSAGES = {
   GET_ORDER_SUCCESS: 'Get order success',
   UPDATE_ORDER_SUCCESS: 'Update order success',
   MAKE_ORDER_SUCCESS: 'Make order success',
+  BUY_ORDER_SUCCESS: 'Buy success',
   CREATE_ORDER_SUCCESS: 'Create order success',
 
   //check authorization

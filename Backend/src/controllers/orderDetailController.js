@@ -21,12 +21,12 @@ export const makeOrderDetailController = async (req, res) => {
 };
 export const buyNowController = async (req, res) => {
   try {
-    let reqCookie = req.cookies && req.cookies.order ? JSON.parse(req.cookies.order) : {}; // fix phải check có trong cookies trước
+    let reqCookie = req.cookies?.order
     reqCookie = {}; // tạo cookies mới cho func buyNow 
     const result = await orderDetailService.buyNow(req.body, reqCookie);
     console.log("result: ", result)
     return res.json({
-      message: USERS_MESSAGES.MAKE_ORDER_SUCCESS,
+      message: USERS_MESSAGES.BUY_ORDER_SUCCESS,
       result
     })
   } catch (error) {

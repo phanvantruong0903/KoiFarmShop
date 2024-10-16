@@ -54,7 +54,7 @@ export default function TableGen({
                             if (field === 'address') {
                                 return <td key={idx}>{isAddress(mock.address) ? mock.address : 'No address'}</td>;
                             }
-                            if (field === 'Status') {
+                            if (field === 'State') {
                                 const statusMap = {
                                     1: 'Deposit Requests',
                                     2: 'Koi Checks',
@@ -63,7 +63,7 @@ export default function TableGen({
                                     5: 'Fish Sales'
 
                                 };
-                                return <td key={idx}>{statusMap[mock.Status]}</td>;
+                                return <td key={idx}>{statusMap[mock.State]}</td>;
                             }
                             return <td key={idx}>{mock[field] || 'not provided'}</td>; // Default
                         })}

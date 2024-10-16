@@ -4,6 +4,10 @@ import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer";
 import CardGrid from "../Cardgrid";
 import axios from "axios";
+import { Layout } from "antd";
+import { Typography } from "antd";
+import "../Css/koiStyle.css";
+const { Title, Text, Paragraph } = Typography;
 export default function Koibenigoi() {
   const [menu, setMenu] = useState("home");
   const [cardData, setCardData] = useState([]);
@@ -16,70 +20,170 @@ export default function Koibenigoi() {
     const element = document.getElementById("1");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll2 = () => {
     const element = document.getElementById("2");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll3 = () => {
     const element = document.getElementById("3");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll31 = () => {
     const element = document.getElementById("31");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll32 = () => {
     const element = document.getElementById("32");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll33 = () => {
     const element = document.getElementById("33");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll4 = () => {
     const element = document.getElementById("4");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll5 = () => {
     const element = document.getElementById("5");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll6 = () => {
     const element = document.getElementById("6");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll7 = () => {
     const element = document.getElementById("7");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   useEffect(() => {
@@ -128,168 +232,73 @@ export default function Koibenigoi() {
   if (error) return <div>Error: {error.message}</div>;
   return (
     <>
-      <div>
-        <div>
-          <Navbar menu={menu} setMenu={setMenu} />
-        </div>
+      <Layout>
+        <Navbar menu={menu} setMenu={setMenu} />
         <Container>
           <div>
             <div style={{ paddingTop: "110px", textAlign: "center" }}>
               <img
                 src="src/assets/Red_Modern_Travel_Presentation__6_-removebg-preview.png"
-                style={{ paddingLeft: "1000px", marginTop: "-15px" }}
+                className="img1Style "
               />
-              <h1
-                style={{ marginTop: "-330px", fontWeight: "800", color: "red" }}
-              >
-                CÁ KOI BENIGOI
-              </h1>
+              <h1 className="nameOfKoi">CÁ KOI BENIGOI</h1>
               <hr />
             </div>
             <div>
-              <div
-                style={{
-                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
-                  padding: "20px",
-                  borderRadius: "10px",
-                  border: "2px solid rgba(0, 0, 0, 0.1)",
-                  border: "1px solid #797979",
-                  color: "black",
-                }}
-              >
+              <div className="body_StyleKoiOfPage ">
                 <h2>Nội Dung Bài Viết</h2>
                 <ul style={{ marginTop: "10px" }}>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll1}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll1} className="contentBox">
                       1. Giới thiệu cá Koi Benigoi
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll2}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll2} className="contentBox">
                       2. Cách nhận biết cá Koi Benigoi
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll3}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll3} className="contentBox">
                       3. Cách nhận biết cá Koi Benigoi
                     </span>
                     <ul>
                       <li>
-                        <span
-                          onClick={handleScroll31}
-                          style={{
-                            color: "blue",
-                            cursor: "pointer",
-                            fontWeight: "600",
-                            fontSize: "20px",
-                          }}
-                        >
+                        <span onClick={handleScroll31} className="contentBox">
                           3.1 Hình dáng
                         </span>
                       </li>
                       <li>
                         {" "}
-                        <span
-                          onClick={handleScroll32}
-                          style={{
-                            color: "blue",
-                            cursor: "pointer",
-                            fontWeight: "600",
-                            fontSize: "20px",
-                          }}
-                        >
+                        <span onClick={handleScroll32} className="contentBox">
                           3.2 Màu sắc
                         </span>
                       </li>
                       <li>
                         {" "}
-                        <span
-                          onClick={handleScroll33}
-                          style={{
-                            color: "blue",
-                            cursor: "pointer",
-                            fontWeight: "600",
-                            fontSize: "20px",
-                          }}
-                        >
+                        <span onClick={handleScroll33} className="contentBox">
                           3.3 Tiêu chí để chọn koi Goshiki nhỏ
                         </span>
                       </li>
                     </ul>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll4}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll4} className="contentBox">
                       4. Cách chăm sóc Cá Koi Goshiki
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll5}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll5} className="contentBox">
                       5. Ý nghĩa đối với phong thủy
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll6}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll6} className="contentBox">
                       6. Giá cá koi Goshiki bao nhiêu?
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll7}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll7} className="contentBox">
                       7. Tại sao nên mua Goshiki Koi tại Siêu thị Cá koi VN?
                     </span>
                   </li>
@@ -297,31 +306,23 @@ export default function Koibenigoi() {
               </div>
 
               <div>
-                <h2
-                  style={{
-                    fontWeight: "bold",
-                    color: "red",
-                    textAlign: "center",
-                  }}
-                >
-                  Nội dung chi tiết
-                </h2>
-                <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                <h2 className="noidungchitiet">Nội dung chi tiết</h2>
+                <Paragraph className="paragraph-Style">
                   Xuất xứ từ Nhật với vẻ đẹp thuần khiết và những ưu điểm nổi
                   trội, Cá Koi Goshiki đảm bảo sẽ đem đến cho các bạn những trải
                   nghiệm thú vị với những màu sắc tươi đẹp kết hợp lại tạo sức
                   hút đối với người xem. Hơn nữa, Goshiki Koi còn là giống cá
                   mang lại rất nhiều may mắn cho gia chủ, sẽ là một trải nghiệm
                   thú vị khi sở hữu chúng.
-                </p>
+                </Paragraph>
               </div>
               <div id="1">
                 <h3 style={{ color: "red" }}>
                   1. Giới thiệu về cá koi Goshiki{" "}
                 </h3>
                 <div>
-                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
-                    Trong tiếng Nhật, Goshiki có nghĩa là "ngũ sắc". Khi kết hợp
+                  <Paragraph className="paragraph-Style">
+                    Trong tiếng Nhật, Goshiki có nghĩa là ngũ sắc. Khi kết hợp
                     một con cá koi Asagi và một con cá koi Kohaku, ta sẽ tạo ra
                     dòng cá koi Goshiki. Điều này khiến cho những nhà tạo giống
                     cảm thấy ấn tượng vì sự phong phú màu sắc của loại cá này.
@@ -333,56 +334,58 @@ export default function Koibenigoi() {
                     Ai trên vùng Shiroji, ta sẽ có một con cá koi Kohaku. Điều
                     này cho thấy rằng một con cá koi Kohaku có thể có sự xuất
                     hiện của Asagi.
-                  </p>
+                  </Paragraph>
                 </div>
                 <div>
-                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
-                    Hiện có ba dòng cá koi Goshiki khác nhau.
-                  </p>
-                  <ul style={{ fontSize: "15px", fontWeight: "400" }}>
+                  <Text>Hiện có ba dòng cá koi Goshiki khác nhau.</Text>
+                  <ul>
                     <li>
-                      Dòng đầu tiên mang nhiều đặc điểm của Asagi, với dấu Ai
-                      xuất hiện trên toàn thân và cả trên Hi và Shiroji. Vùng Hi
-                      trên thân của chúng cũng phải đậm để các vảy có Ai phân bố
-                      đều trên toàn thân.
+                      <Paragraph className="paragraph-Style">
+                        Dòng đầu tiên mang nhiều đặc điểm của Asagi, với dấu Ai
+                        xuất hiện trên toàn thân và cả trên Hi và Shiroji. Vùng
+                        Hi trên thân của chúng cũng phải đậm để các vảy có Ai
+                        phân bố đều trên toàn thân.
+                      </Paragraph>
                     </li>
                     <li>
-                      Dòng cá koi Goshiki thứ hai, đã được lựa chọn kỹ càng, chỉ
-                      có Ai trên vùng Shiroji. Thường thì, chúng có dòng máu của
-                      Kohaku, và thiết kế Hi của chúng rất đậm.
+                      <Paragraph className="paragraph-Style">
+                        Dòng cá koi Goshiki thứ hai, đã được lựa chọn kỹ càng,
+                        chỉ có Ai trên vùng Shiroji. Thường thì, chúng có dòng
+                        máu của Kohaku, và thiết kế Hi của chúng rất đậm.
+                      </Paragraph>
                     </li>
                     <li>
-                      Dòng cá koi Goshiki thứ ba có thêm dòng máu của Haijiro,
-                      cùng huyết hệ với Goshiki. Điều này khiến cho vây ngực của
-                      chúng có Motoguro, một đặc tính đến từ Haijiro. Loại cá
-                      này được tạo ra thông qua lai tạo với Haijiro, chứ không
-                      phải là sự lựa chọn từ Goshiki.
+                      <Paragraph className="paragraph-Style">
+                        Dòng cá koi Goshiki thứ ba có thêm dòng máu của Haijiro,
+                        cùng huyết hệ với Goshiki. Điều này khiến cho vây ngực
+                        của chúng có Motoguro, một đặc tính đến từ Haijiro. Loại
+                        cá này được tạo ra thông qua lai tạo với Haijiro, chứ
+                        không phải là sự lựa chọn từ Goshiki.
+                      </Paragraph>
                     </li>
                   </ul>
                 </div>
                 <div style={{ textAlign: "center" }}>
-                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                  <Paragraph className="paragraph-Style">
                     Ginrin Goshiki được tạo ra thông qua việc phối giống giữa
                     một con Ginrin Kohaku và một con Goishiki. Chogoroun là một
                     nhà nhân giống nổi tiếng nhưng chỉ sản xuất được ít con lai
                     đẹp. Loại cá này chỉ thật sự thu hút khi đến 2 tuổi. Goshiki
                     Sanke được tạo ra thông qua việc phối giống giữa một con
                     Asagi và một con Sanke.
-                  </p>
+                  </Paragraph>
                   <img
                     src="src/assets/Koi-Goshiki/ca-koi-goshiki-3 (1).webp"
                     style={{ width: "50%" }}
                   />
-                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
-                    Cá Koi Goshiki vô cùng nổi bật
-                  </p>
+                  <Text>Cá Koi Goshiki vô cùng nổi bật</Text>
                 </div>
               </div>
 
               <div id="2">
                 <h3 style={{ color: "red" }}>2. Cách nhận biết Goshiki Koi</h3>
                 <div>
-                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                  <Paragraph className="paragraph-Style">
                     Để trở thành một con cá koi Goshiki đẹp, nó cần phải có nét
                     đẹp của dòng máu Kohaku với những vết Ai chỉ nên xuất hiện
                     trên vùng Shiroji. Nếu một con cá có nhiều dòng máu Asagi,
@@ -390,46 +393,47 @@ export default function Koibenigoi() {
                     cá. Goshiki không được có ánh kim và không nên bị lẫn lộn
                     với một con Kujaku hoặc một con koi Goromo, hai loại cá chỉ
                     có vệt màu khác duy nhất trên vùng Hi.
-                  </p>
+                  </Paragraph>
                   <ul>
                     <li>
-                      Điểm đầu tiên để nhận biết một con Goshiki đẹp là khuôn
-                      màu của nó giống như Kohaku, với những bệt màu Hi lớn trên
-                      vùng Shiroji.
+                      <Paragraph className="paragraph-Style">
+                        Điểm đầu tiên để nhận biết một con Goshiki đẹp là khuôn
+                        màu của nó giống như Kohaku, với những bệt màu Hi lớn
+                        trên vùng Shiroji.
+                      </Paragraph>
                     </li>
                     <li>
-                      Điểm thứ hai là tối thiểu những vảy của vùng Shiroji phải
-                      có bong mờ trên gờ vẩy.
+                      <Paragraph className="paragraph-Style">
+                        Điểm thứ hai là tối thiểu những vảy của vùng Shiroji
+                        phải có bong mờ trên gờ vẩy.
+                      </Paragraph>
                     </li>
                     <li>
-                      Điểm thứ ba là màu sắc của những bệt màu là Hi, nhưng đôi
-                      khi cũng có bệt màu Ai nằm lên trên.
+                      <Paragraph className="paragraph-Style">
+                        Điểm thứ ba là màu sắc của những bệt màu là Hi, nhưng
+                        đôi khi cũng có bệt màu Ai nằm lên trên.
+                      </Paragraph>
                     </li>
                   </ul>
                 </div>
                 <div style={{ textAlign: "center" }}>
                   <img src="src/assets/Koi-Goshiki/ca-koi-goshiki-2.webp" />
-                  <p>Dòng cá Koi Kuro Goshiki</p>
+                  <Text>Dòng cá Koi Kuro Goshiki</Text>
                 </div>
               </div>
               <div id="3">
                 <h3 style={{ color: "red" }}>3. Cách chọn mua cá Koi Ginrin</h3>
                 <div>
-                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                  <Paragraph className="paragraph-Style">
                     Những người đã có kinh nghiệm với việc nuôi và chơi Koi sẽ
                     hiểu được rằng, để đánh giá được phẩm chất tương lai của một
                     con cá Koi Goshiki, ta cần phải quan sát kỹ càng và chăm sóc
                     nó thật tốt.
-                  </p>
+                  </Paragraph>
                   <ul style={{ fontSize: "15px", fontWeight: "400" }}>
                     <li>
-                      <span
-                        id="31"
-                        style={{ fontSize: "20px", fontWeight: "600" }}
-                      >
-                        3.1 Hình dáng
-                      </span>
-                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                      <span id="31">3.1 Hình dáng</span>
+                      <Paragraph className="paragraph-Style">
                         Về hình dáng, Koi Goshiki cần có thân hình như một chiếc
                         tàu ngầm, với bụng không quá phệ, phình hay ngắt quãng
                         quá sâu như dáng cá nóc. Điểm đầu và điểm kết thúc của
@@ -440,31 +444,21 @@ export default function Koibenigoi() {
                         sáng, sạch, nhắn, min và trơn bóng. Chọn Koi da nhờ nhợ,
                         mờ nhạt, tróc vẩy hoặc trầy xước là điều tuyệt đối không
                         nên làm.
-                      </p>
+                      </Paragraph>
                     </li>
                     <li>
-                      <span
-                        id="32"
-                        style={{ fontSize: "20px", fontWeight: "600" }}
-                      >
-                        3.2 Màu sắc
-                      </span>
-                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                      <span id="32">3.2 Màu sắc</span>
+                      <Paragraph className="paragraph-Style">
                         Về màu sắc, Koi Goshiki cần có khuôn màu đẹp của Kohaku,
                         với khoang màu đậm và rõ nét. Đường biên của các khoang
                         màu cần được xác định rõ ràng, không bị lem nhem. Vệt Ai
                         chỉ nên xuất hiện ở vùng Shiroji và không nên xuất hiện
                         ở vùng Hi.
-                      </p>
+                      </Paragraph>
                     </li>
                     <li>
-                      <span
-                        id="33"
-                        style={{ fontSize: "20px", fontWeight: "600" }}
-                      >
-                        3.3 Tiêu chí để chọn koi Goshiki nhỏ
-                      </span>
-                      <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                      <span id="33">3.3 Tiêu chí để chọn koi Goshiki nhỏ</span>
+                      <Paragraph className="paragraph-Style">
                         Khi chọn một con Koi Goshiki nhỏ, ta cần chọn con cá
                         mang dòng máu của Kohaku nhiều hơn và điểm Ai nên được
                         giới hạn ở trên vùng Shiroji. Nếu Koi Goshiki mang dòng
@@ -479,13 +473,13 @@ export default function Koibenigoi() {
                         hơn và có thể xuất hiện trên cả điểm vảy của Hi. Khi
                         nuôi Koi Goshiki kiểu cũ, con cá sẽ có xu hướng tối màu
                         cuối cùng có thể giống với Koi màu xám đen
-                      </p>
+                      </Paragraph>
                     </li>
                   </ul>
                 </div>
                 <div style={{ textAlign: "center" }}>
                   <img src="src/assets/Koi-Goshiki/ca-koi-goshiki-1.webp" />
-                  <p>Các dòng Cá Koi Goshiki</p>
+                  <Text>Các dòng Cá Koi Goshiki</Text>
                 </div>
               </div>
               <div id="4">
@@ -493,59 +487,71 @@ export default function Koibenigoi() {
                   4. Cách chăm sóc Cá Koi Goshiki
                 </h3>
                 <div>
-                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                  <Paragraph className="paragraph-Style">
                     Cá Koi Goshiki là dòng cá đẹp xuất xứ từ Nhật bản mang lại
                     sự sung túc, may mắn. Được rất nhiều người yêu thích và nuôi
                     dưỡng trong gia đình, có ý nghĩa về cả phong thủy lẫn thẩm
                     mỹ. Hãy cùng tìm hiểu về cách chăm sóc cho các koi nói chung
                     và Goshiki Koi nói riêng để có thể nuôi dưỡng đàn cá của
                     mình một cách khỏe mạnh nhé:
-                  </p>
+                  </Paragraph>
                   <ul style={{ fontSize: "15px", fontWeight: "400" }}>
                     <li>
-                      Yêu cầu phải chuẩn bị hồ nuôi, nguồn nước phù hợp với đàn
-                      cá. Không dùng nguồn nước bẩn cũng như diện tích hồ quá
-                      nhỏ, quá cạn.
+                      <Paragraph className="paragraph-Style">
+                        Yêu cầu phải chuẩn bị hồ nuôi, nguồn nước phù hợp với
+                        đàn cá. Không dùng nguồn nước bẩn cũng như diện tích hồ
+                        quá nhỏ, quá cạn.
+                      </Paragraph>
                     </li>
                     <li>
-                      Khi đưa cá về thả cần tắm thuốc tím giúp cá phòng và chữa
-                      bệnh. Sử dụng thuốc tím trong hồ cũng giúp khử vi khuẩn,
-                      diệt tảo giúp cá luôn khỏe mạnh.
+                      <Paragraph className="paragraph-Style">
+                        Khi đưa cá về thả cần tắm thuốc tím giúp cá phòng và
+                        chữa bệnh. Sử dụng thuốc tím trong hồ cũng giúp khử vi
+                        khuẩn, diệt tảo giúp cá luôn khỏe mạnh.
+                      </Paragraph>
                     </li>
                     <li>
-                      Thường xuyên vệ sinh hồ nuôi, sử dụng các phương pháp lọc
-                      hồ để lọc sạch các chất thải. Dùng rong, tảo lượng vừa đủ
-                      thả vào hồ nuôi sẽ tạo nên môi trường sinh thái tốt cho cá
-                      phát triển
+                      <Paragraph className="paragraph-Style">
+                        Thường xuyên vệ sinh hồ nuôi, sử dụng các phương pháp
+                        lọc hồ để lọc sạch các chất thải. Dùng rong, tảo lượng
+                        vừa đủ thả vào hồ nuôi sẽ tạo nên môi trường sinh thái
+                        tốt cho cá phát triển
+                      </Paragraph>
                     </li>
                     <li>
-                      Là giống cá ăn tạp nên Goshiki ăn 1-2 lần / ngày. Mỗi lần
-                      cho ăn bạn không nên cho dư thừa sẽ làm ô nhiễm nguồn
-                      nước. Thức ăn của cá nên để nơi thoáng mát tránh ảnh hưởng
-                      đến sức khỏe của đàn cá.
+                      <Paragraph className="paragraph-Style">
+                        Là giống cá ăn tạp nên Goshiki ăn 1-2 lần / ngày. Mỗi
+                        lần cho ăn bạn không nên cho dư thừa sẽ làm ô nhiễm
+                        nguồn nước. Thức ăn của cá nên để nơi thoáng mát tránh
+                        ảnh hưởng đến sức khỏe của đàn cá.
+                      </Paragraph>
                     </li>
                     <li>
-                      Để phòng bệnh cho Goshiki thì chúng ta cần thường xuyên
-                      quan sát hồ nuôi cũng như các biểu hiện của đàn cá. Kiểm
-                      tra xử lý rong, tảo kịp thời, kiểm tra hệ thống lọc nước
-                      còn ổn định không….
+                      <Paragraph className="paragraph-Style">
+                        Để phòng bệnh cho Goshiki thì chúng ta cần thường xuyên
+                        quan sát hồ nuôi cũng như các biểu hiện của đàn cá. Kiểm
+                        tra xử lý rong, tảo kịp thời, kiểm tra hệ thống lọc nước
+                        còn ổn định không….
+                      </Paragraph>
                     </li>
                     <li>
-                      Nên tìm hiểu và lựa chọn nguồn thức ăn cho Goshiki có
-                      nguồn gốc, đảm bảo an toàn.
+                      <Paragraph className="paragraph-Style">
+                        Nên tìm hiểu và lựa chọn nguồn thức ăn cho Goshiki có
+                        nguồn gốc, đảm bảo an toàn.
+                      </Paragraph>
                     </li>
                   </ul>
-                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                  <Paragraph className="paragraph-Style">
                     Trên đây là một số cách chăm sóc cá koi Goshiki đơn giản và
                     khoa học mà bên siêu thị Cá Koi VN muốn gửi đến quý khách
                     hàng. Chúc bạn sẽ áp dụng và chăm sóc đàn cá khỏe mạnh.
-                  </p>
+                  </Paragraph>
                 </div>
               </div>
               <div id="5">
                 <h3 style={{ color: "red" }}>5. Ý nghĩa đối với phong thủy </h3>
                 <div>
-                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                  <Paragraph className="paragraph-Style">
                     Trong văn hóa Nhật Bản, Koi Goshiki được coi là mang lại sự
                     mạnh mẽ, giàu có và sức khỏe cho gia đình chủ nhân. Được tạo
                     ra bằng cách kết hợp giữa bố mẹ Koi Kohaku và Koi Asagi, Koi
@@ -555,7 +561,7 @@ export default function Koibenigoi() {
                     sumi đen (thuộc hành Thủy). Với sự kết hợp này, Koi Goshiki
                     phù hợp với nhiều mệnh khác nhau và là lựa chọn lý tưởng cho
                     những ai yêu thích nuôi cá Koi.
-                  </p>
+                  </Paragraph>
                 </div>
               </div>
               <div id="6">
@@ -563,24 +569,28 @@ export default function Koibenigoi() {
                   6. Giá cá koi Goshiki bao nhiêu?{" "}
                 </h3>
                 <div>
-                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                  <Paragraph className="paragraph-Style">
                     Hiện tại Siêu thị Cá Koi Vn đang cung cấp dòng cá koi
                     Goshiki chuẩn từ cá nhật đến cá F1 với giá cực kỳ ưu đãi. Có
                     thể nói Siêu thị Cá Koi VN là một trong những đơn vị cung
                     cấp cá koi với giá rẻ nhất thị trường, mà chất lượng cũng
                     rất đảm bảo. Giá cá koi nhật và f1 như sau:
-                  </p>
+                  </Paragraph>
                   <ul style={{ fontSize: "15px", fontWeight: "400" }}>
                     <li>
-                      Một con cá Koi trưởng thành Nhật Bản như Goshiki koi với
-                      kích thước từ 20-25cm sẽ có giá từ 1.600.000 –
-                      4.500.000VNĐ/con.
+                      <Paragraph className="paragraph-Style">
+                        Một con cá Koi trưởng thành Nhật Bản như Goshiki koi với
+                        kích thước từ 20-25cm sẽ có giá từ 1.600.000 –
+                        4.500.000VNĐ/con.
+                      </Paragraph>
                     </li>
                     <li>
-                      Ngoài ra còn có con Goshiki Koi thuần chủng … được xếp vào
-                      hàng hiếm có kích thước lớn thì giá cá koi lên đến vài
-                      nghìn đến hàng chục nghìn USD. Do đó nếu bạn muốn mua hãy
-                      liên hệ với chúng tôi để được tư vấn tận tình.
+                      <Paragraph className="paragraph-Style">
+                        Ngoài ra còn có con Goshiki Koi thuần chủng … được xếp
+                        vào hàng hiếm có kích thước lớn thì giá cá koi lên đến
+                        vài nghìn đến hàng chục nghìn USD. Do đó nếu bạn muốn
+                        mua hãy liên hệ với chúng tôi để được tư vấn tận tình.
+                      </Paragraph>
                     </li>
                   </ul>
                 </div>
@@ -590,7 +600,7 @@ export default function Koibenigoi() {
                   7. Tại sao nên mua Goshiki Koi tại Siêu thị Cá koi VN?
                 </h3>
                 <div>
-                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                  <Paragraph className="paragraph-Style">
                     Cá Koi Goshiki và cá koi Karashi không chỉ là loài cá đẹp mà
                     nó còn mang ý nghĩa đem đến sức mạnh, tiền bạc cho chủ nhân.
                     Vì vậy Goshiki được rất nhiều người quan tâm để mua nuôi.
@@ -615,7 +625,7 @@ export default function Koibenigoi() {
                     ngay Cá Koi VN để để được giải đáp thắc mắc một cách nhanh
                     chóng. Chắc chắn rằng địa chỉ này sẽ mang đến cho bạn những
                     trải nghiệm chất lượng và uy tín.
-                  </p>
+                  </Paragraph>
                 </div>
               </div>
             </div>
@@ -633,10 +643,9 @@ export default function Koibenigoi() {
         <div>
           <CardGrid cardData={filteredCards} />
         </div>
-        <div>
-          <Footer />
-        </div>
-      </div>
+
+        <Footer />
+      </Layout>
     </>
   );
 }

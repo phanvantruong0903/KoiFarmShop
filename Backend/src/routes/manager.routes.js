@@ -1,8 +1,16 @@
-import { createNewServiceController, updateOrderStatusController, updateServiceController } from '../controllers/manager.controllers.js'
+import {
+  createNewServiceController,
+  getProfitController,
+  getRevenueController,
+  updateOrderStatusController,
+  updateServiceController
+} from '../controllers/manager.controllers.js'
 import {
   createCategoryController,
   createNewKoiController,
+  createNewSupplierController,
   getAllConsignController,
+  getAllSupplierController,
   getAllUserController,
   getConsignDetailController,
   updateConsignDetailController,
@@ -96,6 +104,8 @@ managerRouter.put(
   wrapAsync(updateConsignDetailController)
 )
 
+managerRouter.post('/manage-supplier/create-new-supplier', accessTokenValidator, isAdminValidator, wrapAsync(createNewSupplierController))
+
 managerRouter.post(
   '/manage-service/create-new-service',
   accessTokenValidator,
@@ -110,6 +120,24 @@ managerRouter.put(
   wrapAsync(updateServiceController)
 )
 
-managerRouter.patch('/order/updateOrderStatus/:OrderID',wrapAsync(updateOrderStatusController))
+managerRouter.patch(
+  '/order/updateOrderStatus/:OrderID',
+  accessTokenValidator,
+  isAdminValidator,
+  wrapAsync(updateOrderStatusController)
+)
+
+managerRouter.post(
+  '/manage-supplier/create-new-supplier',
+  accessTokenValidator,
+  isAdminValidator,
+  wrapAsync(createNewSupplierController)
+)
+
+managerRouter.get('/getRevenue', accessTokenValidator, isAdminValidator, wrapAsync(getRevenueController))
+
+managerRouter.get('/getProfit',wrapAsync(getProfitController))
+
+managerRouter.get('/manage-supplier/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getAllSupplierController))
 
 export default managerRouter
