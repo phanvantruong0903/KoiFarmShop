@@ -42,7 +42,6 @@ export default function Navbar() {
 
   const handleStateSignUp = () => {
     navigate("/Login", { state: { type: "signUp" } });
-    toast.info("Vui lòng đăng ký!");
   };
 
   return (

@@ -6,6 +6,8 @@ import axiosInstance from "../An/Utils/axiosJS";
 import { useState } from "react";
 
 export default function ChangePassword() {
+  const [form] = Form.useForm(); // Tạo form instance
+
   const handleChangePassword = async (values) => {
     try {
       const { old_password, password, confirm_password } = values;
@@ -35,26 +37,34 @@ export default function ChangePassword() {
       // Check for success response
       if (response.data && response.data.success) {
         alert(response.data.message);
+        form.resetFields(); // Reset fields after successful update
       } else {
         alert(response.data.message);
       }
     } catch (error) {
       // Handle the error response
       if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
         console.error("Error updating password:", error.response.data);
         alert(error.response.data.message || "Cập nhật thất bại.");
       } else {
-        // Something happened in setting up the request that triggered an Error
         console.error("Error updating password:", error.message);
         alert("Cập nhật thất bại.");
       }
     }
   };
+
+  const onSubmit = async () => {
+    try {
+      const values = await form.validateFields(); // Validate fields
+      await handleChangePassword(values); // Call the handler with validated values
+    } catch (error) {
+      console.error("Validation Failed:", error);
+    }
+  };
+
   return (
     <>
-      {/* //Navbar Component */}
+      {/* Navbar Component */}
       <Layout>
         <Navbar />
 
@@ -68,8 +78,9 @@ export default function ChangePassword() {
                   style={{ width: 800 }}
                 >
                   <Form
+                    form={form} // Pass form instance
                     id="change-password-form"
-                    onFinish={handleChangePassword}
+                    onFinish={onSubmit} // Use onSubmit function
                   >
                     <Form.Item
                       label="Mật khẩu cũ"
@@ -118,8 +129,7 @@ export default function ChangePassword() {
             </Col>
           </Row>
         </div>
-        {/* // Footer Component */}
-
+        {/* Footer Component */}
         <Footer />
       </Layout>
     </>
