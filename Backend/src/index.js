@@ -7,7 +7,7 @@ import { defaultErrorHandler } from './middlewares/error.middlewares.js'
 import cors from 'cors' // Thêm import cho cors
 
 import managerRouter from './routes/manager.routes.js'
-import { authorizationController, createNewKoiKiGuiController, getCategory } from './controllers/common.controllers.js'
+import { authorizationController, createNewKoiKiGuiController, getCategory, getKoiByIDController } from './controllers/common.controllers.js'
 import { getKoiByCategoryIDController } from './controllers/home.controllers.js'
 
 import { createNewKoiKiGuiValidator } from './middlewares/common.middlewares.js'
@@ -45,8 +45,9 @@ app.use('/users', usersRouter)
 app.get('/categories/getCategory', getCategory)
 
 app.use('/manager', managerRouter)
+app.get('/koi/:KoiID', wrapAsync(getKoiByIDController))
 app.use('/kois/:CategoryID', getKoiByCategoryIDController)
-app.use('/getAllKoi', getAllKoiController)
+app.use('/getAllKoi', wrapAsync(getAllKoiController))
 app.use('/order', orderRouter)
 
 app.post('/authorization', accessTokenValidator, authorizationController)

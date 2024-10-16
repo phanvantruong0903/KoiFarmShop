@@ -64,3 +64,15 @@ export const getAllServiceController = async (req, res) => {
     })
   }
 }
+
+export const getKoiByIDController = async (req, res) => {
+  try {
+    const { KoiID } = req.params
+    const result = await databaseService.kois.find({ _id: new ObjectId(KoiID) })
+    res.json({
+      result
+    })
+  } catch (error) {
+    res.status(404).json({ messga: 'Koi not found' })
+  }
+}
