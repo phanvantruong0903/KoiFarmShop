@@ -4,14 +4,7 @@ import ordersService from '../services/orders.Service.js';
 
 export const createOrderController = async (req, res) => {
   try {
-    const { type } = req.body; // Nhận type từ request (cart hoặc buyNow)
-    let result;
-
-    if (type === 'buyNow') {
-      result = await ordersService.createBuyNowOrder(req.body);
-    } else {
-      result = await ordersService.createCartOrder(req.body, req.params);
-    }
+    const result = await ordersService.createOrder(req.body, req.params)
 
     console.log("result: ", result)
     return res.json({

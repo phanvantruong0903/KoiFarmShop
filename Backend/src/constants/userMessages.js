@@ -114,10 +114,13 @@ export const USERS_MESSAGES = {
   KOI_VIDEO_IS_REQUIRED: 'Koi video is required',
   //koi quantity
   GET_AVAILABLE_KOI_QUANTITY: 'Get available koi quantity success',
+  //koi price
+  GET_MIN_MAX_PRICE: 'Get min max price of koi success',
   //order
   GET_ORDER_SUCCESS: 'Get order success',
   UPDATE_ORDER_SUCCESS: 'Update order success',
   MAKE_ORDER_SUCCESS: 'Make order success',
+  BUY_ORDER_SUCCESS: 'Buy success',
   CREATE_ORDER_SUCCESS: 'Create order success',
 
   //check authorization
