@@ -199,16 +199,18 @@ const CardGrid = ({ cardData }) => {
           <Row>{cards}</Row>
         </>
       )}
-      <hr />
+
       {groupedCardComponents.length > 0 && (
         <>
+          <hr />
           <h1>Cá IKoi</h1>
           <Row>{groupedCardComponents}</Row>
         </>
       )}
-      <hr />
+
       {japanCardComponents.length > 0 && (
         <>
+          <hr />
           <h1>Cá Nhật</h1>
           <Row>{japanCardComponents}</Row>
         </>
