@@ -20,6 +20,11 @@ export default function useFilter(data, filterType) {
           Status: '', Method: '', location: ''
         }
       }
+      else if (filterType === 'supplier') {
+        return {
+          Country: ''
+        }
+      }
 
     }
   
@@ -63,6 +68,12 @@ export default function useFilter(data, filterType) {
       const matchesMethod = filterList.Method ? item.method === filterList.Method : true;
       const matchesLocation = filterList.location ? item.location === filterList.location : true
       return matchesStatus && matchesMethod && matchesLocation;
+    }
+    else if (filterType === 'supplier') {
+      // For suppliers
+      const matchesCountry = filterList.Country ? item.Country === filterList.Country : true;
+      const matchesSearch = item.SupplierName.toLowerCase().includes(searchTerm.toLowerCase());
+      return matchesCountry && matchesSearch;
     }
   });
 

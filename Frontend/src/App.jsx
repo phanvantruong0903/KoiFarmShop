@@ -43,6 +43,7 @@ import "react-toastify/dist/ReactToastify.css"; // Import style cho toast
 import ShoppingCart from "./Components/ShoppingCart";
 import ResetPassword from "./An/Components/resetpassword";
 import ManageKoi from "./An/Pages/Manager/ManageKoi";
+import ManageSupplier from "./An/Pages/Manager/ManageSupplier";
 import ChangePassword from "./Components/ChangePassword";
 import FormFillInformation from "./Components/FormFillInformation";
 
@@ -216,6 +217,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Spinner />}>
             <Manager /> {/* Manager component */}
+          </Suspense>
+        ),
+      },
+      {
+        path: "manager/ManageSupplier",
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <ManageSupplier />
           </Suspense>
         ),
       },

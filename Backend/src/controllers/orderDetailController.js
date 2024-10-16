@@ -10,7 +10,6 @@ export const makeOrderDetailController = async (req, res) => {
         httpOnly: true,
         maxAge: 1800000 // 30 mins
       });
-    console.log("result: ", result)
     return res.json({
       message: USERS_MESSAGES.MAKE_ORDER_SUCCESS,
       result

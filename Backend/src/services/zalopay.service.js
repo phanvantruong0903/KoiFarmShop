@@ -12,7 +12,6 @@ const zaloPayment = async (req, res) => {
 
   const embed_data = {
     redirecturl: 'https://www.facebook.com/',
-    OrderID: req.body.OrderID
   }
 
   const items = [{}]
@@ -25,7 +24,7 @@ const zaloPayment = async (req, res) => {
     item: JSON.stringify(items),
     embed_data: JSON.stringify(embed_data),
     amount: req.body.total,
-    description: `KOI Shop - Payment for the order #${req.body.OrderID}`,
+    description: `KOI Shop - Payment for the order + ${Math.floor(100000 + Math.random() * 900000)}`,
     bank_code: '',
     callback_url: 'https://8973-171-247-187-77.ngrok-free.app/payment/callback'
   }
@@ -36,7 +35,6 @@ const zaloPayment = async (req, res) => {
 
   try {
     const result = await axios.post(config.endpoint, null, { params: order })
-    console.log(result.data)
     res.json(result.data) // Gửi phản hồi về phía client
   } catch (error) {
     console.log(error.message)

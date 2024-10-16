@@ -11,7 +11,7 @@ export const momoPayment = async (req, res) => {
   const ipnUrl = 'https://8973-171-247-187-77.ngrok-free.app/payment/momoCallback';
   const requestType = 'payWithMethod';
   const amount = req.body.total;
-  const orderId = req.body.OrderID;
+  const orderId = Math.floor(100000 + Math.random() * 900000);
   const requestId = orderId;
   const extraData = '';
   const orderGroupId = '';
