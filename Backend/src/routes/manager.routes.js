@@ -5,7 +5,8 @@ import {
   getAllSupplierController,
   getAllUserController,
   getConsignDetailController,
-  updateConsignDetailController
+  updateConsignDetailController,
+  updateSupplierController
 } from '../controllers/manager.controllers.js'
 import { getProfileController } from '../controllers/users.controllers.js'
 import { isAdminValidator } from '../middlewares/manager.middlewares.js'
@@ -49,5 +50,8 @@ managerRouter.put('/manage-ki-gui/:_id', accessTokenValidator, isAdminValidator,
 managerRouter.post('/manage-supplier/create-new-supplier', accessTokenValidator, isAdminValidator, wrapAsync(createNewSupplierController))
 
 managerRouter.get('/manage-supplier/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getAllSupplierController))
+
+managerRouter.put('/manage-supplier/:_id', accessTokenValidator, isAdminValidator, wrapAsync(updateSupplierController))
+
 
 export default managerRouter

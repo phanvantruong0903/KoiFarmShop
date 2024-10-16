@@ -83,3 +83,13 @@ export const getAllSupplierController = async (req, res) => {
     return res.status(500).json({ error: error.message })
   }
 }
+
+export const updateSupplierController = async (req, res) => {
+  //tìm user theo username
+  const { _id } = req.params
+  const supplier = await suplliersService.updateSupplier(_id, req.body)
+  return res.json({
+    message: MANAGER_MESSAGES.UPDATE_SUPPLIER_SUCCESS,
+    result: supplier
+  })
+}

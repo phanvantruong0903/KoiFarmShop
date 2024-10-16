@@ -8,5 +8,7 @@ export const MANAGER_MESSAGES = {
   UPDATE_CONSIGN_DETAIL_SUCCESS: 'Update consign detail success',
   //suplier
   CREATE_NEW_SUPPLIER_SUCCESS: 'Create new supplier success',
-  GET_ALL_SUPPLIER_SUCCESS: 'Get all supplier success'
+  GET_ALL_SUPPLIER_SUCCESS: 'Get all supplier success',
+  SUPPLIER_NOT_FOUND: 'Supplier not found',
+  UPDATE_SUPPLIER_SUCCESS: 'Update supplier success'
 }
