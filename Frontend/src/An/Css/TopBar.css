@@ -1,0 +1,87 @@
+.TopBar {
+    position: relative;
+    opacity: 1;
+  }
+  
+  /* Common styles for both .nav-link and .dropdown-toggle */
+  .TopBar .nav-link,
+  .TopBar .dropdown-toggle {
+    color: white;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+  
+  /* Underline animation from middle outward */
+
+  
+  /* Text color on hover */
+
+  .TopBar .dropdown-toggle:hover,
+  .TopBar .dropdown-toggle:focus {
+    color: #f8f9fa; /* Lighter shade of white */
+  }
+  
+
+  
+  .TopBar .dropdown-menu {
+    background-color: #343a40; /* Dark background for dropdown */
+    border: none;
+  }
+  
+  /* Dropdown item  */
+  .TopBar .dropdown-item {
+    color: white;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Dropdown item hover */
+  .TopBar .dropdown-item:hover,
+  .TopBar .dropdown-item:focus {
+    background-color: #007bff; /* Blue background on hover */
+    color: white;
+  }
+  
+  /*  avatar and text  */
+  .TopBar .ml-auto span {
+    color: white;
+    font-size: 1rem;
+    line-height: 1.2;
+  }
+  
+  /*  avatar and name for mobile */
+  .TopBar .d-lg-none {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .TopBar .d-lg-none .RxAvatar {
+    margin-right: 8px;
+  }
+  .underline::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: #007bff; /* Blue underline */
+    bottom: 10px;
+    left: 0;
+    transition: width 0.3s ease;
+  }
+  
+  /* underline grows  left to right */
+  .underline:hover::after, 
+  .underline:focus::after {
+    width: 100%;
+  }
+  
+  .nav-link:hover,
+  .dropdown-toggle:hover {
+    color: #f8f9fa; /* Light white on hover */
+  }
+  
+  /* Active  with underline */
+  .active-link::after {
+    width: 100%;
+    left: 0;
+  }

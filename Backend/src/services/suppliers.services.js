@@ -10,6 +10,16 @@ class SuplliersService {
     console.log(result)
     return result
   }
+
+  async getAllSupplier() {
+    try {
+      const suppliers = await databaseService.suppliers.find({}).toArray()
+      return suppliers
+    } catch (error) {
+      console.error('Error fetching suppliers:', error)
+      throw error
+    }
+  }
 }
 
 const suplliersService = new SuplliersService()
