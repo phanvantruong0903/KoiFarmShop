@@ -46,14 +46,31 @@ managerRouter.get('/manage-ki-gui/get-all', accessTokenValidator, isAdminValidat
 
 managerRouter.get('/manage-ki-gui/:_id', accessTokenValidator, isAdminValidator, wrapAsync(getConsignDetailController))
 
-managerRouter.put('/manage-ki-gui/:_id', accessTokenValidator, isAdminValidator, wrapAsync(updateConsignDetailController))
+managerRouter.put(
+  '/manage-ki-gui/:_id',
+  accessTokenValidator,
+  isAdminValidator,
+  wrapAsync(updateConsignDetailController)
+)
 
-managerRouter.post('/manage-supplier/create-new-supplier', accessTokenValidator, isAdminValidator, wrapAsync(createNewSupplierController))
+managerRouter.post(
+  '/manage-supplier/create-new-supplier',
+  accessTokenValidator,
+  isAdminValidator,
+  wrapAsync(createNewSupplierController)
+)
 
-managerRouter.get('/manage-supplier/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getAllSupplierController))
+managerRouter.get(
+  '/manage-supplier/get-all',
+  accessTokenValidator,
+  isAdminValidator,
+  wrapAsync(getAllSupplierController)
+)
 
 managerRouter.put('/manage-supplier/:_id', accessTokenValidator, isAdminValidator, wrapAsync(updateSupplierController))
 
 managerRouter.get('/manage-supplier/:_id', accessTokenValidator, isAdminValidator, wrapAsync(getSupplierController))
+
+// managerRouter.post('manage-invoice/create-new-invoice-group-koi', accessTokenValidator, isAdminValidator, wrapAsync(createNewGroupKoiController))
 
 export default managerRouter
