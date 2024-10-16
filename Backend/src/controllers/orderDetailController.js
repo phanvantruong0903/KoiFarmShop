@@ -87,3 +87,4 @@ export const getMinMaxPriceController = async (req, res) => {
   }
 }
 
+

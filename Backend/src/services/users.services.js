@@ -324,7 +324,7 @@ class UsersService {
       }
     )
     return user
-  }
+  } 
 
   async updateMe(user_id, payload) {
     const _payload = payload

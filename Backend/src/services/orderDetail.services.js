@@ -71,25 +71,32 @@ class OrderDetailService {
         return { order: savedOrder, koi }
     }
 
+    // async saveOrderToDatabase(order) {
+    //     if (order._id) {
+    //         // If the order already has an _id, update it in the database
+    //         const result = await databaseService.orderDetail.findOneAndUpdate(
+    //             { _id: new ObjectId(order._id) },
+    //             {
+    //                 $set: {
+    //                     Items: order.Items,
+    //                     TotalPrice: order.TotalPrice
+    //                 }
+    //             },
+    //             { returnDocument: 'after' }
+    //         )
+    //         return result
+    //     } else {
+    //         const result = await databaseService.orderDetail.insertOne(order)
+    //         order._id = result.insertedId // Attach the new _id to the order
+    //         return order
+    //     }
+    // }
     async saveOrderToDatabase(order) {
-        if (order._id) {
-            // If the order already has an _id, update it in the database
-            const result = await databaseService.orderDetail.findOneAndUpdate(
-                { _id: new ObjectId(order._id) },
-                {
-                    $set: {
-                        Items: order.Items,
-                        TotalPrice: order.TotalPrice
-                    }
-                },
-                { returnDocument: 'after' }
-            )
-            return result
-        } else {
+        
             const result = await databaseService.orderDetail.insertOne(order)
             order._id = result.insertedId // Attach the new _id to the order
             return order
-        }
+        
     }
 
     async fetchOrder(payload) {
@@ -225,6 +232,29 @@ class OrderDetailService {
             max: maxPrice
         } 
     }
+    async getKoiByPrice(payload) {
+        const koiList = await databaseService.kois
+        .find({
+            $and: [{ CategoryID: payload.CategoryID }, { Breed: payload.Breed }, { Size: payload.Size }]
+        })
+        .toArray()
+        console.log("list kois: ", koiList)
+        const minPrice = Math.min(
+            ...koiList
+              .map(koi => Number(koi.Price))
+              .filter(price => !isNaN(price))
+          );
+        const maxPrice = Math.max(
+            ...koiList
+              .map(koi => Number(koi.Price))
+              .filter(price => !isNaN(price))
+          );
+        return {
+            min: minPrice,
+            max: maxPrice
+        } 
+    }
+
 }
 
 const orderDetailService = new OrderDetailService()

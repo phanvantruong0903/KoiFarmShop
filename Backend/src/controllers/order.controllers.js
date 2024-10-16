@@ -15,6 +15,19 @@ export const createOrderController = async (req, res) => {
     return res.status(500).json({ error: error.message })
   }
 }
+export const getOrderController = async (req, res) => {
+  try {
+    const result = await ordersService.getOrder(req.body)
+
+    console.log("result: ", result)
+    return res.json({
+      message: USERS_MESSAGES.GET_ORDER_SUCCESS,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
 export const updateOrderStatusController = async (req, res) => {
   try {
     const result = await ordersService.updateOrderStatus(req.body, req.params);
