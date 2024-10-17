@@ -179,7 +179,7 @@ class OrderDetailService {
         quantity = koisList?.length
         console.log('quantity: ', quantity)
         const koiPrices = {
-            Việt: [
+            Viet: [
                 { min: 0, max: 15, price: 500000, description: 'Lô 39 con mix tất cả các loại' },
                 { min: 15, max: 18, price: 500000, description: 'Lô 20 con (Tặng 5 con)' },
                 { min: 18, max: 20, price: 500000, description: 'Lô 12 con (Tặng 3 con)' },
@@ -213,7 +213,7 @@ class OrderDetailService {
                 { min: 70, max: 75, price: 1420000, description: '70cm' },
                 { min: 75, max: Infinity, price: 1700000, description: '>75cm' }
             ],
-            Nhật: [
+            Nhat: [
                 { min: 0, max: 15, priceMin: 800000, priceMax: 2000000, description: '<15cm' },
                 { min: 15, max: 18, priceMin: 1000000, priceMax: 3000000, description: '15-18cm' },
                 { min: 18, max: 20, priceMin: 2000000, priceMax: 3000000, description: '18-20cm' },

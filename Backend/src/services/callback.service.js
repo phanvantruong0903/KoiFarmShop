@@ -43,3 +43,7 @@ export const callback = async (req, res) => {
 
   res.json(result)
 }
+
+export const saveOrderToDatabase = async(req, res) => {
+  
+}
