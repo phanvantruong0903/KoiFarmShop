@@ -38,8 +38,9 @@ export default function TableGen({
                         key={mock._id}
                         onMouseEnter={() => handleMouseEnter(index)}
                         onMouseLeave={handleMouseLeave}
+                       
                     >
-                        <td>{index + 1}</td>
+                        <td  style={{ overflowX: 'hidden', textOverflow: 'nowrap' }}>{index + 1}</td>
                         {fieldMapping.map((field, idx) => {
 
                             if (field === 'role') {
@@ -66,7 +67,11 @@ export default function TableGen({
                                 };
                                 return <td key={idx}>{statusMap[mock.State]}</td>;
                             }
-                            return <td key={idx}>{mock[field] || 'not provided'}</td>; // Default
+                            return <td style={{ 
+                                overflow: 'auto',         
+                                whiteSpace: 'nowrap',     
+                                maxWidth: '150px'          
+                              }} key={idx}>{mock[field] || 'not provided'}</td>; 
                         })}
                         <td className="d-flex justify-content-center align-items-center" style={{ height: '40px' }}>
                             <Dropdown>
