@@ -138,13 +138,43 @@ class OrderDetailService {
     async getKoiQuantity(payload) {
         // let koi = await databaseService.kois.findOne({_id: new ObjectId(payload.KoiID)})
         let koisList, quantity
-        koisList = await databaseService.kois
+        let size = payload.Size
+        if(size < 15){
+            koisList = await databaseService.kois
         .find({
             CategoryID: payload.CategoryID, 
             Breed: payload.Breed, 
-            Size: {$gte :Number(payload.Size)}
+            Size: {$lt :15}
         })
         .toArray();
+        }
+        else if(size >= 15 && size < 18){
+            koisList = await databaseService.kois
+        .find({
+            CategoryID: payload.CategoryID, 
+            Breed: payload.Breed, 
+            Size: {$gte :15, $lt: 18}
+        })
+        .toArray();
+        }
+        else if(size >= 18 && size < 20){
+            koisList = await databaseService.kois
+        .find({
+            CategoryID: payload.CategoryID, 
+            Breed: payload.Breed, 
+            Size: {$gte :18, $lt: 20}
+        })
+        .toArray();
+        }
+        else{
+            koisList = await databaseService.kois
+        .find({
+            CategoryID: payload.CategoryID, 
+            Breed: payload.Breed, 
+            Size: Number(payload.Size)
+        })
+        .toArray();
+        }
         console.log('list: ', koisList)
         quantity = koisList?.length
         console.log('quantity: ', quantity)
@@ -206,7 +236,6 @@ class OrderDetailService {
         if (koisList.length>0 && priceCheck)
             return {
                 CategoryName: {
-                    Size: koisList[0].Size,
                     Price: priceCheck.price,
                     Quantity: quantity,
                     Description: priceCheck.description
