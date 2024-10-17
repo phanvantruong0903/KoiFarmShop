@@ -139,10 +139,12 @@ class OrderDetailService {
         // let koi = await databaseService.kois.findOne({_id: new ObjectId(payload.KoiID)})
         let koisList, quantity
         koisList = await databaseService.kois
-            .find({
-                $and: [{ CategoryID: payload.CategoryID }, { Breed: payload.Breed }, { Size: Number(payload.Size) }]
-            })
-            .toArray()
+        .find({
+            CategoryID: payload.CategoryID, 
+            Breed: payload.Breed, 
+            Size: Number(payload.Size)
+        })
+        .toArray();
         console.log('list: ', koisList)
         quantity = koisList?.length
         console.log('quantity: ', quantity)
@@ -201,12 +203,13 @@ class OrderDetailService {
         }
         const breedPricing = koiPrices[payload.Breed]
         const priceCheck = breedPricing?.find((range) => payload.Size >= range.min && payload.Size < range.max)
-        if (priceCheck)
+        if (koisList.length>0 && priceCheck)
             return {
                 CategoryName: {
                     Size: payload.Size,
                     Price: priceCheck.price,
-                    Quantity: quantity
+                    Quantity: quantity,
+                    Description: priceCheck.description
                 }
             }
     }

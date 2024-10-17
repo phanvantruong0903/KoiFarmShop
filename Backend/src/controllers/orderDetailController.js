@@ -65,10 +65,17 @@ export const getKoiQuantityController = async (req, res) => {
   try {
   const result = await orderDetailService.getKoiQuantity(req.body);
     console.log("result: ", result)
-    return res.json({
-      message: USERS_MESSAGES.GET_AVAILABLE_KOI_QUANTITY,
-      result
-    })
+    if(result){
+      return res.json({
+        message: USERS_MESSAGES.GET_AVAILABLE_KOI_QUANTITY,
+        result
+      })
+    }else{
+      return res.json({
+        message: USERS_MESSAGES.OUT_OF_STOCK
+      })
+    }
+    
   } catch (error) {
     return res.status(500).json({ error: error.message })
   }
