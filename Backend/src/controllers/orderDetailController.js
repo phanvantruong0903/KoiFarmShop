@@ -96,7 +96,8 @@ export const getKoiByPriceController = async (req, res) => {
       })
     }else{
       return res.json({
-        message: USERS_MESSAGES.OUT_OF_STOCK
+        message: USERS_MESSAGES.OUT_OF_STOCK,
+        result
       })
     }
     

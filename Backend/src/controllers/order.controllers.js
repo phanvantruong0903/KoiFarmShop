@@ -4,7 +4,7 @@ import ordersService from '../services/orders.Service.js';
 
 export const createOrderController = async (req, res) => {
   try {
-    const result = await ordersService.createOrder(req.body, req.params)
+    const result = await ordersService.createOrder(req.body)
 
     console.log("result: ", result)
     return res.json({

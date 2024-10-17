@@ -23,10 +23,11 @@ class OrdersService {
         }
         await databaseService.users.insertOne(new UserSchema(userPayload))
         const newUser = await databaseService.users.findOne({ _id: user_id })
+        console.log("new User: ", newUser)
         return newUser
     }
 
-    async createOrder(payload, reqParams) {
+    async createOrder(payload) {
         const existedUser = await databaseService.users.findOne({ email: payload.email })
 
         let user, newOrder, user_id, orderPayload
@@ -35,19 +36,16 @@ class OrdersService {
         if (existedUser) {
             user_id = existedUser._id
             user = await databaseService.users.findOne({ _id: new ObjectId(user_id) })
-            console.log('Existed User: ', user)
         } else {
-
             user = await this.createNewUser(payload)
             user_id = user.insertedId
-            console.log("New user inserted: ", user);
         }
 
 
         orderPayload = {
             _id: new ObjectId(),
-            UserID: user_id,
-            OrderDetailID: reqParams.orderDTID,
+            UserID: user._id,
+            OrderDetailID: payload.OrderDetailID,
             ShipAddress: payload.ShipAddress,
             Description: payload.Description,
             OrderDate: new Date(),

@@ -41,7 +41,8 @@ class OrderDetailService {
                 TotalPrice: Number(koi.Price) // Khởi tạo với giá của koi
             }
         }
-        return { order, koi }
+        const savedOrder = await this.saveOrderToDatabase(order)
+        return { order: savedOrder, koi }
     }
     async buyNow(payload, reqCookie) {
         const koi = await databaseService.kois.findOne({ _id: new ObjectId(payload.KoiID) })
@@ -68,33 +69,33 @@ class OrderDetailService {
         return { order: savedOrder, koi }
     }
 
-    // async saveOrderToDatabase(order) {
-    //     if (order._id) {
-    //         // If the order already has an _id, update it in the database
-    //         const result = await databaseService.orderDetail.findOneAndUpdate(
-    //             { _id: new ObjectId(order._id) },
-    //             {
-    //                 $set: {
-    //                     Items: order.Items,
-    //                     TotalPrice: order.TotalPrice
-    //                 }
-    //             },
-    //             { returnDocument: 'after' }
-    //         )
-    //         return result
-    //     } else {
-    //         const result = await databaseService.orderDetail.insertOne(order)
-    //         order._id = result.insertedId // Attach the new _id to the order
-    //         return order
-    //     }
-    // }
     async saveOrderToDatabase(order) {
-        
+        if (order._id) {
+            // If the order already has an _id, update it in the database
+            const result = await databaseService.orderDetail.findOneAndUpdate(
+                { _id: new ObjectId(order._id) },
+                {
+                    $set: {
+                        Items: order.Items,
+                        TotalPrice: order.TotalPrice
+                    }
+                },
+                { returnDocument: 'after' }
+            )
+            return result
+        } else {
             const result = await databaseService.orderDetail.insertOne(order)
             order._id = result.insertedId // Attach the new _id to the order
             return order
-        
+        }
     }
+    // async saveOrderToDatabase(order) {
+        
+    //         const result = await databaseService.orderDetail.insertOne(order)
+    //         order._id = result.insertedId // Attach the new _id to the order
+    //         return order
+        
+    // }
 
     async fetchOrder(payload) {
         const result = await databaseService.orderDetail.findOne({ _id: new ObjectId(payload.orderID) })
@@ -105,24 +106,27 @@ class OrderDetailService {
         const koi = await databaseService.kois.findOne({ _id: new ObjectId(payload.KoiID) })
         const order = await databaseService.orderDetail.findOne({ _id: new ObjectId(reqParams.orderID) })
         console.log('order: ', order)
-        let result
+        let result, oldQuantity
         if (order) {
             result = await databaseService.orderDetail.findOneAndUpdate(
                 { _id: new ObjectId(reqParams.orderID) },
                 {
                     $set: {
                         Items: order.Items?.map((item) => {
-                            return item.KoiID === payload.KoiID
-                                ? {
+                            if (item.KoiID === payload.KoiID) {
+                                oldQuantity = item.Quantity;  // Capture oldQuantity here
+                                return {
                                     KoiID: item.KoiID,
                                     Quantity: payload.Quantity
-                                }
-                                : {
+                                };
+                            } else {
+                                return {
                                     KoiID: item.KoiID,
                                     Quantity: item.Quantity
                                 }
-                        }),
-                        TotalPrice: order.TotalPrice + koi.Price * payload.Quantity
+                            }
+                            }),
+                        TotalPrice: order.TotalPrice + koi.Price * (payload.Quantity-oldQuantity)
                     }
                 },
                 { returnDocument: 'after' }
@@ -136,7 +140,7 @@ class OrderDetailService {
         let koisList, quantity
         koisList = await databaseService.kois
             .find({
-                $and: [{ CategoryID: payload.CategoryID }, { Breed: payload.Breed }, { Size: payload.Size }]
+                $and: [{ CategoryID: payload.CategoryID }, { Breed: payload.Breed }, { Size: Number(payload.Size) }]
             })
             .toArray()
         console.log('list: ', koisList)
@@ -235,7 +239,16 @@ class OrderDetailService {
     }
     async getKoiByPrice(payload) {
         const koiList = (await this.findKoi(payload)).filter(koi=>koi.Price === payload.Price)
-        return koiList ? koiList : []
+        const quantity = koiList?.length
+        return koiList && quantity>0 
+        ? {
+            koiList,
+            Quantity: quantity
+        } : 
+        {
+            koiList:[],
+            Quantity: 0
+        }
     }
 
 }
