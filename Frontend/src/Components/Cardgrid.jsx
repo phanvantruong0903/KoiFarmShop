@@ -1,53 +1,39 @@
 import PropTypes from "prop-types";
-import React, { useState, useEffect } from "react";
-import { Card, Row, Col, Typography, Divider, Pagination } from "antd";
+import React, { useState } from "react";
+import { Card, Row, Col, Typography, Divider } from "antd";
 import { useNavigate } from "react-router-dom";
 
 const { Text } = Typography;
 
 const CardGrid = ({ cardData }) => {
   const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState(1);
   const [category, setCategory] = useState("kygui"); // State for category switch
-  const pageSize = 30; // Number of cards per page
 
-  const handleCardClick = (card) => {
-    navigate("/order", { state: { selectedItem: card } });
-  };
-
-  const handleOrderingConsignKoi = (card) => {
-    navigate("/order", { state: { selectedItem: card } }); // Pass the card as state
-  };
-  const handleOrderingForIKoi = (card) => {
-    navigate("/orderingikoi", { state: { selectedItem: card } }); // Pass the card as state
-  };
-  const handleOrderingForJapanKoi = (card) => {
-    navigate("/orderingjapankoi", { state: { selectedItem: card } }); // Pass the card as state
-  };
   const handleCategoryChange = (newCategory) => {
     setCategory(newCategory);
-    setCurrentPage(1); // Reset to first page when changing category
   };
 
   // Group Koi fish by CategoryID and collect additional details
   const getUniqueCategories = (status) => {
     const categoryMap = {};
-
     cardData.forEach((card) => {
       if (card.Status === status) {
         if (!categoryMap[card.CategoryID]) {
-          // Initialize if this CategoryID has not been added yet
           categoryMap[card.CategoryID] = {
             count: 0,
-            KoiName: card.KoiName, // You can modify this as needed
+            KoiName: card.KoiName,
             Image: card.Image,
             Price: card.Price,
+            Age: card.Age,
+            Description: card.Description,
+            Origin: card.Origin,
+            Gender: card.Gender,
+            CategoryID: card.CategoryID,
           };
         }
         categoryMap[card.CategoryID].count++;
       }
     });
-
     return categoryMap;
   };
 
@@ -126,7 +112,9 @@ const CardGrid = ({ cardData }) => {
                       }}
                     />
                   }
-                  onClick={() => handleOrderingConsignKoi()}
+                  onClick={() =>
+                    navigate("/order", { state: { selectedItem: card } })
+                  } // Pass the card as state
                 >
                   <Text strong>{card.KoiName || "N/A"}</Text>
                   <br />
@@ -141,7 +129,20 @@ const CardGrid = ({ cardData }) => {
 
         {category === "ikoi" &&
           Object.entries(ikoiCategories).map(
-            ([categoryId, { count, KoiName, Image, Price }]) => (
+            ([
+              categoryId,
+              {
+                count,
+                KoiName,
+                Image,
+                Price,
+                Age,
+                Origin,
+                Gender,
+                Description,
+                CategoryID,
+              },
+            ]) => (
               <Col
                 key={categoryId}
                 xs={12}
@@ -165,7 +166,22 @@ const CardGrid = ({ cardData }) => {
                       }}
                     />
                   }
-                  onClick={() => handleOrderingForIKoi()} // Modify as needed
+                  onClick={() =>
+                    navigate("/orderingikoi", {
+                      state: {
+                        selectedItem: {
+                          KoiName,
+                          Price,
+                          Image,
+                          Age,
+                          Origin,
+                          Gender,
+                          Description,
+                          CategoryID,
+                        },
+                      },
+                    })
+                  } // Pass the category details
                 >
                   <Text strong>{`${KoiName || "N/A"}`}</Text>
                   <br />
@@ -205,7 +221,11 @@ const CardGrid = ({ cardData }) => {
                       }}
                     />
                   }
-                  onClick={() => handleOrderingForJapanKoi()} // Modify as needed
+                  onClick={() =>
+                    navigate("/orderingjapankoi", {
+                      state: { selectedItem: { KoiName, Price, Image } },
+                    })
+                  } // Pass the category details
                 >
                   <Text strong>{`${KoiName || "N/A"}`}</Text>
                   <br />
