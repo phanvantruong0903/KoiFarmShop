@@ -1,225 +1,228 @@
-import PropTypes from "prop-types"; // Import PropTypes
-import React from "react";
-import { Card, Row, Col, Container } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import PropTypes from "prop-types";
+import React, { useState, useEffect } from "react";
+import { Card, Row, Col, Typography, Divider, Pagination } from "antd";
+import { useNavigate } from "react-router-dom";
+
+const { Text } = Typography;
+
 const CardGrid = ({ cardData }) => {
   const navigate = useNavigate();
-  const cardStyle = {
-    width: "100%",
-    border: "2px solid gold",
+  const [currentPage, setCurrentPage] = useState(1);
+  const [category, setCategory] = useState("kygui"); // State for category switch
+  const pageSize = 30; // Number of cards per page
+
+  const handleCardClick = (card) => {
+    navigate("/order", { state: { selectedItem: card } });
   };
 
-  const imgStyle = {
-    width: "100%",
-    height: "500px",
-    objectFit: "cover",
-  };
-
-  const titleStyle = {
-    color: "red",
-    fontSize: "1.5rem",
-    fontWeight: "bold",
-  };
-
-  const textStyle = {
-    fontSize: "1rem",
-  };
-
-  const boldTextStyle = {
-    fontWeight: "bold",
-    color: "black",
-  };
-
-  const cardCount = cardData.length;
-
-  // Grouping logic for status 2 and 3 by CategoryID
-  const groupedCards = {};
-  const japanCards = [];
   const handleOrderingConsignKoi = (card) => {
     navigate("/order", { state: { selectedItem: card } }); // Pass the card as state
   };
-
-  // Chuyển đến trang đặt hàng khi nhấn vào hình ảnh koi (IKoi Fish)
   const handleOrderingForIKoi = (card) => {
     navigate("/orderingikoi", { state: { selectedItem: card } }); // Pass the card as state
   };
   const handleOrderingForJapanKoi = (card) => {
     navigate("/orderingjapankoi", { state: { selectedItem: card } }); // Pass the card as state
   };
-  cardData.map((card) => {
-    if (card.Status === 2 || card.Status === 3) {
-      const key = card.CategoryID; // Use CategoryID as the key
-      if (!groupedCards[key]) {
-        groupedCards[key] = { ...card, count: 1 }; // Initialize count
-      } else {
-        groupedCards[key].count += 1; // Increment count
+  const handleCategoryChange = (newCategory) => {
+    setCategory(newCategory);
+    setCurrentPage(1); // Reset to first page when changing category
+  };
+
+  // Group Koi fish by CategoryID and collect additional details
+  const getUniqueCategories = (status) => {
+    const categoryMap = {};
+
+    cardData.forEach((card) => {
+      if (card.Status === status) {
+        if (!categoryMap[card.CategoryID]) {
+          // Initialize if this CategoryID has not been added yet
+          categoryMap[card.CategoryID] = {
+            count: 0,
+            KoiName: card.KoiName, // You can modify this as needed
+            Image: card.Image,
+            Price: card.Price,
+          };
+        }
+        categoryMap[card.CategoryID].count++;
       }
-    } else if (card.Status === 1) {
-      // Collect cards with Status 1 (Cá Nhật)
-      japanCards.push(card);
-    }
-  });
+    });
 
-  const cards = cardData.map((card) => {
-    let statusText = "";
+    return categoryMap;
+  };
 
-    // Chỉ hiển thị thẻ Card nếu Status là 4
-    if (card.Status === 4) {
-      statusText = "Cá ký gửi";
-
-      return (
-        <Col key={card._id} md={3} className="mb-4">
-          <Card style={cardStyle}>
-            <Card.Img variant="top" src={card.Image} style={imgStyle} />
-            <Card.Body>
-              <Card.Title style={titleStyle}>{card.CategoryName}</Card.Title>
-              <Card.Text style={textStyle}>
-                <span style={boldTextStyle}>Koi Name:</span>{" "}
-                {card.KoiName || "N/A"}
-              </Card.Text>
-              <Card.Text style={textStyle}>
-                <span style={boldTextStyle}>Age:</span> {card.Age || "N/A"}
-              </Card.Text>
-              <Card.Text style={textStyle}>
-                <span style={boldTextStyle}>Origin:</span>{" "}
-                {card.Origin || "N/A"}
-              </Card.Text>
-              <Card.Text style={textStyle}>
-                <span style={boldTextStyle}>Giới tính:</span>{" "}
-                {card.Gender || "N/A"}
-              </Card.Text>
-              <Card.Text style={textStyle}>
-                <span style={boldTextStyle}>Size:</span> {card.Size || "N/A"}
-              </Card.Text>
-              <Card.Text style={textStyle}>
-                <span style={boldTextStyle}>Status:</span>{" "}
-                {card.Status || "N/A"}
-              </Card.Text>
-              <Card.Text style={textStyle}>
-                <span style={boldTextStyle}>Trạng thái:</span> {statusText}
-              </Card.Text>
-            </Card.Body>
-            <Button onClick={() => handleOrderingConsignKoi(card)}>
-              Chi Tiết
-            </Button>
-          </Card>
-        </Col>
-      );
-    }
-
-    return null; // Không hiển thị nếu không đạt điều kiện
-  });
-
-  // Render grouped cards for status 2 and 3
-  const groupedCardComponents = Object.values(groupedCards).map(
-    (groupedCard) => (
-      <Col key={groupedCard.CategoryID} md={3} className="mb-4">
-        <Card style={cardStyle}>
-          <Card.Img variant="top" src={groupedCard.Image} style={imgStyle} />
-          <Card.Body>
-            <Card.Title style={titleStyle}>
-              {groupedCard.CategoryName}
-            </Card.Title>
-            <Card.Text style={textStyle}>
-              <span style={boldTextStyle}>KoiName:</span>{" "}
-              {groupedCard.KoiName || "N/A"}
-            </Card.Text>
-            <Card.Text style={textStyle}>
-              <span style={boldTextStyle}>Số lượng:</span> {groupedCard.count}
-            </Card.Text>
-            <Card.Text style={textStyle}>
-              <span style={boldTextStyle}>Size:</span> {"15cm-75cm"}
-            </Card.Text>
-            <Card.Text style={textStyle}>
-              <span style={boldTextStyle}>Status:</span>{" "}
-              {groupedCard.Status || "N/A"}
-            </Card.Text>
-            <Card.Text style={textStyle}>
-              <span style={boldTextStyle}>Price:</span> {"19.000-850.000"}
-            </Card.Text>
-            <Card.Text style={textStyle}>
-              <span style={boldTextStyle}>Trạng thái:</span>
-            </Card.Text>
-          </Card.Body>
-          <Button onClick={() => handleOrderingForIKoi(groupedCard)}>
-            Chi Tiết
-          </Button>
-        </Card>
-      </Col>
-    )
-  );
-
-  // Render Cá Nhật cards
-  const japanCardComponents = japanCards.map((card) => (
-    <Col key={card._id} md={3} className="mb-4">
-      <Card style={cardStyle}>
-        <Card.Img variant="top" src={card.Image} style={imgStyle} />
-        <Card.Body>
-          <Card.Title style={titleStyle}>{card.CategoryName}</Card.Title>
-          <Card.Text style={textStyle}>
-            <span style={boldTextStyle}>KoiName:</span> {card.KoiName || "N/A"}
-          </Card.Text>
-          <Card.Text style={textStyle}>
-            <span style={boldTextStyle}>Age:</span> {card.Age || "N/A"}
-          </Card.Text>
-          <Card.Text style={textStyle}>
-            <span style={boldTextStyle}>Origin:</span> {card.Origin || "N/A"}
-          </Card.Text>
-          <Card.Text style={textStyle}>
-            <span style={boldTextStyle}>Giới tính:</span> {card.Gender || "N/A"}
-          </Card.Text>
-          <Card.Text style={textStyle}>
-            <span style={boldTextStyle}>Size:</span> {card.Size || "N/A"}
-          </Card.Text>
-          <Card.Text style={textStyle}>
-            <span style={boldTextStyle}>Status:</span> {card.Status || "N/A"}
-          </Card.Text>
-          <Card.Text style={textStyle}>
-            <span style={boldTextStyle}>Trạng thái:</span>
-          </Card.Text>
-        </Card.Body>
-        <Button onClick={() => handleOrderingForIKoi(card)}>Chi Tiết</Button>
-      </Card>
-    </Col>
-  ));
+  const ikoiCategories = {
+    ...getUniqueCategories(2),
+    ...getUniqueCategories(3),
+  }; // Combine for Cá Ikoi
+  const nhatCategories = getUniqueCategories(1); // For Cá Koi Nhật
 
   return (
-    <Container>
-      <Row>
-        {cardCount > 0 && (
-          <>
-            <h5>Tổng số cá koi: {cardCount}</h5>
-          </>
-        )}
+    <div className="container" style={{ padding: "0" }}>
+      <Divider
+        orientation="left"
+        style={{ margin: "0", marginBottom: "40px", cursor: "pointer" }}
+      >
+        <Text style={{ fontSize: "24px", fontWeight: "bold" }}>
+          {category === "kygui"
+            ? "Cá Ký Gửi"
+            : category === "ikoi"
+            ? "Cá Ikoi"
+            : "Cá Koi Nhật"}
+        </Text>
+      </Divider>
+      <Row gutter={[16, 16]} style={{ marginBottom: "20px" }}>
+        <Col>
+          <Text
+            style={{ cursor: "pointer", marginRight: "20px" }}
+            onClick={() => handleCategoryChange("kygui")}
+          >
+            Cá Ký Gửi
+          </Text>
+        </Col>
+        <Col>
+          <Text
+            style={{ cursor: "pointer", marginRight: "20px" }}
+            onClick={() => handleCategoryChange("ikoi")}
+          >
+            Cá Ikoi
+          </Text>
+        </Col>
+        <Col>
+          <Text
+            style={{ cursor: "pointer" }}
+            onClick={() => handleCategoryChange("nhat")}
+          >
+            Cá Koi Nhật
+          </Text>
+        </Col>
       </Row>
-      {cards.length > 0 && (
-        <>
-          <h1>Cá Ký Gửi</h1>
-          <Row>{cards}</Row>
-        </>
-      )}
 
-      {groupedCardComponents.length > 0 && (
-        <>
-          <hr />
-          <h1>Cá IKoi</h1>
-          <Row>{groupedCardComponents}</Row>
-        </>
-      )}
+      <Row gutter={[16, 16]}>
+        {category === "kygui" &&
+          cardData
+            .filter((card) => card.Status === 4)
+            .map((card) => (
+              <Col
+                key={card._id}
+                xs={12}
+                sm={8}
+                md={4}
+                lg={4}
+                xl={4}
+                className="mb-4"
+              >
+                <Card
+                  hoverable
+                  style={{ width: "100%", borderRadius: "8px", height: "100%" }}
+                  cover={
+                    <img
+                      alt={card.KoiName}
+                      src={card.Image}
+                      style={{
+                        height: "250px",
+                        objectFit: "cover",
+                        borderRadius: "8px 8px 0 0",
+                      }}
+                    />
+                  }
+                  onClick={() => handleOrderingConsignKoi()}
+                >
+                  <Text strong>{card.KoiName || "N/A"}</Text>
+                  <br />
+                  <Text strong style={{ color: "#FF5722" }}>
+                    {card.Price
+                      ? `${card.Price.toLocaleString()} VND`
+                      : "Liên Hệ"}
+                  </Text>
+                </Card>
+              </Col>
+            ))}
 
-      {japanCardComponents.length > 0 && (
-        <>
-          <hr />
-          <h1>Cá Nhật</h1>
-          <Row>{japanCardComponents}</Row>
-        </>
-      )}
-    </Container>
+        {category === "ikoi" &&
+          Object.entries(ikoiCategories).map(
+            ([categoryId, { count, KoiName, Image, Price }]) => (
+              <Col
+                key={categoryId}
+                xs={12}
+                sm={8}
+                md={4}
+                lg={4}
+                xl={4}
+                className="mb-4"
+              >
+                <Card
+                  hoverable
+                  style={{ width: "100%", borderRadius: "8px", height: "100%" }}
+                  cover={
+                    <img
+                      alt={KoiName}
+                      src={Image}
+                      style={{
+                        height: "250px",
+                        objectFit: "cover",
+                        borderRadius: "8px 8px 0 0",
+                      }}
+                    />
+                  }
+                  onClick={() => handleOrderingForIKoi()} // Modify as needed
+                >
+                  <Text strong>{`${KoiName || "N/A"}`}</Text>
+                  <br />
+                  <Text strong style={{ color: "#FF5722" }}>
+                    {Price ? `${Price.toLocaleString()} VND` : "Liên Hệ"}
+                  </Text>
+                  <br />
+                  <Text>Số lượng :{`${count} Koi`}</Text>
+                </Card>
+              </Col>
+            )
+          )}
+
+        {category === "nhat" &&
+          Object.entries(nhatCategories).map(
+            ([categoryId, { count, KoiName, Image, Price }]) => (
+              <Col
+                key={categoryId}
+                xs={12}
+                sm={8}
+                md={4}
+                lg={4}
+                xl={4}
+                className="mb-4"
+              >
+                <Card
+                  hoverable
+                  style={{ width: "100%", borderRadius: "8px", height: "100%" }}
+                  cover={
+                    <img
+                      alt={KoiName}
+                      src={Image}
+                      style={{
+                        height: "250px",
+                        objectFit: "cover",
+                        borderRadius: "8px 8px 0 0",
+                      }}
+                    />
+                  }
+                  onClick={() => handleOrderingForJapanKoi()} // Modify as needed
+                >
+                  <Text strong>{`${KoiName || "N/A"}`}</Text>
+                  <br />
+                  <Text strong style={{ color: "#FF5722" }}>
+                    {Price ? `${Price.toLocaleString()} VND` : "Liên Hệ"}
+                  </Text>
+                  <br />
+                  <Text>Số lượng:{`${count} Koi`}</Text>
+                </Card>
+              </Col>
+            )
+          )}
+      </Row>
+    </div>
   );
 };
 
-// Kiểm tra các dữ liệu props được truyền vào trong CardGrid
 CardGrid.propTypes = {
   cardData: PropTypes.arrayOf(
     PropTypes.shape({
@@ -230,7 +233,7 @@ CardGrid.propTypes = {
       Origin: PropTypes.string.isRequired,
       Gender: PropTypes.string.isRequired,
       Size: PropTypes.number.isRequired,
-      Price: PropTypes.number.isRequired, // Thêm trường Price
+      Price: PropTypes.number,
       Breed: PropTypes.string.isRequired,
       Description: PropTypes.string,
       DailyFoodAmount: PropTypes.number.isRequired,

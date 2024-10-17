@@ -78,8 +78,7 @@ export default function Kyguikoi() {
         alert("Ngày nhận không được trước ngày gửi!");
         return;
       }
-
-      const imageRef = ref(storage, `koiImages/${imageFile.name}`);
+const imageRef = ref(storage, `koiImages/${imageFile.name}`);
       const videoRef = ref(storage, `koiVideos/${videoFile.name}`);
 
       // Upload image
@@ -161,7 +160,7 @@ export default function Kyguikoi() {
       }
     } catch (error) {
       if (error.message) {
-        console.error("Error response:", error.response.data);
+console.error("Error response:", error.response.data);
         alert("Không nhận được phản hồi từ server.");
       } else {
         console.error("Error:", error.message);
@@ -245,7 +244,7 @@ export default function Kyguikoi() {
                   className="mb-3"
                   controlId="exampleForm.ControlInput3"
                   style={{ width: "100%" }}
-                >
+>
                   <Form.Label>Địa chỉ(*): </Form.Label>
                   <Form.Control
                     type="text"
@@ -323,7 +322,7 @@ export default function Kyguikoi() {
                       style={{ marginRight: "20px" }} // Adjusted margin
                     />
                     <Form.Check
-                      type="radio"
+type="radio"
                       id="IKoiFarm"
                       label="IKoiFarm"
                       name="PositionCare"
@@ -406,7 +405,7 @@ export default function Kyguikoi() {
           </div>
 
           <hr />
-          <h3>Thông Tin Koi Muốn Ký Gửi</h3>
+<h3>Thông Tin Koi Muốn Ký Gửi</h3>
           <Form.Group
             className="mb-3"
             controlId="exampleForm.ControlSelect1"
@@ -500,7 +499,7 @@ export default function Kyguikoi() {
             controlId="exampleForm.ControlInput14"
             style={{ width: "100%" }}
           >
-            <Form.Label>Kích Thước (*) (cm): </Form.Label>
+<Form.Label>Kích Thước (*) (cm): </Form.Label>
             <Form.Control
               type="number"
               placeholder="Nhập kích thước(cm)"
@@ -595,7 +594,7 @@ export default function Kyguikoi() {
             <Form.Label>Nộp ảnh (*): </Form.Label>
             <Form.Control type="file" required name="Image" />
           </Form.Group>
-          <Form.Group
+<Form.Group
             className="mb-3"
             controlId="exampleForm.ControlFile2"
             style={{ width: "100%" }}

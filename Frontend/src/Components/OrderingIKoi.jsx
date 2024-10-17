@@ -10,6 +10,7 @@ const OrderingIKoi = () => {
   const [selectedSize, setSelectedSize] = useState(selectedItem?.Size || "");
   const [selectedBreed, setSelectedBreed] = useState(selectedItem?.Breed || "");
   const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
   useEffect(() => {
     const sendOrderDetails = async () => {
       try {
@@ -26,6 +27,8 @@ const OrderingIKoi = () => {
 
         console.log(response.data.result.CategoryName.Price);
         setPrice(response.data.result.CategoryName.Price);
+
+        setDescription(response.data.result.CategoryName.Description);
         // Xử lý phản hồi nếu cần
       } catch (error) {
         console.error("Error sending order details:", error);
@@ -79,10 +82,10 @@ const OrderingIKoi = () => {
                 >
                   {/* Replace these options with actual sizes available */}
                   <option value="">Select Size</option>
-                  <option value="10">5cm-15cm</option>
-                  <option value="18"> 15cm-18 cm</option>:
-                  <option value="20">18cm-20cm</option>
-                  <option value="25">20cm-25cm</option>
+                  <option value="14">bé hơn 15cm</option>
+                  <option value="15"> 15cm - 18 cm</option>:
+                  <option value="18">18cm-20cm</option>
+                  <option value="20">20cm-25cm</option>
                   <option value="30">30cm</option>
                   <option value="35">35cm</option>
                   <option value="40">40cm</option>
@@ -114,7 +117,12 @@ const OrderingIKoi = () => {
                   <option value="F1">F1</option>
                 </select>
               </div>
-              <h3>Price: {price}</h3>
+              <div>
+                <h3>Price: {price}</h3>
+              </div>
+              <div>
+                <h3>Decscription:{description}</h3>
+              </div>
               <Button variant="danger" onClick={() => alert("Order placed!")}>
                 Order Now
               </Button>
