@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Row, Col, Typography, Divider, Pagination } from "antd";
 import { useNavigate } from "react-router-dom";
 
@@ -8,96 +8,217 @@ const { Text } = Typography;
 const CardGrid = ({ cardData }) => {
   const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 30; // Số lượng thẻ trên mỗi trang
+  const [category, setCategory] = useState("kygui"); // State for category switch
+  const pageSize = 30; // Number of cards per page
 
   const handleCardClick = (card) => {
     navigate("/order", { state: { selectedItem: card } });
   };
 
-  const startIndex = (currentPage - 1) * pageSize;
-  const currentCards = cardData.filter(card => card.Status === 4).slice(startIndex, startIndex + pageSize);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    window.scrollTo(0, 0);
+  const handleOrderingConsignKoi = (card) => {
+    navigate("/order", { state: { selectedItem: card } }); // Pass the card as state
+  };
+  const handleOrderingForIKoi = (card) => {
+    navigate("/orderingikoi", { state: { selectedItem: card } }); // Pass the card as state
+  };
+  const handleOrderingForJapanKoi = (card) => {
+    navigate("/orderingjapankoi", { state: { selectedItem: card } }); // Pass the card as state
+  };
+  const handleCategoryChange = (newCategory) => {
+    setCategory(newCategory);
+    setCurrentPage(1); // Reset to first page when changing category
   };
 
-  const cards = currentCards.map((card) => (
-    <Col key={card._id} xs={12} sm={8} md={4} lg={4} xl={4} className="mb-4">
-      <Card
-        hoverable
-        style={{ width: "100%", borderRadius: "8px", height: '100%' }}
-        cover={
-          <img
-            alt={card.KoiName}
-            src={card.Image}
-            style={{ height: "250px", objectFit: "cover", borderRadius: "8px 8px 0 0" }}
-          />
+  // Group Koi fish by CategoryID and collect additional details
+  const getUniqueCategories = (status) => {
+    const categoryMap = {};
+
+    cardData.forEach((card) => {
+      if (card.Status === status) {
+        if (!categoryMap[card.CategoryID]) {
+          // Initialize if this CategoryID has not been added yet
+          categoryMap[card.CategoryID] = {
+            count: 0,
+            KoiName: card.KoiName, // You can modify this as needed
+            Image: card.Image,
+            Price: card.Price,
+          };
         }
-        onClick={() => handleCardClick(card)}
-      >
-        <Text
-          strong
-          style={{
-            display: 'block',
-            height: '40px',
-            lineHeight: '20px',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            WebkitLineClamp: 2,
-            WebkitBoxOrient: 'vertical',
-            display: '-webkit-box',
-            overflowWrap: 'break-word',
-            marginBottom: '50px',
-            fontSize: '14px',
-          }}
-        >
-          {card.KoiName || "N/A"}
-        </Text>
-        <Text
-          strong
-          style={{
-            fontSize: '15px',
-            color: '#FF5722',
-            marginTop: '200px',
-          }}
-        >
-          {card.Price ? `${card.Price.toLocaleString()} VND` : "Liên Hệ"}
-        </Text>
-      </Card>
-    </Col>
-  ));
+        categoryMap[card.CategoryID].count++;
+      }
+    });
+
+    return categoryMap;
+  };
+
+  const ikoiCategories = {
+    ...getUniqueCategories(2),
+    ...getUniqueCategories(3),
+  }; // Combine for Cá Ikoi
+  const nhatCategories = getUniqueCategories(1); // For Cá Koi Nhật
 
   return (
-    <div className="container" style={{ padding: '0' }}>
-      <Divider orientation="left" style={{ margin: '0', marginBottom: '40px' }}>
-        <Text style={{ fontSize: '24px', fontWeight: 'bold' }}>Cá Koi</Text>
+    <div className="container" style={{ padding: "0" }}>
+      <Divider
+        orientation="left"
+        style={{ margin: "0", marginBottom: "40px", cursor: "pointer" }}
+      >
+        <Text style={{ fontSize: "24px", fontWeight: "bold" }}>
+          {category === "kygui"
+            ? "Cá Ký Gửi"
+            : category === "ikoi"
+            ? "Cá Ikoi"
+            : "Cá Koi Nhật"}
+        </Text>
       </Divider>
-      {cards.length > 0 ? (
-        <>
-          <Row gutter={[16, 16]} style={{ marginLeft: '70px', marginTop: '0' }}>
-            {cards}
-          </Row>
-          <Pagination 
-  current={currentPage}
-  pageSize={pageSize}
-  total={cardData.filter(card => card.Status === 4).length}
-  onChange={handlePageChange}
-  style={{ marginTop: '20px', lineHeight: '1.5', fontSize: '16px' }} // Center pagination and adjust font size
-  itemRender={(page, type) => {
-    if (type === 'page') {
-      return <a>{page}</a>; // Cách render tùy chỉnh cho nút trang
-    }
-    return <a>{type === 'prev' ? '«' : '»'}</a>; // Các nút trước và sau
-  }}
-  showSizeChanger={false}
-/>
-        </>
-      ) : (
-        <Row justify="center" style={{ marginTop: '50px' }}>
-          <Text style={{ fontSize: '18px', color: '#999' }}>Chưa có cá koi nào!</Text>
-        </Row>
-      )}
+      <Row gutter={[16, 16]} style={{ marginBottom: "20px" }}>
+        <Col>
+          <Text
+            style={{ cursor: "pointer", marginRight: "20px" }}
+            onClick={() => handleCategoryChange("kygui")}
+          >
+            Cá Ký Gửi
+          </Text>
+        </Col>
+        <Col>
+          <Text
+            style={{ cursor: "pointer", marginRight: "20px" }}
+            onClick={() => handleCategoryChange("ikoi")}
+          >
+            Cá Ikoi
+          </Text>
+        </Col>
+        <Col>
+          <Text
+            style={{ cursor: "pointer" }}
+            onClick={() => handleCategoryChange("nhat")}
+          >
+            Cá Koi Nhật
+          </Text>
+        </Col>
+      </Row>
+
+      <Row gutter={[16, 16]}>
+        {category === "kygui" &&
+          cardData
+            .filter((card) => card.Status === 4)
+            .map((card) => (
+              <Col
+                key={card._id}
+                xs={12}
+                sm={8}
+                md={4}
+                lg={4}
+                xl={4}
+                className="mb-4"
+              >
+                <Card
+                  hoverable
+                  style={{ width: "100%", borderRadius: "8px", height: "100%" }}
+                  cover={
+                    <img
+                      alt={card.KoiName}
+                      src={card.Image}
+                      style={{
+                        height: "250px",
+                        objectFit: "cover",
+                        borderRadius: "8px 8px 0 0",
+                      }}
+                    />
+                  }
+                  onClick={() => handleOrderingConsignKoi()}
+                >
+                  <Text strong>{card.KoiName || "N/A"}</Text>
+                  <br />
+                  <Text strong style={{ color: "#FF5722" }}>
+                    {card.Price
+                      ? `${card.Price.toLocaleString()} VND`
+                      : "Liên Hệ"}
+                  </Text>
+                </Card>
+              </Col>
+            ))}
+
+        {category === "ikoi" &&
+          Object.entries(ikoiCategories).map(
+            ([categoryId, { count, KoiName, Image, Price }]) => (
+              <Col
+                key={categoryId}
+                xs={12}
+                sm={8}
+                md={4}
+                lg={4}
+                xl={4}
+                className="mb-4"
+              >
+                <Card
+                  hoverable
+                  style={{ width: "100%", borderRadius: "8px", height: "100%" }}
+                  cover={
+                    <img
+                      alt={KoiName}
+                      src={Image}
+                      style={{
+                        height: "250px",
+                        objectFit: "cover",
+                        borderRadius: "8px 8px 0 0",
+                      }}
+                    />
+                  }
+                  onClick={() => handleOrderingForIKoi()} // Modify as needed
+                >
+                  <Text strong>{`${KoiName || "N/A"}`}</Text>
+                  <br />
+                  <Text strong style={{ color: "#FF5722" }}>
+                    {Price ? `${Price.toLocaleString()} VND` : "Liên Hệ"}
+                  </Text>
+                  <br />
+                  <Text>Số lượng :{`${count} Koi`}</Text>
+                </Card>
+              </Col>
+            )
+          )}
+
+        {category === "nhat" &&
+          Object.entries(nhatCategories).map(
+            ([categoryId, { count, KoiName, Image, Price }]) => (
+              <Col
+                key={categoryId}
+                xs={12}
+                sm={8}
+                md={4}
+                lg={4}
+                xl={4}
+                className="mb-4"
+              >
+                <Card
+                  hoverable
+                  style={{ width: "100%", borderRadius: "8px", height: "100%" }}
+                  cover={
+                    <img
+                      alt={KoiName}
+                      src={Image}
+                      style={{
+                        height: "250px",
+                        objectFit: "cover",
+                        borderRadius: "8px 8px 0 0",
+                      }}
+                    />
+                  }
+                  onClick={() => handleOrderingForJapanKoi()} // Modify as needed
+                >
+                  <Text strong>{`${KoiName || "N/A"}`}</Text>
+                  <br />
+                  <Text strong style={{ color: "#FF5722" }}>
+                    {Price ? `${Price.toLocaleString()} VND` : "Liên Hệ"}
+                  </Text>
+                  <br />
+                  <Text>Số lượng:{`${count} Koi`}</Text>
+                </Card>
+              </Col>
+            )
+          )}
+      </Row>
     </div>
   );
 };
@@ -112,7 +233,7 @@ CardGrid.propTypes = {
       Origin: PropTypes.string.isRequired,
       Gender: PropTypes.string.isRequired,
       Size: PropTypes.number.isRequired,
-      Price: PropTypes.number, // Change required to optional
+      Price: PropTypes.number,
       Breed: PropTypes.string.isRequired,
       Description: PropTypes.string,
       DailyFoodAmount: PropTypes.number.isRequired,
