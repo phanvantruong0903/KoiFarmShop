@@ -1,13 +1,4 @@
-import {
-  Form,
-  Button,
-  Input,
-  Radio,
-  Select,
-  Upload,
-  DatePicker,
-  message,
-} from "antd";
+import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
@@ -16,8 +7,6 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axiosInstance from "../An/Utils/axiosJS";
-import dayjs from "dayjs";
-
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
   authDomain: import.meta.env.VITE_AUTH_DOMAIN,
@@ -26,7 +15,6 @@ const firebaseConfig = {
   messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
   appId: import.meta.env.VITE_APP_ID,
 };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app); // Khởi tạo Firebase Storage
@@ -38,123 +26,156 @@ export default function Kyguikoi() {
   const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [categoryData, setCategoryData] = useState([]);
   const navigate = useNavigate();
-  const [userData, setUserData] = useState({});
-  const [form] = Form.useForm(); // Khởi tạo form từ antd
-  
-
-  const handleSubmit = async (values) => {
-    const {
-      PositionCare,
-      Method,
-      CategoryID,
-      Gender,
-      Size,
-      Breed,
-      DailyFoodAmount,
-      FilteringRatio,
-      Age,
-      email,
-      phone_number,
-      name,
-      address,
-      KoiName,
-      Origin,
-      shippedDate,
-      receiptDate,
-      Image,
-      Video,
-      CertificateID,
-    } = values;
+  const [userData, setUserData] = useState(null);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
 
     try {
-      const currentDate = dayjs();
+      const requiredFields = [
+        "PositionCare",
+        "Method",
+        "CategoryID",
+        "Gender",
+        "Size",
+        "Breed",
+        "DailyFoodAmount",
+        "FilteringRatio",
+        "Age",
+        "email",
+        "phone_number",
+        "name",
+        "address",
+        "KoiName",
+        "Origin",
+      ];
+      for (const field of requiredFields) {
+        if (!formData.get(field)) {
+          alert(`${field} là trường bắt buộc.`);
+          return;
+        }
+      }
+      const imageFile = formData.get("Image");
+      const videoFile = formData.get("Video");
+      if (!imageFile || !videoFile) {
+        alert("Vui lòng chọn ảnh và video!");
+        return;
+      }
+      const shippedDate = new Date(formData.get("shippedDate"));
+      const receiptDate = new Date(formData.get("receiptDate"));
+      const currentDate = new Date();
       const phoneRegex = /^\d{10}$/; // 11 digits
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email validation
       const nameRegex = /^[A-Za-z\s]+$/; // Only letters and spaces
 
-      if (!phoneRegex.test(phone_number)) {
-        message.error("Số điện thoại phải có 11 chữ số.");
+      if (shippedDate > receiptDate || shippedDate < currentDate) {
+        alert("Ngày gửi không được ở quá khứ!");
+        return;
+      } else if (receiptDate < currentDate) {
+        alert("Ngày nhận không được ở quá khứ!");
+        return;
+      } else if (receiptDate < shippedDate) {
+        alert("Ngày nhận không được trước ngày gửi!");
         return;
       }
-
-      if (!emailRegex.test(email)) {
-        message.error("Địa chỉ email không hợp lệ.");
-        return;
-      }
-
-      if (!nameRegex.test(name)) {
-        message.error("Tên không được có ký tự đặc biệt hoặc số.");
-        return;
-      }
-
-      const imageRef = ref(storage, `koiImages/${Image[0].name}`);
-      const videoRef = ref(storage, `koiVideos/${Video[0].name}`);
+const imageRef = ref(storage, `koiImages/${imageFile.name}`);
+      const videoRef = ref(storage, `koiVideos/${videoFile.name}`);
 
       // Upload image
-      await uploadBytes(imageRef, Image[0]);
+      await uploadBytes(imageRef, imageFile);
       const imageUrl = await getDownloadURL(imageRef);
 
       // Upload video
-      await uploadBytes(videoRef, Video[0]);
+      await uploadBytes(videoRef, videoFile);
       const videoUrl = await getDownloadURL(videoRef);
 
       console.log("Image URL:", imageUrl);
       console.log("Video URL:", videoUrl);
 
       const dataToSend = {
-        PositionCare,
-        Method,
-        CategoryID,
-        Gender,
-        Size: parseInt(Size),
-        Breed,
-        DailyFoodAmount: parseFloat(DailyFoodAmount),
-        FilteringRatio: parseFloat(FilteringRatio),
-        Age: parseInt(Age),
-        email,
-        phone_number,
-        name,
-        address,
-        KoiName,
-        Origin,
-        Image: imageUrl,
-        Video: videoUrl,
-        CertificateID,
+        PositionCare: formData.get("PositionCare"),
+        Method: formData.get("Method"),
+        CategoryID: formData.get("CategoryID"),
+        Gender: formData.get("Gender"),
+        Size: parseInt(formData.get("Size")),
+        Breed: formData.get("Breed"),
+        DailyFoodAmount: parseFloat(formData.get("DailyFoodAmount")),
+        FilteringRatio: parseFloat(formData.get("FilteringRatio")),
+        Age: parseInt(formData.get("Age")),
+        email: formData.get("email"),
+        phone_number: formData.get("phone_number"),
+        name: formData.get("name"),
+        address: formData.get("address"),
+        KoiName: formData.get("KoiName"),
+        Origin: formData.get("Origin"),
+        Image: imageUrl || "", // Ensure imageUrl is defined
+        Video: videoUrl || "", // Ensure videoUrl is defined
+        CertificateID: formData.get("CertificateID"),
       };
+      if (!phoneRegex.test(dataToSend.phone_number)) {
+        alert("Số điện thoại phải có 11 chữ số.");
+        return;
+      }
 
-      const response = await axios.post(
-        "http://localhost:4000/ki-gui",
-        dataToSend,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
+      if (!emailRegex.test(dataToSend.email)) {
+        alert("Địa chỉ email không hợp lệ.");
+        return;
+      }
+
+      if (!nameRegex.test(dataToSend.name)) {
+        alert("Tên không được có ký tự đặc biệt hoặc số.");
+        return;
+      }
+      try {
+        const response = await axios.post(
+          "http://localhost:4000/ki-gui",
+          dataToSend,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (response.status === 200) {
+          // Show success message with toast
+          toast.success(response.data.message);
+
+          // Navigate and pass the message
+          navigate("/", { state: { message: response.data.message } });
+        } else {
+          toast.error(`Có lỗi xảy ra: ${response.data.message}`);
         }
-      );
-
-      if (response.status === 200) {
-        toast.success(response.data.message);
-        navigate("/", { state: { message: response.data.message } });
-      } else {
-        toast.error(`Có lỗi xảy ra: ${response.data.message}`);
+      } catch (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          console.error("Error response:", error.response.data);
+        } else if (error.request) {
+          // The request was made but no response was received
+          console.error("No response received:", error.request);
+        } else {
+          // Something happened in setting up the request
+          console.error("Error:", error.message);
+        }
       }
     } catch (error) {
-      console.error("Error:", error);
-      message.error("Có lỗi xảy ra. Vui lòng thử lại.");
+      if (error.message) {
+console.error("Error response:", error.response.data);
+        alert("Không nhận được phản hồi từ server.");
+      } else {
+        console.error("Error:", error.message);
+        alert("Có lỗi xảy ra . Vui lòng thử lại");
+      }
     }
   };
-
   useEffect(() => {
     const fetchUserData = async () => {
       setLoading(true);
       try {
-        const response = await axiosInstance.get("http://localhost:4000/users/me");
+        const response = await axiosInstance.get("users/me");
         if (response.data) {
-          // const {email, address, phone_number, name} = response.data.result;
           setUserData(response.data.result);
-          // console.log(email, address, phone_number, name);
-          // console.log(response.data.result)
-          console.log(userData)
+          console.log(userData);
         } else {
           console.error("Dữ liệu không hợp lệ:", response.data);
         }
@@ -166,19 +187,24 @@ export default function Kyguikoi() {
     };
     fetchUserData();
   }, []);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:4000/getAllKoi");
+        console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
         if (Array.isArray(response.data.result)) {
-          setCardData(response.data.result);
+          setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
           setCategoryData(response.data.cateogryList);
+          console.log("Card data set successfully:", response.data.result); // Kiểm tra sau khi set
+          console.log(
+            "Category Data set successfully:",
+            response.data.cateogryList
+          );
         } else {
           console.error("Dữ liệu không phải là mảng:", response.data);
         }
       } catch (err) {
-        console.error("Error fetching data:", err);
+        console.error("Error fetching data:", err); // Ghi lại lỗi
         setError(err);
       } finally {
         setLoading(false);
@@ -218,7 +244,7 @@ export default function Kyguikoi() {
                   className="mb-3"
                   controlId="exampleForm.ControlInput3"
                   style={{ width: "100%" }}
-                >
+>
                   <Form.Label>Địa chỉ(*): </Form.Label>
                   <Form.Control
                     type="text"
@@ -296,7 +322,7 @@ export default function Kyguikoi() {
                       style={{ marginRight: "20px" }} // Adjusted margin
                     />
                     <Form.Check
-                      type="radio"
+type="radio"
                       id="IKoiFarm"
                       label="IKoiFarm"
                       name="PositionCare"
@@ -379,7 +405,7 @@ export default function Kyguikoi() {
           </div>
 
           <hr />
-          <h3>Thông Tin Koi Muốn Ký Gửi</h3>
+<h3>Thông Tin Koi Muốn Ký Gửi</h3>
           <Form.Group
             className="mb-3"
             controlId="exampleForm.ControlSelect1"
@@ -442,64 +468,150 @@ export default function Kyguikoi() {
             controlId="exampleForm.ControlInput6"
             style={{ width: "100%" }}
           >
-            <Input placeholder="Nhập nguồn gốc" required />
-          </Form.Item>
-          <Form.Item
-            label="Giới Tính (*)"
-            name="Gender"
-            style={{ width: "32%" }}
+            <Form.Label>Giới Tính (*): </Form.Label>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Form.Check
+                type="radio"
+                id="genderOption1"
+                label="Male"
+                name="Gender"
+                value="Male"
+                style={{ marginBottom: "10px", marginRight: "20px" }}
+              />
+              <Form.Check
+                type="radio"
+                id="genderOption2"
+                label="Female"
+                name="Gender"
+                value="Female"
+                style={{ marginBottom: "10px" }}
+              />
+            </div>
+          </Form.Group>
+          <Form.Group
+            className="mb-3"
+            controlId="exampleForm.ControlInput14"
+            style={{ width: "100%" }}
           >
-            <Radio.Group>
-              <Radio value="Male">Đực</Radio>
-              <Radio value="Female">Cái</Radio>
-            </Radio.Group>
-          </Form.Item>
-          <Form.Item label="Cỡ Cá (*)" name="Size" style={{ width: "32%" }}>
-            <Select placeholder="Chọn cỡ cá...">
-              <Select.Option value="1">Nhỏ</Select.Option>
-              <Select.Option value="2">Vừa</Select.Option>
-              <Select.Option value="3">Lớn</Select.Option>
-            </Select>
-          </Form.Item>
+<Form.Label>Kích Thước (*) (cm): </Form.Label>
+            <Form.Control
+              type="number"
+              placeholder="Nhập kích thước(cm)"
+              min="5"
+              max="150"
+              required
+              name="Size"
+            />
+          </Form.Group>
+          <Form.Group
+            className="mb-3"
+            controlId="exampleForm.ControlInput6"
+            style={{ width: "100%" }}
+          >
+            <Form.Label>Trạng Thái (*): </Form.Label>:
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Form.Check
+                type="radio"
+                id="breedOption1"
+                label="Nhật"
+                name="Breed"
+                value="Nhật"
+                style={{ marginRight: "20px" }}
+              />
+              <Form.Check
+                type="radio"
+                id="breedOption2"
+                label="Việt"
+                name="Breed"
+                value="Việt"
+                style={{ marginRight: "20px" }}
+              />
+              <Form.Check
+                type="radio"
+                id="breedOption3"
+                label="F1"
+                name="Breed"
+                value="F1"
+                style={{ marginRight: "20px" }}
+              />
+            </div>
+          </Form.Group>
+          <Form.Group
+            className="mb-3"
+            controlId="exampleForm.ControlInput17"
+            style={{ width: "100%" }}
+          >
+            <Form.Label>
+              Nhập lượng thức ăn / ngày(*) (đơn vị kg/ngày)
+            </Form.Label>
+            <Form.Control
+              type="number"
+              placeholder="Nhập lượng thức ăn / ngày"
+              required
+              name="DailyFoodAmount"
+              step="0.01"
+            />
+          </Form.Group>
+          <Form.Group
+            className="mb-3"
+            controlId="exampleForm.ControlInput18"
+            style={{ width: "100%" }}
+          >
+            <Form.Label>Nhập tỷ lệ lọc(*) (%):</Form.Label>
+            <Form.Control
+              type="number"
+              placeholder="Nhập tỷ lệ lọc"
+              required
+              name="FilteringRatio"
+              step="0.01"
+            />
+          </Form.Group>
+          <Form.Group
+            className="mb-3"
+            controlId="exampleForm.ControlInput18"
+            style={{ width: "100%" }}
+          >
+            <Form.Label>CertificateID(*): </Form.Label>
+            <Form.Control type="text" name="CertificateID" />
+          </Form.Group>
+          <Form.Group
+            className="mb-3"
+            controlId="exampleForm.ControlFile1"
+            style={{ width: "100%" }}
+          >
+            <Form.Label>Nộp ảnh (*): </Form.Label>
+            <Form.Control type="file" required name="Image" />
+          </Form.Group>
+<Form.Group
+            className="mb-3"
+            controlId="exampleForm.ControlFile2"
+            style={{ width: "100%" }}
+          >
+            <Form.Label>Nộp video (*): </Form.Label>
+            <Form.Control type="file" required name="Video" />
+          </Form.Group>
         </div>
-
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Form.Item label="Giống Cá (*)" name="Breed" style={{ width: "32%" }}>
-            <Input placeholder="Nhập giống cá" required />
-          </Form.Item>
-          <Form.Item
-            label="Lượng Thức Ăn Hàng Ngày (*)"
-            name="DailyFoodAmount"
-            style={{ width: "32%" }}
+        <div style={{ textAlign: "center" }}>
+          <Button
+            type="submit"
+            variant="success"
+            style={{ borderRadius: "20px", width: "8%" }}
           >
-            <Input type="number" placeholder="Nhập lượng thức ăn" required />
-          </Form.Item>
-          <Form.Item
-            label="Tỉ Lệ Lọc Nước (*)"
-            name="FilteringRatio"
-            style={{ width: "32%" }}
-          >
-            <Input type="number" placeholder="Nhập tỉ lệ lọc" required />
-          </Form.Item>
+            Ký Gửi
+          </Button>
         </div>
-
-        <Form.Item
-          label="Hình ảnh cá (*)"
-          name="Image"
-          valuePropName="fileList"
-        >
-          <Upload beforeUpload={() => false} multiple={false}>
-            <Button>Upload Image</Button>
-          </Upload>
-        </Form.Item>
-        <Form.Item label="Video cá (*)" name="Video" valuePropName="fileList">
-          <Upload beforeUpload={() => false} multiple={false}>
-            <Button>Upload Video</Button>
-          </Upload>
-        </Form.Item>
-        <Form.Item label="Mã Chứng Nhận (*)" name="CertificateID">
-          <Input placeholder="Nhập mã chứng nhận" required />
-        </Form.Item>
       </Form>
       <ToastContainer />
     </div>
