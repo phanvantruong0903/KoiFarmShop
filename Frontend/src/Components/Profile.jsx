@@ -8,6 +8,8 @@ import Footer from "./Footer";
 import Navbar from "./Navbar/Navbar";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { initializeApp } from "firebase/app";
+import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap
+import { EditOutlined } from "@ant-design/icons"; // Import icon bút chì
 
 // Firebase config
 const firebaseConfig = {
@@ -22,7 +24,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 
-// Hàm kiểm tra tính hợp lệ
+// Hàm kiểm tra tính hợp lệ (giữ nguyên)
 const isValidUsername = (username) => /^[a-zA-Z0-9]+$/.test(username);
 const isValidNameOrAddress = (input) =>
   /^[\w\s]+$/.test(input) && !/\s{2,}/.test(input);
@@ -38,6 +40,7 @@ const isValidURL = (urlString) => {
 
 export default function Profile() {
   const [userData, setUserData] = useState(null);
+  const [originalUserData, setOriginalUserData] = useState(null); // Lưu trữ dữ liệu gốc
   const [loading, setLoading] = useState(true);
   const location = useLocation();
   const [showImageModal, setShowImageModal] = useState(false);
@@ -76,9 +79,8 @@ export default function Profile() {
     return email;
   };
 
-  const handleUpdate = async (field) => {
+  const validateField = (field) => {
     const newErrors = {};
-
     switch (field) {
       case "username":
         if (!isValidUsername(userData.username)) {
@@ -103,7 +105,7 @@ export default function Profile() {
         }
         break;
       case "website":
-        if (!isValidURL(userData.website)) {
+        if (userData.website && !isValidURL(userData.website)) {
           setWebsiteError(
             "Website không hợp lệ. Vui lòng nhập một URL hợp lệ."
           );
@@ -114,9 +116,14 @@ export default function Profile() {
       default:
         break;
     }
+    return newErrors;
+  };
 
-    if (Object.keys(newErrors).length > 0) {
-      setValidationErrors(newErrors);
+  const handleUpdate = async (field) => {
+    const errors = validateField(field);
+
+    if (Object.keys(errors).length > 0) {
+      setValidationErrors(errors);
       return;
     }
 
@@ -126,12 +133,6 @@ export default function Profile() {
       setShowVerificationModal(true);
       return;
     } else {
-      console.log(
-        "Attempting to update:",
-        field,
-        "with value:",
-        userData[field]
-      );
       await updateUser(field, userData[field]);
       // Reload page after update
       window.location.reload();
@@ -169,6 +170,7 @@ export default function Profile() {
       const response = await axiosInstance.get("users/me");
       if (response.data) {
         setUserData(response.data.result);
+        setOriginalUserData(response.data.result); // Lưu trữ dữ liệu gốc
       } else {
         console.error("Dữ liệu không hợp lệ:", response.data);
       }
@@ -228,59 +230,80 @@ export default function Profile() {
 
   const handleUpdateAll = async () => {
     const newErrors = {};
+    const fieldsToUpdate = []; // Lưu trữ các trường cần cập nhật
 
-    if (!isValidUsername(userData.username)) {
-      newErrors.username = "Tên đăng nhập không được có ký tự đặc biệt.";
+    // Kiểm tra tên đăng nhập
+    if (userData.username !== originalUserData.username) {
+      if (!isValidUsername(userData.username)) {
+        newErrors.username = "Tên đăng nhập không được có ký tự đặc biệt.";
+      } else {
+        fieldsToUpdate.push("username");
+      }
     }
-    if (!isValidNameOrAddress(userData.name)) {
-      newErrors.name =
-        "Tên không được có ký tự đặc biệt và khoảng cách liên tiếp.";
-    }
-    if (!isValidNameOrAddress(userData.address)) {
-      newErrors.address =
-        "Địa chỉ không được có ký tự đặc biệt và khoảng cách liên tiếp.";
-    }
-    if (!isValidPhoneNumber(userData.phone_number)) {
-      newErrors.phone_number = "Số điện thoại phải từ 10 đến 11 chữ số.";
-    }
-    if (!isValidURL(userData.website)) {
-      setWebsiteError("Website không hợp lệ. Vui lòng nhập một URL hợp lệ.");
-      return;
-    }
-    setWebsiteError(""); // Reset lỗi nếu URL hợp lệ
 
+    // Kiểm tra tên
+    if (userData.name !== originalUserData.name) {
+      if (!isValidNameOrAddress(userData.name)) {
+        newErrors.name =
+          "Tên không được có ký tự đặc biệt và khoảng cách liên tiếp.";
+      } else {
+        fieldsToUpdate.push("name");
+      }
+    }
+
+    // Kiểm tra địa chỉ
+    if (userData.address !== originalUserData.address) {
+      if (!isValidNameOrAddress(userData.address)) {
+        newErrors.address =
+          "Địa chỉ không được có ký tự đặc biệt và khoảng cách liên tiếp.";
+      } else {
+        fieldsToUpdate.push("address");
+      }
+    }
+
+    // Kiểm tra số điện thoại
+    if (userData.phone_number !== originalUserData.phone_number) {
+      if (!isValidPhoneNumber(userData.phone_number)) {
+        newErrors.phone_number = "Số điện thoại phải từ 10 đến 11 chữ số.";
+      } else {
+        fieldsToUpdate.push("phone_number");
+      }
+    }
+
+    // Kiểm tra website chỉ nếu có giá trị và khác với giá trị gốc
+    if (userData.website && userData.website !== originalUserData.website) {
+      if (!isValidURL(userData.website)) {
+        setWebsiteError("Website không hợp lệ. Vui lòng nhập một URL hợp lệ.");
+        return;
+      }
+      fieldsToUpdate.push("website");
+    }
+
+    // Nếu có lỗi, lưu lại và không thực hiện cập nhật
     if (Object.keys(newErrors).length > 0) {
       setValidationErrors(newErrors);
       return;
     }
 
+    // Nếu không có lỗi, thực hiện cập nhật
     setValidationErrors({}); // Reset lỗi nếu tất cả đều hợp lệ
 
     if (userData.verify !== 1) {
       setShowVerificationModal(true);
       return;
     } else {
-      const fieldsToUpdate = [
-        "username",
-        "name",
-        "address",
-        "phone_number",
-        "website",
-      ];
       const updatePromises = fieldsToUpdate.map((field) =>
         updateUser(field, userData[field])
       );
       await Promise.all(updatePromises);
-      toast.success("Cập nhật tất cả thông tin thành công!");
+      toast.success("Cập nhật tất cả thông tin thành công.");
       // Reload page after update
       window.location.reload();
     }
   };
 
   if (loading) {
-    return (
-      <div style={{ textAlign: "center", paddingTop: "100px" }}>Loading...</div>
-    );
+    return <div>Loading...</div>;
   }
 
   return (
@@ -288,6 +311,93 @@ export default function Profile() {
       <Navbar />
       <div style={{ backgroundColor: "whitesmoke", paddingTop: "150px" }}>
         <Row justify="center" style={{ paddingTop: "50px" }}>
+          <Col
+            span={6}
+            style={{
+              backgroundColor: "white",
+              padding: "20px",
+              borderRadius: "10px",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+            }}
+          >
+            <div>
+              <div
+                style={{
+                  textAlign: "center",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <div style={{ width: "50%" }}>
+                  {userData && userData.avatar ? (
+                    <img
+                      src={userData.avatar}
+                      alt="Profile"
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                        borderRadius: "50%",
+                        objectFit: "cover",
+                        marginBottom: "10px",
+                      }}
+                    />
+                  ) : (
+                    <div
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                        borderRadius: "50%",
+                        border: "2px dashed #007bff", // Màu viền
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      <span>Chưa có ảnh</span>
+                    </div>
+                  )}
+                </div>
+
+                <div style={{ width: "50%", textAlign: "left" }}>
+                  <h4 style={{ margin: 0 }}>
+                    {userData ? userData.username : "Tài khoản"}
+                  </h4>
+                  <h6
+                    style={{
+                      color: "gray",
+                      opacity: 0.6,
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <EditOutlined style={{ marginRight: "5px" }} />
+                    Sửa hồ sơ
+                  </h6>
+                </div>
+              </div>
+
+              <ul style={{ listStyle: "none", padding: 0 }}>
+                <li>
+                  <Button
+                    type="link"
+                    onClick={() => console.log("Đi đến Đơn mua")}
+                  >
+                    Đơn mua
+                  </Button>
+                </li>
+                <li>
+                  <Button
+                    type="link"
+                    onClick={() => console.log("Đi đến Thay đổi mật khẩu")}
+                  >
+                    Thay đổi mật khẩu
+                  </Button>
+                </li>
+                {/* Bạn có thể thêm các liên kết khác ở đây */}
+              </ul>
+            </div>
+          </Col>
           <Col
             span={16}
             style={{
@@ -297,149 +407,136 @@ export default function Profile() {
               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
             }}
           >
-            <h1>Profile</h1>
+            <h2>Hồ Sơ Của Tôi</h2>
+            <h4>Quản lý thông tin hồ sơ để bảo mật tài khoản</h4>
             {userData ? (
               <Row gutter={16}>
                 <Col span={12}>
                   <Form layout="vertical">
-                    <Form.Item
-                      label="Tên đăng nhập"
-                      validateStatus={validationErrors.username ? "error" : ""}
-                      help={validationErrors.username}
-                    >
-                      <Row gutter={8}>
-                        <Col flex="auto">
-                          <Input
-                            value={userData.username}
-                            onChange={(e) =>
-                              setUserData({
-                                ...userData,
-                                username: e.target.value,
-                              })
-                            }
-                          />
-                        </Col>
-                        <Col>
-                          <Button
-                            type="primary"
-                            onClick={() => handleUpdate("username")}
-                          >
-                            Cập nhật
-                          </Button>
-                        </Col>
-                      </Row>
-                    </Form.Item>
-                    <Form.Item
-                      label="Tên"
-                      validateStatus={validationErrors.name ? "error" : ""}
-                      help={validationErrors.name}
-                    >
-                      <Row gutter={8}>
-                        <Col flex="auto">
-                          <Input
-                            value={userData.name}
-                            onChange={(e) =>
-                              setUserData({ ...userData, name: e.target.value })
-                            }
-                          />
-                        </Col>
-                        <Col>
-                          <Button
-                            type="primary"
-                            onClick={() => handleUpdate("name")}
-                          >
-                            Cập nhật
-                          </Button>
-                        </Col>
-                      </Row>
-                    </Form.Item>
                     <Form.Item label="Email">
-                      <Input value={maskedEmail} readOnly />
+                      <Input disabled value={maskedEmail} />
                     </Form.Item>
-                    <Form.Item
-                      label="Địa chỉ"
-                      validateStatus={validationErrors.address ? "error" : ""}
-                      help={validationErrors.address}
-                    >
-                      <Row gutter={8}>
-                        <Col flex="auto">
-                          <Input
-                            value={userData.address}
-                            onChange={(e) =>
-                              setUserData({
-                                ...userData,
-                                address: e.target.value,
-                              })
-                            }
-                          />
-                        </Col>
-                        <Col>
-                          <Button
-                            type="primary"
-                            onClick={() => handleUpdate("address")}
-                          >
-                            Cập nhật
-                          </Button>
-                        </Col>
-                      </Row>
+                    <Form.Item label="Tên đăng nhập">
+                      <Input
+                        value={userData.username}
+                        onChange={(e) => {
+                          const updatedUserData = {
+                            ...userData,
+                            username: e.target.value,
+                          };
+                          setUserData(updatedUserData);
+
+                          // Kiểm tra ngay lập tức khi giá trị thay đổi
+                          const errors = validateField("username");
+                          setValidationErrors((prev) => ({
+                            ...prev,
+                            ...errors,
+                          }));
+                        }}
+                      />
+                      {validationErrors.username && (
+                        <p style={{ color: "red" }}>
+                          {validationErrors.username}
+                        </p>
+                      )}
                     </Form.Item>
-                    <Form.Item
-                      label="SĐT"
-                      validateStatus={
-                        validationErrors.phone_number ? "error" : ""
-                      }
-                      help={validationErrors.phone_number}
-                    >
-                      <Row gutter={8}>
-                        <Col flex="auto">
-                          <Input
-                            value={userData.phone_number}
-                            onChange={(e) =>
-                              setUserData({
-                                ...userData,
-                                phone_number: e.target.value,
-                              })
-                            }
-                          />
-                        </Col>
-                        <Col>
-                          <Button
-                            type="primary"
-                            onClick={() => handleUpdate("phone_number")}
-                          >
-                            Cập nhật
-                          </Button>
-                        </Col>
-                      </Row>
+
+                    <Form.Item label="Tên">
+                      <Input
+                        value={userData.name}
+                        onChange={(e) => {
+                          const updatedUserData = {
+                            ...userData,
+                            name: e.target.value,
+                          };
+                          setUserData(updatedUserData);
+
+                          // Kiểm tra ngay lập tức khi giá trị thay đổi
+                          const errors = validateField("name");
+                          setValidationErrors((prev) => ({
+                            ...prev,
+                            ...errors,
+                          }));
+                        }}
+                      />
+                      {validationErrors.name && (
+                        <p style={{ color: "red" }}>{validationErrors.name}</p>
+                      )}
                     </Form.Item>
-                    <Form.Item
-                      label="Website"
-                      validateStatus={websiteError ? "error" : ""}
-                      help={websiteError}
-                    >
-                      <Row gutter={8}>
-                        <Col flex="auto">
-                          <Input
-                            value={userData.website}
-                            onChange={(e) => {
-                              setUserData({
-                                ...userData,
-                                website: e.target.value,
-                              });
-                              setWebsiteError(""); // Reset lỗi khi đang nhập
-                            }}
-                          />
-                        </Col>
-                        <Col>
-                          <Button
-                            type="primary"
-                            onClick={() => handleUpdate("website")}
-                          >
-                            Cập nhật
-                          </Button>
-                        </Col>
-                      </Row>
+
+                    <Form.Item label="Địa chỉ">
+                      <Input
+                        value={userData.address}
+                        onChange={(e) => {
+                          const updatedUserData = {
+                            ...userData,
+                            address: e.target.value,
+                          };
+                          setUserData(updatedUserData);
+
+                          // Kiểm tra ngay lập tức khi giá trị thay đổi
+                          const errors = validateField("address");
+                          setValidationErrors((prev) => ({
+                            ...prev,
+                            ...errors,
+                          }));
+                        }}
+                      />
+                      {validationErrors.address && (
+                        <p style={{ color: "red" }}>
+                          {validationErrors.address}
+                        </p>
+                      )}
                     </Form.Item>
+
+                    <Form.Item label="Số điện thoại">
+                      <Input
+                        value={userData.phone_number}
+                        onChange={(e) => {
+                          const updatedUserData = {
+                            ...userData,
+                            phone_number: e.target.value,
+                          };
+                          setUserData(updatedUserData);
+
+                          // Kiểm tra ngay lập tức khi giá trị thay đổi
+                          const errors = validateField("phone_number");
+                          setValidationErrors((prev) => ({
+                            ...prev,
+                            ...errors,
+                          }));
+                        }}
+                      />
+                      {validationErrors.phone_number && (
+                        <p style={{ color: "red" }}>
+                          {validationErrors.phone_number}
+                        </p>
+                      )}
+                    </Form.Item>
+
+                    <Form.Item label="Website">
+                      <Input
+                        value={userData.website}
+                        onChange={(e) => {
+                          const updatedUserData = {
+                            ...userData,
+                            website: e.target.value,
+                          };
+                          setUserData(updatedUserData);
+
+                          // Kiểm tra ngay lập tức khi giá trị thay đổi
+                          const errors = validateField("website");
+                          setValidationErrors((prev) => ({
+                            ...prev,
+                            ...errors,
+                          }));
+                        }}
+                      />
+                      {websiteError && (
+                        <p style={{ color: "red" }}>{websiteError}</p>
+                      )}
+                    </Form.Item>
+
                     <Form.Item>
                       <Button type="primary" onClick={handleUpdateAll}>
                         Cập nhật tất cả
@@ -449,24 +546,38 @@ export default function Profile() {
                 </Col>
                 <Col
                   span={12}
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
+                  className="d-flex justify-content-center align-items-center"
                 >
-                  <img
-                    src={userData.avatar}
-                    alt="Profile"
-                    onClick={() => setShowImageModal(true)}
-                    style={{
-                      width: "150px",
-                      height: "150px",
-                      borderRadius: "50%",
-                      objectFit: "cover",
-                      cursor: "pointer",
-                    }}
-                  />
+                  {userData.avatar ? (
+                    <img
+                      src={userData.avatar}
+                      alt="Profile"
+                      onClick={() => setShowImageModal(true)}
+                      style={{
+                        width: "150px",
+                        height: "150px",
+                        borderRadius: "50%",
+                        objectFit: "cover",
+                        cursor: "pointer",
+                      }}
+                    />
+                  ) : (
+                    <div
+                      style={{
+                        width: "150px",
+                        height: "150px",
+                        borderRadius: "50%",
+                        border: "2px dashed #007bff", // Màu viền
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => setShowImageModal(true)}
+                    >
+                      <span>Chưa có ảnh</span>
+                    </div>
+                  )}
                 </Col>
               </Row>
             ) : (
@@ -493,7 +604,10 @@ export default function Profile() {
                 onOk={handleResendVerification}
                 onCancel={() => setShowVerificationModal(false)}
               >
-                <p>Bạn có muốn gửi lại email xác minh không?</p>
+                <p>
+                  Tài khoản của bạn chưa được xác minh. Bạn có muốn gửi lại
+                  email xác minh không?
+                </p>
               </Modal>
             )}
           </Col>
