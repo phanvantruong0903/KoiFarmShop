@@ -1,26 +1,30 @@
 import { Router } from 'express'
 import {
     buyNowController,
-  getKoiPriceController,
+  getKoiByPriceController,
+  getKoiQuantityController,
   getMinMaxPriceController,
   getOrderDetailController,
   makeOrderDetailController,
   updateOrderDetailController
 } from '../controllers/orderDetailController.js'
-import { createOrderController } from '../controllers/order.controllers.js'
+import { createOrderController, getOrderController } from '../controllers/order.controllers.js'
 import { accessTokenValidator } from '../middlewares/users.middlewares.js'
+import { wrapAsync } from '../utils/handle.js'
 
 const orderRouter = Router()
 
 //Order Detail
 orderRouter.post('/detail/make', makeOrderDetailController)
 orderRouter.post('/detail/buy', buyNowController)
-orderRouter.get('/detail/:orderID', accessTokenValidator, getOrderDetailController)
+orderRouter.get('/detail/:orderID', getOrderDetailController)
 orderRouter.patch('/detail/edit/:orderID', updateOrderDetailController)
-orderRouter.post('/detail/price', getKoiPriceController)
+orderRouter.post('/detail/price', getKoiQuantityController)
 //Order
-orderRouter.post('/create/:orderDTID', createOrderController)
+orderRouter.post('/create', createOrderController)
+orderRouter.get('/',accessTokenValidator, wrapAsync(getOrderController))
 //Price
 orderRouter.post('/detail/price/minmax', getMinMaxPriceController)
+orderRouter.post('/detail/koi', getKoiByPriceController)
 
 export default orderRouter

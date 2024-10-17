@@ -61,14 +61,21 @@ export const updateOrderDetailController = async (req, res) => {
   }
 };
 
-export const getKoiPriceController = async (req, res) => {
+export const getKoiQuantityController = async (req, res) => {
   try {
-    const result = await orderDetailService.getKoiPrice(req.body);
+  const result = await orderDetailService.getKoiQuantity(req.body);
     console.log("result: ", result)
-    return res.json({
-      message: USERS_MESSAGES.GET_AVAILABLE_KOI_QUANTITY,
-      result
-    })
+    if(result){
+      return res.json({
+        message: USERS_MESSAGES.GET_AVAILABLE_KOI_QUANTITY,
+        result
+      })
+    }else{
+      return res.json({
+        message: USERS_MESSAGES.OUT_OF_STOCK
+      })
+    }
+    
   } catch (error) {
     return res.status(500).json({ error: error.message })
   }
@@ -85,4 +92,26 @@ export const getMinMaxPriceController = async (req, res) => {
     return res.status(500).json({ error: error.message })
   }
 }
+export const getKoiByPriceController = async (req, res) => {
+  try {
+    const result = await orderDetailService.getKoiByPrice(req.body);
+    console.log("result: ", result)
+    if(result && result.koiList.length > 0){
+      return res.json({
+        message: USERS_MESSAGES.GET_KOI_SUCCESS,
+        result
+      })
+    }else{
+      return res.json({
+        message: USERS_MESSAGES.OUT_OF_STOCK,
+        result
+      })
+    }
+    
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+
+
 

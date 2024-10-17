@@ -3,12 +3,39 @@ import Footer from "./Footer";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Button, Container, Row, Col } from "react-bootstrap";
+import axios from "axios";
 const OrderingIKoi = () => {
   const location = useLocation();
   const { selectedItem } = location.state || {}; // Retrieve selected item
-
   const [selectedSize, setSelectedSize] = useState(selectedItem?.Size || "");
   const [selectedBreed, setSelectedBreed] = useState(selectedItem?.Breed || "");
+  const [price, setPrice] = useState("");
+  useEffect(() => {
+    const sendOrderDetails = async () => {
+      try {
+        const response = await axios.post(
+          "http://localhost:4000/order/detail/price",
+          {
+            Size: selectedSize,
+            Breed: selectedBreed,
+            CategoryID: selectedItem.CategoryID,
+          }
+        );
+
+        console.log("Response:", response.data);
+
+        console.log(response.data.result.CategoryName.Price);
+        setPrice(response.data.result.CategoryName.Price);
+        // Xử lý phản hồi nếu cần
+      } catch (error) {
+        console.error("Error sending order details:", error);
+        // Xử lý lỗi nếu cần
+      }
+    };
+
+    // Gọi hàm gửi dữ liệu
+    sendOrderDetails();
+  }, [selectedSize, selectedBreed, selectedItem.CategoryID]); // Chạy lại khi size, breed hoặc categoryID thay đổi
   return (
     <>
       <div>
@@ -87,7 +114,7 @@ const OrderingIKoi = () => {
                   <option value="F1">F1</option>
                 </select>
               </div>
-              <h3>Price: {selectedItem.Price || "Contact for Price"}</h3>
+              <h3>Price: {price}</h3>
               <Button variant="danger" onClick={() => alert("Order placed!")}>
                 Order Now
               </Button>

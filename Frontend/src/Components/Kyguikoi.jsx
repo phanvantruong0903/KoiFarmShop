@@ -190,110 +190,257 @@ export default function Kyguikoi() {
 
   return (
     <div>
-      <Form form={form} onFinish={handleSubmit}>
-        <h3>Thông tin khách hàng</h3>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Form.Item
-            label="Địa chỉ email (*)"
-            name="email"
-            initialValue={userData?.email || 'kco'}
-            style={{ width: "48%" }}
-          >
-            <Input
-              placeholder="Nhập địa chỉ email (name@example.com)"
-              required
-            />
-          </Form.Item>
-          <Form.Item
-            label="Địa chỉ (*)"
-            name="address"
-            initialValue={userData?.address}
-            style={{ width: "48%" }}
-          >
-            <Input placeholder="Nhập địa chỉ" required />
-          </Form.Item>
-        </div>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Form.Item
-            label="Số điện thoại (*)"
-            name="phone_number"
-            initialValue={userData?.phone_number}
-            style={{ width: "48%" }}
-          >
-            <Input placeholder="Nhập Số Điện Thoại" required />
-          </Form.Item>
-          <Form.Item
-            label="Tên người ký gửi (*)"
-            name="name"
-            initialValue={userData?.name}
-            style={{ width: "48%" }}
-          >
-            <Input placeholder="Nhập FullName" required />
-          </Form.Item>
-        </div>
-        <hr />
-        <h3>Thông Tin Ký Gửi</h3>
-        <Form.Item label="Nơi chăm sóc koi (*)" name="PositionCare">
-          <Radio.Group>
-            <Radio value="Home">Home</Radio>
-            <Radio value="IKoiFarm">IKoiFarm</Radio>
-          </Radio.Group>
-        </Form.Item>
-        <Form.Item label="Phương thức nhận koi (*)" name="Method">
-          <Radio.Group>
-            <Radio value="Online">Online</Radio>
-            <Radio value="Offline">Offline</Radio>
-          </Radio.Group>
-        </Form.Item>
-        <Form.Item label="Ngày Gửi" name="shippedDate">
-          <DatePicker />
-        </Form.Item>
-        <Form.Item label="Ngày Nhận" name="receiptDate">
-          <DatePicker />
-        </Form.Item>
-        <Form.Item label="Chi tiết" name="Description">
-          <Input.TextArea
-            placeholder="Nhập"
-            style={{ height: "150px", resize: "none" }}
-          />
-        </Form.Item>
-        <hr />
-        <h3>Thông Tin Koi Muốn Ký Gửi</h3>
-        <Form.Item
-          label="Loại Cá (*)"
-          name="CategoryID"
-          style={{ width: "32%" }}
-        >
-          <Select placeholder="Chọn danh mục...">
-            {categoryData.map((category) => (
-              <Select.Option key={category._id} value={category._id}>
-                {category.CategoryName}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
-        <Form.Item
-          label="Tên Loại Cá Koi (*)"
-          name="KoiName"
-          style={{ width: "32%" }}
-        >
-          <Input placeholder="Nhập KoiName (Category + Origin)" required />
-        </Form.Item>
-        <Form.Item label="Tuổi (*)" name="Age" style={{ width: "32%" }}>
-          <Input
-            type="number"
-            min={1}
-            max={20}
-            placeholder="Nhập tuổi"
-            required
-          />
-        </Form.Item>
+      <Form onSubmit={handleSubmit} style={{}}>
+        {/* Phần còn lại của form giữ nguyên */}
+        <div style={{ color: "black" }}>
+          <div style={{ width: "100%" }}>
+            <h3>Thông tin khách hàng</h3>
+            {/* Các trường nhập liệu ở đây */}
+            <div style={{ display: "flex" }}>
+              <div style={{ width: "50%" }}>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlInput1"
+                  style={{ width: "100%" }}
+                >
+                  <Form.Label>Địa chỉ email (*): </Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Nhập địa chỉ email (name@example.com)"
+                    required
+                    name="email"
+                    defaultValue={
+                      userData && userData.email ? userData.email : ""
+                    } // Sử dụng email từ userData nếu có
+                  />
+                </Form.Group>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlInput3"
+                  style={{ width: "100%" }}
+                >
+                  <Form.Label>Địa chỉ(*): </Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Nhập địa chỉ"
+                    required
+                    name="address"
+                    defaultValue={
+                      userData && userData.address ? userData.address : ""
+                    } // Sử dụng địa chỉ từ userData nếu có
+                  />
+                </Form.Group>
+              </div>
+              <div style={{ width: "50%", paddingLeft: "20px" }}>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlInput4"
+                  style={{ width: "100%" }}
+                >
+                  <Form.Label>Số điện thoại (*): </Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="Nhập Số Điện Thoại"
+                    required
+                    name="phone_number"
+                    defaultValue={
+                      userData && userData.phone_number
+                        ? userData.phone_number
+                        : ""
+                    } // Sử dụng số điện thoại từ userData nếu có
+                  />
+                </Form.Group>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlInput4"
+                  style={{ width: "100%" }}
+                >
+                  <Form.Label>Tên người ký gửi (*): </Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Nhập FullName"
+                    required
+                    name="name"
+                    defaultValue={
+                      userData && userData.name ? userData.name : ""
+                    } // Sử dụng tên từ userData nếu có
+                  />
+                </Form.Group>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div style={{ width: "100%" }}>
+            <h3>Thông Tin Ký Gửi</h3>
+            <div style={{ display: "flex" }}>
+              <div style={{ width: "50%" }}>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlInput6"
+                  style={{ width: "100%" }}
+                >
+                  <Form.Label>Nơi chăm sóc koi (*): </Form.Label>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Form.Check
+                      type="radio"
+                      id="Home"
+                      label="Home"
+                      name="PositionCare"
+                      value="Home"
+                      style={{ marginRight: "20px" }} // Adjusted margin
+                    />
+                    <Form.Check
+                      type="radio"
+                      id="IKoiFarm"
+                      label="IKoiFarm"
+                      name="PositionCare"
+                      value="IKoiFarm"
+                      style={{ marginBottom: "0" }} // Adjusted margin
+                    />
+                  </div>
+                </Form.Group>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlInput6"
+                  style={{ width: "100%" }}
+                >
+                  <Form.Label>Phương thức nhận koi(*): </Form.Label>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Form.Check
+                      type="radio"
+                      id="nameOption1"
+                      label="Online"
+                      name="Method"
+                      value="Online"
+                      style={{ marginRight: "20px" }}
+                    />
+                    <Form.Check
+                      type="radio"
+                      id="nameOption2"
+                      label="Offline"
+                      name="Method"
+                      value="Offline"
+                    />
+                  </div>
+                </Form.Group>
+              </div>
+              <div style={{ width: "100%", paddingLeft: "20px" }}>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlInput8"
+                  style={{ width: "100%" }}
+                >
+                  <Form.Label>Ngày Gửi: </Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="shippedDate"
+                    placeholder="Nhập ngày gửi"
+                  />
+                </Form.Group>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlInput9"
+                  style={{ width: "100%" }}
+                >
+                  <Form.Label>Ngày Nhận: </Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="receiptDate"
+                    placeholder="Nhập ngày nhận"
+                  />
+                </Form.Group>
+              </div>
+            </div>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlInput9"
+              style={{ width: "100%" }}
+            >
+              <Form.Label>Chi tiết: </Form.Label>
+              <Form.Control
+                as="textarea" // Thay đổi kiểu thành textarea
+                name="Description"
+                placeholder="Nhập"
+                style={{ height: "150px", resize: "none" }} // Tăng chiều cao và không cho phép thay đổi kích thước
+              />
+            </Form.Group>
+          </div>
 
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Form.Item
-            label="Nguồn Gốc (*)"
-            name="Origin"
-            style={{ width: "32%" }}
+          <hr />
+          <h3>Thông Tin Koi Muốn Ký Gửi</h3>
+          <Form.Group
+            className="mb-3"
+            controlId="exampleForm.ControlSelect1"
+            style={{ width: "100%" }}
+          >
+            <Form.Label>Loại Cá(*): </Form.Label>
+
+            <Form.Control as="select" name="CategoryID">
+              <option value="">Chọn danh mục...</option>
+              {categoryData.map((category) => (
+                <option key={category._id} value={category._id}>
+                  {category.CategoryName}
+                </option>
+              ))}
+            </Form.Control>
+          </Form.Group>
+          <Form.Group
+            className="mb-3"
+            controlId="exampleForm.ControlInput10"
+            style={{ width: "100%" }}
+          >
+            <Form.Label>Tên Loại Cá Koi (*): </Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Nhập KoiName ( Category + Origin )"
+              required
+              name="KoiName"
+            />
+          </Form.Group>
+          <Form.Group
+            className="mb-3"
+            controlId="exampleForm.ControlInput11"
+            style={{ width: "100%" }}
+          >
+            <Form.Label>Tuổi (*): </Form.Label>
+            <Form.Control
+              type="number"
+              placeholder="Nhập tuổi"
+              min="1"
+              max="20"
+              required
+              name="Age"
+            />
+          </Form.Group>
+          <Form.Group
+            className="mb-3"
+            controlId="exampleForm.ControlInput12"
+            style={{ width: "100%" }}
+          >
+            <Form.Label>Nguồn Gốc (*): </Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Nhập nguồn gốc"
+              required
+              name="Origin"
+            />
+          </Form.Group>
+          <Form.Group
+            className="mb-3"
+            controlId="exampleForm.ControlInput6"
+            style={{ width: "100%" }}
           >
             <Input placeholder="Nhập nguồn gốc" required />
           </Form.Item>

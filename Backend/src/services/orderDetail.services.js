@@ -41,7 +41,8 @@ class OrderDetailService {
                 TotalPrice: Number(koi.Price) // Khởi tạo với giá của koi
             }
         }
-        return { order, koi }
+        const savedOrder = await this.saveOrderToDatabase(order)
+        return { order: savedOrder, koi }
     }
     async buyNow(payload, reqCookie) {
         const koi = await databaseService.kois.findOne({ _id: new ObjectId(payload.KoiID) })
@@ -88,6 +89,13 @@ class OrderDetailService {
             return order
         }
     }
+    // async saveOrderToDatabase(order) {
+        
+    //         const result = await databaseService.orderDetail.insertOne(order)
+    //         order._id = result.insertedId // Attach the new _id to the order
+    //         return order
+        
+    // }
 
     async fetchOrder(payload) {
         const result = await databaseService.orderDetail.findOne({ _id: new ObjectId(payload.orderID) })
@@ -98,24 +106,27 @@ class OrderDetailService {
         const koi = await databaseService.kois.findOne({ _id: new ObjectId(payload.KoiID) })
         const order = await databaseService.orderDetail.findOne({ _id: new ObjectId(reqParams.orderID) })
         console.log('order: ', order)
-        let result
+        let result, oldQuantity
         if (order) {
             result = await databaseService.orderDetail.findOneAndUpdate(
                 { _id: new ObjectId(reqParams.orderID) },
                 {
                     $set: {
                         Items: order.Items?.map((item) => {
-                            return item.KoiID === payload.KoiID
-                                ? {
+                            if (item.KoiID === payload.KoiID) {
+                                oldQuantity = item.Quantity;  // Capture oldQuantity here
+                                return {
                                     KoiID: item.KoiID,
                                     Quantity: payload.Quantity
-                                }
-                                : {
+                                };
+                            } else {
+                                return {
                                     KoiID: item.KoiID,
                                     Quantity: item.Quantity
                                 }
-                        }),
-                        TotalPrice: order.TotalPrice + koi.Price * payload.Quantity
+                            }
+                            }),
+                        TotalPrice: order.TotalPrice + koi.Price * (payload.Quantity-oldQuantity)
                     }
                 },
                 { returnDocument: 'after' }
@@ -124,14 +135,46 @@ class OrderDetailService {
         return result
     }
 
-    async getKoiPrice(payload) {
+    async getKoiQuantity(payload) {
         // let koi = await databaseService.kois.findOne({_id: new ObjectId(payload.KoiID)})
         let koisList, quantity
-        koisList = await databaseService.kois
-            .find({
-                $and: [{ CategoryID: payload.CategoryID }, { Breed: payload.Breed }, { Size: payload.Size }]
-            })
-            .toArray()
+        let size = payload.Size
+        if(size < 15){
+            koisList = await databaseService.kois
+        .find({
+            CategoryID: payload.CategoryID, 
+            Breed: payload.Breed, 
+            Size: {$lt :15}
+        })
+        .toArray();
+        }
+        else if(size >= 15 && size < 18){
+            koisList = await databaseService.kois
+        .find({
+            CategoryID: payload.CategoryID, 
+            Breed: payload.Breed, 
+            Size: {$gte :15, $lt: 18}
+        })
+        .toArray();
+        }
+        else if(size >= 18 && size < 20){
+            koisList = await databaseService.kois
+        .find({
+            CategoryID: payload.CategoryID, 
+            Breed: payload.Breed, 
+            Size: {$gte :18, $lt: 20}
+        })
+        .toArray();
+        }
+        else{
+            koisList = await databaseService.kois
+        .find({
+            CategoryID: payload.CategoryID, 
+            Breed: payload.Breed, 
+            Size: Number(payload.Size)
+        })
+        .toArray();
+        }
         console.log('list: ', koisList)
         quantity = koisList?.length
         console.log('quantity: ', quantity)
@@ -170,10 +213,10 @@ class OrderDetailService {
                 { min: 70, max: 75, price: 1420000, description: '70cm' },
                 { min: 75, max: Infinity, price: 1700000, description: '>75cm' }
             ],
-            Japan: [
-                { min: 0, max: 15, priceMin: 750000, priceMax: 1500000, description: '<15cm' },
-                { min: 15, max: 18, priceMin: 1000000, priceMax: 2500000, description: '15-18cm' },
-                { min: 18, max: 20, priceMin: 1400000, priceMax: 3000000, description: '18-20cm' },
+            Nhật: [
+                { min: 0, max: 15, priceMin: 800000, priceMax: 2000000, description: '<15cm' },
+                { min: 15, max: 18, priceMin: 1000000, priceMax: 3000000, description: '15-18cm' },
+                { min: 18, max: 20, priceMin: 2000000, priceMax: 3000000, description: '18-20cm' },
                 { min: 20, max: 25, priceMin: 1700000, priceMax: 3400000, description: '20cm' },
                 { min: 25, max: 30, priceMin: 2250000, priceMax: 4050000, description: '25cm' },
                 { min: 30, max: 35, priceMin: 3000000, priceMax: 4900000, description: '30cm' },
@@ -190,22 +233,26 @@ class OrderDetailService {
         }
         const breedPricing = koiPrices[payload.Breed]
         const priceCheck = breedPricing?.find((range) => payload.Size >= range.min && payload.Size < range.max)
-        if (priceCheck)
+        if (koisList.length>0 && priceCheck)
             return {
                 CategoryName: {
-                    Size: payload.Size,
                     Price: priceCheck.price,
-                    Quantity: quantity
+                    Quantity: quantity,
+                    Description: priceCheck.description
                 }
             }
     }
 
-    async getMinMaxPrice(payload) {
-        const koiList = await databaseService.kois
+    async findKoi(payload){
+        return await databaseService.kois
         .find({
-            $and: [{ CategoryID: payload.CategoryID }, { Breed: payload.Breed }, { Size: payload.Size }]
+            $and: [{ CategoryID: payload.CategoryID }, { Breed: payload.Breed }, { Size: Number(payload.Size) }]
         })
         .toArray()
+    }
+
+    async getMinMaxPrice(payload) {
+        const koiList = await this.findKoi(payload) 
         console.log("list kois: ", koiList)
         const minPrice = Math.min(
             ...koiList
@@ -222,6 +269,20 @@ class OrderDetailService {
             max: maxPrice
         } 
     }
+    async getKoiByPrice(payload) {
+        const koiList = (await this.findKoi(payload)).filter(koi=>koi.Price === payload.Price)
+        const quantity = koiList?.length
+        return (koiList && quantity>0) 
+        ? {
+            koiList,
+            Quantity: quantity
+        } : 
+        {
+            koiList:[],
+            Quantity: 0
+        }
+    }
+
 }
 
 const orderDetailService = new OrderDetailService()
