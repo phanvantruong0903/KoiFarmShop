@@ -28,6 +28,7 @@ export default function Gioithieusankygui() {
               padding: "20px",
               boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
               transition: "transform 0.3s, box-shadow 0.3s",
+              marginBottom: "30px",
             }}
             hoverable
             onClick={toggleText}
@@ -39,7 +40,7 @@ export default function Gioithieusankygui() {
               99% người nuôi cá Koi đều mong em koi của mình được “gả” vào gia đình tốt, đảm bảo cuộc sống, tương lai...
             </Paragraph>
 
-            {/* Additional content before expansion */}
+            {/* Quy trình ký gửi */}
             <Paragraph style={{ color: "#333", marginBottom: "15px" }}>
               <strong>Quy trình ký gửi cá Koi</strong>
               <ul>
@@ -47,9 +48,11 @@ export default function Gioithieusankygui() {
                 <li>Ký gửi cá Koi online: Đăng tải thông tin chi tiết của Koi cần ký gửi trên hệ thống website.</li>
               </ul>
             </Paragraph>
+
             <Paragraph style={{ color: "#333", marginBottom: "15px" }}>
               <strong>Lưu ý:</strong> Ký gửi cá Koi Offline phù hợp với người nuôi Koi chưa có website. Ký gửi Koi Online dành cho người nuôi Koi để kinh doanh, có hệ thống website.
             </Paragraph>
+
             <Paragraph style={{ color: "#333", marginBottom: "15px" }}>
               <strong>Quy trình ký gửi:</strong>
               <ol>
@@ -62,6 +65,7 @@ export default function Gioithieusankygui() {
                 <li>Cá bán thành công.</li>
               </ol>
             </Paragraph>
+
             <Paragraph style={{ color: "#333", marginBottom: "15px" }}>
               <h5 style={{ color: "#e74c3c", marginTop: "20px" }}>Chính sách Ký gửi cá Koi</h5>
               <ul>
@@ -72,6 +76,7 @@ export default function Gioithieusankygui() {
                 <li>Chi phí ký gửi hợp lý.</li>
               </ul>
             </Paragraph>
+
             <Paragraph style={{ color: "#333", marginBottom: "15px" }}>
               <h5 style={{ color: "#e74c3c", marginTop: "20px" }}>Ý nghĩa của việc ký gửi cá Koi</h5>
               <ul>
@@ -81,7 +86,7 @@ export default function Gioithieusankygui() {
             </Paragraph>
 
             {/* Toggle button */}
-            <div style={{ cursor: "pointer", display: "flex", alignItems: "center" }}>
+            <div style={{ cursor: "pointer", display: "flex", alignItems: "center" }} onClick={toggleText}>
               {isExpanded ? <CaretUpOutlined /> : <CaretDownOutlined />}
               <span style={{ color: "#e74c3c", marginLeft: "8px" }}>
                 {isExpanded ? "Xem ít hơn" : "Xem thêm"}
@@ -130,8 +135,17 @@ export default function Gioithieusankygui() {
               )}
             </motion.div>
           </Card>
-          <div style={{ marginTop: "50px" }}>
-            <Kyguikoi />
+          <div style={{ marginTop: "20px" }}>
+            <Card
+              style={{
+                backgroundColor: "#f9f9f9",
+                borderRadius: "10px",
+                padding: "20px",
+                boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+              }}
+            >
+              <Kyguikoi />
+            </Card>
           </div>
         </Content>
       </div>
