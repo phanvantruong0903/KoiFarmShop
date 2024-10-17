@@ -96,7 +96,7 @@ export const getKoiByPriceController = async (req, res) => {
   try {
     const result = await orderDetailService.getKoiByPrice(req.body);
     console.log("result: ", result)
-    if(result && result.length > 0){
+    if(result && result.koiList.length > 0){
       return res.json({
         message: USERS_MESSAGES.GET_KOI_SUCCESS,
         result

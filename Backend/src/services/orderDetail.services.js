@@ -243,7 +243,7 @@ class OrderDetailService {
     async getKoiByPrice(payload) {
         const koiList = (await this.findKoi(payload)).filter(koi=>koi.Price === payload.Price)
         const quantity = koiList?.length
-        return koiList && quantity>0 
+        return (koiList && quantity>0) 
         ? {
             koiList,
             Quantity: quantity
