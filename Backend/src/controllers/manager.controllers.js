@@ -1,5 +1,6 @@
 import { MANAGER_MESSAGES } from '../constants/managerMessage.js'
 import consignsService from '../services/consigns.services.js'
+import invoicesService from '../services/invoices.services.js'
 import koisService from '../services/kois.services.js'
 import suplliersService from '../services/suppliers.services.js'
 import usersService from '../services/users.services.js'
@@ -98,7 +99,19 @@ export const getSupplierController = async (req, res) => {
     const { _id } = req.params
     const result = await suplliersService.getSupplier(_id)
     return res.json({
-      message: MANAGER_MESSAGES.GET_ALL_SUPPLIER_SUCCESS,
+      message: MANAGER_MESSAGES.GET_SUPPLIER_SUCCESS,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+
+export const createNewInvoiceGroupKoiController = async (req, res) => {
+  try {
+    const result = await invoicesService.createNewInvoiceGroupKoi(req.body)
+    return res.json({
+      message: MANAGER_MESSAGES.CREATE_NEW_INVOICE_GROUP_KOI_SUCCESS,
       result
     })
   } catch (error) {

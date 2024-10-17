@@ -1,4 +1,5 @@
 import {
+  createNewInvoiceGroupKoiController,
   createNewKoiController,
   createNewSupplierController,
   getAllConsignController,
@@ -10,7 +11,7 @@ import {
   updateSupplierController
 } from '../controllers/manager.controllers.js'
 import { getProfileController } from '../controllers/users.controllers.js'
-import { isAdminValidator } from '../middlewares/manager.middlewares.js'
+import { isAdminValidator, SupplierIDAndCategoryIDValidator } from '../middlewares/manager.middlewares.js'
 import { accessTokenValidator } from '../middlewares/users.middlewares.js'
 import { wrapAsync } from '../utils/handle.js'
 import { Router } from 'express'
@@ -71,6 +72,12 @@ managerRouter.put('/manage-supplier/:_id', accessTokenValidator, isAdminValidato
 
 managerRouter.get('/manage-supplier/:_id', accessTokenValidator, isAdminValidator, wrapAsync(getSupplierController))
 
-// managerRouter.post('manage-invoice/create-new-invoice-group-koi', accessTokenValidator, isAdminValidator, wrapAsync(createNewGroupKoiController))
+managerRouter.post(
+  '/manage-invoice/create-new-invoice-group-koi',
+  accessTokenValidator,
+  isAdminValidator,
+  SupplierIDAndCategoryIDValidator,
+  wrapAsync(createNewInvoiceGroupKoiController)
+)
 
 export default managerRouter
