@@ -142,7 +142,7 @@ class OrderDetailService {
         .find({
             CategoryID: payload.CategoryID, 
             Breed: payload.Breed, 
-            Size: Number(payload.Size)
+            Size: {$gte :Number(payload.Size)}
         })
         .toArray();
         console.log('list: ', koisList)
@@ -183,10 +183,10 @@ class OrderDetailService {
                 { min: 70, max: 75, price: 1420000, description: '70cm' },
                 { min: 75, max: Infinity, price: 1700000, description: '>75cm' }
             ],
-            Japan: [
-                { min: 0, max: 15, priceMin: 750000, priceMax: 1500000, description: '<15cm' },
-                { min: 15, max: 18, priceMin: 1000000, priceMax: 2500000, description: '15-18cm' },
-                { min: 18, max: 20, priceMin: 1400000, priceMax: 3000000, description: '18-20cm' },
+            Nhật: [
+                { min: 0, max: 15, priceMin: 800000, priceMax: 2000000, description: '<15cm' },
+                { min: 15, max: 18, priceMin: 1000000, priceMax: 3000000, description: '15-18cm' },
+                { min: 18, max: 20, priceMin: 2000000, priceMax: 3000000, description: '18-20cm' },
                 { min: 20, max: 25, priceMin: 1700000, priceMax: 3400000, description: '20cm' },
                 { min: 25, max: 30, priceMin: 2250000, priceMax: 4050000, description: '25cm' },
                 { min: 30, max: 35, priceMin: 3000000, priceMax: 4900000, description: '30cm' },
@@ -206,7 +206,7 @@ class OrderDetailService {
         if (koisList.length>0 && priceCheck)
             return {
                 CategoryName: {
-                    Size: payload.Size,
+                    Size: koisList[0].Size,
                     Price: priceCheck.price,
                     Quantity: quantity,
                     Description: priceCheck.description
