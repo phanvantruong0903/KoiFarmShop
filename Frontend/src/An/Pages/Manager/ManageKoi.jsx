@@ -73,8 +73,8 @@ export default function ManageKoi() {
                                     <div className="mt-3">
                                         <Row>
                                             {result.filter(koi => koi.CategoryID === category._id).map((koi) => (
-                                                <Col xs={12} md={8} lg={2} key={koi._id}>
-                                                    <Card className="mb-3">
+                                                <Col xs={12} md={8} lg={3} sm={2} key={koi._id}>
+                                                    <Card className="mb-3" style={{maxWidth:'460px'}}>
                                                         <Card.Img
                                                             variant="top"
                                                             src={koi.Image || 'https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM='}
