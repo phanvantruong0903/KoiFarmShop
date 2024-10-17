@@ -1,6 +1,6 @@
 .add-new-card {
-    background-color: #f8f9fa; 
-    border: 2px dashed #ccc; 
+    background-color: #f8f9fa;
+    border: 2px dashed #ccc;
     transition: background-color 0.3s ease;
     cursor: pointer;
 }
@@ -11,7 +11,7 @@
 }
 
 .add-new-card:hover {
-    background-color: #28a745; 
+    background-color: #28a745;
     border-color: #28a745;
 }
 
@@ -24,9 +24,11 @@
     color: #fff;
     background-color: #28a745;
 }
-.do-not-show .dropdown-menu.show{
+
+.do-not-show .dropdown-menu.show {
     display: none;
 }
+
 .card {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
@@ -50,22 +52,25 @@
 .my-special {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 2.5s ease-in-out, padding 0.5s ease;
+    transition: max-height 0.5s ease-in-out, padding 0.5s ease,opacity 1.5s ease-in-out;
+    opacity: 0;
 }
-
 
 .my-special.expanded {
     max-height: 10011px;
+    height: 10000px;
     padding-top: 1rem;
     padding-bottom: 1rem;
+    opacity: 1;
 }
 
-
 .my-special.collapsing {
-    transition: max-height 3.5s ease-in-out, padding 0.5s ease;
+    transition: max-height 0.1s ease, padding 0.5s ease;
     max-height: 0;
     padding-top: 0;
     padding-bottom: 0;
+    height: 50vh;
+    opacity: 0;
 }
 
 .container-fluid {
@@ -122,13 +127,17 @@ form label {
 }
 
 
-input, select, textarea {
+input,
+select,
+textarea {
     border-radius: 5px;
     border: 1px solid #ced4da;
     transition: border-color 0.2s ease-in-out;
 }
 
-input:focus, select:focus, textarea:focus {
+input:focus,
+select:focus,
+textarea:focus {
     border-color: #007bff;
     box-shadow: none;
 }
@@ -165,7 +174,7 @@ form .form-group {
 
 .dropdown-indicator {
     font-size: 1.5rem;
-    color: #ffffff;    
+    color: #ffffff;
     transition: transform 0.3s ease;
     cursor: pointer;
 }
@@ -174,6 +183,6 @@ form .form-group {
     transform: translateY(-5px);
 }
 
-.be-green{
+.be-green {
     background-color: #28a745;
 }
