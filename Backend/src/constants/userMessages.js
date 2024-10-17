@@ -116,6 +116,8 @@ export const USERS_MESSAGES = {
   GET_AVAILABLE_KOI_QUANTITY: 'Get available koi quantity success',
   //koi price
   GET_MIN_MAX_PRICE: 'Get min max price of koi success',
+  //koi not found
+  KOI_NOT_FOUND: 'Koi not found',
   GET_KOI_SUCCESS: 'Get koi success',
   OUT_OF_STOCK: 'Out of stock',
   //order

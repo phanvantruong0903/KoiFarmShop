@@ -4,9 +4,10 @@ import orderDetailService from '../services/orderDetail.services.js';
 
 export const makeOrderDetailController = async (req, res) => {
   try {
-    let reqCookie = req.cookies && req.cookies.order ? JSON.parse(req.cookies.order) : null; // fix phải check có trong cookies trước
+    let reqCookie = req.cookies && req.cookies.orderDT ? JSON.parse(req.cookies.orderDT) : null; // fix phải check có trong cookies trước
     const result = await orderDetailService.addToCart(req.body, reqCookie);
-      res.cookie('order', JSON.stringify(result.order), {
+    console.log("result.orderDT: ",result.orderDT)
+      res.cookie('orderDT', JSON.stringify(result.orderDT), {
         httpOnly: true,
         maxAge: 1800000 // 30 mins
       });
@@ -20,7 +21,7 @@ export const makeOrderDetailController = async (req, res) => {
 };
 export const buyNowController = async (req, res) => {
   try {
-    let reqCookie = req.cookies?.order
+    let reqCookie = req.cookies?.orderDT
     reqCookie = {}; // tạo cookies mới cho func buyNow 
     const result = await orderDetailService.buyNow(req.body, reqCookie);
     console.log("result: ", result)
@@ -84,10 +85,17 @@ export const getMinMaxPriceController = async (req, res) => {
   try {
     const result = await orderDetailService.getMinMaxPrice(req.body);
     console.log("result: ", result)
-    return res.json({
-      message: USERS_MESSAGES.GET_MIN_MAX_PRICE,
-      result
-    })
+    if(result){
+      return res.json({
+        message: USERS_MESSAGES.GET_MIN_MAX_PRICE,
+        result
+      })
+    }else{
+      return res.json({
+        message: USERS_MESSAGES.KOI_NOT_FOUND,
+      })
+    }
+    
   } catch (error) {
     return res.status(500).json({ error: error.message })
   }
@@ -97,6 +105,46 @@ export const getKoiByPriceController = async (req, res) => {
     const result = await orderDetailService.getKoiByPrice(req.body);
     console.log("result: ", result)
     if(result && result.koiList.length > 0){
+      return res.json({
+        message: USERS_MESSAGES.GET_KOI_SUCCESS,
+        result
+      })
+    }else{
+      return res.json({
+        message: USERS_MESSAGES.OUT_OF_STOCK,
+        result
+      })
+    }
+    
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+export const getKoiBySizeBreedController = async (req, res) => {
+  try {
+    const result = await orderDetailService.getKoiByPrice(req.body);
+    console.log("result: ", result)
+    if(result && result.koiList.length > 0){
+      return res.json({
+        message: USERS_MESSAGES.GET_KOI_SUCCESS,
+        result
+      })
+    }else{
+      return res.json({
+        message: USERS_MESSAGES.OUT_OF_STOCK,
+        result
+      })
+    }
+    
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+export const filterKoiController = async (req, res) => {
+  try {
+    const result = await orderDetailService.filterKoiId(req.body);
+    console.log("result: ", result)
+    if(result && result.length > 0){
       return res.json({
         message: USERS_MESSAGES.GET_KOI_SUCCESS,
         result

@@ -8,41 +8,41 @@ class OrderDetailService {
             throw new Error('Koi not found!')
         }
 
-        let order
+        let orderDT
         let newPrice
 
         if (reqCookie && reqCookie.Items) {
-            order = reqCookie
+            orderDT = reqCookie
 
-            if (!order.Items) {
-                order.Items = []
+            if (!orderDT.Items) {
+                orderDT.Items = []
             }
 
-            if (order.TotalPrice == null) {
-                order.TotalPrice = 0 // Khởi tạo nếu null
+            if (orderDT.TotalPrice == null) {
+                orderDT.TotalPrice = 0 // Khởi tạo nếu null
             }
 
-            const itemIndex = order.Items.findIndex((item) => item.KoiID === payload.KoiID)
+            const itemIndex = orderDT.Items.findIndex((item) => item.KoiID === payload.KoiID)
             if (itemIndex > -1) {
                 // Tăng số lượng
-                order.Items[itemIndex].Quantity++
+                orderDT.Items[itemIndex].Quantity++
                 newPrice = Number(koi.Price) // Tính giá trị cho mục hiện tại
             } else {
                 // Thêm mục mới
-                order.Items.push({ KoiID: payload.KoiID, Quantity: 1 })
+                orderDT.Items.push({ KoiID: payload.KoiID, Quantity: 1 })
                 newPrice = Number(koi.Price) // Tính giá trị cho mục mới
             }
 
             // Cập nhật TotalPrice
-            order.TotalPrice += newPrice
+            orderDT.TotalPrice += newPrice
         } else {
-            order = {
+            orderDT = {
                 Items: [{ KoiID: payload.KoiID, Quantity: 1 }],
                 TotalPrice: Number(koi.Price) // Khởi tạo với giá của koi
             }
         }
-        const savedOrder = await this.saveOrderToDatabase(order)
-        return { order: savedOrder, koi }
+        const savedOrder = await this.saveOrderToDatabase(orderDT)
+        return { orderDT: savedOrder, koi }
     }
     async buyNow(payload, reqCookie) {
         const koi = await databaseService.kois.findOne({ _id: new ObjectId(payload.KoiID) })
@@ -50,23 +50,23 @@ class OrderDetailService {
             throw new Error('Koi not found!')
         }
 
-        let order = reqCookie || {
+        let orderDT = reqCookie || {
             Items: [],
             TotalPrice: 0
         }
 
-        if (order.TotalPrice == null) {
-            order.TotalPrice = 0 // Khởi tạo nếu null
+        if (orderDT.TotalPrice == null) {
+            orderDT.TotalPrice = 0 // Khởi tạo nếu null
         }
 
-        order = {
+        orderDT = {
             Items: [{ KoiID: payload.KoiID, Quantity: 1 }],
             TotalPrice: Number(koi.Price) // Khởi tạo với giá của koi
         }
 
-        console.log('Updated TotalPrice:', order.TotalPrice) // Kiểm tra giá trị
-        const savedOrder = await this.saveOrderToDatabase(order)
-        return { order: savedOrder, koi }
+        console.log('Updated TotalPrice:', orderDT.TotalPrice) // Kiểm tra giá trị
+        const savedOrder = await this.saveOrderToDatabase(orderDT)
+        return { orderDT: savedOrder, koi }
     }
 
     async saveOrderToDatabase(order) {
@@ -244,11 +244,46 @@ class OrderDetailService {
     }
 
     async findKoi(payload){
-        return await databaseService.kois
-        .find({
-            $and: [{ CategoryID: payload.CategoryID }, { Breed: payload.Breed }, { Size: Number(payload.Size) }]
-        })
+        let koiList
+        koiList =  await databaseService.kois
+        .find(
+            { 
+                CategoryID: payload.CategoryID, 
+                Breed: payload.Breed, 
+                Size: Number(payload.Size) 
+            })
         .toArray()
+    }
+    async filterKoiId(payload){
+        let koiList
+        if(payload.CategoryID){
+            koiList =  await databaseService.kois
+            .find(
+                { 
+                    CategoryID: payload.CategoryID, 
+                    Breed: payload.Breed, 
+                    Size: Number(payload.Size) 
+                })
+            .toArray()
+        }else if(payload.Price){
+            koiList =  await databaseService.kois
+            .find(
+                { 
+                    Breed: payload.Breed, 
+                    Size: Number(payload.Size), 
+                    Price: payload.Price.toString()
+                })
+            .toArray()
+        }else{
+            koiList =  await databaseService.kois
+            .find(
+                { 
+                    Breed: payload.Breed, 
+                    Size: Number(payload.Size)
+                })
+            .toArray()
+        }
+        return koiList.map(koi => koi._id)  
     }
 
     async getMinMaxPrice(payload) {
@@ -264,10 +299,12 @@ class OrderDetailService {
               .map(koi => Number(koi.Price))
               .filter(price => !isNaN(price))
           );
-        return {
-            min: minPrice,
-            max: maxPrice
-        } 
+          if(koiList?.length > 0){
+            return {
+                min: minPrice || 0,
+                max: maxPrice || 0
+            }
+          }
     }
     async getKoiByPrice(payload) {
         const koiList = (await this.findKoi(payload)).filter(koi=>koi.Price === payload.Price)

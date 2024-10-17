@@ -1,6 +1,7 @@
 import CryptoJS from 'crypto-js'
 import databaseService from './database.service.js'
-import { ObjectId } from 'mongodb'; 
+import { ObjectId } from 'mongodb';
+import OrdersSchema from '../models/schemas/Order.schema.js';
 
 export const callback = async (req, res) => {
   let result = {}
@@ -24,8 +25,8 @@ export const callback = async (req, res) => {
     } else {
       let dataJson = JSON.parse(dataStr, config.key2);
 
-      const embedData = JSON.parse(dataJson.embed_data); 
-      const OrderID = embedData.OrderID; 
+      const embedData = JSON.parse(dataJson.embed_data);
+      const OrderID = embedData.OrderID;
 
       await databaseService.order.findOneAndUpdate(
         { _id: new ObjectId(OrderID) },
@@ -44,6 +45,19 @@ export const callback = async (req, res) => {
   res.json(result)
 }
 
-export const saveOrderToDatabase = async(req, res) => {
-  
+export const saveOrderToDatabase = async (req, res) => {
+  const reqOrderCookie = req.cookies?.order
+  const newOrder = {
+    _id: new ObjectId(),
+    UserID: reqOrderCookie.UserID,
+    OrderDetailID: reqOrderCookie.OrderDetailID,
+    ShipAddress: reqOrderCookie.ShipAddress,
+    Description: reqOrderCookie.Description,
+    OrderDate: reqOrderCookie.OrderDate,
+    Status: reqOrderCookie.Status,
+  }
+
+  const result = await databaseService.orderDetail.insertOne(new OrdersSchema(newOrder))
+  order._id = result.insertedId // Attach the new _id to the order
+  return order
 }

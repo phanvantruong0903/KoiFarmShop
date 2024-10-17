@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import {
     buyNowController,
+  filterKoiController,
   getKoiByPriceController,
   getKoiQuantityController,
   getMinMaxPriceController,
@@ -26,5 +27,6 @@ orderRouter.get('/',accessTokenValidator, wrapAsync(getOrderController))
 //Price
 orderRouter.post('/detail/price/minmax', getMinMaxPriceController)
 orderRouter.post('/detail/koi', getKoiByPriceController)
-
+//Koi
+orderRouter.post('/koi/filter', filterKoiController)
 export default orderRouter
