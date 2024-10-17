@@ -52,24 +52,23 @@
 .my-special {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.5s ease-in-out, padding 0.5s ease,opacity 1.5s ease-in-out;
+    transition: max-height 3.5s ease-in-out, padding 0.5s ease, opacity 1.5s ease-in-out;
     opacity: 0;
 }
 
 .my-special.expanded {
     max-height: 10011px;
-    height: 10000px;
+
     padding-top: 1rem;
     padding-bottom: 1rem;
     opacity: 1;
 }
 
 .my-special.collapsing {
-    transition: max-height 0.1s ease, padding 0.5s ease;
-    max-height: 0;
+    transition: max-height 2.5s ease, padding 0.5s ease , opacity 1.5s ease-in-out;    
+    height: 10000px;
     padding-top: 0;
     padding-bottom: 0;
-    height: 50vh;
     opacity: 0;
 }
 

@@ -76,7 +76,7 @@ export default function ManageKoi() {
 
                             </Card.Header>
                             <Card.Body className={`mt-3 my-special ${expandedCategories[category._id] ? 'expanded' : 'collapsing'}`}>
-                                {expandedCategories[category._id] && (
+                                {(
                                     <div >
                                         <Row>
                                             {result.filter(koi => koi.CategoryID === category._id).map((koi) => (
