@@ -1,0 +1,8 @@
+version: '3'
+services:
+  web:
+    container_name: Backend_Container
+    build: .
+    ports:
+      - "4000:4000"
+    

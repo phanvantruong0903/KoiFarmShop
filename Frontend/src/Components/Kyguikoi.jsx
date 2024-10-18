@@ -78,7 +78,7 @@ export default function Kyguikoi() {
         alert("Ngày nhận không được trước ngày gửi!");
         return;
       }
-const imageRef = ref(storage, `koiImages/${imageFile.name}`);
+      const imageRef = ref(storage, `koiImages/${imageFile.name}`);
       const videoRef = ref(storage, `koiVideos/${videoFile.name}`);
 
       // Upload image
@@ -160,7 +160,7 @@ const imageRef = ref(storage, `koiImages/${imageFile.name}`);
       }
     } catch (error) {
       if (error.message) {
-console.error("Error response:", error.response.data);
+        console.error("Error response:", error.response.data);
         alert("Không nhận được phản hồi từ server.");
       } else {
         console.error("Error:", error.message);
@@ -194,11 +194,11 @@ console.error("Error response:", error.response.data);
         console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
         if (Array.isArray(response.data.result)) {
           setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
-          setCategoryData(response.data.cateogryList);
+          setCategoryData(response.data.categoryList);
           console.log("Card data set successfully:", response.data.result); // Kiểm tra sau khi set
           console.log(
             "Category Data set successfully:",
-            response.data.cateogryList
+            response.data.categoryList
           );
         } else {
           console.error("Dữ liệu không phải là mảng:", response.data);
@@ -244,7 +244,7 @@ console.error("Error response:", error.response.data);
                   className="mb-3"
                   controlId="exampleForm.ControlInput3"
                   style={{ width: "100%" }}
->
+                >
                   <Form.Label>Địa chỉ(*): </Form.Label>
                   <Form.Control
                     type="text"
@@ -322,7 +322,7 @@ console.error("Error response:", error.response.data);
                       style={{ marginRight: "20px" }} // Adjusted margin
                     />
                     <Form.Check
-type="radio"
+                      type="radio"
                       id="IKoiFarm"
                       label="IKoiFarm"
                       name="PositionCare"
@@ -405,7 +405,7 @@ type="radio"
           </div>
 
           <hr />
-<h3>Thông Tin Koi Muốn Ký Gửi</h3>
+          <h3>Thông Tin Koi Muốn Ký Gửi</h3>
           <Form.Group
             className="mb-3"
             controlId="exampleForm.ControlSelect1"
@@ -499,7 +499,7 @@ type="radio"
             controlId="exampleForm.ControlInput14"
             style={{ width: "100%" }}
           >
-<Form.Label>Kích Thước (*) (cm): </Form.Label>
+            <Form.Label>Kích Thước (*) (cm): </Form.Label>
             <Form.Control
               type="number"
               placeholder="Nhập kích thước(cm)"
@@ -594,7 +594,7 @@ type="radio"
             <Form.Label>Nộp ảnh (*): </Form.Label>
             <Form.Control type="file" required name="Image" />
           </Form.Group>
-<Form.Group
+          <Form.Group
             className="mb-3"
             controlId="exampleForm.ControlFile2"
             style={{ width: "100%" }}

@@ -1,5 +1,6 @@
 import { MANAGER_MESSAGES } from '../constants/managerMessage.js'
 import consignsService from '../services/consigns.services.js'
+import invoicesService from '../services/invoices.services.js'
 import koisService from '../services/kois.services.js'
 import suplliersService from '../services/suppliers.services.js'
 
@@ -28,12 +29,29 @@ export const getAllOrderController = async (req, res) => {
 }
 
 export const getAllKoiController = async (req, res) => {
-  const result = await adminService.getKoi()
-  const cateogryList = await databaseService.category.find().toArray()
-  res.json({
-    result,
-    cateogryList
-  })
+  try {
+    const result = await databaseService.kois.find().toArray()
+    const categoryList = await databaseService.category.find().toArray()
+
+    const consigns = await databaseService.consigns.find({ State: 3 }).toArray()
+    const consignIds = consigns.map((consign) => new ObjectId(consign.KoiID))
+    const filteredResult = result.filter(
+      (koi) =>
+        (koi.Status === 4 && consignIds.some((id) => id.equals(koi._id))) ||
+        koi.Status === 1 ||
+        koi.Status === 2 ||
+        koi.Status === 3
+    )
+    console.log(filteredResult)
+
+    res.json({
+      result: filteredResult,
+      categoryList
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
 }
 
 export const createNewKoiController = async (req, res) => {
@@ -329,5 +347,39 @@ export const getProfitController = async (req, res) => {
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'An error occurred', error: error.message })
+  }
+}
+
+export const updateSupplierController = async (req, res) => {
+  //tìm user theo username
+  const { _id } = req.params
+  const supplier = await suplliersService.updateSupplier(_id, req.body)
+  return res.json({
+    message: MANAGER_MESSAGES.UPDATE_SUPPLIER_SUCCESS,
+    result: supplier
+  })
+}
+export const getSupplierController = async (req, res) => {
+  try {
+    const { _id } = req.params
+    const result = await suplliersService.getSupplier(_id)
+    return res.json({
+      message: MANAGER_MESSAGES.GET_SUPPLIER_SUCCESS,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+
+export const createNewInvoiceGroupKoiController = async (req, res) => {
+  try {
+    const result = await invoicesService.createNewInvoiceGroupKoi(req.body)
+    return res.json({
+      message: MANAGER_MESSAGES.CREATE_NEW_INVOICE_GROUP_KOI_SUCCESS,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
   }
 }

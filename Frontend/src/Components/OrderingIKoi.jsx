@@ -12,12 +12,16 @@ const OrderingIKoi = () => {
   const [selectedSize, setSelectedSize] = useState(selectedItem?.Size || "");
   const [selectedBreed, setSelectedBreed] = useState(selectedItem?.Breed || "");
   const [price, setPrice] = useState("");
+  const [count, setCount] = useState(1);
   const [description, setDescription] = useState("");
-
+  const handleCountChange = (event) => {
+    setCount(event.target.value);
+  };
+  console.log(selectedItem);
   useEffect(() => {
     const sendOrderDetails = async () => {
-      console.log(selectedSize);
-      console.log(selectedBreed);
+      if (!selectedSize || !selectedBreed) return; // Prevent API call if not both selected
+
       try {
         const response = await axios.post(
           "http://localhost:4000/order/detail/price",
@@ -27,9 +31,12 @@ const OrderingIKoi = () => {
             CategoryID: selectedItem.CategoryID,
           }
         );
-        console.log(response.data);
-        setPrice(response.data.result.CategoryName.Price);
-        setDescription(response.data.result.CategoryName.Description);
+
+        // Only update state with response data
+        if (response.data?.result?.CategoryName) {
+          setPrice(response.data.result.CategoryName.Price);
+          setDescription(response.data.result.CategoryName.Description);
+        }
       } catch (error) {
         console.error("Error sending order details:", error);
       }
@@ -138,6 +145,19 @@ const OrderingIKoi = () => {
                     </div>
                     <div className="mb-3">
                       <strong>Description:</strong> {description}
+                    </div>
+                    <div className="mb-3">
+                      <strong>Count:</strong>
+                      <select value={count} onChange={handleCountChange}>
+                        {Array.from(
+                          { length: selectedItem.count },
+                          (_, index) => index + 1
+                        ).map((value) => (
+                          <option key={value} value={value}>
+                            {value}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                     <div className="text-center">
                       <Button
