@@ -257,7 +257,7 @@ class OrderDetailService {
     }
     async filterKoiId(payload){
         let koiList
-        if(payload.CategoryID){
+        if(payload.CategoryID && (payload.Breed === 'Viet' || payload.Breed === 'F1')){
             koiList =  await databaseService.kois
             .find(
                 { 
@@ -266,25 +266,29 @@ class OrderDetailService {
                     Size: Number(payload.Size) 
                 })
             .toArray()
+        }else if(payload.CategoryID && payload.Price){
+            koiList =  await databaseService.kois
+            .find(
+                { 
+                    CategoryID: payload.CategoryID,
+                    Breed: payload.Breed, 
+                    Size: Number(payload.Size), 
+                    Price: payload.Price
+                })
+            .toArray()
         }else if(payload.Price){
             koiList =  await databaseService.kois
             .find(
                 { 
                     Breed: payload.Breed, 
-                    Size: Number(payload.Size), 
-                    Price: payload.Price.toString()
-                })
-            .toArray()
-        }else{
-            koiList =  await databaseService.kois
-            .find(
-                { 
-                    Breed: payload.Breed, 
-                    Size: Number(payload.Size)
+                    Size: Number(payload.Size),
+                    Price: payload.Price
                 })
             .toArray()
         }
-        return koiList.map(koi => koi._id)  
+
+        const koiIdList = koiList?.map(koi => koi._id)
+        return {KoiID: koiIdList[0]}  
     }
 
     async getMinMaxPrice(payload) {
