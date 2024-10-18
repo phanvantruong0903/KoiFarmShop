@@ -2,41 +2,49 @@ import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { Card, Row, Col, Typography, Divider } from "antd";
 import { useNavigate } from "react-router-dom";
-
+import { useOrder } from "../Context/OrderContext";
 const { Text } = Typography;
 
 const CardGrid = ({ cardData }) => {
   const navigate = useNavigate();
   const [category, setCategory] = useState("kygui"); // State for category switch
-
+  const { addedKoiIds } = useOrder(); // Get added Koi IDs
+  console.log(addedKoiIds);
   const handleCategoryChange = (newCategory) => {
     setCategory(newCategory);
   };
 
   // Group Koi fish by CategoryID and collect additional details
+
   const getUniqueCategories = (status) => {
     const categoryMap = {};
     cardData.forEach((card) => {
+      console.log("Checking card:", card); // Log the current card
       if (card.Status === status) {
-        if (!categoryMap[card.CategoryID]) {
-          categoryMap[card.CategoryID] = {
-            count: 0,
-            KoiName: card.KoiName,
-            Image: card.Image,
-            Price: card.Price,
-            Age: card.Age,
-            Description: card.Description,
-            Origin: card.Origin,
-            Gender: card.Gender,
-            CategoryID: card.CategoryID,
-          };
+        console.log("Status matches:", card.Status);
+        if (!addedKoiIds.includes(card._id)) {
+          console.log("Card not added:", card._id);
+          if (!categoryMap[card.CategoryID]) {
+            categoryMap[card.CategoryID] = {
+              count: 0,
+              KoiName: card.KoiName,
+              Image: card.Image,
+              Price: card.Price,
+              Age: card.Age,
+              Description: card.Description,
+              Origin: card.Origin,
+              Gender: card.Gender,
+              CategoryID: card.CategoryID,
+            };
+          }
+          categoryMap[card.CategoryID].count++;
+        } else {
+          console.log("Card is already added:", card._id);
         }
-        categoryMap[card.CategoryID].count++;
       }
     });
     return categoryMap;
   };
-
   const ikoiCategories = {
     ...getUniqueCategories(2),
     ...getUniqueCategories(3),
@@ -87,7 +95,9 @@ const CardGrid = ({ cardData }) => {
       <Row gutter={[16, 16]}>
         {category === "kygui" &&
           cardData
-            .filter((card) => card.Status === 4)
+            .filter(
+              (card) => card.Status === 4 && !addedKoiIds.includes(card._id)
+            )
             .map((card) => (
               <Col
                 key={card._id}
@@ -129,20 +139,7 @@ const CardGrid = ({ cardData }) => {
 
         {category === "ikoi" &&
           Object.entries(ikoiCategories).map(
-            ([
-              categoryId,
-              {
-                count,
-                KoiName,
-                Image,
-                Price,
-                Age,
-                Origin,
-                Gender,
-                Description,
-                CategoryID,
-              },
-            ]) => (
+            ([categoryId, { count, KoiName, Image, Price }]) => (
               <Col
                 key={categoryId}
                 xs={12}
@@ -168,28 +165,17 @@ const CardGrid = ({ cardData }) => {
                   }
                   onClick={() =>
                     navigate("/orderingikoi", {
-                      state: {
-                        selectedItem: {
-                          KoiName,
-                          Price,
-                          Image,
-                          Age,
-                          Origin,
-                          Gender,
-                          Description,
-                          CategoryID,
-                        },
-                      },
+                      state: { selectedItem: { KoiName, Price, Image, count } },
                     })
                   } // Pass the category details
                 >
-                  <Text strong>{`${KoiName || "N/A"}`}</Text>
+                  <Text strong>{KoiName || "N/A"}</Text>
                   <br />
                   <Text strong style={{ color: "#FF5722" }}>
                     {Price ? `${Price.toLocaleString()} VND` : "Liên Hệ"}
                   </Text>
                   <br />
-                  <Text>Số lượng :{`${count} Koi`}</Text>
+                  <Text>Số lượng: {`${count} Koi`}</Text>
                 </Card>
               </Col>
             )
@@ -227,13 +213,13 @@ const CardGrid = ({ cardData }) => {
                     })
                   } // Pass the category details
                 >
-                  <Text strong>{`${KoiName || "N/A"}`}</Text>
+                  <Text strong>{KoiName || "N/A"}</Text>
                   <br />
                   <Text strong style={{ color: "#FF5722" }}>
                     {Price ? `${Price.toLocaleString()} VND` : "Liên Hệ"}
                   </Text>
                   <br />
-                  <Text>Số lượng:{`${count} Koi`}</Text>
+                  <Text>Số lượng: {`${count} Koi`}</Text>
                 </Card>
               </Col>
             )
