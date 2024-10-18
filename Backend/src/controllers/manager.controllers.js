@@ -29,12 +29,29 @@ export const getAllOrderController = async (req, res) => {
 }
 
 export const getAllKoiController = async (req, res) => {
-  const result = await adminService.getKoi()
-  const cateogryList = await databaseService.category.find().toArray()
-  res.json({
-    result,
-    cateogryList
-  })
+  try {
+    const result = await databaseService.kois.find().toArray()
+    const categoryList = await databaseService.category.find().toArray()
+
+    const consigns = await databaseService.consigns.find({ State: 3 }).toArray()
+    const consignIds = consigns.map((consign) => new ObjectId(consign.KoiID))
+    const filteredResult = result.filter(
+      (koi) =>
+        (koi.Status === 4 && consignIds.some((id) => id.equals(koi._id))) ||
+        koi.Status === 1 ||
+        koi.Status === 2 ||
+        koi.Status === 3
+    )
+    console.log(filteredResult)
+
+    res.json({
+      result: filteredResult,
+      categoryList
+    })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Internal Server Error' })
+  }
 }
 
 export const createNewKoiController = async (req, res) => {
@@ -332,7 +349,6 @@ export const getProfitController = async (req, res) => {
     res.status(500).json({ message: 'An error occurred', error: error.message })
   }
 }
-
 
 export const updateSupplierController = async (req, res) => {
   //tìm user theo username
