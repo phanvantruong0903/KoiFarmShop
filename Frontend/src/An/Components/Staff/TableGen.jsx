@@ -68,9 +68,9 @@ export default function TableGen({
                                 return <td key={idx}>{statusMap[mock.State]}</td>;
                             }
                             return <td style={{ 
-                                overflow: 'auto',         
+                                overflow: 'hidden',         
                                 whiteSpace: 'nowrap',     
-                                maxWidth: '150px'          
+                                maxWidth: '250px'          
                               }} key={idx}>{mock[field] || 'not provided'}</td>; 
                         })}
                         <td className="d-flex justify-content-center align-items-center" style={{ height: '40px' }}>

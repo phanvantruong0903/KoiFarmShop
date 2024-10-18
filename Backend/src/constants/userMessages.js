@@ -131,7 +131,11 @@ export const USERS_MESSAGES = {
   //check authorization
   CHECK_AUTHORIZATION_SUCCESS: 'Check authorization success',
   //get all consign
-  GET_ALL_CONSIGNS_SUCCESS: 'Get all consigns success'
+  GET_ALL_CONSIGNS_SUCCESS: 'Get all consigns success',
+  //category
+  CATEGORY_NOT_FOUND: 'Category not found',
+  //supplier
+  SUPPLIER_NOT_FOUND: 'Supplier not found'
 }
 export const ADMINS_MESSAGES = {
   ADD_KOI_SUCCESS: 'Add Fish success',

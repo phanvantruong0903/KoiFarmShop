@@ -55,7 +55,7 @@ function SignInForm() {
       toast.success("Login successfully");
       }
     } catch (error) {
-      console.error("Failed to login", error.response.data);
+      console.error("Failed to login", error.data);
       if (error.response.data.message === "Validation error") {
         toast.error("Password or Email is required");
       }
