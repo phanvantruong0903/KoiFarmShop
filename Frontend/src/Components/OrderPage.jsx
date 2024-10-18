@@ -19,7 +19,7 @@ const OrderPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
+  console.log(selectedItem);
   const handleAddToCart = async () => {
     if (!selectedItem || loading || isAddedToCart) return;
     setLoading(true);

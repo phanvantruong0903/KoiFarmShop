@@ -47,6 +47,7 @@ import ManageSupplier from "./An/Pages/Manager/ManageSupplier";
 import ChangePassword from "./Components/ChangePassword";
 import FormFillInformation from "./Components/FormFillInformation";
 import ProfileChart from "./An/Pages/Charts/ProfileChart";
+import PaymentMethod from "./Components/Paymentmethod";
 const router = createBrowserRouter([
   {
     path: "/login/oauth",
@@ -191,6 +192,10 @@ const router = createBrowserRouter([
   {
     path: "/formfillinformation",
     element: <FormFillInformation />,
+  },
+  {
+    path: "/paymentmethod",
+    element: <PaymentMethod />,
   },
   {
     path: "/DashBoard",

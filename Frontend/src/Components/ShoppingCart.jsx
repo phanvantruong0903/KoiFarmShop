@@ -1,11 +1,13 @@
 import { useLocation } from "react-router-dom";
-import { Table, Typography, Image } from "antd";
+import { Table, Typography, Image, Button } from "antd";
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const { Title, Text } = Typography;
 
-const YourComponent = () => {
+export default function ShoppingCart() {
   const location = useLocation();
 
   // Safely destructure data from location.state
@@ -13,6 +15,7 @@ const YourComponent = () => {
   const { result } = data || {};
   const koiList = result?.koiList || [];
   const orderDetail = result?.orderDetail || {};
+  const navigate = useNavigate();
 
   // Create a mapping of Koi IDs to their details
   const koiMap = koiList.reduce((acc, koi) => {
@@ -20,8 +23,19 @@ const YourComponent = () => {
     return acc;
   }, {});
 
+  useEffect(() => {
+    // Navigate only if data is null
+    if (!data) {
+      navigate("/formfillinformation", {
+        state: {
+          a: data,
+        },
+      });
+    }
+  }, [data, navigate]);
+
   // Prepare data for the table
-  const tableData = orderDetail.Items.map((item) => {
+  const tableData = (orderDetail.Items || []).map((item) => {
     const koi = koiMap[item.KoiID];
     return {
       key: item.KoiID,
@@ -59,42 +73,54 @@ const YourComponent = () => {
       key: "quantity",
     },
   ];
-
+  const totalPrice = orderDetail.TotalPrice
+    ? orderDetail.TotalPrice.toLocaleString()
+    : "N/A";
+  const handlePayment = () => {
+    navigate("/paymentmethod", {
+      state: { totalPrice },
+    });
+  };
   return (
-    <div style={{ padding: "20px" }}>
-      <Navbar />
-      <div style={{ paddingTop: "150px" }}>
-        <Title level={2}>Koi Order Details</Title>
+    <>
+      <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>
+        <Navbar />
+        <div style={{ paddingTop: "150px" }}>
+          <Title level={2}>Koi Order Details</Title>
 
-        {tableData.length > 0 ? (
-          <Table
-            dataSource={tableData}
-            columns={columns}
-            pagination={false}
-            bordered
-            summary={() => (
-              <Table.Summary>
-                <Table.Summary.Row>
-                  <Table.Summary.Cell colSpan={2}>
-                    <Text strong>Total Price:</Text>
-                  </Table.Summary.Cell>
-                  <Table.Summary.Cell>
-                    {orderDetail.TotalPrice
-                      ? `${orderDetail.TotalPrice.toLocaleString()} VND`
-                      : "N/A"}
-                  </Table.Summary.Cell>
-                </Table.Summary.Row>
-              </Table.Summary>
-            )}
-          />
-        ) : (
-          <Text>No Koi items in this order.</Text>
-        )}
+          {tableData.length > 0 ? (
+            <Table
+              dataSource={tableData}
+              columns={columns}
+              pagination={false}
+              bordered
+              summary={() => (
+                <Table.Summary>
+                  <Table.Summary.Row>
+                    <Table.Summary.Cell colSpan={2}>
+                      <Text strong>Total Price:</Text>
+                    </Table.Summary.Cell>
+                    <Table.Summary.Cell>
+                      {orderDetail.TotalPrice
+                        ? `${orderDetail.TotalPrice.toLocaleString()} VND`
+                        : "N/A"}
+                    </Table.Summary.Cell>
+                  </Table.Summary.Row>
+                </Table.Summary>
+              )}
+            />
+          ) : (
+            <Text>No Koi items in this order.</Text>
+          )}
+
+          <div style={{ marginTop: "20px", display: "flex", gap: "10px" }}>
+            <Button type="primary" style={{ flex: 1 }} onClick={handlePayment}>
+              Thanh Toán
+            </Button>
+          </div>
+        </div>
       </div>
-
       <Footer />
-    </div>
+    </>
   );
-};
-
-export default YourComponent;
+}

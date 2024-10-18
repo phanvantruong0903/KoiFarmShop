@@ -16,14 +16,11 @@ const CardGrid = ({ cardData }) => {
 
   // Group Koi fish by CategoryID and collect additional details
 
-  const getUniqueCategories = (status) => {
+  const ikoiCategories = () => {
     const categoryMap = {};
     cardData.forEach((card) => {
-      console.log("Checking card:", card); // Log the current card
-      if (card.Status === status) {
-        console.log("Status matches:", card.Status);
+      if (card.Status === 2 || card.Status === 3) {
         if (!addedKoiIds.includes(card._id)) {
-          console.log("Card not added:", card._id);
           if (!categoryMap[card.CategoryID]) {
             categoryMap[card.CategoryID] = {
               count: 0,
@@ -38,18 +35,38 @@ const CardGrid = ({ cardData }) => {
             };
           }
           categoryMap[card.CategoryID].count++;
-        } else {
-          console.log("Card is already added:", card._id);
         }
       }
     });
     return categoryMap;
   };
-  const ikoiCategories = {
-    ...getUniqueCategories(2),
-    ...getUniqueCategories(3),
-  }; // Combine for Cá Ikoi
-  const nhatCategories = getUniqueCategories(1); // For Cá Koi Nhật
+  const ikoi = ikoiCategories();
+
+  const nhatCategories = () => {
+    const categoryMap = {};
+    cardData.forEach((card) => {
+      if (card.Status === 1) {
+        if (!addedKoiIds.includes(card._id)) {
+          if (!categoryMap[card.CategoryID]) {
+            categoryMap[card.CategoryID] = {
+              count: 0,
+              KoiName: card.KoiName,
+              Image: card.Image,
+              Price: card.Price,
+              Age: card.Age,
+              Description: card.Description,
+              Origin: card.Origin,
+              Gender: card.Gender,
+              CategoryID: card.CategoryID,
+            };
+          }
+          categoryMap[card.CategoryID].count++;
+        }
+      }
+    });
+    return categoryMap;
+  };
+  const nhat = nhatCategories();
 
   return (
     <div className="container" style={{ padding: "0" }}>
@@ -138,52 +155,74 @@ const CardGrid = ({ cardData }) => {
             ))}
 
         {category === "ikoi" &&
-          Object.entries(ikoiCategories).map(
-            ([categoryId, { count, KoiName, Image, Price }]) => (
-              <Col
-                key={categoryId}
-                xs={12}
-                sm={8}
-                md={4}
-                lg={4}
-                xl={4}
-                className="mb-4"
-              >
-                <Card
-                  hoverable
-                  style={{ width: "100%", borderRadius: "8px", height: "100%" }}
-                  cover={
-                    <img
-                      alt={KoiName}
-                      src={Image}
-                      style={{
-                        height: "250px",
-                        objectFit: "cover",
-                        borderRadius: "8px 8px 0 0",
-                      }}
-                    />
-                  }
-                  onClick={() =>
-                    navigate("/orderingikoi", {
-                      state: { selectedItem: { KoiName, Price, Image, count } },
-                    })
-                  } // Pass the category details
+          Object.entries(ikoi).map(
+            ([
+              categoryId,
+              { count, KoiName, Image, Price, CategoryID, Status },
+            ]) => {
+              // ... existing code ...
+
+              // Kiểm tra điều kiện Status để tính toán count
+
+              return (
+                <Col
+                  key={categoryId}
+                  xs={12}
+                  sm={8}
+                  md={4}
+                  lg={4}
+                  xl={4}
+                  className="mb-4"
                 >
-                  <Text strong>{KoiName || "N/A"}</Text>
-                  <br />
-                  <Text strong style={{ color: "#FF5722" }}>
-                    {Price ? `${Price.toLocaleString()} VND` : "Liên Hệ"}
-                  </Text>
-                  <br />
-                  <Text>Số lượng: {`${count} Koi`}</Text>
-                </Card>
-              </Col>
-            )
+                  <Card
+                    hoverable
+                    style={{
+                      width: "100%",
+                      borderRadius: "8px",
+                      height: "100%",
+                    }}
+                    cover={
+                      <img
+                        alt={KoiName}
+                        src={Image}
+                        style={{
+                          height: "250px",
+                          objectFit: "cover",
+                          borderRadius: "8px 8px 0 0",
+                        }}
+                      />
+                    }
+                    onClick={() =>
+                      navigate("/orderingikoi", {
+                        state: {
+                          selectedItem: {
+                            KoiName,
+                            Price,
+                            Image,
+                            count,
+                            CategoryID,
+                            Status,
+                          },
+                        },
+                      })
+                    } // Pass the category details
+                  >
+                    <Text strong>{KoiName || "N/A"}</Text>
+                    <br />
+                    <Text strong style={{ color: "#FF5722" }}>
+                      {Price ? `${Price.toLocaleString()} VND` : "Liên Hệ"}
+                    </Text>
+                    <br />
+                    <Text>Số lượng: {`${count} Koi`}</Text>
+                  </Card>
+                </Col>
+              );
+            }
           )}
 
         {category === "nhat" &&
-          Object.entries(nhatCategories).map(
-            ([categoryId, { count, KoiName, Image, Price }]) => (
+          Object.entries(nhat).map(
+            ([categoryId, { count, KoiName, Image, Price, CategoryID }]) => (
               <Col
                 key={categoryId}
                 xs={12}
@@ -209,7 +248,15 @@ const CardGrid = ({ cardData }) => {
                   }
                   onClick={() =>
                     navigate("/orderingjapankoi", {
-                      state: { selectedItem: { KoiName, Price, Image } },
+                      state: {
+                        selectedItem: {
+                          KoiName,
+                          Price,
+                          Image,
+                          count,
+                          CategoryID,
+                        },
+                      },
                     })
                   } // Pass the category details
                 >

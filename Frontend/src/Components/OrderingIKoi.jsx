@@ -17,10 +17,11 @@ const OrderingIKoi = () => {
   const handleCountChange = (event) => {
     setCount(event.target.value);
   };
+  console.log(selectedItem);
   useEffect(() => {
     const sendOrderDetails = async () => {
-      console.log(selectedSize);
-      console.log(selectedBreed);
+      if (!selectedSize || !selectedBreed) return; // Prevent API call if not both selected
+
       try {
         const response = await axios.post(
           "http://localhost:4000/order/detail/price",
@@ -30,9 +31,12 @@ const OrderingIKoi = () => {
             CategoryID: selectedItem.CategoryID,
           }
         );
-        console.log(response.data);
-        setPrice(response.data.result.CategoryName.Price);
-        setDescription(response.data.result.CategoryName.Description);
+
+        // Only update state with response data
+        if (response.data?.result?.CategoryName) {
+          setPrice(response.data.result.CategoryName.Price);
+          setDescription(response.data.result.CategoryName.Description);
+        }
       } catch (error) {
         console.error("Error sending order details:", error);
       }

@@ -12,7 +12,18 @@ export default function OrderingJapanKoi() {
   const [selectedSize, setSelectedSize] = useState(selectedItem?.Size || "");
   const [selectedBreed, setSelectedBreed] = useState(selectedItem?.Breed || "");
   const [price, setPrice] = useState("");
+  const [min, setMin] = useState("");
+  const [max, setMax] = useState("");
   const [description, setDescription] = useState("");
+  const [count, setCount] = useState(1);
+
+  const handleCountChange = (event) => {
+    setCount(event.target.value);
+  };
+
+  const handlePriceChange = (e) => {
+    setPrice(Number(e.target.value)); // Update price state
+  };
 
   useEffect(() => {
     const sendOrderDetails = async () => {
@@ -20,7 +31,7 @@ export default function OrderingJapanKoi() {
       console.log(selectedBreed);
       try {
         const response = await axios.post(
-          "http://localhost:4000/order/detail/price",
+          "http://localhost:4000/order/detail/price/minmax",
           {
             Size: selectedSize,
             Breed: selectedBreed,
@@ -28,8 +39,8 @@ export default function OrderingJapanKoi() {
           }
         );
         console.log(response.data);
-        setPrice(response.data.result.CategoryName.Price);
-        setDescription(response.data.result.CategoryName.Description);
+        setMin(response.data.result.min);
+        setMax(response.data.result.max);
       } catch (error) {
         console.error("Error sending order details:", error);
       }
@@ -37,6 +48,12 @@ export default function OrderingJapanKoi() {
 
     sendOrderDetails();
   }, [selectedSize, selectedBreed, selectedItem.CategoryID]);
+
+  // Generate price options based on min and max
+  const priceOptions = [];
+  for (let i = min; i <= max; i += 100000) {
+    priceOptions.push(i);
+  }
 
   return (
     <>
@@ -129,15 +146,40 @@ export default function OrderingJapanKoi() {
                         className="form-control"
                       >
                         <option value="">Select Breed</option>
-                        <option value="Viet">Việt</option>
-                        <option value="F1">F1</option>
+                        <option value="Nhat">Nhật</option>
                       </select>
                     </div>
                     <div className="mb-3">
-                      <strong>Price:</strong> {price}
+                      <strong>Price:</strong>
+                      <select
+                        value={price}
+                        onChange={handlePriceChange}
+                        className="form-control"
+                        style={{ marginLeft: "10px", width: "150px" }}
+                      >
+                        <option value="">Select Price</option>
+                        {priceOptions.map((priceOption) => (
+                          <option key={priceOption} value={priceOption}>
+                            {priceOption.toLocaleString()} VND
+                          </option>
+                        ))}
+                      </select>
                     </div>
                     <div className="mb-3">
                       <strong>Description:</strong> {description}
+                    </div>
+                    <div className="mb-3">
+                      <strong>Count:</strong>
+                      <select value={count} onChange={handleCountChange}>
+                        {Array.from(
+                          { length: selectedItem.count },
+                          (_, index) => index + 1
+                        ).map((value) => (
+                          <option key={value} value={value}>
+                            {value}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                     <div className="text-center">
                       <Button
