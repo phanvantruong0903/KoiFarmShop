@@ -22,7 +22,7 @@ export default function Koikygui() {
         const response = await axios.get("http://localhost:4000/getAllKoi");
         if (Array.isArray(response.data.result)) {
           setCardData(response.data.result);
-          setCategoryData(response.data.cateogryList);
+          setCategoryData(response.data.categoryList);
         } else {
           console.error("Dữ liệu không phải là mảng:", response.data);
         }
