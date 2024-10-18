@@ -7,6 +7,7 @@ import {
   getMinMaxPriceController,
   getOrderDetailController,
   makeOrderDetailController,
+  makeOrdersDetailController,
   updateOrderDetailController
 } from '../controllers/orderDetailController.js'
 import { createOrderController, getOrderController } from '../controllers/order.controllers.js'
@@ -17,6 +18,7 @@ const orderRouter = Router()
 
 //Order Detail
 orderRouter.post('/detail/make', makeOrderDetailController)
+orderRouter.post('/detail/makes', makeOrdersDetailController)
 orderRouter.post('/detail/buy', buyNowController)
 orderRouter.get('/detail/:orderID', getOrderDetailController)
 orderRouter.patch('/detail/edit/:orderID', updateOrderDetailController)

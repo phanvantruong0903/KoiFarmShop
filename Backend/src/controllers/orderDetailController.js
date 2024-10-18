@@ -4,13 +4,30 @@ import orderDetailService from '../services/orderDetail.services.js';
 
 export const makeOrderDetailController = async (req, res) => {
   try {
-    let reqCookie = req.cookies && req.cookies.orderDT ? JSON.parse(req.cookies.orderDT) : null; // fix phải check có trong cookies trước
+    let reqCookie = req.cookies && req.cookies.orderDT ? JSON.parse(req.cookies.orderDT) : {}; // fix phải check có trong cookies trước
     const result = await orderDetailService.addToCart(req.body, reqCookie);
     console.log("result.orderDT: ",result.orderDT)
       res.cookie('orderDT', JSON.stringify(result.orderDT), {
         httpOnly: true,
         maxAge: 1800000 // 30 mins
       });
+    return res.json({
+      message: USERS_MESSAGES.MAKE_ORDER_SUCCESS,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+};
+export const makeOrdersDetailController = async (req, res) => {
+  try {
+    let reqCookie = req.cookies && req.cookies.orderDT ? JSON.parse(req.cookies.orderDT) : {}; // fix phải check có trong cookies trước
+    const result = await orderDetailService.makeArrayOrder(req.body, reqCookie);
+      res.cookie('orderDT', JSON.stringify(result.orderDT), {
+        httpOnly: true,
+        maxAge: 1800000 // 30 mins
+      });
+      // res.clearCookie('orderDT')
     return res.json({
       message: USERS_MESSAGES.MAKE_ORDER_SUCCESS,
       result
@@ -144,7 +161,7 @@ export const filterKoiController = async (req, res) => {
   try {
     const result = await orderDetailService.filterKoiId(req.body);
     console.log("result: ", result)
-    if(result && result.length > 0){
+    if(result && result.Quantity > 0){
       return res.json({
         message: USERS_MESSAGES.GET_KOI_SUCCESS,
         result
