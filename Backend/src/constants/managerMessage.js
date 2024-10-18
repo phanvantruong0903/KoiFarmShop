@@ -13,5 +13,7 @@ export const MANAGER_MESSAGES = {
   UPDATE_SUPPLIER_SUCCESS: 'Update supplier success',
   GET_SUPPLIER_SUCCESS: 'Get supplier success',
   //invoice
-  CREATE_NEW_INVOICE_GROUP_KOI_SUCCESS: 'Create new invoice group koi success'
+  CREATE_NEW_INVOICE_GROUP_KOI_SUCCESS: 'Create new invoice group koi success',
+  //group koi
+  GET_ALL_GROUP_KOI_SUCCESS: 'Get all group koi success'
 }

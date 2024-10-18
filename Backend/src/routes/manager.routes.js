@@ -3,6 +3,7 @@ import {
   createNewKoiController,
   createNewSupplierController,
   getAllConsignController,
+  getAllGroupKoiController,
   getAllSupplierController,
   getAllUserController,
   getConsignDetailController,
@@ -79,5 +80,7 @@ managerRouter.post(
   SupplierIDAndCategoryIDValidator,
   wrapAsync(createNewInvoiceGroupKoiController)
 )
+
+managerRouter.get('/manage-group-koi/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getAllGroupKoiController))
 
 export default managerRouter
