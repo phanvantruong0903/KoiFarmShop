@@ -9,7 +9,12 @@ import Navbar from "./Navbar/Navbar";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { initializeApp } from "firebase/app";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap
-import { EditOutlined } from "@ant-design/icons"; // Import icon bút chì
+import {
+  EditOutlined,
+  UserOutlined,
+  ShoppingCartOutlined,
+  ShopOutlined,
+} from "@ant-design/icons"; // Import icon bút chì
 
 // Firebase config
 const firebaseConfig = {
@@ -309,15 +314,12 @@ export default function Profile() {
   return (
     <>
       <Navbar />
-      <div style={{ backgroundColor: "whitesmoke", paddingTop: "150px" }}>
+      <div style={{ backgroundColor: "whitesmoke", paddingTop: "50px" }}>
         <Row justify="center" style={{ paddingTop: "50px" }}>
           <Col
             span={6}
             style={{
-              backgroundColor: "white",
-              padding: "20px",
-              borderRadius: "10px",
-              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+              paddingLeft: "70px",
             }}
           >
             <div>
@@ -328,7 +330,7 @@ export default function Profile() {
                   alignItems: "center",
                 }}
               >
-                <div style={{ width: "50%" }}>
+                <div style={{ width: "40%" }}>
                   {userData && userData.avatar ? (
                     <img
                       src={userData.avatar}
@@ -376,13 +378,43 @@ export default function Profile() {
                   </h6>
                 </div>
               </div>
-
+              <hr style={{ border: "0.1px solid rgba(0, 0, 0, 0.3)", width: '60%', margin: '10px auto' }} />
               <ul style={{ listStyle: "none", padding: 0 }}>
                 <li>
                   <Button
                     type="link"
-                    onClick={() => console.log("Đi đến Đơn mua")}
+                    onClick={() => console.log("Đi đến Tài khoản của tôi")}
+                    style={{ color: "black",marginTop: '15px' }}
                   >
+                    <UserOutlined style={{ marginRight: "5px" }} />
+                    Tài khoản của tôi
+                  </Button>
+                </li>
+                <li style={{ marginLeft: "25px" }}>
+                  <Button
+                    type="link"
+                    onClick={() => console.log("Đi đến Tài khoản của tôi")}
+                    style={{ color: "#FF8C00" }}
+                  >
+                    Hồ sơ
+                  </Button>
+                </li>
+                <li style={{ marginLeft: "25px" }}>
+                  <Button
+                    type="link"
+                    onClick={() => console.log("Đi đến Tài khoản của tôi")}
+                    style={{ color: "black" }}
+                  >
+                    Đổi mật khẩu
+                  </Button>
+                </li>
+                <li>
+                  <Button
+                    type="link"
+                    onClick={() => console.log("Đi đến Đơn mua")}
+                    style={{ color: "black" }}
+                  >
+                    <ShoppingCartOutlined style={{ marginRight: "5px" }} />
                     Đơn mua
                   </Button>
                 </li>
@@ -390,14 +422,17 @@ export default function Profile() {
                   <Button
                     type="link"
                     onClick={() => console.log("Đi đến Thay đổi mật khẩu")}
+                    style={{ color: "black" }}
                   >
-                    Thay đổi mật khẩu
+                    <ShopOutlined style={{ marginRight: "5px" }} />
+                    Đơn ký gửi
                   </Button>
                 </li>
                 {/* Bạn có thể thêm các liên kết khác ở đây */}
               </ul>
             </div>
           </Col>
+
           <Col
             span={16}
             style={{
@@ -405,10 +440,12 @@ export default function Profile() {
               padding: "20px",
               borderRadius: "10px",
               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+              paddingLeft: "5%",
             }}
           >
-            <h2>Hồ Sơ Của Tôi</h2>
-            <h4>Quản lý thông tin hồ sơ để bảo mật tài khoản</h4>
+            <h2 style={{ textAlign: "left", fontWeight: '400', fontSize:'30px' }}>Hồ Sơ Của Tôi</h2>
+            <h4 style={{fontWeight: '360', fontSize:'20px', marginBottom: '30px'}}>Quản lý thông tin hồ sơ để bảo mật tài khoản</h4>
+            <hr style={{ border: "0.1px solid rgba(0, 0, 0, 0.3)", marginBottom: '25px' }} />
             {userData ? (
               <Row gutter={16}>
                 <Col span={12}>
@@ -539,7 +576,7 @@ export default function Profile() {
 
                     <Form.Item>
                       <Button type="primary" onClick={handleUpdateAll}>
-                        Cập nhật tất cả
+                        Cập nhật
                       </Button>
                     </Form.Item>
                   </Form>
