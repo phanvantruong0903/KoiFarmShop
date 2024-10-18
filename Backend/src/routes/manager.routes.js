@@ -4,6 +4,7 @@ import {
   createNewSupplierController,
   getAllConsignController,
   getAllGroupKoiController,
+  getAllInvoiceController,
   getAllSupplierController,
   getAllUserController,
   getConsignDetailController,
@@ -81,6 +82,13 @@ managerRouter.post(
   wrapAsync(createNewInvoiceGroupKoiController)
 )
 
-managerRouter.get('/manage-group-koi/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getAllGroupKoiController))
+managerRouter.get(
+  '/manage-group-koi/get-all',
+  accessTokenValidator,
+  isAdminValidator,
+  wrapAsync(getAllGroupKoiController)
+)
+
+managerRouter.get('/manage-invoice/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getAllInvoiceController))
 
 export default managerRouter

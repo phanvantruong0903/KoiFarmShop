@@ -60,6 +60,16 @@ class InvoicesService {
       invoice: invoiceResult
     }
   }
+
+  async getAllInvoice() {
+    try {
+      const invoices = await databaseService.invoices.find({}).toArray()
+      return invoices
+    } catch (error) {
+      console.error('Error fetching invoices:', error)
+      throw error
+    }
+  }
 }
 
 const invoicesService = new InvoicesService()

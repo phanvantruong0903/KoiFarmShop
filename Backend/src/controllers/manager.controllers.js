@@ -131,3 +131,16 @@ export const getAllGroupKoiController = async (req, res) => {
     return res.status(500).json({ error: error.message })
   }
 }
+
+export const getAllInvoiceController = async (req, res) => {
+  try {
+    const invoices = await invoicesService.getAllInvoice()
+    return res.json({
+      message: MANAGER_MESSAGES.GET_ALL_INVOICE_SUCCESS,
+      invoices
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+
