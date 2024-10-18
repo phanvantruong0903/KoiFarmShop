@@ -362,7 +362,15 @@ export default function Profile() {
                 </div>
 
                 <div style={{ width: "50%", textAlign: "left" }}>
-                  <h4 style={{ margin: 0 }}>
+                  <h4
+                    style={{
+                      margin: 0,
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      width: "100px",
+                    }}
+                  >
                     {userData ? userData.username : "Tài khoản"}
                   </h4>
                   <h6
@@ -378,13 +386,19 @@ export default function Profile() {
                   </h6>
                 </div>
               </div>
-              <hr style={{ border: "0.1px solid rgba(0, 0, 0, 0.3)", width: '60%', margin: '10px auto' }} />
+              <hr
+                style={{
+                  border: "0.1px solid rgba(0, 0, 0, 0.3)",
+                  width: "60%",
+                  margin: "10px auto",
+                }}
+              />
               <ul style={{ listStyle: "none", padding: 0 }}>
                 <li>
                   <Button
                     type="link"
                     onClick={() => console.log("Đi đến Tài khoản của tôi")}
-                    style={{ color: "black",marginTop: '15px' }}
+                    style={{ color: "black", marginTop: "15px" }}
                   >
                     <UserOutlined style={{ marginRight: "5px" }} />
                     Tài khoản của tôi
@@ -443,9 +457,26 @@ export default function Profile() {
               paddingLeft: "5%",
             }}
           >
-            <h2 style={{ textAlign: "left", fontWeight: '400', fontSize:'30px' }}>Hồ Sơ Của Tôi</h2>
-            <h4 style={{fontWeight: '360', fontSize:'20px', marginBottom: '30px'}}>Quản lý thông tin hồ sơ để bảo mật tài khoản</h4>
-            <hr style={{ border: "0.1px solid rgba(0, 0, 0, 0.3)", marginBottom: '25px' }} />
+            <h2
+              style={{ textAlign: "left", fontWeight: "400", fontSize: "30px" }}
+            >
+              Hồ Sơ Của Tôi
+            </h2>
+            <h4
+              style={{
+                fontWeight: "360",
+                fontSize: "20px",
+                marginBottom: "30px",
+              }}
+            >
+              Quản lý thông tin hồ sơ để bảo mật tài khoản
+            </h4>
+            <hr
+              style={{
+                border: "0.1px solid rgba(0, 0, 0, 0.3)",
+                marginBottom: "25px",
+              }}
+            />
             {userData ? (
               <Row gutter={16}>
                 <Col span={12}>
