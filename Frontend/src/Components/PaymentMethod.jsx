@@ -1,6 +1,7 @@
 import React from "react";
-import { Typography, Button, Space } from "antd";
+import { Typography, Button, Space, message } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer";
 
@@ -11,10 +12,44 @@ const PaymentMethod = () => {
   const location = useLocation();
   const { totalPrice } = location.state || {};
 
-  const handlePaymentMethodSelect = (method) => {
+  const handlePaymentMethodSelect = async (method) => {
     console.log(`Selected payment method: ${method}`);
     console.log(`Total Price: ${totalPrice}`);
-    // Navigate to confirmation or another page
+
+    try {
+      let response;
+
+      if (method === "Zalo Pay") {
+        response = await axios.post(
+          `http://localhost:4000/payment/paymentZalopay`,
+          { total: 100000 } // Ensure totalPrice is an integer
+        );
+      } else if (method === "Momo Pay") {
+        response = await axios.post(
+          `http://localhost:4000/payment/paymentMomo`,
+          { total: 100000 } // Ensure totalPrice is an integer
+        );
+      }
+
+      // Handle success - navigate to confirmation page or show success message
+      if (response.status === 200) {
+        message.success(`Payment initiated with ${method}`);
+        if (method === "Zalo Pay") {
+          console.log(response.data); // Log the response for debugging
+          window.location.href = response.data.order_url;
+        } // Redirect to the external URL}
+        else if (method === "Momo Pay") {
+          console.log(response.data); // Log the response for debugging
+          console.log(response.data.payUrl);
+          window.location.href = response.data.payUrl;
+        }
+      } else {
+        throw new Error("Payment processing failed.");
+      }
+    } catch (error) {
+      console.error("Error during payment processing:", error);
+      message.error("Payment processing failed. Please try again.");
+    }
   };
 
   return (
@@ -37,10 +72,6 @@ const PaymentMethod = () => {
                 transition: "background-color 0.3s ease",
               }}
               onClick={() => handlePaymentMethodSelect("Zalo Pay")}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.backgroundColor = "#1890ff")
-              }
-              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "")}
             >
               Zalo Pay
             </Button>
@@ -55,10 +86,6 @@ const PaymentMethod = () => {
                 transition: "background-color 0.3s ease",
               }}
               onClick={() => handlePaymentMethodSelect("Momo Pay")}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.backgroundColor = "#1890ff")
-              }
-              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "")}
             >
               Momo Pay
             </Button>
