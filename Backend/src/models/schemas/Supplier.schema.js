@@ -6,6 +6,9 @@ export default class SupplierSchema {
   Address = ''
   Country = ''
   PhoneNumber = ''
+  SupplierDescription = ''
+  SupplierImage = ''
+  SupplierVideo = ''
 
   constructor(supplier) {
     this._id = supplier?._id ?? new ObjectId() // tự tạo id
@@ -13,5 +16,8 @@ export default class SupplierSchema {
     this.Address = supplier.Address || ''
     this.Country = supplier.Country || ''
     this.PhoneNumber = supplier.PhoneNumber || ''
+    this.SupplierDescription = supplier.SupplierDescription || ''
+    this.SupplierImage = supplier.SupplierImage || ''
+    this.SupplierVideo = supplier.SupplierVideo || ''
   }
 }

@@ -42,7 +42,8 @@ export default function Koikygui() {
   };
 
   if (loading) return <Spin size="large" />;
-  if (error) return <Alert message="Error" description={error.message} type="error" />;
+  if (error)
+    return <Alert message="Error" description={error.message} type="error" />;
 
   const filteredCards =
     selectedCategory === "All"
@@ -59,7 +60,14 @@ export default function Koikygui() {
   return (
     <Layout>
       <Navbar />
-      <Content style={{ padding: "20px", display: "flex", marginTop: "80px", minHeight: "100vh" }}>
+      <Content
+        style={{
+          padding: "20px",
+          display: "flex",
+          marginTop: "80px",
+          minHeight: "100vh",
+        }}
+      >
         <div
           style={{
             marginRight: "20px",
@@ -73,17 +81,28 @@ export default function Koikygui() {
             backgroundColor: "transparent", // Đặt nền là trong suốt
           }}
         >
-          <div className="radio-group" style={{ marginTop: '15px' }}>
+          <div className="radio-group" style={{ marginTop: "15px" }}>
             <Title level={5}>CHỌN LOÀI CÁ</Title>
-            <Radio.Group onChange={handleCategoryChange} value={selectedCategory} style={{ display: 'block' }}>
-              <Radio value="All" style={{ display: 'block', marginBottom: '10px' }}>
+            <Radio.Group
+              onChange={handleCategoryChange}
+              value={selectedCategory}
+              style={{ display: "block" }}
+            >
+              <Radio
+                value="All"
+                style={{ display: "block", marginBottom: "10px" }}
+              >
                 All ({cardData.length})
               </Radio>
               {categoryData.map((card) => {
                 const categoryName = card.CategoryName;
                 const count = breedCounts[card._id] ?? 0;
                 return (
-                  <Radio key={card._id} value={card._id} style={{ display: 'block', marginBottom: '10px' }}>
+                  <Radio
+                    key={card._id}
+                    value={card._id}
+                    style={{ display: "block", marginBottom: "10px" }}
+                  >
                     {categoryName} ({count})
                   </Radio>
                 );

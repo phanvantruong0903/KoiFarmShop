@@ -3,8 +3,10 @@ import { Container, Row, Col, Card, Button, Form } from 'react-bootstrap';
 import { useManageKoi } from '../../Hooks/useManageKoi';
 import './ManageKoi.css';
 import NewKoiForm from '../../Components/Manager/NewKoiForm';
+import { TbLayoutNavbarExpandFilled } from "react-icons/tb";
+import { TbLayoutBottombarExpandFilled } from "react-icons/tb";
 export default function ManageKoi() {
-
+    const[isHovered, setIsHovered] = React.useState(false);
 
     const {
         result,
@@ -63,18 +65,23 @@ export default function ManageKoi() {
                                 <Button
                                     variant="link"
                                     onClick={() => toggleCategory(category._id)}
-                                    className="float-end"
+                                    className="float-end dropdown-toggle-btn"
                                 >
-                                    {expandedCategories[category._id] ? 'Collapse' : 'Expand'}
+                                    {expandedCategories[category._id] ? (
+                                        <TbLayoutNavbarExpandFilled className="dropdown-indicator expand" />
+                                    ) : (
+                                        <TbLayoutBottombarExpandFilled className="dropdown-indicator" />
+                                    )}
                                 </Button>
+
                             </Card.Header>
-                            <Card.Body>
-                                {expandedCategories[category._id] && (
-                                    <div className="mt-3">
+                            <Card.Body className={`mt-3 my-special ${expandedCategories[category._id] ? 'expanded' : 'collapsing'}`}>
+                                {(
+                                    <div >
                                         <Row>
                                             {result.filter(koi => koi.CategoryID === category._id).map((koi) => (
                                                 <Col xs={12} md={8} lg={3} sm={2} key={koi._id}>
-                                                    <Card className="mb-3" style={{maxWidth:'460px'}}>
+                                                    <Card className="mb-3 " style={{ maxWidth: '460px' }}>
                                                         <Card.Img
                                                             variant="top"
                                                             src={koi.Image || 'https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM='}
@@ -199,17 +206,20 @@ export default function ManageKoi() {
                                                             />
                                                         </Card.Body>
                                                     </Card>
-                                                ) :(
-                                                    
+                                                ) : (
+
 
                                                     <Card
-                                                        className="mb-2 add-new-card d-flex justify-content-center align-items-center"
+                                                        className="mb-2 add-new-card d-flex justify-content-center align-items-center green-owner"
                                                         style={{ height: '98%', minHeight: '500px' }}
                                                         onClick={() => setShowCreateForm(true)}
+                                                        onMouseEnter={() => setIsHovered(true)}
+                                                        onMouseLeave={() => setIsHovered(false)}
+                                                   
                                                     >
-                                                        <Card.Body className="d-flex justify-content-center align-items-center">
-                                                            <span className="add-new-plus">+</span>
-                                                        </Card.Body>
+                                                        
+                                                            <span className="add-new-plus" style={isHovered ? { color: "white" } : {}}>+</span>
+                                                       
                                                     </Card>
                                                 )}
                                             </Col>

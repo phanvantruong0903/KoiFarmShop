@@ -12,8 +12,11 @@ const OrderingIKoi = () => {
   const [selectedSize, setSelectedSize] = useState(selectedItem?.Size || "");
   const [selectedBreed, setSelectedBreed] = useState(selectedItem?.Breed || "");
   const [price, setPrice] = useState("");
+  const [count, setCount] = useState(1);
   const [description, setDescription] = useState("");
-
+  const handleCountChange = (event) => {
+    setCount(event.target.value);
+  };
   useEffect(() => {
     const sendOrderDetails = async () => {
       console.log(selectedSize);
@@ -138,6 +141,19 @@ const OrderingIKoi = () => {
                     </div>
                     <div className="mb-3">
                       <strong>Description:</strong> {description}
+                    </div>
+                    <div className="mb-3">
+                      <strong>Count:</strong>
+                      <select value={count} onChange={handleCountChange}>
+                        {Array.from(
+                          { length: selectedItem.count },
+                          (_, index) => index + 1
+                        ).map((value) => (
+                          <option key={value} value={value}>
+                            {value}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                     <div className="text-center">
                       <Button
