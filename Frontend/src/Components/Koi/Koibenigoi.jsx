@@ -193,7 +193,7 @@ export default function Koibenigoi() {
         console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
         if (Array.isArray(response.data.result)) {
           setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
-          setCategoryData(response.data.cateogryList);
+          setCategoryData(response.data.categoryList);
           console.log("Card data set successfully:", response.data.result9); // Kiểm tra sau khi set
           console.log(
             "Category Data set successfully:",
