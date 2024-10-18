@@ -126,6 +126,7 @@ export const USERS_MESSAGES = {
   MAKE_ORDER_SUCCESS: 'Make order success',
   BUY_ORDER_SUCCESS: 'Buy success',
   CREATE_ORDER_SUCCESS: 'Create order success',
+  ORDER_NOT_FOUND: 'Order not found',
 
   //check authorization
   CHECK_AUTHORIZATION_SUCCESS: 'Check authorization success',

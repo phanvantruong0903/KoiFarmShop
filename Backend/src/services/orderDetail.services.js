@@ -253,6 +253,7 @@ class OrderDetailService {
                 Size: Number(payload.Size) 
             })
         .toArray()
+        return koiList
     }
     async filterKoiId(payload){
         let koiList
