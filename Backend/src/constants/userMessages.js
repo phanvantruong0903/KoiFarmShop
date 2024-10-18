@@ -116,6 +116,8 @@ export const USERS_MESSAGES = {
   GET_AVAILABLE_KOI_QUANTITY: 'Get available koi quantity success',
   //koi price
   GET_MIN_MAX_PRICE: 'Get min max price of koi success',
+  //koi not found
+  KOI_NOT_FOUND: 'Koi not found',
   GET_KOI_SUCCESS: 'Get koi success',
   OUT_OF_STOCK: 'Out of stock',
   //order
@@ -124,6 +126,7 @@ export const USERS_MESSAGES = {
   MAKE_ORDER_SUCCESS: 'Make order success',
   BUY_ORDER_SUCCESS: 'Buy success',
   CREATE_ORDER_SUCCESS: 'Create order success',
+  ORDER_NOT_FOUND: 'Order not found',
 
   //check authorization
   CHECK_AUTHORIZATION_SUCCESS: 'Check authorization success',
