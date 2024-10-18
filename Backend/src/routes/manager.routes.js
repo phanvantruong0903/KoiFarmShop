@@ -1,4 +1,5 @@
 import {
+  createNewInvoiceGroupKoiController,
   createNewServiceController,
   getProfitController,
   getRevenueController,
@@ -13,7 +14,9 @@ import {
   getAllSupplierController,
   getAllUserController,
   getConsignDetailController,
+  getSupplierController,
   updateConsignDetailController,
+  updateSupplierController,
   getAllKoiController,
   getAllOrderController,
   updateKoiController,
@@ -22,7 +25,7 @@ import {
   updateUserController
 } from '../controllers/manager.controllers.js'
 import { getProfileController } from '../controllers/users.controllers.js'
-import { isAdminValidator } from '../middlewares/manager.middlewares.js'
+import { isAdminValidator, SupplierIDAndCategoryIDValidator } from '../middlewares/manager.middlewares.js'
 import { accessTokenValidator } from '../middlewares/users.middlewares.js'
 import { wrapAsync } from '../utils/handle.js'
 import { Router } from 'express'
@@ -58,6 +61,12 @@ managerRouter.get('/manage-ki-gui/get-all', accessTokenValidator, isAdminValidat
 
 managerRouter.get('/manage-ki-gui/:_id', accessTokenValidator, isAdminValidator, wrapAsync(getConsignDetailController))
 
+managerRouter.put(
+  '/manage-ki-gui/:_id',
+  accessTokenValidator,
+  isAdminValidator,
+  wrapAsync(updateConsignDetailController)
+)
 managerRouter.get('/manage-order/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getAllOrderController))
 
 managerRouter.get('/manage-koi/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getAllKoiController))
@@ -104,7 +113,12 @@ managerRouter.put(
   wrapAsync(updateConsignDetailController)
 )
 
-managerRouter.post('/manage-supplier/create-new-supplier', accessTokenValidator, isAdminValidator, wrapAsync(createNewSupplierController))
+managerRouter.post(
+  '/manage-supplier/create-new-supplier',
+  accessTokenValidator,
+  isAdminValidator,
+  wrapAsync(createNewSupplierController)
+)
 
 managerRouter.post(
   '/manage-service/create-new-service',
@@ -139,5 +153,22 @@ managerRouter.get('/getRevenue', accessTokenValidator, isAdminValidator, wrapAsy
 managerRouter.get('/getProfit',wrapAsync(getProfitController))
 
 managerRouter.get('/manage-supplier/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getAllSupplierController))
+managerRouter.get(
+  '/manage-supplier/get-all',
+  accessTokenValidator,
+  isAdminValidator,
+  wrapAsync(getAllSupplierController)
+)
 
+managerRouter.put('/manage-supplier/:_id', accessTokenValidator, isAdminValidator, wrapAsync(updateSupplierController))
+
+managerRouter.get('/manage-supplier/:_id', accessTokenValidator, isAdminValidator, wrapAsync(getSupplierController))
+
+managerRouter.post(
+  '/manage-invoice/create-new-invoice-group-koi',
+  accessTokenValidator,
+  isAdminValidator,
+  SupplierIDAndCategoryIDValidator,
+  wrapAsync(createNewInvoiceGroupKoiController)
+)
 export default managerRouter
