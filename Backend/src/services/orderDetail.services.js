@@ -108,7 +108,8 @@ class OrderDetailService {
             return {
                 KoiName: koi.KoiName,
                 CategoryName: category.CategoryName,
-                Size: koi.Size
+                Size: koi.Size,
+                Image: koi.Image
             };
         }));
         return {
