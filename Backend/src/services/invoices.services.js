@@ -3,6 +3,9 @@ import databaseService from './database.service.js'
 import GroupKoiSchema from '../models/schemas/GroupKoi.schema.js'
 import InvoiceSchema from '../models/schemas/Invoice.schema.js'
 import KoiSchema from '../models/schemas/Koi.schema.js'
+import { ErrorWithStatus } from '../models/Errors.js'
+import { MANAGER_MESSAGES } from '../constants/managerMessage.js'
+import HTTP_STATUS from '../constants/httpStatus.js'
 
 class InvoicesService {
   async createNewInvoiceGroupKoi(payload) {
@@ -69,6 +72,18 @@ class InvoicesService {
       console.error('Error fetching invoices:', error)
       throw error
     }
+  }
+
+  async getInvoice(invoiceid) {
+    const invoiceObjectID = new ObjectId(invoiceid)
+    const invoice = await databaseService.invoices.findOne({ _id: invoiceObjectID })
+    if (invoice == null) {
+      throw new ErrorWithStatus({
+        message: MANAGER_MESSAGES.INVOICE_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+    return invoice
   }
 }
 

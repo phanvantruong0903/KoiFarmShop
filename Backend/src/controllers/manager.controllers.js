@@ -144,3 +144,16 @@ export const getAllInvoiceController = async (req, res) => {
   }
 }
 
+export const getInvoiceController = async (req, res) => {
+  try {
+    const { _id } = req.params
+    const result = await invoicesService.getInvoice(_id)
+    return res.json({
+      message: MANAGER_MESSAGES.GET_INVOICE_SUCCESS,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+

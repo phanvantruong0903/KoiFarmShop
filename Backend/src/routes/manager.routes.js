@@ -8,6 +8,7 @@ import {
   getAllSupplierController,
   getAllUserController,
   getConsignDetailController,
+  getInvoiceController,
   getSupplierController,
   updateConsignDetailController,
   updateSupplierController
@@ -90,5 +91,7 @@ managerRouter.get(
 )
 
 managerRouter.get('/manage-invoice/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getAllInvoiceController))
+
+managerRouter.get('/manage-invoice/:_id', accessTokenValidator, isAdminValidator, wrapAsync(getInvoiceController))
 
 export default managerRouter
