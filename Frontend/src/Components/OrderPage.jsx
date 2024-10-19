@@ -3,34 +3,41 @@ import { useLocation } from "react-router-dom";
 import { Button, Card, Col, Row, Typography, Layout } from "antd";
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { useOrder } from "../Context/OrderContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
 const { Title, Paragraph } = Typography;
 
 const OrderPage = () => {
-  const { setOrderId, addKoiToCart } = useOrder(); // Ensure you have addKoiToCart from context
+  const { setOrderId, addKoiToCart } = useOrder();
   const location = useLocation();
   const { selectedItem } = location.state || {};
   const [loading, setLoading] = useState(false);
   const [isAddedToCart, setIsAddedToCart] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
-  console.log(selectedItem);
+
+    // Check if the product is already added to the cart
+    const cartData = JSON.parse(localStorage.getItem("cart")) || [];
+    if (cartData.some((item) => item.itemId === selectedItem?._id)) {
+      setIsAddedToCart(true);
+    }
+  }, [selectedItem]);
+
   const handleAddToCart = async () => {
     if (!selectedItem || loading || isAddedToCart) return;
     setLoading(true);
+
     try {
       const response = await axios.post(
         "http://localhost:4000/order/detail/make",
         { KoiID: selectedItem._id },
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       );
@@ -38,11 +45,26 @@ const OrderPage = () => {
       if (response.status !== 200) {
         throw new Error("Failed to add to cart");
       }
+
       const data = response.data;
       setOrderId(data.result.orderDT._id);
-      addKoiToCart(selectedItem._id); // Add to cart tracking
+      addKoiToCart(selectedItem._id);
+
+      // Get existing cart items from localStorage or initialize an empty list
+      const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      // Add the new item to the cart list
+      existingCart.push({
+        itemId: selectedItem._id,
+        message: "Hàng đã vào giỏ hàng của bạn",
+      });
+
+      // Save the updated list back to localStorage
+      localStorage.setItem("cart", JSON.stringify(existingCart));
+
       setIsAddedToCart(true);
       toast.success("Đã thêm vào giỏ hàng!");
+
       setTimeout(() => {
         navigate("/koikygui");
       }, 3000);
@@ -96,7 +118,12 @@ const OrderPage = () => {
                 <Title level={2} style={{ color: "red" }}>
                   {selectedItem.KoiName}
                 </Title>
-                <Paragraph style={{ fontSize: "25px" }}>
+                <Paragraph
+                  style={{
+                    fontSize: "25px",
+                    color: isAddedToCart ? "red" : "inherit",
+                  }}
+                >
                   <strong>Description: </strong>
                   {selectedItem.Description}
                 </Paragraph>
@@ -129,6 +156,11 @@ const OrderPage = () => {
                     {isAddedToCart ? "Đã Thêm" : "Thêm Vào Giỏ Hàng"}
                   </Button>
                 </div>
+                {isAddedToCart && (
+                  <Paragraph style={{ color: "green" }}>
+                    Hàng đã vào giỏ hàng của bạn!
+                  </Paragraph>
+                )}
               </Col>
             </Row>
           ) : (
@@ -176,7 +208,6 @@ const OrderPage = () => {
           </ul>
         </Card>
       )}
-
       <Card style={{ marginTop: "40px" }}>
         <Title level={4} style={{ color: "red" }}>
           Nguồn gốc, xuất xứ của cá chép Koi Nhật Bản
