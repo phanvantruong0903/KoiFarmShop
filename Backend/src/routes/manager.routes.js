@@ -8,6 +8,7 @@ import {
   getAllSupplierController,
   getAllUserController,
   getConsignDetailController,
+  getgroupKoiController,
   getInvoiceController,
   getSupplierController,
   updateConsignDetailController,
@@ -93,5 +94,8 @@ managerRouter.get(
 managerRouter.get('/manage-invoice/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getAllInvoiceController))
 
 managerRouter.get('/manage-invoice/:_id', accessTokenValidator, isAdminValidator, wrapAsync(getInvoiceController))
+
+managerRouter.get('/manage-group-koi/:_id', accessTokenValidator, isAdminValidator, wrapAsync(getgroupKoiController))
+
 
 export default managerRouter

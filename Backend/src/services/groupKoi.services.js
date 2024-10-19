@@ -14,6 +14,18 @@ class GroupKoisService {
       throw error
     }
   }
+
+  async getGroupKoi(groupKoiID) {
+    const groupKoiObjectID = new ObjectId(groupKoiID)
+    const groupKoi = await databaseService.groupKois.findOne({ _id: groupKoiObjectID })
+    if (groupKoi == null) {
+      throw new ErrorWithStatus({
+        message: MANAGER_MESSAGES.GROUP_KOI_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+    return groupKoi
+  }
 }
 
 const groupKoisService = new GroupKoisService()

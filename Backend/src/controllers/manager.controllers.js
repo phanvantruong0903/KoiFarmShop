@@ -157,3 +157,18 @@ export const getInvoiceController = async (req, res) => {
   }
 }
 
+export const getgroupKoiController = async (req, res) => {
+  try {
+    const { _id } = req.params
+    const result = await groupKoisService.getGroupKoi(_id)
+    return res.json({
+      message: MANAGER_MESSAGES.GET_GROUP_KOI_SUCCESS,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+
+
+
