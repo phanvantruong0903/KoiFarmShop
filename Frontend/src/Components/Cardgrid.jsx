@@ -20,22 +20,20 @@ const CardGrid = ({ cardData }) => {
     const categoryMap = {};
     cardData.forEach((card) => {
       if (card.Status === 2 || card.Status === 3) {
-        if (!addedKoiIds.includes(card._id)) {
-          if (!categoryMap[card.CategoryID]) {
-            categoryMap[card.CategoryID] = {
-              count: 0,
-              KoiName: card.KoiName,
-              Image: card.Image,
-              Price: card.Price,
-              Age: card.Age,
-              Description: card.Description,
-              Origin: card.Origin,
-              Gender: card.Gender,
-              CategoryID: card.CategoryID,
-            };
-          }
-          categoryMap[card.CategoryID].count++;
+        if (!categoryMap[card.CategoryID]) {
+          categoryMap[card.CategoryID] = {
+            count: 0,
+            KoiName: card.KoiName,
+            Image: card.Image,
+            Price: card.Price,
+            Age: card.Age,
+            Description: card.Description,
+            Origin: card.Origin,
+            Gender: card.Gender,
+            CategoryID: card.CategoryID,
+          };
         }
+        categoryMap[card.CategoryID].count++;
       }
     });
     return categoryMap;
@@ -46,22 +44,20 @@ const CardGrid = ({ cardData }) => {
     const categoryMap = {};
     cardData.forEach((card) => {
       if (card.Status === 1) {
-        if (!addedKoiIds.includes(card._id)) {
-          if (!categoryMap[card.CategoryID]) {
-            categoryMap[card.CategoryID] = {
-              count: 0,
-              KoiName: card.KoiName,
-              Image: card.Image,
-              Price: card.Price,
-              Age: card.Age,
-              Description: card.Description,
-              Origin: card.Origin,
-              Gender: card.Gender,
-              CategoryID: card.CategoryID,
-            };
-          }
-          categoryMap[card.CategoryID].count++;
+        if (!categoryMap[card.CategoryID]) {
+          categoryMap[card.CategoryID] = {
+            count: 0,
+            KoiName: card.KoiName,
+            Image: card.Image,
+            Price: card.Price,
+            Age: card.Age,
+            Description: card.Description,
+            Origin: card.Origin,
+            Gender: card.Gender,
+            CategoryID: card.CategoryID,
+          };
         }
+        categoryMap[card.CategoryID].count++;
       }
     });
     return categoryMap;
@@ -112,9 +108,7 @@ const CardGrid = ({ cardData }) => {
       <Row gutter={[16, 16]}>
         {category === "kygui" &&
           cardData
-            .filter(
-              (card) => card.Status === 4 && !addedKoiIds.includes(card._id)
-            )
+            .filter((card) => card.Status === 4)
             .map((card) => (
               <Col
                 key={card._id}

@@ -9,30 +9,30 @@ const { Title, Text } = Typography;
 
 export default function ShoppingCart() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Safely destructure data from location.state
   const { data } = location.state || {};
   const { result } = data || {};
   const koiList = result?.koiList || [];
-  const orderDetail = result?.orderDetail || {};
-  const navigate = useNavigate();
-
+  const orderDetail = result?.orderDetail || [];
   // Create a mapping of Koi IDs to their details
   const koiMap = koiList.reduce((acc, koi) => {
     acc[koi._id] = koi; // Map Koi ID to Koi object
     return acc;
   }, {});
 
+  // Check if the user has already filled the form
+  const isFormFilled = data && data.result;
+
   useEffect(() => {
-    // Navigate only if data is null
-    if (!data) {
+    // Navigate only if data is null and form not filled
+    if (!isFormFilled) {
       navigate("/formfillinformation", {
-        state: {
-          a: data,
-        },
+        state: { a: data },
       });
     }
-  }, [data, navigate]);
+  }, [isFormFilled, data, navigate]);
 
   // Prepare data for the table
   const tableData = (orderDetail.Items || []).map((item) => {
@@ -73,14 +73,17 @@ export default function ShoppingCart() {
       key: "quantity",
     },
   ];
+
   const totalPrice = orderDetail.TotalPrice
     ? orderDetail.TotalPrice.toLocaleString()
     : "N/A";
+
   const handlePayment = () => {
     navigate("/paymentmethod", {
       state: { totalPrice },
     });
   };
+
   return (
     <>
       <div style={{ padding: "20px", maxWidth: "1200px", margin: "0 auto" }}>

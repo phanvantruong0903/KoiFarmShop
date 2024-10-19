@@ -169,7 +169,7 @@ export default function OrderingJapanKoi() {
                       <strong>Description:</strong> {description}
                     </div>
                     <div className="mb-3">
-                      <strong>Count:</strong>
+                      <strong>Quantity:</strong>
                       <select value={count} onChange={handleCountChange}>
                         {Array.from(
                           { length: selectedItem.count },

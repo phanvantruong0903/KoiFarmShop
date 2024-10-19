@@ -1,24 +1,20 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer";
 import { useLocation } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { CgPacman } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 import { useOrder } from "../Context/OrderContext";
 import axios from "axios";
+import axiosInstance from "../An/Utils/axiosJS";
 export default function FormFillInformation() {
-  const location = useLocation();
-  const { a } = location.state || {};
-  console.log(a);
   const orderID = useOrder().orderId;
   const navigate = useNavigate(); // Sử dụng hook useNavigate để chuyển hướng trang
   const [data, setData] = useState("");
-  useEffect(() => {}, [a]);
-  console.log(a);
-  console.log(orderID);
+  const [loading, setLoading] = useState(true);
+  const [userData, setUserData] = useState();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -69,6 +65,26 @@ export default function FormFillInformation() {
       }
     }
   };
+  const fetchUserData = async () => {
+    setLoading(true);
+    try {
+      const response = await axiosInstance.get("users/me");
+      if (response.data) {
+        setUserData(response.data.result);
+        console.log(userData);
+      } else {
+        console.error("Dữ liệu không hợp lệ:", response.data);
+      }
+    } catch (error) {
+      console.error("Có lỗi xảy ra khi lấy thông tin người dùng:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
   return (
     <>
       <div>
@@ -88,6 +104,7 @@ export default function FormFillInformation() {
                 placeholder="Nhập email"
                 required
                 name="email"
+                defaultValue={userData && userData.email ? userData.email : ""} //
               />
               <Form.Control.Feedback type="invalid">
                 Vui lòng nhập email hợp lệ.
@@ -101,6 +118,7 @@ export default function FormFillInformation() {
                 placeholder="Nhập họ và tên"
                 required
                 name="name"
+                defaultValue={userData && userData.name ? userData.name : ""} // Sử dụng tên từ userData nếu có
               />
               <Form.Control.Feedback type="invalid">
                 Vui lòng nhập họ và tên.
@@ -114,6 +132,9 @@ export default function FormFillInformation() {
                 placeholder="Nhập địa chỉ"
                 required
                 name="address"
+                defaultValue={
+                  userData && userData.address ? userData.address : ""
+                } // Sử dụng địa chỉ từ userData nếu có
               />
               <Form.Control.Feedback type="invalid">
                 Vui lòng nhập địa chỉ.
@@ -126,6 +147,9 @@ export default function FormFillInformation() {
                 placeholder="Nhập số điện thoại"
                 required
                 name="phone_number"
+                defaultValue={
+                  userData && userData.phone_number ? userData.phone_number : ""
+                } // Sử dụng số điện thoại từ userData nếu có
               />
               <Form.Control.Feedback type="invalid">
                 Vui lòng nhập số điện thoại.
@@ -139,6 +163,9 @@ export default function FormFillInformation() {
                 placeholder="Nhập số địa chỉ giao hàng"
                 required
                 name="ShipAddress"
+                defaultValue={
+                  userData && userData.address ? userData.address : ""
+                } // Sử dụng địa chỉ từ userData nếu có
               />
               <Form.Control.Feedback type="invalid">
                 Vui lòng nhập số điện thoại.
