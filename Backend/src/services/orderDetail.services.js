@@ -99,7 +99,23 @@ class OrderDetailService {
 
     async fetchOrder(payload) {
         const result = await databaseService.orderDetail.findOne({ _id: new ObjectId(payload.orderID) })
-        return result ? result : {}
+        if(!result){
+            return null
+        }
+        const items = await Promise.all(result.Items.map(async (item) => {
+            const koi = await databaseService.kois.findOne({ _id: new ObjectId(item.KoiID) });
+            const category = await databaseService.category.findOne({ _id: new ObjectId(koi.CategoryID) });
+            return {
+                KoiName: koi.KoiName,
+                CategoryName: category.CategoryName,
+                Size: koi.Size
+            };
+        }));
+        return {
+            _id: result?._id,
+            Items: items,
+            TotalPrice: result?.TotalPrice
+        }
     }
 
     async updateItemQuantity(payload, reqParams) {
