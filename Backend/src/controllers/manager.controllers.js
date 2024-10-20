@@ -251,7 +251,7 @@ export const getAllSupplierController = async (req, res) => {
 
 export const getRevenueController = async (req, res) => {
   try {
-    const Orders = await databaseService.order.find({ Status: 5 }).toArray()
+    const Orders = await databaseService.order.find({ Status: 2 }).toArray()
 
     const dailyRevenue = Orders.reduce((accumulator, order) => {
       const orderDate = new Date(order.OrderDate).toISOString().split('T')[0] // ví dụ OrderDate trong db là 2024-10-13T07:40:36.198+00:00 thì tách chữ T ra
