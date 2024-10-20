@@ -56,10 +56,17 @@ export const getOrderDetailController = async (req, res) => {
     const result = await orderDetailService.fetchOrder(req.params);
 
     console.log("result: ", result)
-    return res.json({
-      message: USERS_MESSAGES.GET_ORDER_SUCCESS,
-      result
-    })
+    if(result!==null){
+      return res.json({
+        message: USERS_MESSAGES.GET_ORDER_SUCCESS,
+        result
+      })
+    }else{
+      return res.json({
+        message: USERS_MESSAGES.ORDER_NOT_FOUND
+      })
+    }
+    
   } catch (error) {
     return res.status(500).json({ error: error.message })
   }
