@@ -27,11 +27,11 @@ class OrdersService {
         return newUser
     }
 
-    async createOrder(payload, reqParams) {
+    async createOrder(payload, reqParams, reqOrderCookie) {
         const orderDTID = reqParams.orderDetailID
         const existedUser = await databaseService.users.findOne({ email: payload.email })
 
-        let user, newOrder, user_id, orderPayload
+        let user, user_id
 
 
         if (existedUser) {
@@ -43,8 +43,8 @@ class OrdersService {
         }
 
 
-        orderPayload = {
-            _id: new ObjectId(),
+        reqOrderCookie = {
+            // _id: new ObjectId(),
             UserID: user._id,
             OrderDetailID: orderDTID,
             ShipAddress: payload.ShipAddress,
@@ -54,9 +54,9 @@ class OrdersService {
         }
 
 
-        newOrder = await databaseService.order.insertOne(new OrdersSchema(orderPayload))
+        // newOrder = await databaseService.order.insertOne(new OrdersSchema(orderPayload))
         // newOrder = await this.saveOrderToDatabase(orderPayload)
-        const order = await databaseService.order.findOne({ _id: new ObjectId(newOrder.insertedId) })
+        // const order = await databaseService.order.findOne({ _id: new ObjectId(newOrder.insertedId) })
         // console.log("order detail id: ", orderDTID)
         const orderDetail = await databaseService.orderDetail.findOne({ _id: new ObjectId(orderDTID) })
         const koiList = await Promise.all(
@@ -64,16 +64,17 @@ class OrdersService {
         );
 
         return {
-            user, order: {
-                _id: order._id,
-                UserID: order.UserID,
-                OrderDetail: orderDetail,
-                ShipAddress: order.ShipAddress,
-                Description: order.Description,
-                OrderDate: order.OrderDate,
-                Type: order.Type,
-                Status: order.Status
-            }, koiList
+            // user, order: {
+            //     _id: order._id,
+            //     UserID: order.UserID,
+            //     OrderDetail: orderDetail,
+            //     ShipAddress: order.ShipAddress,
+            //     Description: order.Description,
+            //     OrderDate: order.OrderDate,
+            //     Type: order.Type,
+            //     Status: order.Status
+            // }, koiList
+            user, order: reqOrderCookie, orderDetail, koiList
         }
     }
 

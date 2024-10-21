@@ -10,7 +10,7 @@ import {
   makeOrdersDetailController,
   updateOrderDetailController
 } from '../controllers/orderDetailController.js'
-import { createOrderController, getOrderController } from '../controllers/order.controllers.js'
+import { createOrderController, getOrderController, saveOrderController } from '../controllers/order.controllers.js'
 import { accessTokenValidator } from '../middlewares/users.middlewares.js'
 import { wrapAsync } from '../utils/handle.js'
 
@@ -31,4 +31,6 @@ orderRouter.post('/detail/price/minmax', getMinMaxPriceController)
 orderRouter.post('/detail/koi', getKoiByPriceController)
 //Koi
 orderRouter.post('/koi/filter', filterKoiController)
+//save
+orderRouter.get('/save', saveOrderController)
 export default orderRouter
