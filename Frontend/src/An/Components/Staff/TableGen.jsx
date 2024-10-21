@@ -87,10 +87,10 @@ export default function TableGen({
 
                                         }}
                                     >
-                                        View
+                                        View/Edit
                                     </Dropdown.Item>
 
-                                    <Dropdown.Item href="#/action-2">Edit</Dropdown.Item>
+                                   
                                     
                                     {!isSpecial && (
                                         <Dropdown.Item
