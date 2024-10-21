@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Layout, Radio, Typography, Spin, Alert } from "antd";
+import { Layout, Radio, Typography, Spin, Alert, Input, Select } from "antd";
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer";
 import CardGrid from "./Cardgrid";
@@ -15,6 +15,9 @@ export default function Koikygui() {
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [categoryData, setCategoryData] = useState([]);
+  const [selectedSize, setSelectedSize] = useState("All");
+  const [minPrice, setMinPrice] = useState("0"); // Default minimum price
+  const [maxPrice, setMaxPrice] = useState("20000000"); // Default maximum price
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,14 +44,35 @@ export default function Koikygui() {
     setSelectedCategory(e.target.value);
   };
 
+  const handleSizeChange = (value) => {
+    setSelectedSize(value);
+  };
+
+  const handleMinPriceChange = (e) => {
+    setMinPrice(e.target.value);
+  };
+
+  const handleMaxPriceChange = (e) => {
+    setMaxPrice(e.target.value);
+  };
+
   if (loading) return <Spin size="large" />;
   if (error)
     return <Alert message="Error" description={error.message} type="error" />;
 
-  const filteredCards =
-    selectedCategory === "All"
-      ? cardData
-      : cardData.filter((card) => card.CategoryID === selectedCategory);
+  const filteredCards = cardData.filter((card) => {
+    const matchesCategory =
+      selectedCategory === "All" || card.CategoryID === selectedCategory;
+
+    const matchesSize =
+      selectedSize === "All" || card.Size === Number(selectedSize); // Adjust according to your size property
+
+    const price = card.Price; // Assuming card has a Price property
+    const matchesPrice =
+      price >= parseFloat(minPrice) && price <= parseFloat(maxPrice);
+
+    return matchesCategory && matchesSize && matchesPrice;
+  });
 
   const breedCounts = cardData.reduce((accumulator, card) => {
     if (card.CategoryID) {
@@ -74,11 +98,11 @@ export default function Koikygui() {
             marginLeft: "10px",
             zIndex: "9999",
             position: "sticky",
-            top: "100px", // Tăng thêm 20px
+            top: "100px",
             width: "200px",
-            height: "fit-content", // Đảm bảo chiều cao đủ cho nội dung
-            padding: "10px", // Thêm padding cho nội dung không chạm vào cạnh
-            backgroundColor: "transparent", // Đặt nền là trong suốt
+            height: "fit-content",
+            padding: "10px",
+            backgroundColor: "transparent",
           }}
         >
           <div className="radio-group" style={{ marginTop: "15px" }}>
@@ -108,6 +132,50 @@ export default function Koikygui() {
                 );
               })}
             </Radio.Group>
+          </div>
+
+          <div className="price-filter" style={{ marginTop: "20px" }}>
+            <Title level={5}>CHỌN GIÁ</Title>
+            <Input
+              placeholder="Giá tối thiểu (19.000)"
+              value={minPrice}
+              onChange={handleMinPriceChange}
+              style={{ marginBottom: "10px" }}
+              type="number"
+              min={19000}
+              max={20000000}
+            />
+            <Input
+              placeholder="Giá tối đa (20.000.000)"
+              value={maxPrice}
+              onChange={handleMaxPriceChange}
+              type="number"
+              min={19000}
+              max={20000000}
+            />
+          </div>
+          <div className="size-filter" style={{ marginTop: "20px" }}>
+            <Title level={5}>CHỌN KÍCH THƯỚC</Title>
+            <Select
+              value={selectedSize}
+              onChange={handleSizeChange}
+              style={{ width: "100%" }}
+            >
+              <Option value="All">All Sizes</Option>
+              <Option value="20">20cm</Option>
+              <Option value="25">25cm</Option>
+              <Option value="30">30cm</Option>
+              <Option value="35">35cm</Option>
+              <Option value="40">40cm</Option>
+              <Option value="45">45cm</Option>
+              <Option value="50">50cm</Option>
+              <Option value="55">55cm</Option>
+              <Option value="60">60cm</Option>
+              <Option value="65">65cm</Option>
+              <Option value="70">70cm</Option>
+              <Option value="75">75cm</Option>
+              {/* Add more size options as needed */}
+            </Select>
           </div>
         </div>
         <CardGrid cardData={filteredCards} />

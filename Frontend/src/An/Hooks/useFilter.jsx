@@ -17,7 +17,7 @@ export default function useFilter(data, filterType) {
       }
       else if (filterType === 'consign') {
         return {
-          Status: '', Method: '', location: ''
+          State: '', Method: '', location: ''
         }
       }
       else if (filterType === 'supplier') {
@@ -44,16 +44,15 @@ export default function useFilter(data, filterType) {
         3: 'Manager',
       };
       
-      // const matchesRole = filterList.roleid ? item.role === filterList.role : true;
-      
       const matchesRole = filterList.role ? roleMap[item.roleid] === filterList.role : true;
       const matchesEmailVerified = filterList.Email_verified
-      ? (filterList.Email_verified === 'All' || item.verify == (filterList.Email_verified === 'Verified'))
-      : true;
-  
-      const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
+        ? (filterList.Email_verified === 'All' || item.verify == (filterList.Email_verified === 'Verified'))
+        : true;
 
-      return matchesRole && matchesEmailVerified && matchesSearch;
+      const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesSearchID = item._id == searchTerm;
+
+      return matchesRole && matchesEmailVerified && (matchesSearch || matchesSearchID);
     } else if (filterType === 'order') {
       // For orders
       const matchesCustomer = item.customer.toLowerCase().includes(searchTerm.toLowerCase());

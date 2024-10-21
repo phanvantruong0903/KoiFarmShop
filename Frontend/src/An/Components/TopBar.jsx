@@ -11,22 +11,6 @@ export default function TopBar({ children, name, role }) {
   const location = useLocation(); 
   const navigate = useNavigate();
 
-  const handleChartClick = (path) => {
-    // Check if the current path already includes a chart type
-    const regex = /\/(BarChart|LineChart)$/; // Adjust for any other chart types
-    let newPath = location.pathname;
-  
-    // If a chart type is already in the URL, replace it with the new one
-    if (regex.test(location.pathname)) {
-      newPath = location.pathname.replace(regex, `/${path}`);
-    } else {
-      // Otherwise, append the new chart type to the path
-      newPath = `${location.pathname}/${path}`;
-    }
-  
-    // Navigate to the updated path
-    navigate(newPath);
-  };
   
   return (
     <>
@@ -84,10 +68,10 @@ export default function TopBar({ children, name, role }) {
                   {name} - {role}
                 </NavDropdown.Item>
               </NavDropdown>
-               <Nav.Link onClick={()=>handleChartClick('BarChart')} className="chart-icon">
+               <Nav.Link as={Link} to={'staff/Report/BarChart'} className="chart-icon">
                 <IoBarChartOutline size={24} style={{ color: 'white', cursor: 'pointer' }} />
               </Nav.Link>
-              <Nav.Link onClick={()=>handleChartClick('LineChart')} className="chart-icon">
+              <Nav.Link as={Link} to={'staff/Report/LineChart'} className="chart-icon">
                 <PiChartLineUpLight size={24} style={{ color: 'white', cursor: 'pointer' }} />
               </Nav.Link>
             </Nav>

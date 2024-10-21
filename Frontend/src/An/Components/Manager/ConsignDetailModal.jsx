@@ -20,7 +20,12 @@ export default function ConsignDetailModal({ actions, setactions, consignID }) {
         4: 'Fish Deliveries',
         5: 'Fish Sales'
     };
-
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'VND',
+        }).format(value);
+    };
     const handleClose = () => {
 
         setModalData(null);
@@ -30,8 +35,8 @@ export default function ConsignDetailModal({ actions, setactions, consignID }) {
     const savedToClipboard = (type) => {
         if (type === "user") {
             navigator.clipboard.writeText(modalData?.user?._id || "Not Available");
-        } else if (type === "certificate") {
-            navigator.clipboard.writeText(modalData?.koi?.CertificateID || "Not Available");
+        } else if (type === "KoiID") {
+            navigator.clipboard.writeText(modalData?.koi?._id || "Not Available");
         }
     };
 
@@ -67,7 +72,9 @@ export default function ConsignDetailModal({ actions, setactions, consignID }) {
     const [modalData, setModalData] = useState(null);
     const [formData, setFormData] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
-
+    function dateConverter(date) {
+        return date ? date.split('T')[0] : ''
+    }
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -141,7 +148,6 @@ export default function ConsignDetailModal({ actions, setactions, consignID }) {
         <Modal show={actions} onHide={handleClose} centered dialogClassName="modal-50w">
             <Modal.Header className="bg-light">
                 <Row className="vw-100">
-                    <Col md={4}><Modal.Title>Customer Details</Modal.Title></Col>
                     <Col md={4}><Modal.Title>Consign Details</Modal.Title></Col>
                     <Col md={4}><Modal.Title>Fish Details</Modal.Title></Col>
                 </Row>
@@ -152,7 +158,7 @@ export default function ConsignDetailModal({ actions, setactions, consignID }) {
                     {/* Customer Details */}
                     <Col md={4}>
                         <div className="d-flex align-items-center justify-content-between profile-row">
-                            <Image src="https://via.placeholder.com/80" roundedCircle className="profile-avatar" />
+                            <Image src={modalData.user.Image ? modalData.user.Image : 'https://via.placeholder.com/150"'} roundedCircle className="profile-avatar" />
                             <div className="d-flex flex-column align-items-end">
                                 <h5>{modalData?.user?.name || "Not Available"}</h5>
                                 <span className="text-muted">{modalData?.user?.email || "Not Available"}</span>
@@ -162,42 +168,6 @@ export default function ConsignDetailModal({ actions, setactions, consignID }) {
                                 </div>
                             </div>
                         </div>
-
-                        <Form>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Name</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={formData?.user?.name || "Not Available"}
-                                    onChange={(e) => handleFormChange("name", "user", e.target.value)}
-
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Address</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={formData?.user?.address || "Not Available"}
-                                    onChange={(e) => handleFormChange("address", "user", e.target.value)}
-
-
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Phone Number</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={formData?.user?.phone_number || "Not Available"}
-                                    onChange={(e) => handleFormChange("phone_number", "user", e.target.value)}
-
-
-                                />
-                            </Form.Group>
-                        </Form>
-                    </Col>
-
-                    {/* Consign Details */}
-                    <Col md={4}>
                         <Form>
                             <Form.Group className="mb-3">
                                 <Form.Label>Consign Method</Form.Label>
@@ -236,16 +206,18 @@ export default function ConsignDetailModal({ actions, setactions, consignID }) {
                                 <Form.Label>Shipped Date</Form.Label>
                                 <Form.Control
                                     type="text"
-                                    value={formData?.consign?.ShippedDate || "Not Available"}
+                                    value={formData?.consign?.ShippedDate || "No Shipped Date"}
                                     onChange={(e) => handleFormChange("ShippedDate", "consign", e.target.value)}
+                                    readOnly
                                 />
                             </Form.Group>
                             <Form.Group className="mb-3">
                                 <Form.Label>Receipt Date</Form.Label>
                                 <Form.Control
                                     type="text"
-                                    value={formData?.consign?.ReceiptDate || "Not Available"}
+                                    value={dateConverter(formData?.consign?.ReceiptDate) || "No Receipt Date"}
                                     onChange={(e) => handleFormChange("ReceiptDate", "consign", e.target.value)}
+                                    readOnly
                                 />
                             </Form.Group>
                             <Form.Group className="mb-3">
@@ -260,107 +232,128 @@ export default function ConsignDetailModal({ actions, setactions, consignID }) {
                         </Form>
                     </Col>
 
+
                     {/* Fish Details */}
-                    <Col md={4}>
+                    <Col md={8}>
                         <div className="d-flex align-items-center justify-content-between profile-row">
                             <Image
                                 src={modalData?.koi?.Image || "https://via.placeholder.com/150"}
-                                className={isImageLarge ? "w-50 mb-3 " : "w-25 mb-3 "}
+                                className={ "w-25 mb-3 "}
                                 onClick={toggleImageSize}
-                                style={{ cursor: "pointer" }}
+                                style={{ cursor: "pointer",maxHeight:'150px' }}
                                 alt="Koi Fish"
+                                
                             />
                             <div className="d-flex flex-column align-items-end">
                                 <h5>{modalData?.koi?.KoiName || "Not Available"}</h5>
                                 <span className="text-muted">{modalData?.user?.email || "Not Available"}</span>
-                                <div className="user-id-container mt-2" onClick={() => savedToClipboard("certificate")}>
+                                <div className="user-id-container mt-2" onClick={() => savedToClipboard("KoiID")}>
                                     <HiLink />
-                                    <span className="ms-1 fw-bold">Copy Certificate ID</span>
+                                    <span className="ms-1 fw-bold">Copy Koi ID</span>
                                 </div>
                             </div>
                         </div>
 
                         <Form>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Koi Name</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={formData?.koi?.KoiName || "Not Available"}
-                                    onChange={(e) => handleFormChange("KoiName", "koi", e.target.value)}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Koi Status</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={KoiStatusMap[formData?.koi?.Status] || "Not Available"}
-                                    onChange={(e) => handleFormChange("Status", "koi", e.target.value)}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Age</Form.Label>
-                                <Form.Control
-                                    type="number"
-                                    value={formData?.koi?.Age || "Not Available"}
-                                    onChange={(e) => handleFormChange("Age", "koi", e.target.value)}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Origin</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={formData?.koi?.Origin || "Not Available"}
-                                    onChange={(e) => handleFormChange("Origin", "koi", e.target.value)}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Gender</Form.Label>
-                                <Form.Select
-                                    type="text"
-                                    value={formData?.koi.Gender || "Not Available"}
-                                    onChange={(e) => handleFormChange("Gender", "koi", e.target.value)}>
+                            <div className='d-flex align-align-items-center'>
+                                <Form.Group className="mb-3 flex-grow-1 me-2">
+                                    <Form.Label >Koi Name</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        value={formData?.koi?.KoiName || "Not Available"}
+                                        onChange={(e) => handleFormChange("KoiName", "koi", e.target.value)}
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3 flex-grow-1 me-2 ">
+                                    <Form.Label className='mb-3'>Koi Status</Form.Label>
+                                    <Form.Select
+                                        value={formData?.koi?.Status || 0}
+                                        onChange={(e) => handleFormChange("Status", "koi", Number(e.target.value))}
+                                    >
+                                        <option value="0">Out of Stock</option>
+                                        <option value="1">Imported</option>
+                                        <option value="2">F1</option>
+                                        <option value="3">VietNam</option>
+                                        <option value="4">Consign</option>
+                                    </Form.Select>
 
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </Form.Select>
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Size</Form.Label>
-                                <Form.Control
-                                    type="number"
-                                    value={formData?.koi?.Size || 0}
-                                    onChange={(e) => handleFormChange("Size", "koi", e.target.value)}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Breed</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    value={formData?.koi?.Breed || "Not Available"}
-                                    onChange={(e) => handleFormChange("Breed", "koi", e.target.value)}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Daily Food Amount</Form.Label>
-                                <Form.Control
-                                    type="number"
-                                    value={formData?.koi?.DailyFoodAmount || 0}
-                                    onChange={(e) => handleFormChange("DailyFoodAmount", "koi", e.target.value)}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Filtering Ratio</Form.Label>
-                                <Form.Control
-                                    type="number"
-                                    value={formData?.koi?.FilteringRatio || 0}
-                                    onChange={(e) => handleFormChange("FilteringRatio", "koi", e.target.value)}
-                                />
-                            </Form.Group>
+                                </Form.Group>
+
+                                <Form.Group className="mb-3 flex-grow-1">
+                                    <Form.Label>Age</Form.Label>
+                                    <Form.Control
+                                        type="number"
+                                        value={formData?.koi?.Age || "Not Available"}
+                                        onChange={(e) => handleFormChange("Age", "koi", e.target.value)}
+                                    />
+                                </Form.Group>
+                            </div>
+                            <div className='d-flex '>
+                                <div className='d-flex flex-column d-inline w-50'>
+                                    <Form.Group className="mb-3 me-5">
+                                        <Form.Label>Origin</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            value={formData?.koi?.Origin || "Not Available"}
+                                            onChange={(e) => handleFormChange("Origin", "koi", e.target.value)}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3 me-5">
+                                        <Form.Label>Gender</Form.Label>
+                                        <Form.Select
+                                            type="text"
+                                            value={formData?.koi.Gender || "Not Available"}
+                                            onChange={(e) => handleFormChange("Gender", "koi", e.target.value)}>
+
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </Form.Select>
+                                    </Form.Group>
+                                    <Form.Group className="mb-3 me-5">
+                                        <Form.Label>Size</Form.Label>
+                                        <Form.Control
+                                            type="number"
+                                            value={formData?.koi?.Size || 0}
+                                            onChange={(e) => handleFormChange("Size", "koi", e.target.value)}
+                                        />
+                                    </Form.Group>
+                                    
+                                </div>
+
+                                <div className='d-flex flex-column d-inline w-50'>
+                                    <Form.Group className="mb-3">
+                                        <Form.Label>Breed</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            value={formData?.koi?.Breed || "Not Available"}
+                                            onChange={(e) => handleFormChange("Breed", "koi", e.target.value)}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3 ">
+                                        <Form.Label>Daily Food Amount</Form.Label>
+                                        <Form.Control
+                                            className='m-0'
+                                            type="number"
+                                            value={formData?.koi?.DailyFoodAmount || 0}
+                                            onChange={(e) => handleFormChange("DailyFoodAmount", "koi", e.target.value)}
+                                        />
+                                    </Form.Group>
+                                    <Form.Group className="">
+                                        <Form.Label className=''>Filtering Ratio</Form.Label>
+                                        <Form.Control
+
+                                            type="number"
+                                            value={formData?.koi?.FilteringRatio || 0}
+                                            onChange={(e) => handleFormChange("FilteringRatio", "koi", e.target.value)}
+                                        />
+                                    </Form.Group>
+                                </div>
+                            </div>
                             <Form.Group className="mb-3">
                                 <Form.Label>Price</Form.Label>
                                 <Form.Control
-                                    type="number"
-                                    value={formData?.koi?.Price || 0}
+                                    type="text"
+                                    value={formData?.koi?.Price }
                                     onChange={(e) => handleFormChange("Price", "koi", e.target.value)}
                                 />
                             </Form.Group>
@@ -381,6 +374,6 @@ export default function ConsignDetailModal({ actions, setactions, consignID }) {
                 <Button variant="secondary" onClick={handleClose}>Close</Button>
                 <Button variant="primary" onClick={handleSubmit} disabled={isSubmitting} >Submit Changes</Button>
             </Modal.Footer>
-        </Modal>
+        </Modal >
     );
 }

@@ -149,76 +149,11 @@ const CardGrid = ({ cardData }) => {
             ))}
 
         {category === "ikoi" &&
-          Object.entries(ikoi).map(
-            ([
-              categoryId,
-              { count, KoiName, Image, Price, CategoryID, Status },
-            ]) => {
-              // ... existing code ...
-
-              // Kiểm tra điều kiện Status để tính toán count
-
-              return (
-                <Col
-                  key={categoryId}
-                  xs={12}
-                  sm={8}
-                  md={4}
-                  lg={4}
-                  xl={4}
-                  className="mb-4"
-                >
-                  <Card
-                    hoverable
-                    style={{
-                      width: "100%",
-                      borderRadius: "8px",
-                      height: "100%",
-                    }}
-                    cover={
-                      <img
-                        alt={KoiName}
-                        src={Image}
-                        style={{
-                          height: "250px",
-                          objectFit: "cover",
-                          borderRadius: "8px 8px 0 0",
-                        }}
-                      />
-                    }
-                    onClick={() =>
-                      navigate("/orderingikoi", {
-                        state: {
-                          selectedItem: {
-                            KoiName,
-                            Price,
-                            Image,
-                            count,
-                            CategoryID,
-                            Status,
-                          },
-                        },
-                      })
-                    } // Pass the category details
-                  >
-                    <Text strong>{KoiName || "N/A"}</Text>
-                    <br />
-                    <Text strong style={{ color: "#FF5722" }}>
-                      {Price ? `${Price.toLocaleString()} VND` : "Liên Hệ"}
-                    </Text>
-                    <br />
-                    <Text>Số lượng: {`${count} Koi`}</Text>
-                  </Card>
-                </Col>
-              );
-            }
-          )}
-
-        {category === "nhat" &&
-          Object.entries(nhat).map(
-            ([categoryId, { count, KoiName, Image, Price, CategoryID }]) => (
+          cardData
+            .filter((card) => card.Status === 2 || card.Status === 3)
+            .map((card) => (
               <Col
-                key={categoryId}
+                key={card._id}
                 xs={12}
                 sm={8}
                 md={4}
@@ -231,8 +166,8 @@ const CardGrid = ({ cardData }) => {
                   style={{ width: "100%", borderRadius: "8px", height: "100%" }}
                   cover={
                     <img
-                      alt={KoiName}
-                      src={Image}
+                      alt={card.KoiName}
+                      src={card.Image}
                       style={{
                         height: "250px",
                         objectFit: "cover",
@@ -241,30 +176,68 @@ const CardGrid = ({ cardData }) => {
                     />
                   }
                   onClick={() =>
-                    navigate("/orderingjapankoi", {
-                      state: {
-                        selectedItem: {
-                          KoiName,
-                          Price,
-                          Image,
-                          count,
-                          CategoryID,
-                        },
-                      },
-                    })
-                  } // Pass the category details
+                    navigate("/order", { state: { selectedItem: card } })
+                  } // Pass the card as state
                 >
-                  <Text strong>{KoiName || "N/A"}</Text>
+                  <Text strong>{card.KoiName || "N/A"}</Text>
                   <br />
+
                   <Text strong style={{ color: "#FF5722" }}>
-                    {Price ? `${Price.toLocaleString()} VND` : "Liên Hệ"}
+                    {card.Origin}
+                  </Text>
+                  <Text strong style={{ color: "#FF5722" }}>
+                    {card.Description}
                   </Text>
                   <br />
-                  <Text>Số lượng: {`${count} Koi`}</Text>
+                  <Text strong style={{ color: "#FF5722" }}>
+                    {card.Price
+                      ? `${card.Price.toLocaleString()} VND`
+                      : "Liên Hệ"}
+                  </Text>
                 </Card>
               </Col>
-            )
-          )}
+            ))}
+        {category === "nhat" &&
+          cardData
+            .filter((card) => card.Status === 1)
+            .map((card) => (
+              <Col
+                key={card._id}
+                xs={12}
+                sm={8}
+                md={4}
+                lg={4}
+                xl={4}
+                className="mb-4"
+              >
+                <Card
+                  hoverable
+                  style={{ width: "100%", borderRadius: "8px", height: "100%" }}
+                  cover={
+                    <img
+                      alt={card.KoiName}
+                      src={card.Image}
+                      style={{
+                        height: "250px",
+                        objectFit: "cover",
+                        borderRadius: "8px 8px 0 0",
+                      }}
+                    />
+                  }
+                  onClick={() =>
+                    navigate("/order", { state: { selectedItem: card } })
+                  } // Pass the card as state
+                >
+                  <Text strong>{card.KoiName || "N/A"}</Text>
+                  <br />
+                  <Text strong style={{ color: "#FF5722" }}>
+                    {card.Price
+                      ? `${card.Price.toLocaleString()} VND`
+                      : "Liên Hệ"}
+                  </Text>
+                </Card>
+              </Col>
+            ))}
       </Row>
     </div>
   );

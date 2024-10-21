@@ -150,9 +150,14 @@ managerRouter.post(
 
 managerRouter.get('/getRevenue', accessTokenValidator, isAdminValidator, wrapAsync(getRevenueController))
 
-managerRouter.get('/getProfit',wrapAsync(getProfitController))
+managerRouter.get('/getProfit', wrapAsync(getProfitController))
 
-managerRouter.get('/manage-supplier/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getAllSupplierController))
+managerRouter.get(
+  '/manage-supplier/get-all',
+  accessTokenValidator,
+  isAdminValidator,
+  wrapAsync(getAllSupplierController)
+)
 managerRouter.get(
   '/manage-supplier/get-all',
   accessTokenValidator,

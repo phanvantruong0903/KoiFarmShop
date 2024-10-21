@@ -69,3 +69,32 @@
   background-color: #b8dbff; 
   
 }
+
+.overlay-special {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 12;
+}
+
+.overlay-content {
+  position: relative;
+  max-height: 90%;
+  padding: 10px;
+  border-radius: 10px;
+  
+}
+
+
+.overlay-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  Z-index: 13; 
+}
