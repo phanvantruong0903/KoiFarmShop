@@ -122,7 +122,12 @@ class OrderDetailService {
     async updateItemQuantity(payload, reqParams) {
         const koi = await databaseService.kois.findOne({ _id: new ObjectId(payload.KoiID) })
         const order = await databaseService.orderDetail.findOne({ _id: new ObjectId(reqParams.orderID) })
-        console.log('order: ', order)
+        if(!order){
+            return 'Order not found'
+        }
+        if(!koi){
+            return 'Koi not exiested'
+        }
         let result, oldQuantity
         if (order) {
             result = await databaseService.orderDetail.findOneAndUpdate(
