@@ -23,10 +23,10 @@ export const callback = async (req, res) => {
       result.returncode = -1
       result.returnmessage = 'mac not equal'
     } else {
-      let dataJson = JSON.parse(dataStr, config.key2);
-
-      const embedData = JSON.parse(dataJson.embed_data);
-      const OrderID = embedData.OrderID;
+      const reqOrderCookie = req.cookies && req.cookies.order ? JSON.parse(req.cookies.order) :{}
+      console.log(reqOrderCookie)
+      const result = await saveOrderToDatabase(reqOrderCookie)
+      res.clearCookie('order')
 
       await databaseService.order.findOneAndUpdate(
         { _id: new ObjectId(OrderID) },
