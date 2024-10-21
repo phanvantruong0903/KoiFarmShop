@@ -46,7 +46,7 @@ import ManageKoi from "./An/Pages/Manager/ManageKoi";
 import ManageSupplier from "./An/Pages/Manager/ManageSupplier";
 import ChangePassword from "./Components/ChangePassword";
 import FormFillInformation from "./Components/FormFillInformation";
-import ProfileChart from "./An/Pages/Charts/ProfileChart";
+import Chart from "./An/Pages/Charts/Charts";
 import PaymentMethod from "./Components/Paymentmethod";
 const router = createBrowserRouter([
   {
@@ -210,10 +210,10 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "staff/Profiles/:chartType",
+        path: "staff/Report/:chartType",
         element: (
           <Suspense fallback={<Spinner />}>
-            <ProfileChart />
+            <Chart />
           </Suspense>
         ),
       },

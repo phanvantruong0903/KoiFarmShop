@@ -65,7 +65,7 @@
 }
 
 .my-special.collapsing {
-    transition: max-height 2.5s ease, padding 0.5s ease , opacity 1.5s ease-in-out;    
+    transition: max-height 1.5s ease, padding 0.5s ease , opacity 1.5s ease-in-out;    
     height: 10000px;
     padding-top: 0;
     padding-bottom: 0;
@@ -185,3 +185,37 @@ form .form-group {
 .be-green {
     background-color: #28a745;
 }
+.sidebar {
+    position: sticky;
+    top: 0;
+    height: 50vh;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    transition: width 0.3s ease;
+    border-right: 1px solid #dee2e6;
+    overflow-y: auto;
+}
+
+.sidebar.expanded {
+
+    min-width: 100px;
+    max-width: 20vw;
+}
+
+
+
+.toggle-sidebar-btn {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.category-sidebar-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.content-container {
+    padding-left: 1rem;
+}
+
