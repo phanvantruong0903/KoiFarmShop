@@ -5,24 +5,36 @@ import { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import "../../Css/Modal.css";
 import axiosInstance from "../../Utils/axiosJS";
-
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { initializeApp } from "firebase/app";
 export default function ViewProfile({ actions, setactions, id }) {
     const handleClose = () => setactions(false);
-
+    const firebaseConfig = {
+        apiKey: import.meta.env.VITE_API_KEY,
+        authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+        projectId: import.meta.env.VITE_PROJECT_ID,
+        storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+        messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+        appId: import.meta.env.VITE_APP_ID,
+    };
+    const app = initializeApp(firebaseConfig);
+    const storage = getStorage(app);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const savedToClipboard = () => {
         navigator.clipboard.writeText(user._id);
     };
 
-   
     const [user, setUser] = useState({});
+    const [selectedAvatar, setSelectedAvatar] = useState(null);
+    const [previewAvatar, setPreviewAvatar] = useState(null); 
     
     const [formData, setFormData] = useState({
         name: '',
         address: '',
         date_of_birth: '',
         email: '',
-        user_id: ''
+        user_id: '',
+        selectedAvatar: ''
     });
 
     useEffect(() => {
@@ -30,16 +42,17 @@ export default function ViewProfile({ actions, setactions, id }) {
             try {
                 setIsSubmitting(true);
                 const res = await axiosInstance.get(`manager/manage-user/user${id}`);
-                const { _id, name, email, date_of_birth, verify, bio, location, website, username, avatar, cover_photo,address } = res.data.result;
+                console.log(res.data.result);
+                const { _id, name, email, date_of_birth, verify, bio, location, website, username, Image, cover_photo, address } = res.data.result;
                 const formattedDateOfBirth = date_of_birth ? date_of_birth.split('T')[0] : '';
-                setUser({ _id, name, email, date_of_birth, verify, bio, location, website, username, avatar, cover_photo,address     });
-                console.log(user)
+                setUser({ _id, name, email, date_of_birth, verify, bio, location, website, username, Image, cover_photo, address });
                 setFormData({
                     name: name || '',
                     address: address || '',
                     date_of_birth: formattedDateOfBirth || '',
                     email: email || '',
-                    user_id: _id || ''
+                    user_id: _id || '',
+                    selectedAvatar: Image || ''
                 });
             } catch (error) {
                 console.log(error.response);
@@ -50,7 +63,6 @@ export default function ViewProfile({ actions, setactions, id }) {
         fetchData();
     }, [id]);
 
-
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevState) => ({
@@ -59,7 +71,13 @@ export default function ViewProfile({ actions, setactions, id }) {
         }));
     };
 
-    
+    const handleAvatarChange = (e) => {
+        const file = e.target.files[0];
+        console.log(file);
+        setSelectedAvatar(file); 
+        setPreviewAvatar(URL.createObjectURL(file));
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -67,12 +85,19 @@ export default function ViewProfile({ actions, setactions, id }) {
                 name: formData.name,
                 role: formData.role,
                 date_of_birth: formData.date_of_birth,
-                email: formData.email
+                email: formData.email,
+                address: formData.address,
+                Image: formData.selectedAvatar
             };
 
-            const response =  await axiosInstance.post(`manager/manage-user/updateUser/${id}`, updatedData);
+            const imgRef = ref(storage, `images/${selectedAvatar.name}`);
+            await uploadBytes(imgRef, selectedAvatar);
+            const imgURL = await getDownloadURL(imgRef);
+            updatedData.Image = imgURL;
+            
+            const response = await axiosInstance.post(`manager/manage-user/updateUser/${id}`, updatedData);
             console.log(response.data);
-            if (response.data.result.success == true){
+            if (response.data.result.success == true) {
                 console.log('Update successfully');
                 window.location.reload();
             }
@@ -90,7 +115,11 @@ export default function ViewProfile({ actions, setactions, id }) {
 
             <Modal.Body>
                 <div className="d-flex align-items-center justify-content-between profile-row">
-                    <Image src={user.avatar || "https://via.placeholder.com/80"} roundedCircle className="profile-avatar" />
+                    {previewAvatar ? (
+                        <Image src={previewAvatar} roundedCircle className="profile-avatar" />
+                    ) : (
+                        <Image src={user.Image || "https://via.placeholder.com/80"} roundedCircle className="profile-avatar" />
+                    )}
                     <div className="d-flex flex-column align-items-end">
                         <h5>{user.name || 'Amélie Laurent'}</h5>
                         <span className="text-muted">{user.email || 'amelie@untitledui.com'}</span>
@@ -102,6 +131,16 @@ export default function ViewProfile({ actions, setactions, id }) {
                 </div>
 
                 <Form onSubmit={handleSubmit}>
+                 
+                    <Form.Group className="mb-3">
+                        <Form.Label>Profile Picture</Form.Label>
+                        <Form.Control
+                            type="file"
+                            accept="image/*"
+                            onChange={handleAvatarChange}
+                        />
+                    </Form.Group>
+
                     {/* Name */}
                     <Form.Group className="mb-3">
                         <Form.Label>Name</Form.Label>

@@ -17,6 +17,7 @@ import TableGen from '../../Components/Staff/TableGen';
 import ViewProfile from '../../Components/Staff/ViewProfile';
 // Axios
 import axiosInstance from '../../Utils/axiosJS';
+import { fetchProfiles } from '../../Utils/FetchHandler';
 export default function Profiles() {
   const [hoveredRow, setHoveredRow] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -28,7 +29,7 @@ export default function Profiles() {
   const handleRowAction = (id, actionType) => {
     if (actionType === 'delete') {
 
-      console.log(`Delete user with ID: ${id}`);
+      window.alert(`Delete user with ID: ${id}`);
     }
     else if (actionType === 'view') {
       setUserID(id)
@@ -75,9 +76,8 @@ export default function Profiles() {
     setIsLoading(true);
     const fetchData = async () => {
       try {
-        const response = await axiosInstance.get('/manager/manage-user/get-all');
-        console.log('Data:', response.data);
-        setIntialData(response.data.result);
+        const response = await fetchProfiles('Profiles:Line 97');
+        setIntialData(response);
       } catch (error) {
         console.error('Error fetching data', error);
       } finally {

@@ -14,7 +14,7 @@ class AdminsService {
   }
 
   async getOrder() {
-    const result = await databaseService.orders.find().toArray()
+    const result = await databaseService.order.find().toArray()
     return result
   }
 
