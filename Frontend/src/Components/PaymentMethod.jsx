@@ -19,29 +19,28 @@ const PaymentMethod = () => {
     try {
       let response;
 
+      // Gửi yêu cầu thanh toán với số tiền từ localStorage
       if (method === "Zalo Pay") {
         response = await axios.post(
           `http://localhost:4000/payment/paymentZalopay`,
-          { total: 100000 } // Ensure totalPrice is an integer
+          { total: totalPrice }, // Gửi tổng giá trị từ localStorage
+          { withCredentials: true }
         );
       } else if (method === "Momo Pay") {
         response = await axios.post(
           `http://localhost:4000/payment/paymentMomo`,
-          { total: 100000 } // Ensure totalPrice is an integer
+          { total: totalPrice }, // Gửi tổng giá trị từ localStorage
+          { withCredentials: true }
         );
       }
 
-      // Handle success - navigate to confirmation page or show success message
+      // Xử lý phản hồi từ server
       if (response.status === 200) {
         message.success(`Payment initiated with ${method}`);
         if (method === "Zalo Pay") {
-          console.log(response.data); // Log the response for debugging
-          window.location.href = response.data.order_url;
-        } // Redirect to the external URL}
-        else if (method === "Momo Pay") {
-          console.log(response.data); // Log the response for debugging
-          console.log(response.data.payUrl);
-          window.location.href = response.data.payUrl;
+          window.location.href = response.data.order_url; // Điều hướng đến URL thanh toán
+        } else if (method === "Momo Pay") {
+          window.location.href = response.data.payUrl; // Điều hướng đến URL thanh toán
         }
       } else {
         throw new Error("Payment processing failed.");

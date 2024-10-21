@@ -1,6 +1,5 @@
 // import OrderSchema from '../models/schemas/Order.schema.js'
 import { USERS_MESSAGES } from '../constants/userMessages.js';
-import { saveOrderToDatabase } from '../services/callback.service.js';
 import ordersService from '../services/orders.Service.js';
 
 export const createOrderController = async (req, res) => {
