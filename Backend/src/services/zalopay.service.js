@@ -26,7 +26,7 @@ const zaloPayment = async (req, res) => {
     amount: req.body.total,
     description: `KOI Shop - Payment for the order + ${Math.floor(100000 + Math.random() * 900000)}`,
     bank_code: '',
-    callback_url: 'https://8973-171-247-187-77.ngrok-free.app/payment/callback'
+    callback_url: 'https://1ce0-171-247-187-77.ngrok-free.app/payment/callback'
   }
 
   // Thay đổi dòng này để bao gồm order_id
