@@ -10,7 +10,7 @@ const { Title } = Typography;
 const PaymentMethod = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { totalPrice } = location.state || {};
+  const totalPrice = localStorage.getItem("totalPrice");
 
   const handlePaymentMethodSelect = async (method) => {
     console.log(`Selected payment method: ${method}`);
