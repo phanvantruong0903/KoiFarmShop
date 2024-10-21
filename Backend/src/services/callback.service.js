@@ -45,29 +45,30 @@ export const callback = async (req, res) => {
   res.json(result)
 }
 
-export const saveOrderToDatabase = async (reqOrderDTCookie,reqOrderCookie) => {
-  console.log("Cookies DT received:", reqOrderDTCookie);
+export const saveOrderToDatabase = async (reqOrderCookie) => {
+  // console.log("Cookies DT received:", reqOrderDTCookie);
   console.log("Cookies received:", reqOrderCookie);
   //check order cookie có exist
-  if (!reqOrderCookie || !reqOrderDTCookie) {
+  if (!reqOrderCookie) {
     return res.status(400).json({ error: 'No order data found in cookies' });
   }
 
-  const newOrderDT = {
-    _id: new ObjectId(),
-    Items: reqOrderDTCookie.Items,
-    TotalPrice: reqOrderDTCookie.TotalPrice
-  }
+  // const newOrderDT = {
+  //   _id: new ObjectId(),
+  //   Items: reqOrderDTCookie.Items,
+  //   TotalPrice: reqOrderDTCookie.TotalPrice
+  // }
 
-  const orderDT = await databaseService.orderDetail.insertOne(newOrderDT)
-  if(orderDT.insertedId){
-    newOrderDT._id = orderDT.insertedId
-  }
+  // const orderDT = await databaseService.orderDetail.insertOne(newOrderDT)
+  // if(orderDT.insertedId){
+  //   newOrderDT._id = orderDT.insertedId
+  // }
 
   const newOrder = {
     _id: new ObjectId(),
     UserID: reqOrderCookie.UserID,
-    OrderDetailID: newOrderDT._id,
+    // OrderDetailID: newOrderDT._id,
+    OrderDetailID: reqOrderCookie.OrderDetailID,
     ShipAddress: reqOrderCookie.ShipAddress,
     Description: reqOrderCookie.Description,
     OrderDate: reqOrderCookie.OrderDate || new Date(),
@@ -82,5 +83,5 @@ export const saveOrderToDatabase = async (reqOrderDTCookie,reqOrderCookie) => {
       message: 'Fail to save'
     }
   }
-  return {orderDT, order}
+  return order
 }
