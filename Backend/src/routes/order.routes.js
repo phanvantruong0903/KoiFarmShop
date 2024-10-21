@@ -24,7 +24,7 @@ orderRouter.get('/detail/:orderID', getOrderDetailController)
 orderRouter.patch('/detail/edit/:orderID', updateOrderDetailController)
 orderRouter.post('/detail/price', getKoiQuantityController)
 //Order
-orderRouter.post('/create', createOrderController)
+orderRouter.post('/create/:orderDetailID', createOrderController)
 orderRouter.get('/',accessTokenValidator, wrapAsync(getOrderController))
 //Price
 orderRouter.post('/detail/price/minmax', getMinMaxPriceController)

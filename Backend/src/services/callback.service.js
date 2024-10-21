@@ -45,29 +45,42 @@ export const callback = async (req, res) => {
   res.json(result)
 }
 
-export const saveOrderToDatabase = async (req, res) => {
-  console.log("Cookies received:", req.cookies);
-  const reqOrderCookie = req.cookies?.order
+export const saveOrderToDatabase = async (reqOrderDTCookie,reqOrderCookie) => {
+  console.log("Cookies DT received:", reqOrderDTCookie);
+  console.log("Cookies received:", reqOrderCookie);
   //check order cookie có exist
-  if (!reqOrderCookie) {
+  if (!reqOrderCookie || !reqOrderDTCookie) {
     return res.status(400).json({ error: 'No order data found in cookies' });
+  }
+
+  const newOrderDT = {
+    _id: new ObjectId(),
+    Items: reqOrderDTCookie.Items,
+    TotalPrice: reqOrderDTCookie.TotalPrice
+  }
+
+  const orderDT = await databaseService.orderDetail.insertOne(newOrderDT)
+  if(orderDT.insertedId){
+    newOrderDT._id = orderDT.insertedId
   }
 
   const newOrder = {
     _id: new ObjectId(),
     UserID: reqOrderCookie.UserID,
-    OrderDetailID: reqOrderCookie.OrderDetailID,
+    OrderDetailID: newOrderDT._id,
     ShipAddress: reqOrderCookie.ShipAddress,
     Description: reqOrderCookie.Description,
     OrderDate: reqOrderCookie.OrderDate || new Date(),
     Status: reqOrderCookie.Status || 1,
   }
 
-  const result = await databaseService.order.insertOne(newOrder)
-  if (result.insertedId) {
-    newOrder._id = result.insertedId;
+  const order = await databaseService.order.insertOne(newOrder)
+  if (order.insertedId) {
+    newOrder._id = order.insertedId;
   } else {
-    return res.status(500).json({ error: 'Failed to insert order' });
+    return {
+      message: 'Fail to save'
+    }
   }
-  return res.status(201).json(newOrder);
+  return {orderDT, order}
 }

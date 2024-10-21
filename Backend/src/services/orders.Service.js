@@ -27,7 +27,8 @@ class OrdersService {
         return newUser
     }
 
-    async createOrder(payload) {
+    async createOrder(payload, reqParams) {
+        const orderDTID = reqParams.orderDetailID
         const existedUser = await databaseService.users.findOne({ email: payload.email })
 
         let user, newOrder, user_id, orderPayload
@@ -45,7 +46,7 @@ class OrdersService {
         orderPayload = {
             _id: new ObjectId(),
             UserID: user._id,
-            OrderDetailID: payload.OrderDetailID,
+            OrderDetailID: orderDTID,
             ShipAddress: payload.ShipAddress,
             Description: payload.Description,
             OrderDate: new Date(),
@@ -56,17 +57,28 @@ class OrdersService {
         newOrder = await databaseService.order.insertOne(new OrdersSchema(orderPayload))
         // newOrder = await this.saveOrderToDatabase(orderPayload)
         const order = await databaseService.order.findOne({ _id: new ObjectId(newOrder.insertedId) })
-        console.log("order detail id: ", order.OrderDetailID)
-        const orderDetail = await databaseService.orderDetail.findOne({ _id: new ObjectId(order?.OrderDetailID) })
+        // console.log("order detail id: ", orderDTID)
+        const orderDetail = await databaseService.orderDetail.findOne({ _id: new ObjectId(orderDTID) })
         const koiList = await Promise.all(
             orderDetail.Items.map(item => databaseService.kois.findOne({ _id: new ObjectId(item.KoiID) }))
         );
 
-        return { user, order, orderDetail, koiList }
+        return {
+            user, order: {
+                _id: order._id,
+                UserID: order.UserID,
+                OrderDetail: orderDetail,
+                ShipAddress: order.ShipAddress,
+                Description: order.Description,
+                OrderDate: order.OrderDate,
+                Type: order.Type,
+                Status: order.Status
+            }, koiList
+        }
     }
 
-    async getOrder(user){
-        const order = await databaseService.order.find({UserID: new ObjectId(user._id)}).toArray()
+    async getOrder(user) {
+        const order = await databaseService.order.find({ UserID: new ObjectId(user._id) }).toArray()
         return order
     }
 
