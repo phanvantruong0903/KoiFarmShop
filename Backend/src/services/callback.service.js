@@ -30,7 +30,7 @@ export const callback = async (req, res) => {
 
       await databaseService.order.findOneAndUpdate(
         { _id: new ObjectId(OrderID) },
-        { $set: { Status: 5 } },
+        { $set: { Status: 2 } },
         { new: true }
       );
 
