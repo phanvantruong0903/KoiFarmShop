@@ -100,6 +100,7 @@ const OrderPage = () => {
 
       if (existingItem) {
         // Update quantity in cart
+
         existingItem.quantity += parseInt(selectedQuantity);
       } else {
         // Add new item to cart with the current selected quantity
@@ -107,6 +108,7 @@ const OrderPage = () => {
           itemId: selectedItem._id,
           message: "Hàng đã vào giỏ hàng của bạn",
           quantity: parseInt(selectedQuantity),
+          koi: selectedItem,
         });
       }
 

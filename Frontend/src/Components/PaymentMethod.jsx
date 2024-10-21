@@ -22,12 +22,12 @@ const PaymentMethod = () => {
       if (method === "Zalo Pay") {
         response = await axios.post(
           `http://localhost:4000/payment/paymentZalopay`,
-          { total: 100000 } // Ensure totalPrice is an integer
+          { total: totalPrice } // Ensure totalPrice is an integer
         );
       } else if (method === "Momo Pay") {
         response = await axios.post(
           `http://localhost:4000/payment/paymentMomo`,
-          { total: 100000 } // Ensure totalPrice is an integer
+          { total: totalPrice } // Ensure totalPrice is an integer
         );
       }
 

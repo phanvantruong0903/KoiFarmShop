@@ -22,14 +22,13 @@ export default function FormFillInformation() {
   const handleSubmit = async (values) => {
     const dataToSend = {
       ...values,
-      OrderDetailID: orderDetail.orderId,
     };
 
     console.log(dataToSend); // Kiểm tra dữ liệu
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/order/create",
+        `http://localhost:4000/order/create/${orderDetail.orderId}`,
         dataToSend,
         {
           headers: {
@@ -42,6 +41,7 @@ export default function FormFillInformation() {
         message.success(response.data.message);
         alert("Đặt hàng thành công!");
         navigate("/paymentmethod");
+      } else {
         message.error(`Có lỗi xảy ra: ${response.data.message}`);
       }
     } catch (error) {
