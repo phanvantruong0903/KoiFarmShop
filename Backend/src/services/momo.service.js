@@ -8,7 +8,7 @@ export const momoPayment = async (req, res) => {
   const orderInfo = 'Pay with MoMo';
   const partnerCode = 'MOMO';
   const redirectUrl = 'https://www.facebook.com/';
-  const ipnUrl = 'https://8973-171-247-187-77.ngrok-free.app/payment/momoCallback';
+  const ipnUrl = 'https://5534-171-247-187-77.ngrok-free.app/payment/momoCallback';
   const requestType = 'payWithMethod';
   const amount = req.body.total;
   const orderId = Math.floor(100000 + Math.random() * 900000);
@@ -59,7 +59,6 @@ export const momoPayment = async (req, res) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Content-Length': Buffer.byteLength(requestBody),
     },
     data: requestBody,
   };

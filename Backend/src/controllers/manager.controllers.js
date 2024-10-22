@@ -1,5 +1,6 @@
 import { MANAGER_MESSAGES } from '../constants/managerMessage.js'
 import consignsService from '../services/consigns.services.js'
+import groupKoisService from '../services/groupKoi.services.js'
 import invoicesService from '../services/invoices.services.js'
 import koisService from '../services/kois.services.js'
 import suplliersService from '../services/suppliers.services.js'
@@ -383,3 +384,56 @@ export const createNewInvoiceGroupKoiController = async (req, res) => {
     return res.status(500).json({ error: error.message })
   }
 }
+
+export const getAllGroupKoiController = async (req, res) => {
+  try {
+    const groupKoi = await groupKoisService.getAllGroupKoi()
+    return res.json({
+      message: MANAGER_MESSAGES.GET_ALL_GROUP_KOI_SUCCESS,
+      groupKoi
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+
+export const getAllInvoiceController = async (req, res) => {
+  try {
+    const invoices = await invoicesService.getAllInvoice()
+    return res.json({
+      message: MANAGER_MESSAGES.GET_ALL_INVOICE_SUCCESS,
+      invoices
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+
+export const getInvoiceController = async (req, res) => {
+  try {
+    const { _id } = req.params
+    const result = await invoicesService.getInvoice(_id)
+    return res.json({
+      message: MANAGER_MESSAGES.GET_INVOICE_SUCCESS,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+
+export const getgroupKoiController = async (req, res) => {
+  try {
+    const { _id } = req.params
+    const result = await groupKoisService.getGroupKoi(_id)
+    return res.json({
+      message: MANAGER_MESSAGES.GET_GROUP_KOI_SUCCESS,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+
+
+

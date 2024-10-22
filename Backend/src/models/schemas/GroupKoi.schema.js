@@ -4,7 +4,8 @@ export default class GroupKoiSchema {
   _id = new ObjectId()
   SupplierID = ''
   GroupKoiCategoryID = ''
-  Dimension
+  Dimension = ''
+  BreedGroupKoi = ''
   PriceOneKoi = ''
   Quantity = ''
   GroupKoiImage = ''
@@ -15,6 +16,7 @@ export default class GroupKoiSchema {
     this.SupplierID = groupKoi.SupplierID || ''
     this.GroupKoiCategoryID = groupKoi.GroupKoiCategoryID || ''
     this.Dimension = groupKoi.Dimension || ''
+    this.BreedGroupKoi = groupKoi.BreedGroupKoi || ''
     this.PriceOneKoi = groupKoi.PriceOneKoi || ''
     this.Quantity = groupKoi.Quantity || ''
     this.GroupKoiImage = groupKoi.GroupKoiImage || ''

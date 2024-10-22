@@ -13,5 +13,12 @@ export const MANAGER_MESSAGES = {
   UPDATE_SUPPLIER_SUCCESS: 'Update supplier success',
   GET_SUPPLIER_SUCCESS: 'Get supplier success',
   //invoice
-  CREATE_NEW_INVOICE_GROUP_KOI_SUCCESS: 'Create new invoice group koi success'
+  CREATE_NEW_INVOICE_GROUP_KOI_SUCCESS: 'Create new invoice group koi success',
+  GET_ALL_INVOICE_SUCCESS: 'Get all invoice success',
+  INVOICE_NOT_FOUND: 'Invoice not found',
+  GET_INVOICE_SUCCESS: 'Get invoice success',
+  //group koi
+  GET_ALL_GROUP_KOI_SUCCESS: 'Get all group koi success',
+  GROUP_KOI_NOT_FOUND: 'Group koi not found',
+  GET_GROUP_KOI_SUCCESS: 'Get group koi success'
 }
