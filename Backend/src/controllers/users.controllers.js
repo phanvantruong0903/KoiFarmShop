@@ -129,16 +129,15 @@ export const verifyForgotPasswordTokenController = async (req, res) => {
     })
   }
   //res về forgot_password_token cho client
-  // const urlRedirect = `${process.env.CLIENT_REDIRECT_CALLBACK_RESET_PASSWORD}?forgot_password_token=${user.forgot_password_token}` 
+  // const urlRedirect = `${process.env.CLIENT_REDIRECT_CALLBACK_RESET_PASSWORD}?forgot_password_token=${user.forgot_password_token}`
 
-   const urlRedirect = `${process.env.CLIENT_REDIRECT_CALLBACK_RESET_PASSWORD}?forgot_password_secrect_token=${user.forgot_password_token}`;
-   return res.redirect(urlRedirect)
+  const urlRedirect = `${process.env.CLIENT_REDIRECT_CALLBACK_RESET_PASSWORD}?forgot_password_secrect_token=${user.forgot_password_token}`
+  return res.redirect(urlRedirect)
 
   // return res.json({
   //   message: USERS_MESSAGES.VERIFY_FORGOT_PASSWORD_TOKEN_SUCCESS,
   //   result: urlRedirect
   // })
-  
 }
 
 export const resetPasswordController = async (req, res) => {
@@ -242,22 +241,34 @@ export const getAllConsignFromUserController = async (req, res) => {
   }
 }
 
-export const getOrderController = async(req,res)=>{
+export const getOrderController = async (req, res) => {
   try {
     const userID = req.body.userID
     console.log(userID)
 
-    const order = await databaseService.order.find({UserID: new ObjectId(userID)}).toArray()
-    if(order.length === 0){
+    const order = await databaseService.order.find({ UserID: new ObjectId(userID) }).toArray()
+    if (order.length === 0) {
       return res.json({
-        message:'Order null'
+        message: 'Order null'
       })
     }
+
+    console.log(order)
+
+    const orderDetailIDs = order.map((item) => item.OrderDetailID)
+    const orderDetails = []
+
+    console.log(orderDetailIDs)
+
+    for (const orderDetailID of orderDetailIDs) {
+      const orderDetail = await databaseService.orderDetail.findOne({ _id: new ObjectId(orderDetailID) })
+      orderDetails.push(orderDetail)
+    }
+
     return res.json({
       message: 'Get Order Successfully',
-      order
+      orderDetails
     })
-
   } catch (error) {
     return res.status(404).json({
       message: 'User Not Found'
