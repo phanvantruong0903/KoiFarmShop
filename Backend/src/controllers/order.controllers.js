@@ -1,6 +1,9 @@
 // import OrderSchema from '../models/schemas/Order.schema.js'
 import { USERS_MESSAGES } from '../constants/userMessages.js';
+import { saveOrderToDatabase } from '../services/callback.service.js';
+import databaseService from '../services/database.service.js';
 import ordersService from '../services/orders.Service.js';
+import { ObjectId } from 'mongodb';
 
 export const createOrderController = async (req, res) => {
   try {
@@ -53,9 +56,10 @@ export const saveOrderController = async (req, res) => {
   try {
     const reqOrderCookie = req.cookies && req.cookies.order ? JSON.parse(req.cookies.order) : {}
     const result = await saveOrderToDatabase(reqOrderCookie);
+    res.clearCookie('orderDT')
     res.clearCookie('order')
     return res.json({
-      message: USERS_MESSAGES.UPDATE_ORDER_SUCCESS,
+      message: USERS_MESSAGES.SAVE_TO_DB_SUCCESS,
       result
     })
   } catch (error) {

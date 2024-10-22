@@ -3,6 +3,7 @@ import databaseService from './database.service.js'
 import { ObjectId } from 'mongodb'
 
 export const callback = async (req, res) => {
+  console.log('Cookies received in callback:', req.cookies)
   let result = {}
   console.log(req.body)
   try {
@@ -43,17 +44,22 @@ export const callback = async (req, res) => {
       } else {
         // PHẦN CỦA M NÈ TRƯỜNG LÊ
         const reqOrderCookie = req.cookies && req.cookies.order ? JSON.parse(req.cookies.order) : {}
-        console.log(reqOrderCookie)
+        console.log("cookies check: ",reqOrderCookie)
         const result = await saveOrderToDatabase(reqOrderCookie)
-        res.clearCookie('order')
 
         await databaseService.order.findOneAndUpdate(
           { _id: new ObjectId(OrderID) },
           { $set: { Status: 2 } },
           { new: true }
         )
-        result.returncode = 1
-        result.returnmessage = 'success'
+        if (result.error) {
+          result.returncode = -1
+          result.returnmessage = result.error
+        } else {
+          res.clearCookie('order')
+          result.returncode = 1
+          result.returnmessage = 'success'
+        }
       }
     }
   } catch (ex) {
@@ -69,7 +75,7 @@ export const saveOrderToDatabase = async (reqOrderCookie) => {
   console.log('Cookies received:', reqOrderCookie)
   //check order cookie có exist
   if (!reqOrderCookie) {
-    return res.status(400).json({ error: 'No order data found in cookies' })
+    return { error: 'No order data found in cookies' }
   }
 
   // const newOrderDT = {
@@ -98,9 +104,7 @@ export const saveOrderToDatabase = async (reqOrderCookie) => {
   if (order.insertedId) {
     newOrder._id = order.insertedId
   } else {
-    return {
-      message: 'Fail to save'
-    }
+    return  'Fail to save'
   }
   return order
 }
