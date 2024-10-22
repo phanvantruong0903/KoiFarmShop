@@ -241,3 +241,26 @@ export const getAllConsignFromUserController = async (req, res) => {
     })
   }
 }
+
+export const getOrderController = async(req,res)=>{
+  try {
+    const userID = req.body.userID
+    console.log(userID)
+
+    const order = await databaseService.order.find({UserID: new ObjectId(userID)}).toArray()
+    if(order.length === 0){
+      return res.json({
+        message:'Order null'
+      })
+    }
+    return res.json({
+      message: 'Get Order Successfully',
+      order
+    })
+
+  } catch (error) {
+    return res.status(404).json({
+      message: 'User Not Found'
+    })
+  }
+}

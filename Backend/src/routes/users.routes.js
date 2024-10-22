@@ -18,6 +18,7 @@ import {
   forgotPasswordController,
   getAllConsignFromUserController,
   getMeController,
+  getOrderController,
   getProfileController,
   loginController,
   logoutController,
@@ -112,5 +113,7 @@ usersRouter.post('/refresh-token', refreshTokenValidator, wrapAsync(refreshContr
 usersRouter.get('/oauth/google', wrapAsync(oAuthController))
 
 usersRouter.get('/tat-ca-don-ki-gui', accessTokenValidator, wrapAsync(getAllConsignFromUserController))
+
+usersRouter.get('/get-orders',accessTokenValidator, wrapAsync(getOrderController))
 
 export default usersRouter
