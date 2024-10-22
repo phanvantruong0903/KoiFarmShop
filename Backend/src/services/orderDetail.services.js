@@ -328,15 +328,17 @@ class OrderDetailService {
     }
 
     async makeArrayOrder(payload, reqCookie) {
-        let koiList
+        let koiList = []
         let newPrice = 0
         if (payload.Quantity) {
-            koiList = (await this.filterKoiId(payload)).KoiList
+            koiList = (await this.filterKoiId(payload)).KoiList || []
         }
+        console.log("koi list: ", koiList)
         let orderDT
 
         if (reqCookie && reqCookie.Items) {
             orderDT = reqCookie
+            console.log("orderDetail: ", orderDT)
 
             if (!orderDT.Items) {
                 orderDT.Items = []
@@ -348,17 +350,18 @@ class OrderDetailService {
 
             // Thêm mục mới
             koiList.map(koi => {
-                const itemIndex = orderDT.Items.findIndex((item) => item.KoiID.toString() === koi._id.toString())
-                console.log("index: ", itemIndex)
-                if (itemIndex > -1) {
-                    // Increment the quantity if the KoiID exists
-                    orderDT.Items[itemIndex].Quantity++;
-                    newPrice += Number(koi.Price); // Add the price of just one more koi
-                } else {
-                    // Add new item
-                    orderDT.Items.push({ KoiID: koi._id, Quantity: 1 });
-                    newPrice += Number(koi.Price); // Add price for the new item
-                }
+                    const itemIndex = orderDT.Items.findIndex((item) => item.KoiID.toString() === koi._id.toString())
+                    console.log("index: ", itemIndex)
+                    if (itemIndex > -1) {
+                        // Increment the quantity if the KoiID exists
+                        orderDT.Items[itemIndex].Quantity++;
+                        newPrice += Number(koi.Price); // Add the price of just one more koi
+                    } else {
+                        // Add new item
+                        orderDT.Items.push({ KoiID: koi._id, Quantity: 1 });
+                        newPrice += Number(koi.Price); // Add price for the new item
+                    }
+                
             })
 
 
@@ -378,6 +381,7 @@ class OrderDetailService {
                 }),
                 TotalPrice: Number(newPrice) // Khởi tạo với giá của koi
             }
+            console.log("orderDT: ", orderDT)
         }
         const savedOrder = await this.saveOrderToDatabase(orderDT)
         return { orderDT: savedOrder, koiList }
