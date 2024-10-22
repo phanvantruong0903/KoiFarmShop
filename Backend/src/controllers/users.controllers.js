@@ -246,23 +246,23 @@ export const getOrderController = async (req, res) => {
     const userID = req.body.userID
     console.log(userID)
 
-    const order = await databaseService.order.find({ UserID: new ObjectId(userID) }).toArray()
-    if (order.length === 0) {
+    const orders = await databaseService.order.find({ UserID: new ObjectId(userID) }).toArray()
+    if (orders.length === 0) {
       return res.json({
         message: 'Order null'
       })
     }
-
-    console.log(order)
-
-    const orderDetailIDs = order.map((item) => item.OrderDetailID)
     const orderDetails = []
 
-    console.log(orderDetailIDs)
+    for (const order of orders) {
+      const orderDetail = await databaseService.orderDetail.findOne({ _id: new ObjectId(order.OrderDetailID) })
 
-    for (const orderDetailID of orderDetailIDs) {
-      const orderDetail = await databaseService.orderDetail.findOne({ _id: new ObjectId(orderDetailID) })
-      orderDetails.push(orderDetail)
+      if (orderDetail) {
+        orderDetails.push({
+          OrderDate: order.OrderDate,
+          ...orderDetail
+        })
+      }
     }
 
     return res.json({
