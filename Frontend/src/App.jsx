@@ -139,7 +139,7 @@ const router = createBrowserRouter([
     element: <OrderPage />, // Home component
   },
   {
-    path: "users/reset-password",
+    path: "reset-password",
     element: <ResetPassword />,
   },
   {

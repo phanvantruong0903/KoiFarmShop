@@ -10,7 +10,7 @@ export default function ResetPassword() {
         if (token) {
             console.log(token)
             localStorage.setItem('forgot_password_secrect_token', token)
-            navigate('login')
+            navigate('/login')
         }
     }, [params])
   
