@@ -10,10 +10,6 @@ import TableCart from "./TableCart";
 
 export default function FormFillInformation() {
   const orderDetail = useOrder(); // Đảm bảo rằng hàm này trả về giá trị hợp lệ
-  if (!orderDetail || !orderDetail.orderId) {
-    message.error("Thông tin đơn hàng không hợp lệ.");
-    return;
-  }
 
   const navigate = useNavigate();
   const [userData, setUserData] = useState();

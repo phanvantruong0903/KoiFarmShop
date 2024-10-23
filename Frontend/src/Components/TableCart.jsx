@@ -2,178 +2,175 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useOrder } from "../Context/OrderContext";
 import axios from "axios";
-import { Table, Spin, Empty } from "antd"; // Import Ant Design components
-import Navbar from "./Navbar/Navbar";
-import Footer from "./Footer";
-import { BsUiChecksGrid } from "react-icons/bs";
+import { Empty } from "antd"; // Import only Empty from Ant Design
 
 export default function ShoppingCart() {
   const orderDetail = useOrder();
   const [koiList, setKoiList] = useState([]);
   const [error, setError] = useState(null);
-
-  const [totalPrice, setTotalPrice] = useState(0);
-  const navigate = useNavigate();
+  const [totalPrice, setTotalPrice] = useState(0); // Initialize to 0
 
   useEffect(() => {
-    // Retrieve stored totalPrice from localStorage
-    const storedTotalPrice = localStorage.getItem("totalPrice");
-    console.log("Stored totalPrice:", storedTotalPrice);
-    if (storedTotalPrice) {
-      setTotalPrice(parseFloat(storedTotalPrice)); // Convert from string to float
-    } else {
-      setTotalPrice(0); // Default value if not found
+    const storedKoiList = JSON.parse(localStorage.getItem("koiList")) || [];
+    const storedTotalPrice =
+      parseFloat(localStorage.getItem("totalPrice")) || 0;
+    const storedOrderId = localStorage.getItem("orderId");
+
+    const updatedKoiList = storedKoiList.map((koi) => ({
+      ...koi,
+      quantity: koi.quantity || 1,
+    }));
+
+    setKoiList(updatedKoiList);
+    setTotalPrice(storedTotalPrice);
+
+    // Check if the koi list is empty and orderId is available
+    if (updatedKoiList.length === 0 && orderDetail?.orderId) {
+      fetchOrderDetails(orderDetail.orderId);
     }
-
-    // Retrieve stored koiList from localStorage
-    const storedKoiList = JSON.parse(localStorage.getItem("koiList"));
-    console.log("Stored koiList:", storedKoiList);
-    if (storedKoiList) {
-      setKoiList(storedKoiList);
-    } else {
-      setKoiList([]); // Default value if not found
-    }
-
-    const fetchOrderDetails = async () => {
-      if (!orderDetail || !orderDetail.orderId) return;
-
-      try {
-        const response = await axios.get(
-          `http://localhost:4000/order/detail/${orderDetail.orderId}`
-        );
-
-        if (response.status === 200) {
-          const { koiList } = response.data.result;
-          const { Items, TotalPrice } = response.data.result.result;
-
-          // Update totalPrice from API
-          setTotalPrice(TotalPrice);
-          localStorage.setItem("totalPrice", TotalPrice.toString());
-
-          // Update koiList
-          const koiMap = new Map(koiList.map((koi) => [koi._id, koi]));
-          const updatedKoiList = Items.map((item) => {
-            const koi = koiMap.get(item.KoiID);
-            return koi ? { ...koi, quantity: item.Quantity } : null;
-          }).filter((koi) => koi !== null);
-
-          setKoiList(updatedKoiList);
-          localStorage.setItem("koiList", JSON.stringify(updatedKoiList));
-        } else {
-          console.error(`API request failed with status: ${response.status}`);
-        }
-      } catch (error) {
-        console.error("Error fetching order details:", error);
-      }
-    };
-
-    fetchOrderDetails();
   }, [orderDetail]);
 
-  const handleQuantityChange = async (koiId, newQuantity) => {
-    console.log("koiid:", koiId);
-    console.log("quantity:", newQuantity);
-    console.log("orderid:", orderDetail.orderId);
+  const fetchOrderDetails = async (orderId) => {
+    if (!orderId) {
+      console.error("No orderId provided for fetching order details.");
+      return;
+    }
 
-    if (!orderDetail || !orderDetail.orderId) return;
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/order/detail/${orderId}`
+      );
+      if (response.status === 200) {
+        const { koiList, result } = response.data.result;
+        const { Items, TotalPrice } = result;
+
+        const koiMap = new Map(koiList.map((koi) => [koi._id, koi]));
+        const updatedKoiList = Items.map((item) => {
+          const koi = koiMap.get(item.KoiID);
+          return koi ? { ...koi, quantity: item.Quantity } : null;
+        }).filter((koi) => koi !== null);
+
+        setKoiList(updatedKoiList);
+        setTotalPrice(TotalPrice); // Ensure TotalPrice is set correctly
+
+        // Save to localStorage
+        localStorage.setItem("koiList", JSON.stringify(updatedKoiList));
+        localStorage.setItem("totalPrice", TotalPrice.toString());
+        localStorage.setItem("orderId", orderId); // Store orderId in localStorage
+        console.log("Order details fetched and stored in localStorage.");
+      } else {
+        console.error(`API request failed with status: ${response.status}`);
+        setError("Failed to fetch order details.");
+      }
+    } catch (error) {
+      console.error("Error fetching order details:", error);
+      setError("Error fetching order details.");
+    }
+  };
+
+  const handleQuantityChange = async (koiId, newQuantity) => {
+    const storedOrderId = localStorage.getItem("orderId");
+    if (!storedOrderId) return;
 
     try {
       const response = await axios.patch(
-        `http://localhost:4000/order/detail/edit/${orderDetail.orderId}`,
-        { KoiID: koiId, Quantity: parseInt(newQuantity) }
+        `http://localhost:4000/order/detail/edit/${storedOrderId}`,
+        { KoiID: koiId, Quantity: newQuantity }
       );
 
-      console.log("Response from API:", response);
+      const updatedKoiList = koiList.map((koi) =>
+        koi._id === koiId ? { ...koi, quantity: newQuantity } : koi
+      );
+
+      // Calculate the new total price locally
+      const newTotalPrice = updatedKoiList.reduce(
+        (total, koi) => total + koi.Price * koi.quantity,
+        0
+      );
+
+      // Update state with the new koi list and total price
+      setKoiList(updatedKoiList);
+      setTotalPrice(newTotalPrice);
+
+      // Save updated data to localStorage
+      localStorage.setItem("koiList", JSON.stringify(updatedKoiList));
+      localStorage.setItem("totalPrice", newTotalPrice.toString());
 
       if (response.status === 200) {
-        setTotalPrice(response.data.result.TotalPrice);
-        const updateKoiList = koiList.map((koi) =>
-          koi._id === koiId ? { ...koi, quantity: newQuantity } : koi
-        );
-
-        // If TotalPrice is null, calculate it locally
-
-        // Update state with the new koi list
-        setKoiList(updateKoiList);
-        localStorage.setItem("koiList", JSON.stringify(updateKoiList));
-        localStorage.setItem("totalPrice", totalPrice.toString()); // Update localStorage
+        // Optionally, update localStorage with the server's TotalPrice if needed
+        // const serverTotalPrice = response.data.result.TotalPrice;
+        // if (serverTotalPrice !== null) {
+        //   localStorage.setItem("totalPrice", serverTotalPrice.toString());
+        //   setTotalPrice(serverTotalPrice);
+        // }
       }
     } catch (error) {
       setError("Error updating quantity: " + error.message);
     }
   };
-  const columns = [
-    {
-      title: "Koi Name",
-      dataIndex: "KoiName",
-      key: "KoiName",
-    },
-    {
-      title: "Image",
-      dataIndex: "Image",
-      key: "Image",
-      render: (image) => (
-        <img src={image} alt="Koi" style={{ maxWidth: "100px" }} />
-      ),
-    },
-    {
-      title: "Price",
-      dataIndex: "Price",
-      key: "Price",
-      render: (price) => price.toLocaleString(),
-    },
-    {
-      title: "Quantity",
-      dataIndex: "quantity",
-      key: "quantity",
-      render: (quantity, record) => (
-        <input
-          type="number"
-          min={1}
-          value={quantity}
-          onChange={(e) => {
-            const newQuantity = parseInt(e.target.value);
-            if (newQuantity >= 1) {
-              handleQuantityChange(record._id, newQuantity);
-            }
-          }}
-          style={{ width: "80px" }}
-        />
-      ),
-    },
-  ];
 
   return (
-    <>
-      <div style={{ padding: "20px", width: "100%" }}>
-        <h2>Koi Order Details</h2>
+    <div style={{ padding: "20px", width: "100%" }}>
+      <h2>Koi Order Details</h2>
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        {koiList.length > 0 ? (
-          <>
-            <Table
-              columns={columns}
-              dataSource={koiList}
-              pagination={false}
-              size="large"
-              style={{ width: "100%" }} // Ensure table stretches to full width
-              scroll={{ x: true }} // Enable horizontal scrolling if necessary
-            />
-            <h3 style={{ marginTop: "20px" }}>
-              Total Price:{" "}
-              {totalPrice
-                ? totalPrice.toLocaleString("en-US", {
-                    style: "currency",
-                    currency: "VND",
-                  })
-                : "0.00"}{" "}
-              VND
-            </h3>
-          </>
-        ) : (
-          <Empty description={error || "No Koi items in this order."} />
-        )}
-      </div>
-    </>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {koiList.length > 0 ? (
+        <>
+          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <thead>
+              <tr>
+                <th>Koi Name</th>
+                <th>Image</th>
+                <th>Price</th>
+                <th>Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              {koiList.map((koi) => (
+                <tr key={koi._id}>
+                  <td>{koi.KoiName}</td>
+                  <td>
+                    <img
+                      src={koi.Image}
+                      alt="Koi"
+                      style={{ maxWidth: "100px" }}
+                    />
+                  </td>
+                  <td>{koi.Price.toLocaleString()}</td>
+                  <td>
+                    <input
+                      type="number"
+                      min={1}
+                      value={koi.quantity}
+                      onChange={(e) => {
+                        const newQuantity = parseInt(e.target.value, 10);
+                        if (!isNaN(newQuantity) && newQuantity >= 1) {
+                          handleQuantityChange(koi._id, newQuantity);
+                        } else {
+                          handleQuantityChange(koi._id, 1);
+                        }
+                      }}
+                      style={{ width: "80px" }}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <h3 style={{ marginTop: "20px" }}>
+            Total Price:{" "}
+            {totalPrice > 0
+              ? totalPrice.toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "VND",
+                })
+              : "0.00"}{" "}
+            VND
+          </h3>
+        </>
+      ) : (
+        <Empty description={error || "No Koi items in this order."} />
+      )}
+    </div>
   );
 }
