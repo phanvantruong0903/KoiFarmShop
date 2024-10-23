@@ -30,7 +30,8 @@ export default function FormFillInformation() {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+          withCredentials: true,
+        },
       );
 
       if (response.status === 200) {
