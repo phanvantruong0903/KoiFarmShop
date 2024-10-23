@@ -156,7 +156,10 @@ class OrderDetailService {
                 TotalPrice: orderDT?.TotalPrice - oldPrice + updatedPrice
             }
             console.log("updated Order detail: ", orderDT)
-            return {orderDT}
+            return {
+                orderDT,
+                samePropertiesKoi: koiList
+            }
         }else{
             return 'Order detail not found'
         }
