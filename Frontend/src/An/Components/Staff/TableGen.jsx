@@ -38,9 +38,9 @@ export default function TableGen({
                         key={mock._id}
                         onMouseEnter={() => handleMouseEnter(index)}
                         onMouseLeave={handleMouseLeave}
-                       
+
                     >
-                        <td  style={{ overflowX: 'hidden', textOverflow: 'nowrap' }}>{index + 1}</td>
+                        <td style={{ overflowX: 'hidden', textOverflow: 'nowrap' }}>{index + 1}</td>
                         {fieldMapping.map((field, idx) => {
 
                             if (field === 'role') {
@@ -67,11 +67,21 @@ export default function TableGen({
                                 };
                                 return <td key={idx}>{statusMap[mock.State]}</td>;
                             }
-                            return <td style={{ 
-                                overflow: 'hidden',         
-                                whiteSpace: 'nowrap',     
-                                maxWidth: '250px'          
-                              }} key={idx}>{mock[field] || 'not provided'}</td>; 
+                            if (field === 'Status') {
+                                const statusMap = {
+                                    1: 'Received',
+                                    2: 'Sold'
+                                };
+                                return <td key={idx}>{statusMap[mock.Status]}</td>;
+                            }
+                            if (field === 'InvoiceDate') {
+                                return  mock.InvoiceDate  ? <td key={idx}>{mock.InvoiceDate.split('T')[0] }</td> : '';
+                            }
+                            return <td style={{
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                maxWidth: '250px'
+                            }} key={idx}>{mock[field] || 'not provided'}</td>;
                         })}
                         <td className="d-flex justify-content-center align-items-center" style={{ height: '40px' }}>
                             <Dropdown>
@@ -90,8 +100,8 @@ export default function TableGen({
                                         View/Edit
                                     </Dropdown.Item>
 
-                                   
-                                    
+
+
                                     {!isSpecial && (
                                         <Dropdown.Item
                                             onMouseLeave={() => setIsActive(false)}
@@ -120,7 +130,7 @@ TableGen.propTypes = {
     handleMouseEnter: PropTypes.func.isRequired,
     handleMouseLeave: PropTypes.func.isRequired,
     whatRole: PropTypes.func.isRequired,
-    isAddress: PropTypes.func.isRequired,
+
     isActive: PropTypes.bool.isRequired,
     setIsActive: PropTypes.func.isRequired,
     handleRowAction: PropTypes.func.isRequired,

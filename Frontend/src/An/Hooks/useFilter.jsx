@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function useFilter(data, filterType) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -6,35 +6,40 @@ export default function useFilter(data, filterType) {
   const checkWhichFilter = (filterType) => {
     if (filterType === 'profile') {
       return {
-         role: '', Email_verified: ''
+        role: '', Email_verified: ''
       }
     }
-    
-      else if (filterType === 'order') {
-        return {
-          OrderStatus: '', PaymentStatus: ''
-        }
-      }
-      else if (filterType === 'consign') {
-        return {
-          State: '', Method: '', location: ''
-        }
-      }
-      else if (filterType === 'supplier') {
-        return {
-          Country: ''
-        }
-      }
 
+    else if (filterType === 'order') {
+      return {
+        OrderStatus: '', PaymentStatus: ''
+      }
     }
-  
+    else if (filterType === 'consign') {
+      return {
+        State: '', Method: '', location: ''
+      }
+    }
+    else if (filterType === 'supplier') {
+      return {
+        Country: ''
+      }
+    }
+    else if (filterType === 'invoices') {
+      return {
+        Status: ''
+      }
+    }
 
-  const initialFilterList  = checkWhichFilter(filterType);
+  }
+ 
+
+  const initialFilterList = checkWhichFilter(filterType);
 
   const [filterList, setFilterList] = useState(initialFilterList);
 
-   console.log (filterList); // Debugging
-  
+  console.log(filterList); // Debugging
+
   const filteredData = data.filter((item) => {
     if (filterType === 'profile') {
       // For profiles
@@ -43,14 +48,14 @@ export default function useFilter(data, filterType) {
         2: 'Staff',
         3: 'Manager',
       };
-      
+
       const matchesRole = filterList.role ? roleMap[item.roleid] === filterList.role : true;
       const matchesEmailVerified = filterList.Email_verified
         ? (filterList.Email_verified === 'All' || item.verify == (filterList.Email_verified === 'Verified'))
         : true;
 
       const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesSearchID = item._id == searchTerm;
+      const matchesSearchID = item._id.includes(searchTerm);
 
       return matchesRole && matchesEmailVerified && (matchesSearch || matchesSearchID);
     } else if (filterType === 'order') {
@@ -65,8 +70,10 @@ export default function useFilter(data, filterType) {
       // For consignments
       const matchesStatus = filterList.State ? item.State == filterList.State : true;
       const matchesMethod = filterList.Method ? item.method === filterList.Method : true;
-      const matchesLocation = filterList.location ? item.location === filterList.location : true
-      return matchesStatus && matchesMethod && matchesLocation;
+      const matchesLocation = filterList.location ? item.PositionCare === filterList.location : true;
+      const matchesID = item._id.includes(searchTerm);
+
+      return matchesStatus && matchesMethod && matchesLocation && matchesID;
     }
     else if (filterType === 'supplier') {
       // For suppliers
@@ -74,12 +81,18 @@ export default function useFilter(data, filterType) {
       const matchesSearch = item.SupplierName.toLowerCase().includes(searchTerm.toLowerCase());
       return matchesCountry && matchesSearch;
     }
+    else if (filterType === 'invoices') {
+      // For invoices
+      const matchesStatus = filterList.Status ? item.Status == filterList.Status : true;
+      // const matchesSearch = item.InvoiceID.toLowerCase().includes(searchTerm.toLowerCase());
+      return matchesStatus ;
+    }
   });
 
   const handleSearch = (e) => setSearchTerm(e.target.value);
 
   const handleFilterChange = (type, value) => {
-    
+
     setFilterList((prevState) => ({
       ...prevState,
       [type]: value === undefined ? '' : value

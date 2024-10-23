@@ -6,6 +6,7 @@ import Spinner from '../../Components/Spinner';
 import GeneralChart from './GeneralChart';
 import ProfileChart from './ProfileChart';
 import OrderChart from './OrderChart';
+import RevunueChart from './RevunueChart';
 import  'chart.js/auto';
 export default function Chart() {
   const { chartType } = useParams();
@@ -73,7 +74,7 @@ export default function Chart() {
 
 
           <Row>
-            <Col md={12}>
+            <Col md={6}>
               {filteredProfileData.labels.length > 0 && filteredOrderData.labels.length > 0 && (
                 <GeneralChart
                   data={filteredCombinedData} 
@@ -81,6 +82,9 @@ export default function Chart() {
                   title="Count"
                 />
               )}
+            </Col>
+            <Col md={6}>
+              <RevunueChart types={chartType}/>
             </Col>
           </Row>
         </>

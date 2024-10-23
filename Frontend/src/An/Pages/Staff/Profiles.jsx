@@ -17,14 +17,14 @@ import TableGen from '../../Components/Staff/TableGen';
 import ViewProfile from '../../Components/Staff/ViewProfile';
 // Axios
 import axiosInstance from '../../Utils/axiosJS';
-import { fetchProfiles } from '../../Utils/FetchHandler';
+
 export default function Profiles() {
   const [hoveredRow, setHoveredRow] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isActive, setIsActive] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [userID , setUserID] = useState(null);
-  const headers = ['#', 'User_ID', 'Name', 'Role', 'Email', 'Email Status', 'Address', 'Phone Number'];
+  const headers = ['#', 'Mã người dùng', 'Tên', 'Vai trò', 'Email', 'Trạng thái Email', 'Địa chỉ', 'Số điện thoại'];
   const fieldMapping = ['_id', 'name', 'role', 'email', 'verify', 'address', 'phone_number'];
   const handleRowAction = (id, actionType) => {
     if (actionType === 'delete') {
@@ -53,15 +53,7 @@ export default function Profiles() {
     });
     return count;
   }
-  function totalUser(data) {
-    let count = 0;
-    data.forEach(element => {
-      if (element.roleid === 1) {
-        count++;
-      }
-    })
-    return count;
-  }
+
   function totalStaff(data) {
     let count = 0;
     data.forEach(element => {
@@ -76,8 +68,8 @@ export default function Profiles() {
     setIsLoading(true);
     const fetchData = async () => {
       try {
-        const response = await fetchProfiles('Profiles:Line 97');
-        setIntialData(response);
+        const response = await axiosInstance.get('manager/manage-user/get-all');
+        setIntialData(response.data.result);
       } catch (error) {
         console.error('Error fetching data', error);
       } finally {
@@ -100,8 +92,8 @@ export default function Profiles() {
         </div>
 
         <div className='border rounded-3 p-2 flex-grow-1'>
-          <h4 className='fw-bold fs-4 fs-md-5'>Total Guest</h4>
-          <p>{totalManager(intialData)}</p>
+          <h4 className='fw-bold fs-4 fs-md-5'>Total Staff</h4>
+          <p>{totalStaff(intialData)}</p>
         </div>
         <div className='border rounded-3 p-2 flex-grow-1'>
           <h4 className='fw-bold fs-4 fs-md-5'>Total Customer</h4>
@@ -126,7 +118,9 @@ export default function Profiles() {
           filterValue="User"
           currentFilter={filterList.role}
           onFilterChange={handleFilterChange}
-          count={totalUser(intialData)}
+          count={
+            intialData.filter(user => user.roleid === 1 || user.roleid === undefined).length
+          }
         />
         <FilterButton
           label="All Staffs"
@@ -134,7 +128,9 @@ export default function Profiles() {
           filterValue="Staff"
           currentFilter={filterList.role}
           onFilterChange={handleFilterChange}
-          count={totalStaff(intialData)}
+          count={
+            intialData.filter(user => user.roleid === 2).length
+          }
         />
 
         <FilterButton
@@ -143,7 +139,9 @@ export default function Profiles() {
           filterValue="Manager"
           currentFilter={filterList.role}
           onFilterChange={handleFilterChange}
-          count={totalManager(intialData)}
+          count={
+            intialData.filter(user => user.roleid === 3).length
+          }
 
         />
 
@@ -153,14 +151,18 @@ export default function Profiles() {
       {/* ==============================Filter Bar========================================= */}
       <div className='d-flex ms-5 me-5 flex-wrap ' style={{ gap: '2rem' }}>
         <FilterBar
-          initialTitle="All"
+          initialTitle={
+            filterList.role === '' ? "All" : filterList.role === 'User' ? "User" : filterList.role === 'Staff' ? "Staff" : "Manager"
+          }
           NavItems={["All", "User", "Staff", "Manager"]}
           handleFilterChange={handleFilterChange}
           filter="role"
         />
 
         <FilterBar
-          initialTitle="Email Verified Status"
+          initialTitle={
+            filterList.Email_verified === '' ? "Email Verify Status" : filterList.Email_verified === 'Verified' ? "Verified" : "Not Verified"
+          }
           NavItems={["All", "Verified", "Not Verified"]}
           handleFilterChange={handleFilterChange}
           filter="Email_verified"

@@ -34,7 +34,7 @@ export default function ManageSupplier() {
     const [supplierID, setSupplierID] = useState(null);
     const [selectedSupplier, setSelectedSupplier] = useState(null);
     const [isCreating, setIsCreating] = useState(false);
-    const headers = ['#', 'Supplier_ID', 'Supplier Name', 'Address', 'Country', 'Phone Number'];
+    const headers = ['#', 'Mã Nhà Cung Cấp', 'Tên Nhà Cung Cấp', 'Địa Chỉ', 'Quốc Gia', 'Số Điện Thoại'];
     const fieldMapping = ['_id', 'SupplierName', 'Address', 'Country', 'PhoneNumber'];
     const firebaseConfig = {
         apiKey: import.meta.env.VITE_API_KEY,
@@ -186,38 +186,56 @@ export default function ManageSupplier() {
 
     return (
         <div>
-            <div className='fw-bold fs-1 ms-5 mb-5'>Suppliers</div>
-            <div className='d-flex ms-5 me-5 mb-3 Card-Container' style={{ height: '100px', gap: '1rem' }}>
-                <div className='border rounded-3 p-2 w-25'>
-                    <h4 className='fw-bold fs-4 fs-md-5'>Total Suppliers</h4>
-                    <p>{intialData.length}</p>
+                <div className='fw-bold fs-1 ms-5 mb-5'>Nhà Cung Cấp</div>
+                <div className='d-flex ms-5 me-5 mb-3 Card-Container' style={{ height: '100px', gap: '1rem' }}>
+                    <div className='border rounded-3 p-2 w-25'>
+                        <h4 className='fw-bold fs-4 fs-md-5'>Tổng số lượng nhà cung cấp</h4>
+                        <p>{intialData.length}</p>
+                    </div>
                 </div>
-            </div>
 
-            <div className='d-flex ms-5 me-5 Order-container' style={{ gap: '2rem' }}>
-                {/* Filter buttons */}
-                <FilterButton
-                    label="Tất Cả Nhà Cung Cấp"
-                    filterType="Country"
-                    filterValue=""
-                    currentFilter={filterList.Country}
-                    onFilterChange={handleFilterChange}
-                    count={intialData.length}
-                />
-                <FilterButton
-                    label="Tất cả Nhà Cung Cấp Nhật Bản"
-                    filterType="Country"
-                    filterValue="Nhật Bản"
-                    currentFilter={filterList.Country}
-                    onFilterChange={handleFilterChange}
-                    count={intialData.filter((item) => item.Country === 'Nhật Bản').length}
-                />
+                <div className='d-flex ms-5 me-5 Order-container' style={{ gap: '2rem' }}>
+                    {/* Filter buttons */}
+                    <FilterButton
+                        label="Tất Cả Nhà Cung Cấp"
+                        filterType="Country"
+                        filterValue=""
+                        currentFilter={filterList.Country}
+                        onFilterChange={handleFilterChange}
+                        count={intialData.length}
+                    />
+                    <FilterButton
+                        label="Tất cả Nhà Cung Cấp Nhật Bản"
+                        filterType="Country"
+                        filterValue="Nhật Bản"
+                        currentFilter={filterList.Country}
+                        onFilterChange={handleFilterChange}
+                        count={intialData.filter((item) => item.Country === 'Nhật Bản').length}
+                    />
+                    <FilterButton
+                        label="Tất cả Nhà Cung Cấp Việt Nam"
+                        filterType="Country"
+                        filterValue="Việt Nam"
+                        currentFilter={filterList.Country}
+                        onFilterChange={handleFilterChange}
+                        count={intialData.filter((item) => item.Country === 'Việt Nam').length}
+                    />
+                    <FilterButton
+                        label="Tất cả Nhà Cung Cấp Trung Quốc"
+                        filterType="Country"
+                        filterValue="Trung Quốc"
+                        currentFilter={filterList.Country}
+                        onFilterChange={handleFilterChange}
+                        count={intialData.filter((item) => item.Country === 'Trung Quốc').length}
+                    />
 
             </div>
             <hr className="my-1 mb-4" />
             <div className='d-flex ms-5 me-5 flex-wrap ' style={{ gap: '2rem' }}>
                 <FilterBar
-                    initialTitle="All"
+                    initialTitle={
+                        filterList.Country === '' ? "Tất Cả" : filterList.Country === 'Nhật Bản' ? "Nhật Bản" : filterList.Country === 'Việt Nam' ? "Việt Nam" : "Trung Quốc"
+                    }
                     NavItems={["All", "Nhật Bản", "Việt Nam", "Trung Quốc"]}
                     handleFilterChange={handleFilterChange}
                     filter="Country"
@@ -227,7 +245,7 @@ export default function ManageSupplier() {
                     <Form className="d-flex w-100 flex-row search-bar">
                         <FormControl
                             type="search"
-                            placeholder="Find Supplier"
+                            placeholder="Tìm kiếm nhà cung cấp"
                             value={searchTerm}
                             onChange={handleSearch}
                             className="me-1"

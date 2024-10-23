@@ -22,6 +22,14 @@ export default function FilterBar({ initialTitle, NavItems, handleFilterChange, 
       return statusMapping[e];      
 
     }
+    else if (filter === 'Status'){
+      const methodMapping = {
+        "All": "",
+        "Received": "1",
+        "Sold Out": "2",
+      };
+      return methodMapping[e];      
+    }
     return e;
   }
   return (
