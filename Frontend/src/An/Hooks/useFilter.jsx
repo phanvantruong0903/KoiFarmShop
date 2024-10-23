@@ -44,14 +44,14 @@ export default function useFilter(data, filterType) {
     if (filterType === 'profile') {
       // For profiles
       const roleMap = {
-        1: 'User',
-        2: 'Staff',
-        3: 'Manager',
+        1: 'Người dùng',
+        2: 'Nhân viên',
+        3: 'Quản lý',
       };
 
       const matchesRole = filterList.role ? roleMap[item.roleid] === filterList.role : true;
       const matchesEmailVerified = filterList.Email_verified
-        ? (filterList.Email_verified === 'All' || item.verify == (filterList.Email_verified === 'Verified'))
+        ? (filterList.Email_verified === 'All' || item.verify == (filterList.Email_verified === 'Đã xác minh'))
         : true;
 
       const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());

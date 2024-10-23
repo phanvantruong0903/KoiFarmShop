@@ -79,33 +79,30 @@ export default function Profiles() {
 
     fetchData();
   }, []);
-
   return (
     <div>
       <ViewProfile actions={showModal} setactions={setShowModal} id={userID}/>
-      <div className='fw-bold fs-1 ms-5 mb-5'>Profiles</div>
+      <div className='fw-bold fs-1 ms-5 mb-5'>Hồ sơ</div>
 
       <div className='d-flex ms-5 me-5 mb-3 Card-Container' style={{ height: '100px', gap: '1rem' }}>
         <div className='border rounded-3 p-2 flex-grow-1'>
-          <h4 className='fw-bold fs-4 fs-md-5'>Total User</h4>
+          <h4 className='fw-bold fs-4 fs-md-5'>Tổng số người dùng</h4>
           <p>{intialData.length}</p>
         </div>
 
         <div className='border rounded-3 p-2 flex-grow-1'>
-          <h4 className='fw-bold fs-4 fs-md-5'>Total Staff</h4>
+          <h4 className='fw-bold fs-4 fs-md-5'>Tổng số nhân viên</h4>
           <p>{totalStaff(intialData)}</p>
         </div>
         <div className='border rounded-3 p-2 flex-grow-1'>
-          <h4 className='fw-bold fs-4 fs-md-5'>Total Customer</h4>
+          <h4 className='fw-bold fs-4 fs-md-5'>Tổng số quản lý</h4>
           <p>{totalManager(intialData)}</p>
         </div>
-
-
       </div>
       <div className='d-flex ms-5 me-5 Order-container' style={{ gap: '2rem' }}>
-        {/* ==============================Filter Button========================================= */}
+        {/* ==============================Nút Lọc========================================= */}
         <FilterButton
-          label="All"
+          label="Tất cả"
           filterType="role"
           filterValue=""
           currentFilter={filterList.role}
@@ -113,7 +110,7 @@ export default function Profiles() {
           count={intialData.length}
         />
         <FilterButton
-          label="All Users"
+          label="Tất cả Người dùng"
           filterType="role"
           filterValue="User"
           currentFilter={filterList.role}
@@ -123,7 +120,7 @@ export default function Profiles() {
           }
         />
         <FilterButton
-          label="All Staffs"
+          label="Tất cả Nhân viên"
           filterType="role"
           filterValue="Staff"
           currentFilter={filterList.role}
@@ -134,7 +131,7 @@ export default function Profiles() {
         />
 
         <FilterButton
-          label="All Manager"
+          label="Tất cả Quản lý"
           filterType="role"
           filterValue="Manager"
           currentFilter={filterList.role}
@@ -148,22 +145,22 @@ export default function Profiles() {
       </div>
 
       <hr className="my-1 mb-4" />
-      {/* ==============================Filter Bar========================================= */}
+      {/* ==============================Thanh Lọc========================================= */}
       <div className='d-flex ms-5 me-5 flex-wrap ' style={{ gap: '2rem' }}>
         <FilterBar
           initialTitle={
-            filterList.role === '' ? "All" : filterList.role === 'User' ? "User" : filterList.role === 'Staff' ? "Staff" : "Manager"
+            filterList.role === '' ? "Tất cả" : filterList.role === 'Người dùng' ? "Người dùng" : filterList.role === 'Nhân viên' ? "Nhân viên" : "Vai trò Quản lý"
           }
-          NavItems={["All", "User", "Staff", "Manager"]}
+          NavItems={["Tất cả", "Người dùng", "Nhân viên", "Quản lý"]}
           handleFilterChange={handleFilterChange}
           filter="role"
         />
 
         <FilterBar
           initialTitle={
-            filterList.Email_verified === '' ? "Email Verify Status" : filterList.Email_verified === 'Verified' ? "Verified" : "Not Verified"
+            filterList.Email_verified === '' ? "Trạng thái Xác minh Email" : filterList.Email_verified === 'Verified' ? "Đã xác minh" : "Chưa xác minh"
           }
-          NavItems={["All", "Verified", "Not Verified"]}
+          NavItems={["Tất cả", "Đã xác minh", "Chưa xác minh"]}
           handleFilterChange={handleFilterChange}
           filter="Email_verified"
         />
@@ -173,7 +170,7 @@ export default function Profiles() {
           <Form className="d-flex w-100 flex-row search-bar">
             <FormControl
               type="search"
-              placeholder="Find User"
+              placeholder="Tìm Người dùng"
               value={searchTerm}
               onChange={handleSearch}
               className="me-1"

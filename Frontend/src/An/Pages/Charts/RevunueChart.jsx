@@ -1,7 +1,7 @@
 import React from 'react';
 import { Bar, Line } from 'react-chartjs-2';
 
-export default function RevenueChart({ types }) {
+export default function RevenueChart({ types,chartDATA, DATA }) {
     const data = [
         { "date": "2024-10-06", "value": 182664, "profit": 145000 },
         { "date": "2024-10-07", "value": 1325963, "profit": 1250000 },
@@ -30,7 +30,7 @@ export default function RevenueChart({ types }) {
                 label: 'Revenue',
                 data: data.map(item => item.value),
                 borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                backgroundColor: 'rgba(75, 192, 192, 0.1)',
                 borderWidth: 2,
                 fill: false
             },
@@ -44,6 +44,8 @@ export default function RevenueChart({ types }) {
             }
         ]
     };
+                        // https://www.chartjs.org/docs/latest/configuration/tooltip.html#label-callback
+
 
     const chartOptions = {
         maintainAspectRatio: false,
@@ -58,17 +60,39 @@ export default function RevenueChart({ types }) {
                     label: function (tooltipItem) {
                         const revenue = tooltipItem.dataset.label === 'Revenue'
                             ? tooltipItem.raw
-                            : data[tooltipItem.dataIndex].value;
+                            : DATA[tooltipItem.dataIndex].value;
                         const profit = tooltipItem.dataset.label === 'Profit'
                             ? tooltipItem.raw
-                            : data[tooltipItem.dataIndex].profit;
+                            : DATA[tooltipItem.dataIndex].profit;
 
                         const percentageChange = ((profit - revenue) / revenue) * 100;
                         const changeLabel = percentageChange > 0 ? 'gain' : 'loss';
 
                         return `${tooltipItem.dataset.label}: ${tooltipItem.raw.toLocaleString('en-US')} VND (${percentageChange.toFixed(2)}% ${changeLabel})`;
+                    },
+                    labelTextColor: function(tooltipItem) {
+                        const revenue = tooltipItem.dataset.label === 'Revenue'
+                            ? tooltipItem.raw
+                            : DATA[tooltipItem.dataIndex].value;
+                        const profit = tooltipItem.dataset.label === 'Profit'
+                            ? tooltipItem.raw
+                            : DATA[tooltipItem.dataIndex].profit;
+        
+                        const percentageChange = ((profit - revenue) / revenue) * 100;
+        
+                        // https://www.chartjs.org/docs/latest/configuration/tooltip.html#label-callback
+                        return percentageChange > 0 ? 'rgba(205, 254, 194)' : 'rgba(254, 121, 104)';
+                    }
+                },
+                titleColor: function (tooltip) {
+                    const datasetLabel = tooltip.tooltipItems[0]?.dataset.label;
+                    if (datasetLabel === 'Revenue') {
+                        return 'rgba(75, 192, 192, 1)';
+                    } else {
+                        return 'rgba(255, 99, 132, 1)';
                     }
                 }
+
             }
         }
     };
@@ -76,9 +100,9 @@ export default function RevenueChart({ types }) {
     return (
         <div style={{ height: '50vh', width: '100%' }}>
             {types === 'BarChart' ? (
-                <Bar data={chartData} options={chartOptions} height={400} width={600} />
+                <Bar data={chartDATA} options={chartOptions} height={400} width={600} />
             ) : (
-                <Line data={chartData} options={chartOptions} height={400} width={600} />
+                <Line data={chartDATA} options={chartOptions} height={400} width={600} />
             )}
         </div>
     );

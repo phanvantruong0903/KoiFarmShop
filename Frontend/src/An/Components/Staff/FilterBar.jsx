@@ -3,7 +3,7 @@ import { DropdownButton, Dropdown } from "react-bootstrap";
 
 export default function FilterBar({ initialTitle, NavItems, handleFilterChange, filter }) {
   const checkEmptyString = (item) => {
-    if (item === 'All') {
+    if (item === 'All' || item === 'Tất cả') {
       
       return true;
     }

@@ -17,28 +17,33 @@ export default function Chart() {
     filterProfileData,
     filterOrderData,
     filterCombinedData,
+    filterRevuenueData,
+    RevenuedataSet,
+    RevuenueData
   } = useChartData();
-
+  
   const [isLoading, setIsLoading] = useState(false);
   const [filteredProfileData, setFilteredProfileData] = useState(profileChartData);
   const [filteredOrderData, setFilteredOrderData] = useState(orderData); 
   const [filteredCombinedData, setFilteredCombinedData] = useState(combineData()); 
   const [selectedFilter, setSelectedFilter] = useState('all'); 
-
+const [filterRevuenueDataR, setFilterRevuenueDataR] = useState(RevuenueData);
 
   useEffect(() => {
     setIsLoading(profileChartData.labels.length === 0 || orderData.labels.length === 0);
-    
+    setFilterRevuenueDataR(RevuenueData);
     setFilteredProfileData(profileChartData);
     setFilteredOrderData(orderData);
     setFilteredCombinedData(combineData());
-  }, [profileChartData, orderData]);
-
+  }, [profileChartData, orderData,RevuenueData]);
+  
 
   const handleFilterChange = (filter) => {
     const newProfileData = filterProfileData(filter);
     const newOrderData = filterOrderData(filter);
     const newCombinedData = filterCombinedData(filter);
+    const newRevuenueData = filterRevuenueData(filter);
+    setFilterRevuenueDataR(newRevuenueData);
     setFilteredProfileData(newProfileData);
     setFilteredOrderData(newOrderData);
     setFilteredCombinedData(newCombinedData);
@@ -84,7 +89,7 @@ export default function Chart() {
               )}
             </Col>
             <Col md={6}>
-              <RevunueChart types={chartType}/>
+              <RevunueChart types={chartType} chartDATA={filterRevuenueDataR} DATA={RevenuedataSet} />
             </Col>
           </Row>
         </>
