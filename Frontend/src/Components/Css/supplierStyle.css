@@ -1,0 +1,33 @@
+.supplier-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between items */
+}
+
+.supplier-item {
+  background: white;
+
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.supplier-image {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-top: 10px; /* Space above the image */
+}
+
+.error {
+  color: red;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.paragraph-Style {
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 30px;
+}
+.text-Style {
+  font-size: 20px;
+  font-weight: 400;
+}
