@@ -72,37 +72,54 @@ export default function ShoppingCart() {
     const storedOrderId = localStorage.getItem("orderId");
     if (!storedOrderId) return;
 
+    // Validate newQuantity
+    const quantity = parseInt(newQuantity);
+    if (isNaN(quantity) || quantity < 0) {
+      setError("Invalid quantity.");
+      return;
+    }
+
     try {
-      const response = await axios.patch(
-        `http://localhost:4000/order/detail/edit/${storedOrderId}`,
-        { KoiID: koiId, Quantity: newQuantity }
+      const response = await axios.post(
+        "http://localhost:4000/order/detail/edit",
+        {
+          KoiID: koiId,
+          Quantity: quantity,
+        },
+        {
+          withCredentials: true,
+        }
       );
-
-      const updatedKoiList = koiList.map((koi) =>
-        koi._id === koiId ? { ...koi, quantity: newQuantity } : koi
-      );
-
-      // Calculate the new total price locally
-      const newTotalPrice = updatedKoiList.reduce(
-        (total, koi) => total + koi.Price * koi.quantity,
-        0
-      );
-
-      // Update state with the new koi list and total price
-      setKoiList(updatedKoiList);
-      setTotalPrice(newTotalPrice);
-
-      // Save updated data to localStorage
-      localStorage.setItem("koiList", JSON.stringify(updatedKoiList));
-      localStorage.setItem("totalPrice", newTotalPrice.toString());
 
       if (response.status === 200) {
-        // Optionally, update localStorage with the server's TotalPrice if needed
-        // const serverTotalPrice = response.data.result.TotalPrice;
-        // if (serverTotalPrice !== null) {
-        //   localStorage.setItem("totalPrice", serverTotalPrice.toString());
-        //   setTotalPrice(serverTotalPrice);
-        // }
+        const { result } = response.data;
+
+        // Kiểm tra nếu có thông báo về số lượng không đủ
+        if (
+          typeof result === "string" &&
+          result.includes("available in stock")
+        ) {
+          setError(result); // Hiển thị thông điệp từ phản hồi
+          return;
+        }
+
+        const updatedKoiList = koiList.map((koi) =>
+          koi._id === koiId ? { ...koi, quantity } : koi
+        );
+
+        // Kiểm tra cấu trúc phản hồi để lấy totalPrice
+        const newTotalPrice = response.data.result.orderDT.TotalPrice;
+
+        if (newTotalPrice !== undefined) {
+          setKoiList(updatedKoiList);
+          setTotalPrice(newTotalPrice);
+
+          // Lưu dữ liệu đã cập nhật vào localStorage
+          localStorage.setItem("koiList", JSON.stringify(updatedKoiList));
+          localStorage.setItem("totalPrice", newTotalPrice.toString());
+        } else {
+          setError("Failed to retrieve updated total price.");
+        }
       }
     } catch (error) {
       setError("Error updating quantity: " + error.message);
