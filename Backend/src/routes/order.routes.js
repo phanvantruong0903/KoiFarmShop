@@ -21,7 +21,7 @@ orderRouter.post('/detail/make', makeOrderDetailController)
 orderRouter.post('/detail/makes', makeOrdersDetailController)
 orderRouter.post('/detail/buy', buyNowController)
 orderRouter.get('/detail/:orderID', getOrderDetailController)
-orderRouter.patch('/detail/edit/:orderID', updateOrderDetailController)
+orderRouter.post('/detail/edit', updateOrderDetailController)
 orderRouter.post('/detail/price', getKoiQuantityController)
 //Order
 orderRouter.post('/create/:orderDetailID', createOrderController)

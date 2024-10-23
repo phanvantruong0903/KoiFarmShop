@@ -75,12 +75,21 @@ export const getOrderDetailController = async (req, res) => {
 
 export const updateOrderDetailController = async (req, res) => {
   try {
-    const result = await orderDetailService.updateItemQuantity(req.body, req.params);
+    const reqOrderDTCookie = req.cookies && req.cookies.orderDT ? JSON.parse(req.cookies.orderDT) : {}
+    const result = await orderDetailService.updateItemQuantity(req.body, reqOrderDTCookie);
     console.log("result: ", result)
-    return res.json({
-      message: USERS_MESSAGES.UPDATE_ORDER_SUCCESS,
-      result
-    })
+    if(result.orderDT){
+      res.cookie('orderDT', JSON.stringify(result.orderDT))
+      return res.json({
+        message: USERS_MESSAGES.UPDATE_ORDER_SUCCESS,
+        result
+      })
+    }else{
+      return res.json({
+        result
+      })
+    }
+    
   } catch (error) {
     return res.status(500).json({ error: error.message })
   }
