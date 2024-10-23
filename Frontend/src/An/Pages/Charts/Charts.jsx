@@ -6,6 +6,7 @@ import Spinner from '../../Components/Spinner';
 import GeneralChart from './GeneralChart';
 import ProfileChart from './ProfileChart';
 import OrderChart from './OrderChart';
+import RevunueChart from './RevunueChart';
 import  'chart.js/auto';
 export default function Chart() {
   const { chartType } = useParams();
@@ -16,28 +17,33 @@ export default function Chart() {
     filterProfileData,
     filterOrderData,
     filterCombinedData,
+    filterRevuenueData,
+    RevenuedataSet,
+    RevuenueData
   } = useChartData();
-
+  
   const [isLoading, setIsLoading] = useState(false);
   const [filteredProfileData, setFilteredProfileData] = useState(profileChartData);
   const [filteredOrderData, setFilteredOrderData] = useState(orderData); 
   const [filteredCombinedData, setFilteredCombinedData] = useState(combineData()); 
   const [selectedFilter, setSelectedFilter] = useState('all'); 
-
+const [filterRevuenueDataR, setFilterRevuenueDataR] = useState(RevuenueData);
 
   useEffect(() => {
     setIsLoading(profileChartData.labels.length === 0 || orderData.labels.length === 0);
-    
+    setFilterRevuenueDataR(RevuenueData);
     setFilteredProfileData(profileChartData);
     setFilteredOrderData(orderData);
     setFilteredCombinedData(combineData());
-  }, [profileChartData, orderData]);
-
+  }, [profileChartData, orderData,RevuenueData]);
+  
 
   const handleFilterChange = (filter) => {
     const newProfileData = filterProfileData(filter);
     const newOrderData = filterOrderData(filter);
     const newCombinedData = filterCombinedData(filter);
+    const newRevuenueData = filterRevuenueData(filter);
+    setFilterRevuenueDataR(newRevuenueData);
     setFilteredProfileData(newProfileData);
     setFilteredOrderData(newOrderData);
     setFilteredCombinedData(newCombinedData);
@@ -73,7 +79,7 @@ export default function Chart() {
 
 
           <Row>
-            <Col md={12}>
+            <Col md={6}>
               {filteredProfileData.labels.length > 0 && filteredOrderData.labels.length > 0 && (
                 <GeneralChart
                   data={filteredCombinedData} 
@@ -81,6 +87,9 @@ export default function Chart() {
                   title="Count"
                 />
               )}
+            </Col>
+            <Col md={6}>
+              <RevunueChart types={chartType} chartDATA={filterRevuenueDataR} DATA={RevenuedataSet} />
             </Col>
           </Row>
         </>

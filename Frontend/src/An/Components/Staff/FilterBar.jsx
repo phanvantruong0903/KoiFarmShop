@@ -3,7 +3,7 @@ import { DropdownButton, Dropdown } from "react-bootstrap";
 
 export default function FilterBar({ initialTitle, NavItems, handleFilterChange, filter }) {
   const checkEmptyString = (item) => {
-    if (item === 'All') {
+    if (item === 'All' || item === 'Tất cả') {
       
       return true;
     }
@@ -21,6 +21,14 @@ export default function FilterBar({ initialTitle, NavItems, handleFilterChange, 
       };
       return statusMapping[e];      
 
+    }
+    else if (filter === 'Status'){
+      const methodMapping = {
+        "All": "",
+        "Received": "1",
+        "Sold Out": "2",
+      };
+      return methodMapping[e];      
     }
     return e;
   }

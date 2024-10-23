@@ -178,14 +178,19 @@ export default function Manager() {
       {/* ==============================Filter Bar========================================= */}
       <div className='d-flex ms-5 me-5 flex-wrap ' style={{ gap: '2rem' }}>
         <FilterBar
-          initialTitle="All Locations"
-          NavItems={["All", "iKoi farm"]}
+          initialTitle= 
+          {
+            filterList.location === '' ? "All Location" : filterList.location === 'iKoi farm' ? "iKoi farm" : "iKoi farm"
+          }
+          NavItems={["All", "IKoiFarm"]}
           handleFilterChange={handleFilterChange}
           filter="location"
         />
 
         <FilterBar
-          initialTitle="Consign State"
+          initialTitle={
+            filterList.State === '' ? "Consign State" : filterList.State === '1' ? "Deposit Requests" : filterList.State === '2' ? "Koi Checks" : filterList.State === '3' ? "Price Agreements" : filterList.State === '4' ? "Fish Deliveries" : "Fish Sales"
+          }
           NavItems={["All", "Deposit Requests", "Koi Checks", "Price Agreements", "Fish Deliveries", "Fish Sales"]}
           handleFilterChange={handleFilterChange}
           filter="State"
@@ -196,7 +201,7 @@ export default function Manager() {
           <Form className="d-flex w-100 flex-row search-bar">
             <FormControl
               type="search"
-              placeholder="Find User"
+              placeholder="Find Consign"
               value={searchTerm}
               onChange={handleSearch}
               className="me-1"

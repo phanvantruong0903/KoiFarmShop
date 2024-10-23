@@ -2,7 +2,9 @@
     position: relative;
     opacity: 1;
   }
-  
+  .navbar-nav .nav-link.active{
+    color: #ffffff;
+  }
   /* Common styles for both .nav-link and .dropdown-toggle */
   .TopBar .nav-link,
   .TopBar .dropdown-toggle {
