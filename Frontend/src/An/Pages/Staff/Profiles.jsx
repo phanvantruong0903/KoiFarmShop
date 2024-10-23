@@ -17,14 +17,14 @@ import TableGen from '../../Components/Staff/TableGen';
 import ViewProfile from '../../Components/Staff/ViewProfile';
 // Axios
 import axiosInstance from '../../Utils/axiosJS';
-import { fetchProfiles } from '../../Utils/FetchHandler';
+
 export default function Profiles() {
   const [hoveredRow, setHoveredRow] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isActive, setIsActive] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [userID , setUserID] = useState(null);
-  const headers = ['#', 'User_ID', 'Name', 'Role', 'Email', 'Email Status', 'Address', 'Phone Number'];
+  const headers = ['#', 'Mã người dùng', 'Tên', 'Vai trò', 'Email', 'Trạng thái Email', 'Địa chỉ', 'Số điện thoại'];
   const fieldMapping = ['_id', 'name', 'role', 'email', 'verify', 'address', 'phone_number'];
   const handleRowAction = (id, actionType) => {
     if (actionType === 'delete') {
@@ -53,15 +53,7 @@ export default function Profiles() {
     });
     return count;
   }
-  function totalUser(data) {
-    let count = 0;
-    data.forEach(element => {
-      if (element.roleid === 1) {
-        count++;
-      }
-    })
-    return count;
-  }
+
   function totalStaff(data) {
     let count = 0;
     data.forEach(element => {
@@ -76,8 +68,8 @@ export default function Profiles() {
     setIsLoading(true);
     const fetchData = async () => {
       try {
-        const response = await fetchProfiles('Profiles:Line 97');
-        setIntialData(response);
+        const response = await axiosInstance.get('manager/manage-user/get-all');
+        setIntialData(response.data.result);
       } catch (error) {
         console.error('Error fetching data', error);
       } finally {
@@ -87,33 +79,30 @@ export default function Profiles() {
 
     fetchData();
   }, []);
-
   return (
     <div>
       <ViewProfile actions={showModal} setactions={setShowModal} id={userID}/>
-      <div className='fw-bold fs-1 ms-5 mb-5'>Profiles</div>
+      <div className='fw-bold fs-1 ms-5 mb-5'>Hồ sơ</div>
 
       <div className='d-flex ms-5 me-5 mb-3 Card-Container' style={{ height: '100px', gap: '1rem' }}>
         <div className='border rounded-3 p-2 flex-grow-1'>
-          <h4 className='fw-bold fs-4 fs-md-5'>Total User</h4>
+          <h4 className='fw-bold fs-4 fs-md-5'>Tổng số người dùng</h4>
           <p>{intialData.length}</p>
         </div>
 
         <div className='border rounded-3 p-2 flex-grow-1'>
-          <h4 className='fw-bold fs-4 fs-md-5'>Total Guest</h4>
-          <p>{totalManager(intialData)}</p>
+          <h4 className='fw-bold fs-4 fs-md-5'>Tổng số nhân viên</h4>
+          <p>{totalStaff(intialData)}</p>
         </div>
         <div className='border rounded-3 p-2 flex-grow-1'>
-          <h4 className='fw-bold fs-4 fs-md-5'>Total Customer</h4>
+          <h4 className='fw-bold fs-4 fs-md-5'>Tổng số quản lý</h4>
           <p>{totalManager(intialData)}</p>
         </div>
-
-
       </div>
       <div className='d-flex ms-5 me-5 Order-container' style={{ gap: '2rem' }}>
-        {/* ==============================Filter Button========================================= */}
+        {/* ==============================Nút Lọc========================================= */}
         <FilterButton
-          label="All"
+          label="Tất cả"
           filterType="role"
           filterValue=""
           currentFilter={filterList.role}
@@ -121,47 +110,57 @@ export default function Profiles() {
           count={intialData.length}
         />
         <FilterButton
-          label="All Users"
+          label="Tất cả Người dùng"
           filterType="role"
           filterValue="User"
           currentFilter={filterList.role}
           onFilterChange={handleFilterChange}
-          count={totalUser(intialData)}
+          count={
+            intialData.filter(user => user.roleid === 1 || user.roleid === undefined).length
+          }
         />
         <FilterButton
-          label="All Staffs"
+          label="Tất cả Nhân viên"
           filterType="role"
           filterValue="Staff"
           currentFilter={filterList.role}
           onFilterChange={handleFilterChange}
-          count={totalStaff(intialData)}
+          count={
+            intialData.filter(user => user.roleid === 2).length
+          }
         />
 
         <FilterButton
-          label="All Manager"
+          label="Tất cả Quản lý"
           filterType="role"
           filterValue="Manager"
           currentFilter={filterList.role}
           onFilterChange={handleFilterChange}
-          count={totalManager(intialData)}
+          count={
+            intialData.filter(user => user.roleid === 3).length
+          }
 
         />
 
       </div>
 
       <hr className="my-1 mb-4" />
-      {/* ==============================Filter Bar========================================= */}
+      {/* ==============================Thanh Lọc========================================= */}
       <div className='d-flex ms-5 me-5 flex-wrap ' style={{ gap: '2rem' }}>
         <FilterBar
-          initialTitle="All"
-          NavItems={["All", "User", "Staff", "Manager"]}
+          initialTitle={
+            filterList.role === '' ? "Tất cả" : filterList.role === 'Người dùng' ? "Người dùng" : filterList.role === 'Nhân viên' ? "Nhân viên" : "Vai trò Quản lý"
+          }
+          NavItems={["Tất cả", "Người dùng", "Nhân viên", "Quản lý"]}
           handleFilterChange={handleFilterChange}
           filter="role"
         />
 
         <FilterBar
-          initialTitle="Email Verified Status"
-          NavItems={["All", "Verified", "Not Verified"]}
+          initialTitle={
+            filterList.Email_verified === '' ? "Trạng thái Xác minh Email" : filterList.Email_verified === 'Verified' ? "Đã xác minh" : "Chưa xác minh"
+          }
+          NavItems={["Tất cả", "Đã xác minh", "Chưa xác minh"]}
           handleFilterChange={handleFilterChange}
           filter="Email_verified"
         />
@@ -171,7 +170,7 @@ export default function Profiles() {
           <Form className="d-flex w-100 flex-row search-bar">
             <FormControl
               type="search"
-              placeholder="Find User"
+              placeholder="Tìm Người dùng"
               value={searchTerm}
               onChange={handleSearch}
               className="me-1"

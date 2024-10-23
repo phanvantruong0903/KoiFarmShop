@@ -48,6 +48,7 @@ import ChangePassword from "./Components/ChangePassword";
 import FormFillInformation from "./Components/FormFillInformation";
 import Chart from "./An/Pages/Charts/Charts";
 import PaymentMethod from "./Components/Paymentmethod";
+import ManageInvoices from "./An/Pages/Manager/ManageInvoices";
 const router = createBrowserRouter([
   {
     path: "/login/oauth",
@@ -138,7 +139,7 @@ const router = createBrowserRouter([
     element: <OrderPage />, // Home component
   },
   {
-    path: "users/reset-password",
+    path: "reset-password",
     element: <ResetPassword />,
   },
   {
@@ -216,6 +217,14 @@ const router = createBrowserRouter([
             <Chart />
           </Suspense>
         ),
+      }, {
+        path: "manager/ManageInvoices",
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <ManageInvoices />
+          </Suspense>
+        ),
+
       },
       {
         path: "staff/Orders",
