@@ -119,43 +119,90 @@ class OrderDetailService {
         }
     }
 
-    async updateItemQuantity(payload, reqParams) {
-        const koi = await databaseService.kois.findOne({ _id: new ObjectId(payload.KoiID) })
-        const order = await databaseService.orderDetail.findOne({ _id: new ObjectId(reqParams.orderID) })
-        if(!order){
-            return 'Order not found'
+    async updateItemQuantity(payload, reqOrderDTCookie) {
+        const koiList = await this.getSamePropertiesKoi(payload.KoiID)
+        console.log("koiList: ", koiList)
+        const quantity = koiList?.length
+        if(payload.Quantity > quantity){
+            return `${quantity} available in stock`
         }
-        if(!koi){
-            return 'Koi not exiested'
-        }
-        let result, oldQuantity
-        if (order) {
-            result = await databaseService.orderDetail.findOneAndUpdate(
-                { _id: new ObjectId(reqParams.orderID) },
-                {
-                    $set: {
-                        Items: order.Items?.map((item) => {
-                            if (item.KoiID === payload.KoiID) {
-                                oldQuantity = item.Quantity;  // Capture oldQuantity here
-                                return {
-                                    KoiID: item.KoiID,
-                                    Quantity: payload.Quantity
-                                };
-                            } else {
-                                return {
-                                    KoiID: item.KoiID,
-                                    Quantity: item.Quantity
-                                }
-                            }
-                        }),
-                        TotalPrice: order.TotalPrice + koi.Price * (payload.Quantity - oldQuantity)
+        let orderDT
+        let oldPrice = 0
+        let updatedPrice = 0
+        let updatedList = koiList.slice(0, payload.Quantity);
+        console.log("updatedKoiList: ", updatedList)
+        if(reqOrderDTCookie){
+            orderDT = reqOrderDTCookie
+            console.log("orderDetail: ", orderDT)
+            orderDT?.Items.map(item=>{
+                const foundKoi = koiList?.find(koi=> koi._id.toString()===item.KoiID)
+                console.log('found koi: ', foundKoi)
+                if(foundKoi){
+                    oldPrice+=foundKoi.Price
+                }
+            })
+            console.log("old price: ", oldPrice)
+            
+            orderDT = {
+                Items: updatedList?.map((updatedKoi) => {
+                    
+
+                    updatedPrice += updatedKoi.Price 
+                    return {
+                        KoiID: updatedKoi._id,
+                        Quantity: 1
                     }
-                },
-                { returnDocument: 'after' }
-            )
+                }),
+                TotalPrice: orderDT?.TotalPrice - oldPrice + updatedPrice
+            }
+            console.log("updated Order detail: ", orderDT)
+            return {
+                orderDT,
+                samePropertiesKoi: koiList
+            }
+        }else{
+            return 'Order detail not found'
         }
-        return result
     }
+    // async updateItemQuantity(payload, reqParams, reqOrderDTCookie) {
+    //     const koi = await databaseService.kois.findOne({ _id: new ObjectId(payload.KoiID) })
+    //     const koiList = this.getSamePropertiesKoi(payload.KoiID)
+    //     console.log("koiList: ", koiList)
+    //     const order = await databaseService.orderDetail.findOne({ _id: new ObjectId(reqParams.orderID) })
+    //     if(!order){
+    //         return 'Order not found'
+    //     }
+    //     if(!koi){
+    //         return 'Koi not exiested'
+    //     }
+    //     let result, oldQuantity
+    //     if (order) {
+    //         result = await databaseService.orderDetail.findOneAndUpdate(
+    //             { _id: new ObjectId(reqParams.orderID) },
+    //             {
+    //                 $set: {
+    //                     Items: order.Items?.map((item) => {
+    //                         if (item.KoiID === payload.KoiID) {
+    //                             oldQuantity = item.Quantity;  // Capture oldQuantity here
+    //                             return {
+    //                                 KoiID: item.KoiID,
+    //                                 Quantity: payload.Quantity
+    //                             };
+    //                         } else {
+    //                             return {
+    //                                 KoiID: item.KoiID,
+    //                                 Quantity: item.Quantity
+    //                             }
+    //                         }
+    //                     }),
+    //                     TotalPrice: order.TotalPrice + koi.Price * (payload.Quantity - oldQuantity)
+    //                 }
+    //             },
+    //             { returnDocument: 'after' }
+    //         )
+    //     }
+    //     return result
+    // }
 
     async getKoiQuantity(payload) {
         // let koi = await databaseService.kois.findOne({_id: new ObjectId(payload.KoiID)})
@@ -321,9 +368,35 @@ class OrderDetailService {
         }
         const koiIdList = koiList?.map(koi => koi._id)
         return {
-            KoiList: koiList,
+            KoiList: koiList, 
             FirstKoiID: koiIdList[0],
             Quantity: koiList.length
+        }
+    }
+    async getSamePropertiesKoi(KoiID) {
+        const koi = await databaseService.kois.findOne({_id: new ObjectId(KoiID)})
+        let koiProperties, koiList
+        if(koi){
+            if(koi.Breed === 'Viet' || koi.Breed === 'F1'){
+                console.log("koi Viet hoac F1")
+                koiProperties = {
+                    CategoryID: koi.CategoryID,
+                    Breed: koi.Breed,
+                    Size: Number(koi.Size)
+                }
+            }else{
+                console.log("koi Nhat")
+                koiProperties = {
+                    CategoryID: koi.CategoryID,
+                    Breed: koi.Breed,
+                    Size: Number(koi.Size),
+                    Price: Number(koi.Price)
+                } 
+            }
+            koiList = await databaseService.kois.find(koiProperties).toArray()
+            return koiList
+        }else{
+            return {message: 'KoiID not found'}
         }
     }
 
@@ -331,12 +404,14 @@ class OrderDetailService {
         let koiList
         let newPrice = 0
         if (payload.Quantity) {
-            koiList = (await this.filterKoiId(payload)).KoiList
+            koiList = (await this.filterKoiId(payload)).KoiList || []
         }
+        console.log("koi list: ", koiList)
         let orderDT
 
-        if (reqCookie && reqCookie.Items) {
+        if (reqCookie && reqCookie.Items) { 
             orderDT = reqCookie
+            console.log("orderDetail: ", orderDT)
 
             if (!orderDT.Items) {
                 orderDT.Items = []
@@ -348,17 +423,18 @@ class OrderDetailService {
 
             // Thêm mục mới
             koiList.map(koi => {
-                const itemIndex = orderDT.Items.findIndex((item) => item.KoiID.toString() === koi._id.toString())
-                console.log("index: ", itemIndex)
-                if (itemIndex > -1) {
-                    // Increment the quantity if the KoiID exists
-                    orderDT.Items[itemIndex].Quantity++;
-                    newPrice += Number(koi.Price); // Add the price of just one more koi
-                } else {
-                    // Add new item
-                    orderDT.Items.push({ KoiID: koi._id, Quantity: 1 });
-                    newPrice += Number(koi.Price); // Add price for the new item
-                }
+                    const itemIndex = orderDT.Items.findIndex((item) => item.KoiID.toString() === koi._id.toString())
+                    console.log("index: ", itemIndex)
+                    if (itemIndex > -1) {
+                        // Increment the quantity if the KoiID exists
+                        orderDT.Items[itemIndex].Quantity++;
+                        newPrice += Number(koi.Price); // Add the price of just one more koi
+                    } else {
+                        // Add new item
+                        orderDT.Items.push({ KoiID: koi._id, Quantity: 1 });
+                        newPrice += Number(koi.Price); // Add price for the new item
+                    }
+                
             })
 
 
@@ -378,6 +454,7 @@ class OrderDetailService {
                 }),
                 TotalPrice: Number(newPrice) // Khởi tạo với giá của koi
             }
+            console.log("orderDT: ", orderDT)
         }
         const savedOrder = await this.saveOrderToDatabase(orderDT)
         return { orderDT: savedOrder, koiList }

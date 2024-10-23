@@ -3,7 +3,6 @@ import databaseService from './database.service.js'
 import { ObjectId } from 'mongodb'
 
 export const callback = async (req, res) => {
-  console.log('Cookies received in callback:', req.cookies)
   let result = {}
   console.log(req.body)
   try {
@@ -25,27 +24,27 @@ export const callback = async (req, res) => {
       const parsedData = JSON.parse(dataStr)
       const embedData = JSON.parse(parsedData.embed_data) // Phân tích cú pháp embed_data
       const reqOrderDetails = embedData.orderDetails // Thông tin đơn hàng
+      const reqOrder = embedData.order // Thông tin đơn hàng
 
       console.log('Order details from embed_data:', reqOrderDetails)
+      console.log('Order from embed_data:', reqOrder)
 
-      const koiIDs = reqOrderDetails.Items.map((item) => item.KoiID)
+      // const koiIDs = reqOrderDetails.Items.map((item) => item.KoiID)
 
-      for (const koiID of koiIDs) {
-        await databaseService.kois.findOneAndUpdate(
-          { _id: new ObjectId(koiID) }, // Tìm kiếm theo _id và trạng thái
-          { $set: { Status: 0 } }, // Cập nhật trạng thái thành 1
-          { new: true } // Trả về đối tượng đã cập nhật
-        )
-      }
+      // for (const koiID of koiIDs) {
+      //   await databaseService.kois.findOneAndUpdate(
+      //     { _id: new ObjectId(koiID) }, // Tìm kiếm theo _id và trạng thái
+      //     { $set: { Status: 0 } }, // Cập nhật trạng thái thành 1
+      //     { new: true } // Trả về đối tượng đã cập nhật
+      //   )
+      // }
 
       if (!reqOrderDetails) {
         result.returncode = -1
         result.returnmessage = 'No order data found in embed_data'
       } else {
-        // PHẦN CỦA M NÈ TRƯỜNG LÊ
-        const reqOrderCookie = req.cookies && req.cookies.order ? JSON.parse(req.cookies.order) : {}
-        console.log("cookies check: ",reqOrderCookie)
-        const result = await saveOrderToDatabase(reqOrderCookie)
+        const result = await saveOrderToDatabase(reqOrder)
+        console.log("database value: ", result)
 
         await databaseService.order.findOneAndUpdate(
           { _id: new ObjectId(OrderID) },
@@ -57,6 +56,7 @@ export const callback = async (req, res) => {
           result.returnmessage = result.error
         } else {
           res.clearCookie('order')
+          res.clearCookie('orderDT')
           result.returncode = 1
           result.returnmessage = 'success'
         }

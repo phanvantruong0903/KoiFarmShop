@@ -3,7 +3,8 @@ import CryptoJS from 'crypto-js';
 import moment from 'moment';
 
 const zaloPayment = async (req, res) => {
-  const reqOrderCookie = req.cookies && req.cookies.orderDT ? JSON.parse(req.cookies.orderDT) : {}; // Lấy từ cookie orderDT
+  const reqOrderDTCookie = req.cookies && req.cookies.orderDT ? JSON.parse(req.cookies.orderDT) : {}; // Lấy từ cookie orderDT
+  const reqOrderCookie = req.cookies && req.cookies.order ? JSON.parse(req.cookies.order) : {}; // Lấy từ cookie order
 
   const config = {
     app_id: '2554',
@@ -14,7 +15,8 @@ const zaloPayment = async (req, res) => {
 
   const embed_data = {
     redirecturl: 'https://www.facebook.com/',
-    orderDetails: reqOrderCookie // Thêm thông tin đơn hàng từ cookie vào embed_data
+    orderDetails: reqOrderDTCookie, // Thêm thông tin đơn hàng từ cookie vào embed_data
+    order: reqOrderCookie // Thêm thông tin đơn hàng từ cookie vào embed_data
   };
 
   const items = [{}];
@@ -29,7 +31,7 @@ const zaloPayment = async (req, res) => {
     amount: req.body.total,
     description: `KOI Shop - Payment for the order + ${Math.floor(100000 + Math.random() * 900000)}`,
     bank_code: '',
-    callback_url: 'https://f559-171-247-187-77.ngrok-free.app/payment/callback'
+    callback_url: 'https://dc21-2405-4802-80d9-a360-b8ba-92da-6f85-7f42.ngrok-free.app/payment/callback'
   };
 
   // Tạo MAC cho yêu cầu
