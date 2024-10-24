@@ -9,6 +9,7 @@ export default class SupplierSchema {
   SupplierDescription = ''
   SupplierImage = ''
   SupplierVideo = ''
+  SupplierWebsite = ''
 
   constructor(supplier) {
     this._id = supplier?._id ?? new ObjectId() // tự tạo id
@@ -19,5 +20,6 @@ export default class SupplierSchema {
     this.SupplierDescription = supplier.SupplierDescription || ''
     this.SupplierImage = supplier.SupplierImage || ''
     this.SupplierVideo = supplier.SupplierVideo || ''
+    this.SupplierWebsite = supplier.SupplierWebsite || ''
   }
 }

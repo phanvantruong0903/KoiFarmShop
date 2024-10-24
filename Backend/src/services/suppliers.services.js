@@ -39,7 +39,11 @@ class SuplliersService {
           SupplierName: payload.SupplierName,
           Address: payload.Address,
           Country: payload.Country,
-          PhoneNumber: payload.PhoneNumber
+          PhoneNumber: payload.PhoneNumber,
+          SupplierDescription: payload.SupplierDescription,
+          SupplierImage: payload.SupplierImage,
+          SupplierVideo: payload.SupplierVideo,
+          SupplierWebsite: payload.SupplierWebsite
         }
       }
     ])
