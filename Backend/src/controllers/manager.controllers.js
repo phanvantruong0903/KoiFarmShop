@@ -299,7 +299,7 @@ export const getProfitController = async (req, res) => {
             const koiPrices = checkKoi.map((koi) => koi.TotalPrice) // Lưu giá từ bảng kois
 
             for (let i = 0; i < statuses.length; i++) {
-              const orderDate = new Date(orderDetail.OrderDate)
+              const orderDate = new Date(orders.OrderDate)
               const formattedDate = `${orderDate.getUTCDate().toString().padStart(2, '0')}/${(orderDate.getUTCMonth() + 1).toString().padStart(2, '0')}/${orderDate.getUTCFullYear()}`
 
 
