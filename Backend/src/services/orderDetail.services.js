@@ -143,6 +143,9 @@ class OrderDetailService {
         const koiList = await this.getSamePropertiesKoi(payload.KoiID)
         console.log("koiList: ", koiList)
         const quantity = koiList?.length
+        if(!payload.Quantity){
+            return 'Quantity is required'
+        }
         if(payload.Quantity > quantity){
             return `${quantity} available in stock`
         }
