@@ -27,8 +27,8 @@ class OrdersService {
         return newUser
     }
 
-    async createOrder(payload, reqParams, reqOrderCookie) {
-        const orderDTID = reqParams.orderDetailID
+    async createOrder(payload, reqOrderDTCookie, reqOrderCookie) {
+        const orderDT = reqOrderDTCookie
         const existedUser = await databaseService.users.findOne({ email: payload.email })
 
         let user, user_id
@@ -46,7 +46,7 @@ class OrdersService {
         reqOrderCookie = {
             // _id: new ObjectId(),
             UserID: user._id,
-            OrderDetailID: orderDTID,
+            OrderDetailID: orderDT?._id,
             ShipAddress: payload.ShipAddress,
             Description: payload.Description,
             OrderDate: new Date(),
@@ -58,9 +58,9 @@ class OrdersService {
         // newOrder = await this.saveOrderToDatabase(orderPayload)
         // const order = await databaseService.order.findOne({ _id: new ObjectId(newOrder.insertedId) })
         // console.log("order detail id: ", orderDTID)
-        const orderDetail = await databaseService.orderDetail.findOne({ _id: new ObjectId(orderDTID) })
+        // const orderDetail = await databaseService.orderDetail.findOne({ _id: new ObjectId(orderDTID) })
         const koiList = await Promise.all(
-            orderDetail.Items.map(item => databaseService.kois.findOne({ _id: new ObjectId(item.KoiID) }))
+            orderDT.Items.map(item => databaseService.kois.findOne({ _id: new ObjectId(item.KoiID) }))
         );
 
         return {
@@ -74,7 +74,7 @@ class OrdersService {
             //     Type: order.Type,
             //     Status: order.Status
             // }, koiList
-            user, order: reqOrderCookie, orderDetail, koiList
+            user, order: reqOrderCookie, orderDetail: orderDT, koiList
         }
     }
 

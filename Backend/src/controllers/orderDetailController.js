@@ -53,12 +53,38 @@ export const buyNowController = async (req, res) => {
 
 export const getOrderDetailController = async (req, res) => {
   try {
-    const result = await orderDetailService.fetchOrder(req.params);
+    let reqCookie = req.cookies && req.cookies.orderDT ? JSON.parse(req.cookies.orderDT) : {}; // fix phải check có trong cookies trước
+    const result = await orderDetailService.fetchOrder(reqCookie);
 
     console.log("result: ", result)
     if(result!==null){
       return res.json({
         message: USERS_MESSAGES.GET_ORDER_SUCCESS,
+        result
+      })
+    }else{
+      return res.json({
+        message: USERS_MESSAGES.ORDER_NOT_FOUND
+      })
+    }
+    
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+};
+export const removeItemsDetailController = async (req, res) => {
+  try {
+    const reqOrderDTCookie = req.cookies && req.cookies.orderDT ? JSON.parse(req.cookies.orderDT) : {}
+    const result = await orderDetailService.removeItem(req.body,reqOrderDTCookie);
+    console.log("result: ", result)
+    
+    if(result!==null && result.orderDT.TotalPrice>=0){
+      res.cookie('orderDT', JSON.stringify(result.orderDT), {
+        httpOnly: true,
+        maxAge: 1800000 // 30 mins
+      });
+      return res.json({
+        message: USERS_MESSAGES.REMOVE_ITEM_SUCCESS,
         result
       })
     }else{

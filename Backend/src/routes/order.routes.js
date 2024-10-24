@@ -8,6 +8,7 @@ import {
   getOrderDetailController,
   makeOrderDetailController,
   makeOrdersDetailController,
+  removeItemsDetailController,
   updateOrderDetailController
 } from '../controllers/orderDetailController.js'
 import { createOrderController, getOrderController, saveOrderController } from '../controllers/order.controllers.js'
@@ -20,11 +21,12 @@ const orderRouter = Router()
 orderRouter.post('/detail/make', makeOrderDetailController)
 orderRouter.post('/detail/makes', makeOrdersDetailController)
 orderRouter.post('/detail/buy', buyNowController)
-orderRouter.get('/detail/:orderID', getOrderDetailController)
+orderRouter.get('/detail', getOrderDetailController)
 orderRouter.post('/detail/edit', updateOrderDetailController)
 orderRouter.post('/detail/price', getKoiQuantityController)
+orderRouter.post('/detail/remove', removeItemsDetailController)
 //Order
-orderRouter.post('/create/:orderDetailID', createOrderController)
+orderRouter.post('/create', createOrderController)
 orderRouter.get('/',accessTokenValidator, wrapAsync(getOrderController))
 //Price
 orderRouter.post('/detail/price/minmax', getMinMaxPriceController)
