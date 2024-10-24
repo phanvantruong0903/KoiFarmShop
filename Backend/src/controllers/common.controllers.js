@@ -5,6 +5,7 @@ import { ErrorWithStatus } from '../models/Errors.js'
 import databaseService from '../services/database.service.js'
 import koisService from '../services/kois.services.js'
 import { ObjectId } from 'mongodb'
+import suplliersService from '../services/suppliers.services.js'
 
 export const createNewKoiKiGuiController = async (req, res) => {
   try {
@@ -37,5 +38,30 @@ export const authorizationController = async (req, res) => {
     res.status(error.status || HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
       message: error.message || 'Internal Server Error'
     })
+  }
+}
+
+export const guestGetAllSupplierController = async (req, res) => {
+  try {
+    const result = await suplliersService.guestGetAllSupplier()
+    return res.json({
+      message: MESSAGES.GET_ALL_SUPPLIER_SUCCESS,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+
+export const guestGetSupplierController = async (req, res) => {
+  try {
+    const { _id } = req.params
+    const result = await suplliersService.guestGetSupplier(_id)
+    return res.json({
+      message: MESSAGES.GET_SUPPLIER_SUCCESS,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
   }
 }

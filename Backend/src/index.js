@@ -9,7 +9,7 @@ import { defaultErrorHandler } from './middlewares/error.middlewares.js'
 import cors from 'cors' // Thêm import cho cors
 
 import managerRouter from './routes/manager.routes.js'
-import { authorizationController, createNewKoiKiGuiController } from './controllers/common.controllers.js'
+import { authorizationController, createNewKoiKiGuiController, guestGetAllSupplierController, guestGetSupplierController } from './controllers/common.controllers.js'
 import { getKoiByCategoryIDController } from './controllers/home.controllers.js'
 
 import { createNewKoiKiGuiValidator } from './middlewares/common.middlewares.js'
@@ -42,10 +42,18 @@ app.use('/admins', adminRouter)
 app.use('/categories', categoryRouter)
 
 app.use('/manager', managerRouter)
-app.use('/kois/:CategoryID', getKoiByCategoryIDController)
-app.use('/getAllKoi', getKois)
+app.use('/kois/:CategoryID', wrapAsync(getKoiByCategoryIDController))
+app.use('/getAllKoi', wrapAsync(getKois))
 
-app.post('/authorization', accessTokenValidator, authorizationController)
+app.post('/authorization', accessTokenValidator, wrapAsync(authorizationController))
+
+app.get(
+  '/get-all-supplier',
+  wrapAsync(guestGetAllSupplierController)
+)
+
+app.get('/supplierDetail/:_id', wrapAsync(guestGetSupplierController))
+
 
 app.use(defaultErrorHandler)
 
