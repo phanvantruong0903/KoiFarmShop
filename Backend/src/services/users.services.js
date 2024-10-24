@@ -324,7 +324,7 @@ class UsersService {
       }
     )
     return user
-  }
+  } 
 
   async updateMe(user_id, payload) {
     const _payload = payload
@@ -411,26 +411,26 @@ class UsersService {
   }
 
   //_getOAuthGoogleToken dùng code nhận đc để yêu cầu google tạo id_token
-  async _getOAuthGoogleToken(code) {
-    const body = {
-      code,
-      client_id: process.env.GOOGLE_CLIENT_ID, //khai báo trong .env bằng giá trị trong file json
-      client_secret: process.env.GOOGLE_CLIENT_SECRET, //khai báo trong .env bằng giá trị trong file json
-      redirect_uri: process.env.GOOGLE_REDIRECT_URI, //khai báo trong .env bằng giá trị trong file json
-      grant_type: 'authorization_code'
-    }
-    //giờ ta gọi api của google, truyền body này lên để lấy id_token
-    //ta dùng axios để gọi api `npm i axios`
-    const { data } = await axios.post(`https://oauth2.googleapis.com/token`, body, {
-      headers: {
-        'Content-Type': 'application/json' //kiểu truyền lên là form
+    async _getOAuthGoogleToken(code) {
+      const body = {
+        code,
+        client_id: process.env.GOOGLE_CLIENT_ID, //khai báo trong .env bằng giá trị trong file json
+        client_secret: process.env.GOOGLE_CLIENT_SECRET, //khai báo trong .env bằng giá trị trong file json
+        redirect_uri: process.env.GOOGLE_REDIRECT_URI, //khai báo trong .env bằng giá trị trong file json
+        grant_type: 'authorization_code'
       }
-    }) //nhận đc response nhưng đã rã ra lấy data
-    return {
-      access_token: data.access_token,
-      id_token: data.id_token
+      //giờ ta gọi api của google, truyền body này lên để lấy id_token
+      //ta dùng axios để gọi api `npm i axios`
+      const { data } = await axios.post(`https://oauth2.googleapis.com/token`, body, {
+        headers: {
+          'Content-Type': 'application/json' //kiểu truyền lên là form
+        }
+      }) //nhận đc response nhưng đã rã ra lấy data
+      return {
+        access_token: data.access_token,
+        id_token: data.id_token
+      }
     }
-  }
 
   //dùng id_token để lấy thông tin của người dùng
   async _getGoogleUserInfo(access_token, id_token) {
@@ -516,6 +516,7 @@ class UsersService {
     }
   }
 }
+
 
 const usersService = new UsersService()
 export default usersService

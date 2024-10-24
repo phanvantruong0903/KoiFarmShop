@@ -41,6 +41,31 @@ export const authorizationController = async (req, res) => {
   }
 }
 
+export const getAllServiceController = async (req, res) => {
+  try {
+    const result = await databaseService.services.find().toArray()
+    res.json({
+      result
+    })
+  } catch (error) {
+    res.status(error.status || HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
+      message: error.message || 'Internal Server Error'
+    })
+  }
+}
+
+export const getKoiByIDController = async (req, res) => {
+  try {
+    const { KoiID } = req.params
+    const result = await databaseService.kois.find({ _id: new ObjectId(KoiID) })
+    res.json({
+      result
+    })
+  } catch (error) {
+    res.status(404).json({ messga: 'Koi not found' })
+  }
+}
+
 export const guestGetAllSupplierController = async (req, res) => {
   try {
     const result = await suplliersService.guestGetAllSupplier()

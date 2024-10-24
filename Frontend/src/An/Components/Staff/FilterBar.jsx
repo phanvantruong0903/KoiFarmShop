@@ -3,13 +3,14 @@ import { DropdownButton, Dropdown } from "react-bootstrap";
 
 export default function FilterBar({ initialTitle, NavItems, handleFilterChange, filter }) {
   const checkEmptyString = (item) => {
-    if (item === 'All') {
+    if (item === 'All' || item === 'Tất cả') {
+      
       return true;
     }
     return false;
   }
   function filterMapping (filter,e){
-    if (filter === 'Status'){
+    if (filter === 'State'){
       const statusMapping = {
         "All": "",
         "Deposit Requests": "1",
@@ -21,10 +22,18 @@ export default function FilterBar({ initialTitle, NavItems, handleFilterChange, 
       return statusMapping[e];      
 
     }
+    else if (filter === 'Status'){
+      const methodMapping = {
+        "All": "",
+        "Received": "1",
+        "Sold Out": "2",
+      };
+      return methodMapping[e];      
+    }
     return e;
   }
   return (
-    <DropdownButton id="dropdown-basic-button" title={initialTitle} onSelect={(e) => handleFilterChange(filter, filterMapping( filter,e))}>
+    <DropdownButton id="dropdown-basic-button" title={initialTitle} onSelect={(e) => handleFilterChange(filter, filterMapping(filter,e))}>
       {NavItems.map((item) => (
         <Dropdown.Item key={item} eventKey={checkEmptyString(item)  ? '' : item} >
           {item}

@@ -46,3 +46,7 @@ h5 {
     width: 100vw !important; 
     max-width: 20vw !important;
 }
+.modal-50w{
+    width: 100vw !important; 
+    max-width: 50vw !important;
+}

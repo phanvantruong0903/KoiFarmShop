@@ -41,6 +41,14 @@ class DatabaseService {
       throw error
     }
   }
+  get orderDetail() {
+    try {
+      return this._db.collection('OrderDetail')
+    } catch (error) {
+      console.log(error + 'lỗi ở database service - get orderDetail')
+      throw error
+    }
+  }
   get kois() {
     try {
       return this._db.collection('kois')
@@ -53,7 +61,6 @@ class DatabaseService {
   async indexUsers() {
     await this.users.createIndex({ email: 1 }, { unique: true }) //register
     await this.users.createIndex({ username: 1 }, { unique: true }) //getProfile
-    await this.users.createIndex({ email: 1, password: 1 }) //login
   }
 
   get refreshTokens() {
@@ -92,6 +99,14 @@ class DatabaseService {
     }
   }
 
+  get services() {
+    try {
+      return this._db.collection(process.env.DB_SERVICES_COLLECTION)
+    } catch (error) {
+      console.log(error + 'lỗi ở database service - get services')
+    }
+  }
+
   get suppliers() {
     try {
       return this._db.collection(process.env.DB_SUPPLIERS_COLLECTION)
@@ -113,6 +128,14 @@ class DatabaseService {
       return this._db.collection(process.env.DB_GROUP_KOI_COLLECTION)
     } catch (error) {
       console.log(error + 'lỗi ở database service - get group kois')
+    }
+  }
+
+  get invoice(){
+    try {
+      return this._db.collection(DB_INVOICES_COLLECTION)
+    } catch (error) {
+      console.log(error + 'lỗi ở database service - get invoice')
     }
   }
 }

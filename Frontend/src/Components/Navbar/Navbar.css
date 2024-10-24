@@ -1,144 +1,133 @@
-/* custom.css */
-
-/* Loại bỏ bất kỳ kiểu caret mặc định nào */
-.no-caret .dropdown-toggle {
-  background-image: none;
-  color: black; /* custom.css */
-
-  /* Ẩn caret */
-  .no-caret .dropdown-toggle::after {
-    display: none;
-  }
-
-  /* Loại bỏ bất kỳ kiểu caret mặc định nào */
-  .no-caret .dropdown-toggle {
-    background-image: none;
-    color: black;
-    background-color: transparent;
-  }
-
-  /* Loại bỏ viền và bóng */
-  .no-border .dropdown-toggle {
-    border: none;
-    box-shadow: none;
-  }
-
-  /* Loại bỏ màu xanh khi nhấn vào nút */
-  .no-border .dropdown-toggle:active {
-    background-color: transparent;
-    box-shadow: none;
-  }
-
-  /* Làm đậm chữ khi hover */
-  .dropdown-menu .dropdown-item:hover {
-    font-weight: bold;
-  }
-
-  /* Đảm bảo các dropdown không bị đè lên nhau */
-  .dropdown {
-    position: relative;
-  }
-
-  background-color: transparent;
+.navbar {
+  background-color: #1d1d1d; /* Màu nền giống trang ví dụ */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  left: 0; /* Đẩy sang trái */
+  height: 80px;
+  width: 100%; /* Giữ chiều rộng 100% */
+  z-index: 1000;
+  padding: 5px 20px; /* Giảm padding để giảm chiều cao */
+  opacity: 0.92;
 }
 
-/* Loại bỏ viền và bóng */
-.no-border .dropdown-toggle {
-  border: none;
-  box-shadow: none;
+.navbar-content {
+  display: flex;
+  align-items: center; /* Căn giữa theo chiều dọc */
+  justify-content: space-between; /* Phân bổ không gian giữa các mục */
+  width: 90%;
+  margin: 0 auto;
+  height: 80px; /* Đảm bảo chiều cao của navbar */
 }
 
-/* Loại bỏ màu xanh khi nhấn vào nút */
-.no-border .dropdown-toggle:active {
-  background-color: transparent;
-  box-shadow: none;
+.logo {
+  width: 80px; /* Giảm kích thước logo */
+  height: auto;
+  margin-right: 15px; /* Giảm khoảng cách giữa logo và các liên kết */
 }
 
-/* Làm đậm chữ khi hover */
-.dropdown-menu .dropdown-item:hover {
+.nav-links {
+  display: flex; /* Đảm bảo các liên kết được hiển thị trên một hàng */
+  align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+/* Hiệu ứng cho nav-link và nav-dropdown-toggle giống nhau */
+.nav-link,
+.nav-dropdown-toggle {
+  position: relative; /* Để tạo vị trí cho pseudo-element */
+  color: white; /* Màu chữ */
+  text-decoration: none; /* Bỏ gạch chân */
+  padding: 10px 15px; /* Padding cho liên kết */
+  transition: color 0.3s ease; /* Hiệu ứng chuyển đổi màu chữ */
   font-weight: bold;
 }
 
-.navbar {
-  display: flex;
-  width: 100vw;
-  justify-content: center;
-  align-items: center;
-  height: 100px;
-  background-color: black;
-  position: fixed;
-  z-index: 9999;
-  right: 0;
-  left: 0;
+.nav-link:hover,
+.nav-dropdown-toggle:hover {
+  color: white; /* Đặt màu chữ là trắng khi hover */
 }
 
-.navbar.shrink {
-  height: 50px;
-  top: 10px;
-  animation: stuckMoveDown 0.6s;
+.nav-link::after,
+.nav-dropdown-toggle::after {
+  content: ""; /* Tạo pseudo-element */
+  position: absolute; /* Đặt nó tuyệt đối */
+  left: 50%; /* Đặt nó ở giữa */
+  bottom: 0; /* Đặt nó ở dưới cùng */
+  width: 50%; /* Đặt chiều rộng bằng một nửa chiều rộng của liên kết */
+  height: 2px; /* Độ dày của thanh */
+  background-color: white; /* Màu của thanh */
+  transform: translateX(-50%) scaleX(0); /* Ẩn thanh */
+  transition: transform 0.3s ease; /* Hiệu ứng chuyển đổi cho thanh */
 }
 
-.dropdown-menu-columns .dropdown-item {
-  flex: 1; /* Chia đều thành 3 cột */
-  white-space: 150px;
-}
-.dropdown-enter {
-  opacity: 0;
-  transform: translateY(-20px);
+.nav-link:hover::after,
+.nav-dropdown-toggle:hover::after {
+  transform: translateX(-50%) scaleX(1); /* Hiện thanh khi hover */
 }
 
-.dropdown-enter-active {
-  opacity: 1;
-  transform: translateY(0);
-  transition: all 300ms ease-in-out;
+.nav-dropdown {
+  margin-left: 15px; /* Giảm khoảng cách giữa dropdown và các liên kết */
 }
 
-.dropdown-exit {
-  opacity: 1;
-  transform: translateY(0);
+.nav-dropdown-toggle {
+  background-color: transparent; /* Đảm bảo nền trong suốt */
+  border: none;
+  font-weight: bold;
+  font-size: 16px; /* Kích thước font */
 }
 
-.dropdown-exit-active {
-  opacity: 0;
-  transform: translateY(-20px);
-  transition: all 300ms ease-in-out;
-}
-@keyframes fallDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-}
-
-.dropdown-menu {
-  display: none;
-  opacity: 0;
-  transition: all 0.3s ease-in-out;
-}
-
-.dropdown-menu.show {
-  display: block;
-  opacity: 1;
-}
-.custom-dropdown {
-  position: relative;
-}
-
-.custom-toggle {
-  background-color: transparent !important;
-  border: none !important;
-  color: #f2e8c6 !important;
-  font-weight: 400 !important;
-  font-size: 25px !important;
-  padding-right: 10px !important;
+.nav-dropdown-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Màu nền hover cho mục dropdown */
 }
 
 .custom-menu {
-  min-width: 200px;
-  border-radius: 0px;
-  width: 100%;
+  background-color: #1d1d1d; /* Màu nền cho dropdown */
+  border: none;
+}
+
+/* Hiệu ứng hover cho các mục trong dropdown */
+.custom-menu .dropdown-item {
+  position: relative; /* Để tạo vị trí cho pseudo-element */
+  color: white; /* Màu chữ */
+  font-size: 14px; /* Kích thước font */
+  padding: 5px 10px; /* Padding cho các mục trong dropdown */
+  transition: color 0.3s ease; /* Hiệu ứng chuyển đổi màu chữ */
+}
+
+.custom-menu .dropdown-item::after {
+  content: ""; /* Tạo pseudo-element */
+  position: absolute; /* Đặt nó tuyệt đối */
+  left: 50%; /* Đặt nó ở giữa */
+  bottom: 0; /* Đặt nó ở dưới cùng */
+  width: 50%; /* Đặt chiều rộng bằng một nửa chiều rộng của mục */
+  height: 2px; /* Độ dày của thanh */
+  background-color: whitesmoke; /* Màu của thanh */
+  transform: translateX(-50%) scaleX(0); /* Ẩn thanh */
+  transition: transform 0.3s ease; /* Hiệu ứng chuyển đổi cho thanh */
+}
+
+.custom-menu .dropdown-item:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Màu nền hover cho mục dropdown, độ mờ 10% */
+  color: white; /* Màu chữ hover */
+}
+
+.custom-menu .dropdown-item:hover::after {
+  transform: translateX(-50%) scaleX(1); /* Hiện thanh khi hover */
+}
+
+.auth-links {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* Đẩy các nút đăng nhập và giỏ hàng sang bên phải */
+}
+
+.custom-link {
+  font-size: 14px; /* Giảm kích thước font cho nút */
+  padding: 5px 10px; /* Giảm padding cho nút */
+}
+
+.cart-icon {
+  color: white;
+  font-size: 20px; /* Giảm kích thước icon giỏ hàng */
+  margin-left: 20px;
 }

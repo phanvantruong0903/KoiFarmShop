@@ -112,6 +112,24 @@ export const USERS_MESSAGES = {
   KOI_IMAGE_IS_REQUIRED: 'Koi image is required',
   //koi video
   KOI_VIDEO_IS_REQUIRED: 'Koi video is required',
+  //koi quantity
+  GET_AVAILABLE_KOI_QUANTITY: 'Get available koi quantity success',
+  //koi price
+  GET_MIN_MAX_PRICE: 'Get min max price of koi success',
+  //koi not found
+  KOI_NOT_FOUND: 'Koi not found',
+  GET_KOI_SUCCESS: 'Get koi success',
+  OUT_OF_STOCK: 'Out of stock',
+  //order
+  GET_ORDER_SUCCESS: 'Get order success',
+  UPDATE_ORDER_SUCCESS: 'Update order success',
+  MAKE_ORDER_SUCCESS: 'Make order success',
+  BUY_ORDER_SUCCESS: 'Buy success',
+  CREATE_ORDER_SUCCESS: 'Create order success',
+  ORDER_NOT_FOUND: 'Order not found',
+  REMOVE_ITEM_SUCCESS:'Remove item from order detail success',
+  //save
+  SAVE_TO_DB_SUCCESS:'Save order to database success',
   //check authorization
   CHECK_AUTHORIZATION_SUCCESS: 'Check authorization success',
   //get all consign

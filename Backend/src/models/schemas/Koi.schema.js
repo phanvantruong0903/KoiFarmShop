@@ -2,7 +2,6 @@ import { ObjectId } from 'mongodb'
 
 export default class KoiSchema {
   _id = new ObjectId()
-  GroupKoiID = ''
   CategoryID = ''
   KoiName = ''
   Age = ''
@@ -21,7 +20,6 @@ export default class KoiSchema {
 
   constructor(koi) {
     this._id = koi?._id ?? new ObjectId() // tự tạo id
-    this.GroupKoiID = koi.GroupKoiID || ''
     this.CategoryID = koi.CategoryID || ''
     this.KoiName = koi.KoiName || ''
     this.Age = koi.Age || ''

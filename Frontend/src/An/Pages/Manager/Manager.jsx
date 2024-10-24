@@ -6,19 +6,25 @@ import Spinner from "../../Components/Spinner"
 import FilterButton from "../../Components/Staff/FilterButton"
 import TableGen from "../../Components/Staff/TableGen"
 import FilterBar from "../../Components/Staff/FilterBar"
+import ConsignDetailModal from "../../Components/Manager/ConsignDetailModal"
 import { Form, FormControl } from "react-bootstrap"
 import '../../Css/Orders.css'
-
+import { whatRole } from "../../Utils/valueParser"
 export default function Manager() {
   const [intialData, setIntialData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [hoveredRow, setHoveredRow] = useState(null);
   const [isActive, setIsActive] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [consignID, setConsignID] = useState(null);
   const { searchTerm, handleFilterChange, filteredData, handleSearch, filterList } = useFilter(intialData, 'consign');
   const handleRowAction = (id, actionType) => {
     if (actionType === 'delete') {
 
       console.log(`Delete user with ID: ${id}`);
+    }
+    else if (actionType === 'view') {
+      setConsignID(id)
     }
   };
   const handleMouseEnter = (index) => {
@@ -27,8 +33,8 @@ export default function Manager() {
   const handleMouseLeave = () => {
     setHoveredRow(null);
   };
-  const headers = ['#', 'User_ID', 'Shipped Date', 'Receipt Date', 'Description', 'Status', 'Method', 'Position Care'];
-  const fieldMapping = ['_id', 'ShippedDate', 'ReceiptDate', 'Description', 'Status', 'Method', 'PositionCare']
+  const headers = ['#', 'Consign ID', 'Shipped Date', 'Receipt Date', 'Description', 'State', 'Method', 'Position Care'];
+  const fieldMapping = ['_id', 'ShippedDate', 'ReceiptDate', 'Description', 'State', 'Method', 'PositionCare']
   useEffect(() => {
     setIsLoading(true);
     const fetchData = async () => {
@@ -44,45 +50,50 @@ export default function Manager() {
     fetchData()
   }
     , [])
-    function totalKoiChecks(data) {
-      let count = 0;
-      data.forEach(element => {
-        if (element.Status === 1) {
+  function totalKoiChecks(data) {
+    let count = 0;
+    data.forEach(element => {
+      if (element.State === 1) {
+        count++;
+      }
+    });
+    return count;
+  }
+  function totalPriceAgreements(data) {
+    let count = 0;
+    data.forEach(element => {
+      if (element.State === 2) {
+        count++;
+      }
+    });
+    return count;
+  }
+  function totalFishDeliveries(data) {
+    let count = 0;
+    data.forEach(element => {
+      if (element.State === 3) {
+        count++;
+      }
+    });
+    return count;
+  }
+  function totalFishSales(data) {
+    let count = 0;
+    data.forEach(element => {
+      if (element.State === 4) {
           count++;
-        }
-      });
-      return count;
-    }
-    function totalPriceAgreements(data) {
-      let count = 0;
-      data.forEach(element => {
-        if (element.Status === 2) {
-          count++;
-        }
-      });
-      return count;
-    }
-    function totalFishDeliveries(data) {
-      let count = 0;
-      data.forEach(element => {
-        if (element.Status === 3) {
-          count++;
-        }
-      });
-      return count;
-    }
-    function totalFishSales(data) {
-      let count = 0;
-      data.forEach(element => {
-        if (element.Status === 4) {
-          count++;
-        }
-      });
-      return count;
-    }
+          console.log(element)
+      }
+    });
+    return count;
+  }
+  
 
   return (
     <div>
+      <ConsignDetailModal actions={showModal} setactions={setShowModal} consignID={consignID} />
+
+
       <div className='fw-bold fs-1 ms-5 mb-5'>Consign</div>
 
       <div className='d-flex ms-5 me-5 mb-3 Card-Container' style={{ height: '100px', gap: '1rem' }}>
@@ -114,51 +125,51 @@ export default function Manager() {
         {/* ==============================Filter Button========================================= */}
         <FilterButton
           label="All"
-          filterType="Status"
+          filterType="State"
           filterValue=""
-          currentFilter={filterList.Status}
+          currentFilter={filterList.State}
           onFilterChange={handleFilterChange}
           count={intialData.length}
         />
         <FilterButton
           label=" Deposit Requests"
-          filterType="Status"
+          filterType="State"
           filterValue="1"
-          currentFilter={filterList.Status}
+          currentFilter={filterList.State}
           onFilterChange={handleFilterChange}
           count={totalKoiChecks(intialData)}
         />
         <FilterButton
           label="Koi Checks"
-          filterType="Status"
+          filterType="State"
           filterValue="2"
-          currentFilter={filterList.Status}
+          currentFilter={filterList.State}
           onFilterChange={handleFilterChange}
           count={totalPriceAgreements(intialData)}
         />
 
         <FilterButton
           label="Price Agreements"
-          filterType="Status"
+          filterType="State"
           filterValue="3"
-          currentFilter={filterList.Status}
+          currentFilter={filterList.State}
           onFilterChange={handleFilterChange}
           count={totalFishDeliveries(intialData)}
 
         />
         <FilterButton
           label="Fish Deliveries"
-          filterType="Status"
+          filterType="State"
           filterValue="4"
-          currentFilter={filterList.Status}
+          currentFilter={filterList.State}
           onFilterChange={handleFilterChange}
           count={totalFishSales(intialData)}
         />
         <FilterButton
           label="Fish Sales"
-          filterType="Status"
+          filterType="State"
           filterValue="5"
-          currentFilter={filterList.Status}
+          currentFilter={filterList.State}
           onFilterChange={handleFilterChange}
           count={totalFishSales(intialData)}
         />
@@ -167,17 +178,22 @@ export default function Manager() {
       {/* ==============================Filter Bar========================================= */}
       <div className='d-flex ms-5 me-5 flex-wrap ' style={{ gap: '2rem' }}>
         <FilterBar
-          initialTitle="All Locations"
-          NavItems={["All", "iKoi farm"]}
+          initialTitle= 
+          {
+            filterList.location === '' ? "All Location" : filterList.location === 'iKoi farm' ? "iKoi farm" : "iKoi farm"
+          }
+          NavItems={["All", "IKoiFarm"]}
           handleFilterChange={handleFilterChange}
           filter="location"
         />
 
         <FilterBar
-          initialTitle="Consign Status"
+          initialTitle={
+            filterList.State === '' ? "Consign State" : filterList.State === '1' ? "Deposit Requests" : filterList.State === '2' ? "Koi Checks" : filterList.State === '3' ? "Price Agreements" : filterList.State === '4' ? "Fish Deliveries" : "Fish Sales"
+          }
           NavItems={["All", "Deposit Requests", "Koi Checks", "Price Agreements", "Fish Deliveries", "Fish Sales"]}
           handleFilterChange={handleFilterChange}
-          filter="Status"
+          filter="State"
         />
 
 
@@ -185,7 +201,7 @@ export default function Manager() {
           <Form className="d-flex w-100 flex-row search-bar">
             <FormControl
               type="search"
-              placeholder="Find User"
+              placeholder="Find Consign"
               value={searchTerm}
               onChange={handleSearch}
               className="me-1"
@@ -214,6 +230,9 @@ export default function Manager() {
             setIsActive={setIsActive}
             handleMouseEnter={handleMouseEnter}
             handleMouseLeave={handleMouseLeave}
+            whatRole={whatRole}
+            showModal={setShowModal}
+            Table={'Consign'}
           />
         )}
       </div>

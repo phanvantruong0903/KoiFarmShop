@@ -3,6 +3,7 @@ import "../Css/Login.css";
 import SignInForm from "../Components/LogIn";
 import SignUpForm from "../Components/SignUp";
 import { useLocation } from "react-router-dom";
+;
 export default function LoginPage() {
   const location = useLocation(); // Get the location object
   const initialType = location.state?.type || "signIn";

@@ -1,32 +1,36 @@
 import express from 'express'
 import { config } from 'dotenv'
 import usersRouter from './routes/users.routes.js'
-import adminRouter from './routes/admin.routes.js'
-import categoryRouter from './routes/category.routes.js'
 import databaseService from './services/database.service.js'
 import { defaultErrorHandler } from './middlewares/error.middlewares.js'
 
 import cors from 'cors' // Thêm import cho cors
 
 import managerRouter from './routes/manager.routes.js'
-import { authorizationController, createNewKoiKiGuiController, guestGetAllSupplierController, guestGetSupplierController } from './controllers/common.controllers.js'
+import { authorizationController, createNewKoiKiGuiController, guestGetAllSupplierController, guestGetSupplierController, getCategory, getKoiByIDController } from './controllers/common.controllers.js'
 import { getKoiByCategoryIDController } from './controllers/home.controllers.js'
 
 import { createNewKoiKiGuiValidator } from './middlewares/common.middlewares.js'
 import { wrapAsync } from './utils/handle.js'
 
-import { getKois } from './controllers/admin.controllers.js'
+import { getAllKoiController } from './controllers/manager.controllers.js'
 import { accessTokenValidator } from './middlewares/users.middlewares.js'
+import paymentRouter from './routes/payments.routes.js'
+import orderRouter from './routes/order.routes.js'
+import cookieParser from 'cookie-parser'
 
 config()
 const app = express()
 app.use(
   cors({
-    origin: 'http://localhost:3000'
+    origin: 'http://localhost:3000',
+    credentials: true,
   })
 )
 const PORT = process.env.PORT || 4000
 app.use(express.json())
+app.use(cookieParser())
+app.use(express.urlencoded({ extended: true }))
 databaseService.connect().then(() => {
   databaseService.indexUsers()
 })
@@ -38,12 +42,13 @@ app.get('/', (req, res) => {
 app.post('/ki-gui', createNewKoiKiGuiValidator, wrapAsync(createNewKoiKiGuiController))
 
 app.use('/users', usersRouter)
-app.use('/admins', adminRouter)
-app.use('/categories', categoryRouter)
+app.get('/categories/getCategory', getCategory)
 
 app.use('/manager', managerRouter)
+app.get('/koi/:KoiID', wrapAsync(getKoiByIDController))
 app.use('/kois/:CategoryID', wrapAsync(getKoiByCategoryIDController))
-app.use('/getAllKoi', wrapAsync(getKois))
+app.use('/getAllKoi', wrapAsync(wrapAsync(getAllKoiController))
+app.use('/order', orderRouter))
 
 app.post('/authorization', accessTokenValidator, wrapAsync(authorizationController))
 
@@ -54,6 +59,8 @@ app.get(
 
 app.get('/supplierDetail/:_id', wrapAsync(guestGetSupplierController))
 
+
+app.use('/payment', paymentRouter)
 
 app.use(defaultErrorHandler)
 

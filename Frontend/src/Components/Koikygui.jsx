@@ -1,36 +1,36 @@
 import { useState, useEffect } from "react";
+import { Layout, Radio, Typography, Spin, Alert, Input, Select } from "antd";
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer";
-import { Form } from "react-bootstrap";
 import CardGrid from "./Cardgrid";
 import axios from "axios";
 import "./Koikygui.css";
 
+const { Content } = Layout;
+const { Title } = Typography;
+
 export default function Koikygui() {
-  const [menu, setMenu] = useState("home");
-  const [cardData, setCardData] = useState([]); // Dữ liệu danh mục
+  const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState("ALL");
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [categoryData, setCategoryData] = useState([]);
+  const [selectedSize, setSelectedSize] = useState("All");
+  const [minPrice, setMinPrice] = useState("0"); // Default minimum price
+  const [maxPrice, setMaxPrice] = useState("20000000"); // Default maximum price
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:4000/getAllKoi");
-        console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
-        if (Array.isArray(response.data.koisList)) {
-          setCardData(response.data.koisList); // Lấy mảng từ thuộc tính 'result'
-          setCategoryData(response.data.cateogryList);
-          console.log("Card data set successfully:", response.data.koisList); // Kiểm tra sau khi set
-          console.log(
-            "Category Data set successfully:",
-            response.data.cateogryList
-          );
+        if (Array.isArray(response.data.result)) {
+          setCardData(response.data.result);
+          setCategoryData(response.data.categoryList);
         } else {
           console.error("Dữ liệu không phải là mảng:", response.data);
         }
       } catch (err) {
-        console.error("Error fetching data:", err); // Ghi lại lỗi
+        console.error("Error fetching data:", err);
         setError(err);
       } finally {
         setLoading(false);
@@ -40,19 +40,40 @@ export default function Koikygui() {
     fetchData();
   }, []);
 
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  const handleSizeChange = (value) => {
+    setSelectedSize(value);
+  };
 
-  const filteredCards =
-    selectedCategory === "ALL"
-      ? cardData
-      : cardData.filter((card) => card.CategoryID === selectedCategory);
+  const handleMinPriceChange = (e) => {
+    setMinPrice(e.target.value);
+  };
 
-  // Đếm số lượng cá cho từng giống
+  const handleMaxPriceChange = (e) => {
+    setMaxPrice(e.target.value);
+  };
+
+  if (loading) return <Spin size="large" />;
+  if (error)
+    return <Alert message="Error" description={error.message} type="error" />;
+
+  const filteredCards = cardData.filter((card) => {
+    const matchesCategory =
+      selectedCategory === "All" || card.CategoryID === selectedCategory;
+
+    const matchesSize =
+      selectedSize === "All" || card.Size === Number(selectedSize); // Adjust according to your size property
+
+    const price = card.Price; // Assuming card has a Price property
+    const matchesPrice =
+      price >= parseFloat(minPrice) && price <= parseFloat(maxPrice);
+
+    return matchesCategory && matchesSize && matchesPrice;
+  });
+
   const breedCounts = cardData.reduce((accumulator, card) => {
     if (card.CategoryID) {
       accumulator[card.CategoryID] = (accumulator[card.CategoryID] || 0) + 1;
@@ -61,43 +82,105 @@ export default function Koikygui() {
   }, {});
 
   return (
-    <>
+    <Layout>
       <Navbar />
-      <div style={{ display: "flex", paddingTop: "200px" }}>
-        <div style={{ marginRight: "20px" }}>
-          <div className="radio-group">
-            <Form.Group>
-              <Form.Label>CHỌN LOÀI CÁ </Form.Label>
-              <Form.Check
-                style={{ paddingBottom: "20px" }}
-                type="radio"
-                label={`ALL (${cardData.length})`}
-                value="ALL"
-                checked={selectedCategory === "ALL"}
-                onChange={handleCategoryChange}
-              />
-              {Object.keys(categoryData).map((CategoryID) => {
-                // Tìm tên category tương ứng từ categoryData
-                const categoryName = categoryData[CategoryID].CategoryName;
-
+      <Content
+        style={{
+          padding: "20px",
+          display: "flex",
+          marginTop: "80px",
+          minHeight: "100vh",
+        }}
+      >
+        <div
+          style={{
+            marginRight: "20px",
+            marginLeft: "10px",
+            zIndex: "9999",
+            position: "sticky",
+            top: "100px",
+            width: "200px",
+            height: "fit-content",
+            padding: "10px",
+            backgroundColor: "transparent",
+          }}
+        >
+          <div className="radio-group" style={{ marginTop: "15px" }}>
+            <Title level={5}>CHỌN LOÀI CÁ</Title>
+            <Radio.Group
+              onChange={handleCategoryChange}
+              value={selectedCategory}
+              style={{ display: "block" }}
+            >
+              <Radio
+                value="All"
+                style={{ display: "block", marginBottom: "10px" }}
+              >
+                All ({cardData.length})
+              </Radio>
+              {categoryData.map((card) => {
+                const categoryName = card.CategoryName;
+                const count = breedCounts[card._id] ?? 0;
                 return (
-                  <Form.Check
-                    style={{ paddingBottom: "20px" }}
-                    key={CategoryID}
-                    type="radio"
-                    label={`${categoryName} (${breedCounts[CategoryID]})`} // Sử dụng categoryName ở đây
-                    value={CategoryID}
-                    checked={selectedCategory === CategoryID}
-                    onChange={handleCategoryChange}
-                  />
+                  <Radio
+                    key={card._id}
+                    value={card._id}
+                    style={{ display: "block", marginBottom: "10px" }}
+                  >
+                    {categoryName} ({count})
+                  </Radio>
                 );
               })}
-            </Form.Group>
+            </Radio.Group>
+          </div>
+
+          <div className="price-filter" style={{ marginTop: "20px" }}>
+            <Title level={5}>CHỌN GIÁ</Title>
+            <Input
+              placeholder="Giá tối thiểu (19.000)"
+              value={minPrice}
+              onChange={handleMinPriceChange}
+              style={{ marginBottom: "10px" }}
+              type="number"
+              min={19000}
+              max={20000000}
+            />
+            <Input
+              placeholder="Giá tối đa (20.000.000)"
+              value={maxPrice}
+              onChange={handleMaxPriceChange}
+              type="number"
+              min={19000}
+              max={20000000}
+            />
+          </div>
+          <div className="size-filter" style={{ marginTop: "20px" }}>
+            <Title level={5}>CHỌN KÍCH THƯỚC</Title>
+            <Select
+              value={selectedSize}
+              onChange={handleSizeChange}
+              style={{ width: "100%" }}
+            >
+              <Option value="All">All Sizes</Option>
+              <Option value="20">20cm</Option>
+              <Option value="25">25cm</Option>
+              <Option value="30">30cm</Option>
+              <Option value="35">35cm</Option>
+              <Option value="40">40cm</Option>
+              <Option value="45">45cm</Option>
+              <Option value="50">50cm</Option>
+              <Option value="55">55cm</Option>
+              <Option value="60">60cm</Option>
+              <Option value="65">65cm</Option>
+              <Option value="70">70cm</Option>
+              <Option value="75">75cm</Option>
+              {/* Add more size options as needed */}
+            </Select>
           </div>
         </div>
         <CardGrid cardData={filteredCards} />
-      </div>
-      <Footer />
-    </>
+      </Content>
+      <Footer className="footer" />
+    </Layout>
   );
 }

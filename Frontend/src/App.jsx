@@ -22,13 +22,38 @@ import DashBoard from "./An/Pages/DashBoard";
 import Home from "./Home";
 import Login from "./Login";
 import LoginPage from "./An/Pages/Login";
+import OrderPage from "./Components/OrderPage";
+import TrackingOrderPage from "./Components/trackingOrderPage";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Profile from "./Components/Profile";
+import DonKyGuiPage from "./Components/Donkygui";
+import NguonGocCuaIKoi from "./Components/Nguongoccuaikoi";
+import GioiThieuVeKoiViet from "./Components/GioiThieuVeKoiViet";
+import GioiThieuVeKoiNhat from "./Components/GioiThieuVeKoiNhat";
+import GioiThieuVeKoiF1 from "./Components/GioitThieuVeKoiF1";
+import OrderingIKoi from "./Components/OrderingIKoi";
+import OrderingJapanKoi from "./Components/OrderingJapanKoi";
+import changePassword from "./Components/ChangePassword";
 const Staff = lazy(() => import("../src/An/Pages/Staff"));
 const Manager = lazy(() => import("./An/Pages/Manager/Manager"));
 const Profiles = lazy(() => import("../src/An/Pages/Staff/Profiles"));
 const Orders = lazy(() => import("../src/An/Pages/Staff/Orders"));
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import style cho toast
+import ShoppingCart from "./Components/ShoppingCart";
+import ResetPassword from "./An/Components/resetpassword";
+import ManageKoi from "./An/Pages/Manager/ManageKoi";
+import ManageSupplier from "./An/Pages/Manager/ManageSupplier";
+import ChangePassword from "./Components/ChangePassword";
+import FormFillInformation from "./Components/FormFillInformation";
+import Chart from "./An/Pages/Charts/Charts";
+import PaymentMethod from "./Components/Paymentmethod";
+import ManageInvoices from "./An/Pages/Manager/ManageInvoices";
 const router = createBrowserRouter([
+  {
+    path: "/login/oauth",
+    element: <Login />,
+  },
   {
     path: "/kohaku",
     element: <Koikohaku />,
@@ -110,8 +135,68 @@ const router = createBrowserRouter([
     element: <Home />, // Home component
   },
   {
-    path: "/login/oauth",
-    element: <Login />, // OAuth login route
+    path: "/order",
+    element: <OrderPage />, // Home component
+  },
+  {
+    path: "reset-password",
+    element: <ResetPassword />,
+  },
+  {
+    path: "/trackingorder",
+    element: <TrackingOrderPage />, // Home component
+  },
+  {
+    path: "/profile",
+    element: <Profile />, // Home component
+  },
+  {
+    path: "/donkygui",
+    element: <DonKyGuiPage />, // Home component
+  },
+  {
+    path: "/nguongocIKoi",
+    element: <NguonGocCuaIKoi />, // Home component
+  },
+  {
+    path: "/gioithieuvekoiviet",
+    element: <GioiThieuVeKoiViet />, // Home component
+  },
+  {
+    path: "/gioithieuvekoinhat",
+    element: <GioiThieuVeKoiNhat />, // Home component
+  },
+  {
+    path: "/gioithieuvekoif1",
+    element: <GioiThieuVeKoiF1 />,
+  },
+  {
+    path: "/gioithieuvekoiviet",
+    element: <GioiThieuVeKoiViet />,
+  },
+  {
+    path: "/orderingikoi",
+    element: <OrderingIKoi />,
+  },
+  {
+    path: "/orderingjapankoi",
+    element: <OrderingJapanKoi />,
+  },
+  {
+    path: "/changepassword",
+    element: <ChangePassword />,
+  },
+  {
+    path: "/cart",
+    element: <ShoppingCart />,
+  },
+  {
+    path: "/formfillinformation",
+    element: <FormFillInformation />,
+  },
+  {
+    path: "/paymentmethod",
+    element: <PaymentMethod />,
   },
   {
     path: "/DashBoard",
@@ -124,6 +209,22 @@ const router = createBrowserRouter([
             <Profiles /> {/* Profile component */}
           </Suspense>
         ),
+      },
+      {
+        path: "staff/Report/:chartType",
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <Chart />
+          </Suspense>
+        ),
+      }, {
+        path: "manager/ManageInvoices",
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <ManageInvoices />
+          </Suspense>
+        ),
+
       },
       {
         path: "staff/Orders",
@@ -141,12 +242,32 @@ const router = createBrowserRouter([
           </Suspense>
         ),
       },
+      {
+        path: "manager/ManageSupplier",
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <ManageSupplier />
+          </Suspense>
+        ),
+      },
+      {
+        path: "manager/ManageKoi",
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <ManageKoi />
+          </Suspense>
+        ),
+      },
     ],
   },
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+    </>
+  );
 }
 
 export default App;

@@ -16,7 +16,8 @@ export default function TableGen({
     isActive,
     setIsActive,
     handleRowAction,
-    showModal
+    showModal,
+    isSpecial
 }) {
 
     return (
@@ -37,10 +38,11 @@ export default function TableGen({
                         key={mock._id}
                         onMouseEnter={() => handleMouseEnter(index)}
                         onMouseLeave={handleMouseLeave}
+
                     >
-                        <td>{index + 1}</td>
+                        <td style={{ overflowX: 'hidden', textOverflow: 'nowrap' }}>{index + 1}</td>
                         {fieldMapping.map((field, idx) => {
-                            
+
                             if (field === 'role') {
                                 return <td key={idx}>{whatRole(mock.roleid)}</td>;
                             }
@@ -54,18 +56,32 @@ export default function TableGen({
                             if (field === 'address') {
                                 return <td key={idx}>{isAddress(mock.address) ? mock.address : 'No address'}</td>;
                             }
-                            if (field === 'Status'){
+                            if (field === 'State') {
                                 const statusMap = {
                                     1: 'Deposit Requests',
                                     2: 'Koi Checks',
                                     3: 'Price Agreements',
                                     4: 'Fish Deliveries',
                                     5: 'Fish Sales'
-                                     
+
+                                };
+                                return <td key={idx}>{statusMap[mock.State]}</td>;
+                            }
+                            if (field === 'Status') {
+                                const statusMap = {
+                                    1: 'Received',
+                                    2: 'Sold'
                                 };
                                 return <td key={idx}>{statusMap[mock.Status]}</td>;
                             }
-                            return <td key={idx}>{mock[field] || 'not provided'}</td>; // Default
+                            if (field === 'InvoiceDate') {
+                                return  mock.InvoiceDate  ? <td key={idx}>{mock.InvoiceDate.split('T')[0] }</td> : '';
+                            }
+                            return <td style={{
+                                overflow: 'hidden',
+                                whiteSpace: 'nowrap',
+                                maxWidth: '250px'
+                            }} key={idx}>{mock[field] || 'not provided'}</td>;
                         })}
                         <td className="d-flex justify-content-center align-items-center" style={{ height: '40px' }}>
                             <Dropdown>
@@ -76,22 +92,26 @@ export default function TableGen({
                                 <Dropdown.Menu>
                                     <Dropdown.Item
                                         onClick={() => {
-                                            showModal(true); 
-                                            handleRowAction(mock._id, 'view'); 
+                                            handleRowAction(mock._id, 'view');
+                                            showModal(true);
+
                                         }}
                                     >
-                                        View
+                                        View/Edit
                                     </Dropdown.Item>
 
-                                    <Dropdown.Item href="#/action-2">Edit</Dropdown.Item>
-                                    <Dropdown.Item
-                                        onMouseLeave={() => setIsActive(false)}
-                                        onMouseEnter={() => setIsActive(true)}
-                                        className={isActive ? 'bg-danger text-white' : ''}
-                                        onClick={() => handleRowAction(mock._id, 'delete')}
-                                    >
-                                        Delete
-                                    </Dropdown.Item>
+
+
+                                    {!isSpecial && (
+                                        <Dropdown.Item
+                                            onMouseLeave={() => setIsActive(false)}
+                                            onMouseEnter={() => setIsActive(true)}
+                                            className={isActive ? 'bg-danger text-white' : ''}
+                                            onClick={() => handleRowAction(mock._id, 'delete')}
+                                        >
+                                            Delete
+                                        </Dropdown.Item>
+                                    )}
                                 </Dropdown.Menu>
                             </Dropdown>
                         </td>
@@ -110,7 +130,7 @@ TableGen.propTypes = {
     handleMouseEnter: PropTypes.func.isRequired,
     handleMouseLeave: PropTypes.func.isRequired,
     whatRole: PropTypes.func.isRequired,
-    isAddress: PropTypes.func.isRequired,
+
     isActive: PropTypes.bool.isRequired,
     setIsActive: PropTypes.func.isRequired,
     handleRowAction: PropTypes.func.isRequired,

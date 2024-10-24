@@ -4,67 +4,153 @@ import { Container } from "react-bootstrap";
 import CardGrid from "../Cardgrid";
 import Footer from "../Footer";
 import axios from "axios";
+import "../Css/koiStyle.css";
+import { Layout } from "antd";
+import { Typography } from "antd";
+import "../Css/koiStyle.css";
+const { Title, Text, Paragraph } = Typography;
 export default function Koibekko() {
   const [menu, setMenu] = useState("home");
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [idBekko, setIDBekko] = useState(null);
+  const [filteredCards, setFilteredCards] = useState([]);
+  const [categoryData, setCategoryData] = useState([]);
   const handleScroll1 = () => {
     const element = document.getElementById("1");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll2 = () => {
     const element = document.getElementById("2");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll3 = () => {
     const element = document.getElementById("3");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll4 = () => {
     const element = document.getElementById("4");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll5 = () => {
     const element = document.getElementById("5");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
-
   const handleScroll21 = () => {
     const element = document.getElementById("21");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll22 = () => {
     const element = document.getElementById("22");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll23 = () => {
     const element = document.getElementById("23");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   useEffect(() => {
@@ -74,7 +160,12 @@ export default function Koibekko() {
         console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
         if (Array.isArray(response.data.result)) {
           setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
-          console.log("Card data set successfully:", response.data.result); // Kiểm tra sau khi set
+          setCategoryData(response.data.categoryList);
+          console.log("Card data set successfully:", response.data.result9); // Kiểm tra sau khi set
+          console.log(
+            "Category Data set successfully:",
+            response.data.cateogryList
+          );
         } else {
           console.error("Dữ liệu không phải là mảng:", response.data);
         }
@@ -88,103 +179,65 @@ export default function Koibekko() {
 
     fetchData();
   }, []);
+  useEffect(() => {
+    const bekkoCard = categoryData.find(
+      (card) => card.CategoryName === "Bekko"
+    );
+
+    if (bekkoCard) {
+      setIDBekko(bekkoCard._id);
+    }
+  }, [categoryData]); // Run this effect when categoryData changes
+
+  useEffect(() => {
+    if (idBekko) {
+      const filtered = cardData.filter((card) => card.CategoryID === idBekko);
+      setFilteredCards(filtered);
+    }
+  }, [idBekko, cardData]);
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  const filteredCards = cardData.filter((card) => card.CategoryID === "5");
+
   return (
     <>
-      <div>
-        <div>
-          <Navbar menu={menu} setMenu={setMenu} />
-        </div>
+      <Layout>
+        <Navbar menu={menu} setMenu={setMenu} />
+
         <Container>
           <div>
             <div style={{ paddingTop: "110px", textAlign: "center" }}>
               <img
                 src="src/assets/Red_Modern_Travel_Presentation__6_-removebg-preview.png"
-                style={{ paddingLeft: "1000px", marginTop: "-15px" }}
+                className="img1Style"
               />
-              <h1
-                style={{ marginTop: "-330px", fontWeight: "800", color: "red" }}
-              >
-                CÁ KOI BEKKO
-              </h1>
+              <h1 className="nameOfKoi">CÁ KOI BEKKO</h1>
               <hr />
             </div>
             <div>
-              <div
-                style={{
-                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
-                  padding: "20px",
-                  borderRadius: "10px",
-                  border: "2px solid rgba(0, 0, 0, 0.1)",
-                  border: "1px solid #797979",
-                  color: "black",
-                }}
-              >
+              <div className="body_StyleKoiOfPage">
                 <h2>Nội Dung Bài Viết</h2>
                 <ul style={{ marginTop: "10px" }}>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll1}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll1} className="contentBox">
                       1. Cá Koi Bekko là giống cá gì?
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll2}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll2} className="contentBox">
                       2. Đặc điểm của cá Koi Bekko
                       <ul>
                         <li style={{ paddingTop: "10px" }}>
-                          <span
-                            onClick={handleScroll21}
-                            style={{
-                              color: "blue",
-                              cursor: "pointer",
-                              fontWeight: "600",
-                              fontSize: "20px",
-                            }}
-                          >
+                          <span onClick={handleScroll21} className="contentBox">
                             2.1 Giá cá koi Shusui F1
                           </span>
                         </li>
                         <li style={{ paddingTop: "10px" }}>
-                          <span
-                            onClick={handleScroll22}
-                            style={{
-                              color: "blue",
-                              cursor: "pointer",
-                              fontWeight: "600",
-                              fontSize: "20px",
-                            }}
-                          >
+                          <span onClick={handleScroll22} className="contentBox">
                             2.2 Giá cá koi Shusui Nhật chuẩn
                           </span>
                         </li>
                         <li style={{ paddingTop: "10px" }}>
-                          <span
-                            onClick={handleScroll23}
-                            style={{
-                              color: "blue",
-                              cursor: "pointer",
-                              fontWeight: "600",
-                              fontSize: "20px",
-                            }}
-                          >
+                          <span onClick={handleScroll23} className="contentBox">
                             2.3 Giá cá koi Shusui Nhật chuẩn
                           </span>
                         </li>
@@ -192,41 +245,17 @@ export default function Koibekko() {
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll3}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll3} className="contentBox">
                       3. Cách phân biệt giữa Shiro Bekko và Shiro Utsuri
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll4}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll4} className="contentBox">
                       4. Cách lựa chọn cá Koi Bekko đẹp nhất
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
-                    <span
-                      onClick={handleScroll5}
-                      style={{
-                        color: "blue",
-                        cursor: "pointer",
-                        fontWeight: "600",
-                        fontSize: "20px",
-                      }}
-                    >
+                    <span onClick={handleScroll5} className="contentBox">
                       5. Nên mua cá Koi bekko ở đâu.
                     </span>
                   </li>
@@ -238,16 +267,14 @@ export default function Koibekko() {
                   Nội dung chi tiết
                 </h2>
                 <div>
-                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
-                    <span style={{ fontSize: "20px", fontWeight: "600" }}>
-                      Cá Koi Bekko
-                    </span>{" "}
+                  <span className="span-Style">Cá Koi Bekko</span>{" "}
+                  <Paragraph className="paragraph-Style">
                     là loài cá cảnh được nhiều người yếu thích và săn tìm. Tuy
                     nhiên, bên cạnh cũng vẫn có những người chưa hề biết về loài
                     cá này. Vậy nhân đây, hãy tìm hiểu về nguồn gốc của cá Koi
                     Bekko cũng như những đặc biệt và cách chọn cá Koi Bekko đẹp
                     nhất nhé!
-                  </p>
+                  </Paragraph>
                 </div>
               </div>
               <div id="1">
@@ -255,7 +282,7 @@ export default function Koibekko() {
                   1. Cá Koi Bekko là giống cá gì?
                 </h3>
                 <div>
-                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                  <Paragraph className="paragraph-Style">
                     Với những người có đam mê lớn với loài cá chép Koi thì chắc
                     chắn không còn quá xa lại với cái tên Cá Koi Bekko. Nhưng
                     với những người mới bắt đầu nuôi cá Koi thì đây lại được xem
@@ -270,37 +297,25 @@ export default function Koibekko() {
                     <br />
                     Cá Koi Bekko còn được phân loại ra thành 3 loại khác nhau đó
                     là: Shi Bekko, Aka Bekko, Ki Bekko
-                  </p>
+                  </Paragraph>
                   <div style={{ textAlign: "center" }}>
                     <img src="src/assets/Koi Bekko/ca-koi-bekko.webp" />
-                    <p style={{ fontSize: "15px", fontWeight: "400" }}>
-                      Cá Koi Bekko
-                    </p>
+                    <Text>Cá Koi Bekko</Text>
                   </div>
                 </div>
               </div>
 
               <div id="detailed-content">
                 <h3 style={{ color: "red" }}>2. Đặc điểm của cá Koi Bekko</h3>
-
-                <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                <Paragraph className="paragraph-Style">
                   Như ở phần trên đã nói cá Koi Bekko được chia ra làm 3 loại
                   khác nhau. Mỗi loại lại có đặc điểm về thân hình và màu sắc
                   khác nhau. Cụ thể là:
-                </p>
+                </Paragraph>
                 <ul style={{ fontSize: "15px", fontWeight: "400" }}>
                   <li>
-                    <span
-                      id="21"
-                      style={{
-                        fontSize: "20px",
-                        fontWeight: "600",
-                        color: "red",
-                      }}
-                    >
-                      2.1 Aka Bekko : {""}
-                    </span>
-                    <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                    <span id="21">2.1 Aka Bekko : {""}</span>
+                    <Paragraph className="paragraph-Style">
                       là một loài cá đỏ thông thường và thường xuất hiện trong
                       quá trình sinh sản của loài Kohaku. Trước đây, ở Nhật Bản,
                       các con cá Akamuji thường bị đánh bại để làm cá bột. Tuy
@@ -308,46 +323,28 @@ export default function Koibekko() {
                       trưng bày trong thể loại Kawarimono như Benigoi hoặc Hiaka
                       tại triển lãm. Một con cá Akamuji có các mảng trắng trên
                       đầu vây được gọi là Aka Hajiro.
-                    </p>
+                    </Paragraph>
                   </li>
                   <li>
-                    <span
-                      id="22"
-                      style={{
-                        fontSize: "20px",
-                        fontWeight: "600",
-                        color: "red",
-                      }}
-                    >
-                      2.2 Ki Bekko : {""}
-                    </span>
-                    <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                    <span id="22">2.2 Ki Bekko : {""}</span>
+                    <Paragraph className="paragraph-Style">
                       Cũng giống như Aka Bekko, Ki Bekko cũng là giống cá Koi
                       Bekko được lai tạo từ Sanke. Tuy nhiên, nền da lại là màu
                       vàng với những đốm đen. Điều này được tạo bởi gen lặn của
                       Ki Bekko, được đánh giá là hiếm hơn rất nhiều so với Aka
                       Bekko. Từ đó có thể thấy những con Ki Bekko đời đầu sẽ
                       được đánh giá rất cao và cực kỳ quý hiếm.
-                    </p>
+                    </Paragraph>
                   </li>
                   <li>
-                    <span
-                      id="23"
-                      style={{
-                        fontSize: "20px",
-                        fontWeight: "600",
-                        color: "red",
-                      }}
-                    >
-                      2.3 Shiro Bekko : {""}
-                    </span>
-                    <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                    <span id="23">2.3 Shiro Bekko : {""}</span>
+                    <Paragraph className="paragraph-Style">
                       Shiro Bekko là loại cá Koi Bekko có làn da trắng nổi bật
                       với những đốm sumi đen quanh thân mình. Người Nhật Bản cho
                       rằng Shiro Bekko, Aka Bekko và Ki Bekko đều xuất hiện từ
                       Sanke cổ điển. Tất cả những cá Koi Bekko hiện tại đều được
                       sinh sản từ Snake, là sản phẩm phụ của Sanke.
-                    </p>
+                    </Paragraph>
                   </li>
                 </ul>
               </div>
@@ -355,7 +352,7 @@ export default function Koibekko() {
                 <h3 style={{ color: "red" }}>
                   3. Cách phân biệt giữa Shiro Bekko và Shiro Utsuri
                 </h3>
-                <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                <Paragraph className="paragraph-Style">
                   Trong các màu sắc của cá Koi thì cá Koi Bekko Shiro và cá Koi
                   Utsuri Shiro có dáng vẻ khác giống nhau. Vậy làm thế nào để có
                   thể phân biệt được 2 loài này. Cùng tìm hiểu ngay sau đây nhé:
@@ -370,48 +367,60 @@ export default function Koibekko() {
                   Koi Bekko Shiro không có sumi đến đầu và Koi Utsuri Shiro có
                   sumi trên đầu. Đây được xem là đặc điểm lớn nhất để phân loại
                   2 loại này.{" "}
-                </p>
+                </Paragraph>
               </div>
               <div id="4">
                 <h3 style={{ color: "red" }}>
                   4. Cách lựa chọn cá Koi Bekko đẹp nhất
                 </h3>
-                <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                <Paragraph className="paragraph-Style">
                   Để lựa chọn được 1 con cá Koi Bekko đẹp, cần dựa vào những
                   tiêu chí sau. Chúng ta hãy cùng tìm hiểu nhé:{" "}
-                </p>
+                </Paragraph>
                 <ul>
                   <li>
-                    Điểm nổi bật nhất của một con cá Koi Bekko đó chính là màu
-                    da và các đốm sumi trên cơ thể. Như đã nói ở trên cá Koi
-                    Bekko có 3 màu cơ bản đó là trắng mịn bóng, vàng và đỏ. Cá
-                    Koi Bekko có nền da đỏ rất ít và có nền da vàng lại càng
-                    thuộc dạng quý hiếm hơn.{" "}
+                    <Paragraph className="paragraph-Style">
+                      Điểm nổi bật nhất của một con cá Koi Bekko đó chính là màu
+                      da và các đốm sumi trên cơ thể. Như đã nói ở trên cá Koi
+                      Bekko có 3 màu cơ bản đó là trắng mịn bóng, vàng và đỏ. Cá
+                      Koi Bekko có nền da đỏ rất ít và có nền da vàng lại càng
+                      thuộc dạng quý hiếm hơn.{" "}
+                    </Paragraph>
                   </li>
                   <li>
-                    Cá Koi Bekko thường không có sumi ở trên đầu và đuôi, những
-                    đốm sumi thường nhỏ nhắn, tái đều cơ thể, con nào có sumi
-                    càng đậm con đó càng quý hiếm. Đặc điểm quyến rũ độc đáo
-                    nhất của cá Koi Bekko là vệ sumi trên vai và ít sọc ở vây.{" "}
+                    <Paragraph className="paragraph-Style">
+                      Cá Koi Bekko thường không có sumi ở trên đầu và đuôi,
+                      những đốm sumi thường nhỏ nhắn, tái đều cơ thể, con nào có
+                      sumi càng đậm con đó càng quý hiếm. Đặc điểm quyến rũ độc
+                      đáo nhất của cá Koi Bekko là vệ sumi trên vai và ít sọc ở
+                      vây.{" "}
+                    </Paragraph>
                   </li>
                   <li>
-                    Nên chọn những cá Koi Bekko có độ dài từ 30cm - 40cm, thân
-                    hình mập mạp, dáng bơi thẳng, đẹp, khỏe mạnh, đôi mắt tinh
-                    anh.{" "}
+                    <Paragraph className="paragraph-Style">
+                      Nên chọn những cá Koi Bekko có độ dài từ 30cm - 40cm, thân
+                      hình mập mạp, dáng bơi thẳng, đẹp, khỏe mạnh, đôi mắt tinh
+                      anh.{" "}
+                    </Paragraph>
                   </li>
                   <li>
-                    Ngoài ra, thân hình cá phải thon dài, cân đối, vai to, đầu
-                    nhỏ, bụng không sệ, đuôi thon gọn, các đường cong trên cơ
-                    thể mượt mà, đặc biệt là mang cá không được mở to.{" "}
+                    <Paragraph className="paragraph-Style">
+                      Ngoài ra, thân hình cá phải thon dài, cân đối, vai to, đầu
+                      nhỏ, bụng không sệ, đuôi thon gọn, các đường cong trên cơ
+                      thể mượt mà, đặc biệt là mang cá không được mở to.{" "}
+                    </Paragraph>
                   </li>
                   <li>
-                    Ngoài ra, có thể phân biệt giữa cá Koi Bekko thuần chủng và
-                    cá Koi Bekko lai. Koi bekko thuần chủng những chấm đen sumi
-                    trên lưng chúng rất rõ nét, màu đỏ máu/đỏ ớt /đỏ cam hoặc
-                    màu vàng, màu trắng không bị lẫn lộn bởi các đốm màu nhỏ. Cá
-                    koi lai thì ít khi đạt được màu đỏ sắc nét này (hầu hết là
-                    màu cam). Ngoài ra cá Koi bekko của Nhật thường có phần đầu
-                    sạch, trắng, không xuất hiện điểm đen sumi.
+                    <Paragraph className="paragraph-Style">
+                      Ngoài ra, có thể phân biệt giữa cá Koi Bekko thuần chủng
+                      và cá Koi Bekko lai. Koi bekko thuần chủng những chấm đen
+                      sumi trên lưng chúng rất rõ nét, màu đỏ máu/đỏ ớt /đỏ cam
+                      hoặc màu vàng, màu trắng không bị lẫn lộn bởi các đốm màu
+                      nhỏ. Cá koi lai thì ít khi đạt được màu đỏ sắc nét này
+                      (hầu hết là màu cam). Ngoài ra cá Koi bekko của Nhật
+                      thường có phần đầu sạch, trắng, không xuất hiện điểm đen
+                      sumi.
+                    </Paragraph>
                   </li>
                 </ul>
               </div>
@@ -419,7 +428,7 @@ export default function Koibekko() {
                 <h3 style={{ color: "red" }}>
                   5. Nên mua cá Koi bekko ở đâu.{" "}
                 </h3>
-                <p style={{ fontSize: "15px", fontWeight: "400" }}>
+                <Paragraph className="paragraph-Style">
                   Siêu thị cá Koi là đơn vị cung cấp cá Koi Bekko thuần chủng
                   chất lượng uy tín trên toàn quốc. Cá Koi Bekko tại Siêu thị cá
                   Koi có màu sắc rõ nét vàng, đỏ hoặc trắng, các đốm sumi sậm,
@@ -440,7 +449,7 @@ export default function Koibekko() {
                   nhiều kiến thức trong lĩnh vực nuôi cá Koi. Đặc biệt hơn là có
                   thể tự mình lựa chọn một con cá Koi bekko đẹp mã, ưng ý. Chúc
                   bạn thành công!
-                </p>
+                </Paragraph>
                 <div style={{ textAlign: "center" }}>
                   <img src="src/assets/Koi Bekko/ca-koi-bekko-4.webp" />
                 </div>
@@ -460,10 +469,9 @@ export default function Koibekko() {
         <div>
           <CardGrid cardData={filteredCards} />
         </div>
-        <div>
-          <Footer />
-        </div>
-      </div>
+
+        <Footer />
+      </Layout>
     </>
   );
 }
