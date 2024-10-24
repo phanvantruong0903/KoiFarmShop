@@ -47,8 +47,8 @@ app.get('/categories/getCategory', getCategory)
 app.use('/manager', managerRouter)
 app.get('/koi/:KoiID', wrapAsync(getKoiByIDController))
 app.use('/kois/:CategoryID', wrapAsync(getKoiByCategoryIDController))
-app.use('/getAllKoi', wrapAsync(wrapAsync(getAllKoiController))
-app.use('/order', orderRouter))
+app.use('/getAllKoi', wrapAsync(wrapAsync(getAllKoiController)))
+app.use('/order', orderRouter)
 
 app.post('/authorization', accessTokenValidator, wrapAsync(authorizationController))
 
