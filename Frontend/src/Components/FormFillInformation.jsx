@@ -24,14 +24,14 @@ export default function FormFillInformation() {
 
     try {
       const response = await axios.post(
-        `http://localhost:4000/order/create/${orderDetail.orderId}`,
+        `http://localhost:4000/order/create/`,
         dataToSend,
         {
           headers: {
             "Content-Type": "application/json",
           },
           withCredentials: true,
-        },
+        }
       );
 
       if (response.status === 200) {

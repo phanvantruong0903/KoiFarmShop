@@ -14,7 +14,6 @@ export default function ShoppingCart() {
     const storedKoiList = JSON.parse(localStorage.getItem("koiList")) || [];
     const storedTotalPrice =
       parseFloat(localStorage.getItem("totalPrice")) || 0;
-    const storedOrderId = localStorage.getItem("orderId");
 
     const updatedKoiList = storedKoiList.map((koi) => ({
       ...koi,
@@ -30,48 +29,44 @@ export default function ShoppingCart() {
     }
   }, [orderDetail]);
 
-  const fetchOrderDetails = async (orderId) => {
-    if (!orderId) {
-      console.error("No orderId provided for fetching order details.");
-      return;
-    }
-
+  const fetchOrderDetails = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:4000/order/detail/${orderId}`
-      );
+      const response = await axios.get("http://localhost:4000/order/detail", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      console.log(response);
       if (response.status === 200) {
-        const { koiList, result } = response.data.result;
-        const { Items, TotalPrice } = result;
-
+        const { koiList, reqCookie } = response.data.result;
+        const { Items, TotalPrice } = reqCookie;
         const koiMap = new Map(koiList.map((koi) => [koi._id, koi]));
         const updatedKoiList = Items.map((item) => {
           const koi = koiMap.get(item.KoiID);
           return koi ? { ...koi, quantity: item.Quantity } : null;
         }).filter((koi) => koi !== null);
-
         setKoiList(updatedKoiList);
-        setTotalPrice(TotalPrice); // Ensure TotalPrice is set correctly
-
+        setTotalPrice(TotalPrice);
         // Save to localStorage
         localStorage.setItem("koiList", JSON.stringify(updatedKoiList));
         localStorage.setItem("totalPrice", TotalPrice.toString());
-        localStorage.setItem("orderId", orderId); // Store orderId in localStorage
         console.log("Order details fetched and stored in localStorage.");
       } else {
         console.error(`API request failed with status: ${response.status}`);
         setError("Failed to fetch order details.");
       }
     } catch (error) {
-      console.error("Error fetching order details:", error);
+      // Log thêm thông tin lỗi
+      console.error(
+        "Error fetching order details:",
+        error.response ? error.response.data : error.message
+      );
       setError("Error fetching order details.");
     }
   };
 
   const handleQuantityChange = async (koiId, newQuantity) => {
-    const storedOrderId = localStorage.getItem("orderId");
-    if (!storedOrderId) return;
-
     // Validate newQuantity
     const quantity = parseInt(newQuantity);
     if (isNaN(quantity) || quantity < 0) {
