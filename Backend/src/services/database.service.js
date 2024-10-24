@@ -109,7 +109,7 @@ class DatabaseService {
 
   get suppliers() {
     try {
-      return this._db.collection(process.env.DB_SUPPLIERS_COLLECTION)
+      return this._db.collection('suppliers')
     } catch (error) {
       console.log(error + 'lỗi ở database service - get suppliers')
     }
