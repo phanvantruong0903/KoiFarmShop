@@ -8,7 +8,8 @@ import { ObjectId } from 'mongodb';
 export const createOrderController = async (req, res) => {
   try {
     const reqOrderCookie = req.cookies && req.cookies.order ? JSON.parse(req.cookies.order) : {}
-    const result = await ordersService.createOrder(req.body,req.params, reqOrderCookie)
+    const reqOrderDTCookie = req.cookies && req.cookies.orderDT ? JSON.parse(req.cookies.orderDT) : {}
+    const result = await ordersService.createOrder(req.body,reqOrderDTCookie, reqOrderCookie)
     console.log("result.order: ", result.order)
     res.cookie('order', JSON.stringify(result.order), { 
       httpOnly: true,

@@ -53,7 +53,8 @@ export const buyNowController = async (req, res) => {
 
 export const getOrderDetailController = async (req, res) => {
   try {
-    const result = await orderDetailService.fetchOrder(req.params);
+    let reqCookie = req.cookies && req.cookies.orderDT ? JSON.parse(req.cookies.orderDT) : {}; // fix phải check có trong cookies trước
+    const result = await orderDetailService.fetchOrder(reqCookie);
 
     console.log("result: ", result)
     if(result!==null){

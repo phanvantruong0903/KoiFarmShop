@@ -97,12 +97,12 @@ class OrderDetailService {
 
     // }
 
-    async fetchOrder(payload) {
-        const result = await databaseService.orderDetail.findOne({ _id: new ObjectId(payload.orderID) })
-        if(!result){
+    async fetchOrder(reqCookie) {
+        // const result = await databaseService.orderDetail.findOne({ _id: new ObjectId(payload.orderID) })
+        if(!reqCookie){
             return null
         }
-        const koiList = await Promise.all(result.Items.map(async(item)=>await databaseService.kois.findOne({_id: new ObjectId(item.KoiID)})))
+        const koiList = await Promise.all(reqCookie?.Items.map(async(item)=>await databaseService.kois.findOne({_id: new ObjectId(item.KoiID)})))
         // const items = await Promise.all(result.Items.map(async (item) => {
         //     const koi = await databaseService.kois.findOne({ _id: new ObjectId(item.KoiID) });
         //     const category = await databaseService.category.findOne({ _id: new ObjectId(koi.CategoryID) });
@@ -114,7 +114,7 @@ class OrderDetailService {
         //     };
         // }));
         return {
-            result,
+            reqCookie,
             koiList: koiList
         }
     }
@@ -479,8 +479,11 @@ class OrderDetailService {
             }
             console.log("orderDT: ", orderDT)
         }
-        const savedOrder = await this.saveOrderToDatabase(orderDT)
-        return { orderDT: savedOrder, koiList }
+        // const savedOrder = await this.saveOrderToDatabase(orderDT)
+        return { orderDT: {
+            _id: new ObjectId(),
+            ...orderDT
+        }, koiList }
     }
 
     async getMinMaxPrice(payload) {
