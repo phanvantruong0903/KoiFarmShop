@@ -244,18 +244,27 @@ export const getAllConsignFromUserController = async (req, res) => {
 export const getOrderController = async (req, res) => {
   try {
     const userID = req.body.userID
-    console.log(userID)
 
     const orders = await databaseService.order.find({ UserID: new ObjectId(userID) }).toArray()
+
     if (orders.length === 0) {
-      return res.json({
-        message: 'Order null'
-      })
+      return res.json({ message: 'Order null' })
     }
+
     const orderDetails = []
 
     for (const order of orders) {
-      const orderDetail = await databaseService.orderDetail.findOne({ _id: new ObjectId(order.OrderDetailID) })
+      let orderDetailID = order.OrderDetailID
+
+      if (typeof orderDetailID === 'object' && orderDetailID !== null) {
+        orderDetailID = orderDetailID.orderId || null // Lấy orderId nếu có
+      }
+
+      if (!orderDetailID || !ObjectId.isValid(orderDetailID)) {
+        continue 
+      }
+
+      const orderDetail = await databaseService.orderDetail.findOne({ _id: new ObjectId(orderDetailID) })
 
       if (orderDetail) {
         orderDetails.push({
@@ -270,8 +279,9 @@ export const getOrderController = async (req, res) => {
       orderDetails
     })
   } catch (error) {
-    return res.status(404).json({
-      message: 'User Not Found'
+    console.error('Error:', error) 
+    return res.status(500).json({
+      message: 'Error at get Order ' + error.message
     })
   }
 }

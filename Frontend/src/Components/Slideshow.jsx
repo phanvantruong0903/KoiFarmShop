@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import "./Slideshow.css"; // Để thêm CSS cho animation
+import React from "react";
+import { Carousel } from "antd";
+import "./Slideshow.css"; // Ensure your CSS is included
 
 const images = [
   "src/assets/koi1.jpg",
@@ -7,30 +8,24 @@ const images = [
   "src/assets/koi3.webp",
   "src/assets/koi4.avif",
   "src/assets/koi5.jpg",
-
-  // Thêm các đường dẫn ảnh khác ở đây
+  // Add more image paths here
 ];
 
 export default function Slideshow() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentIndex((prevIndex) =>
-        prevIndex === images.length - 1 ? 0 : prevIndex + 1
-      );
-    }, 3000); // Thay đổi ảnh mỗi 3 giây
-
-    return () => clearInterval(intervalId); // Dọn dẹp khi component unmount
-  }, []);
-
   return (
     <div className="slideshow-container">
-      <img
-        src={images[currentIndex]}
-        alt={`Slide ${currentIndex}`}
-        className="slideshow-image"
-      />
+      <Carousel autoplay dots>
+        {images.map((image, index) => (
+          <div key={index}>
+            <img
+              src={image}
+              alt={`Slide ${index}`}
+              className="slideshow-image"
+              style={{marginTop:'80px' , width: "100%", height: "70vh" , margin:'0 auto'}} // Ensure images are responsive
+            />
+          </div>
+        ))}
+      </Carousel>
     </div>
   );
 }

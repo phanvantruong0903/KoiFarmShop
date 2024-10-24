@@ -69,17 +69,17 @@ const [filterRevuenueDataR, setFilterRevuenueDataR] = useState(RevuenueData);
 
 
           <Row style={{ height: '50vh', width: '100%' }}>
-            <Col md={6}>
+            <Col sm={12} md={6}>
               <ProfileChart profileData={filteredProfileData} types={chartType} />
             </Col>
-            <Col md={6}>
+            <Col sm={12} md={6}>
               <OrderChart orderData={filteredOrderData} types={chartType} />
             </Col>
           </Row>
 
 
           <Row>
-            <Col md={6}>
+            <Col sm={12} md={6}>
               {filteredProfileData.labels.length > 0 && filteredOrderData.labels.length > 0 && (
                 <GeneralChart
                   data={filteredCombinedData} 
@@ -88,7 +88,7 @@ const [filterRevuenueDataR, setFilterRevuenueDataR] = useState(RevuenueData);
                 />
               )}
             </Col>
-            <Col md={6}>
+            <Col sm={12} md={6}>
               <RevunueChart types={chartType} chartDATA={filterRevuenueDataR} DATA={RevenuedataSet} />
             </Col>
           </Row>

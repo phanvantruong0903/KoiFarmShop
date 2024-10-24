@@ -29,21 +29,21 @@ export const callback = async (req, res) => {
       console.log('Order details from embed_data:', reqOrderDetails)
       console.log('Order from embed_data:', reqOrder)
 
-      // const koiIDs = reqOrderDetails.Items.map((item) => item.KoiID)
+      const koiIDs = reqOrderDetails.Items.map((item) => item.KoiID)
 
-      // for (const koiID of koiIDs) {
-      //   await databaseService.kois.findOneAndUpdate(
-      //     { _id: new ObjectId(koiID) }, // Tìm kiếm theo _id và trạng thái
-      //     { $set: { Status: 0 } }, // Cập nhật trạng thái thành 1
-      //     { new: true } // Trả về đối tượng đã cập nhật
-      //   )
-      // }
+      for (const koiID of koiIDs) {
+        await databaseService.kois.findOneAndUpdate(
+          { _id: new ObjectId(koiID) }, // Tìm kiếm theo _id và trạng thái
+          { $set: { Status: 0 } }, // Cập nhật trạng thái thành 1
+          { new: true } // Trả về đối tượng đã cập nhật
+        )
+      }
 
       if (!reqOrderDetails) {
         result.returncode = -1
         result.returnmessage = 'No order data found in embed_data'
       } else {
-        const result = await saveOrderToDatabase(reqOrder)
+        const result = await saveOrderToDatabase(reqOrderDetails,reqOrder)
         console.log("database value: ", result)
 
         await databaseService.order.findOneAndUpdate(
@@ -70,30 +70,32 @@ export const callback = async (req, res) => {
   res.json(result)
 }
 
-export const saveOrderToDatabase = async (reqOrderCookie) => {
+export const saveOrderToDatabase = async (reqOrderDetailCookie,reqOrderCookie) => {
   // console.log("Cookies DT received:", reqOrderDTCookie);
   console.log('Cookies received:', reqOrderCookie)
   //check order cookie có exist
-  if (!reqOrderCookie) {
+  if (!reqOrderDetailCookie || !reqOrderCookie) {
     return { error: 'No order data found in cookies' }
   }
 
-  // const newOrderDT = {
-  //   _id: new ObjectId(),
-  //   Items: reqOrderDTCookie.Items,
-  //   TotalPrice: reqOrderDTCookie.TotalPrice
-  // }
+  const newOrderDT = {
+    _id: reqOrderDetailCookie._id,
+    Items: reqOrderDetailCookie.Items,
+    TotalPrice: reqOrderDetailCookie.TotalPrice
+  }
 
-  // const orderDT = await databaseService.orderDetail.insertOne(newOrderDT)
-  // if(orderDT.insertedId){
-  //   newOrderDT._id = orderDT.insertedId
-  // }
+  const orderDT = await databaseService.orderDetail.insertOne(newOrderDT)
+  if(orderDT.insertedId){
+    newOrderDT._id = orderDT.insertedId
+  } else {
+    return  'Fail to save'
+  }
 
   const newOrder = {
     _id: new ObjectId(),
     UserID: reqOrderCookie.UserID,
     // OrderDetailID: newOrderDT._id,
-    OrderDetailID: reqOrderCookie.OrderDetailID,
+    OrderDetailID: orderDT?._id,
     ShipAddress: reqOrderCookie.ShipAddress,
     Description: reqOrderCookie.Description,
     OrderDate: reqOrderCookie.OrderDate || new Date(),
@@ -106,5 +108,5 @@ export const saveOrderToDatabase = async (reqOrderCookie) => {
   } else {
     return  'Fail to save'
   }
-  return order
+  return {orderDT, order}
 }
