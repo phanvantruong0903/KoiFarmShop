@@ -8,7 +8,18 @@ import { useOrder } from "../Context/OrderContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FaCartPlus } from "react-icons/fa";
-import Cookies from "js-cookie";
+import Koikohaku from "./Koi/Koikohaku";
+import Koiogon from "./Koi/Koiogon";
+import Koishowa from "./Koi/Koishowa";
+import Koitancho from "./Koi/Koitancho";
+import Koibekko from "./Koi/Koibekko";
+import Koidoitsu from "./Koi/Koidoitsu";
+import Koiginrin from "./Koi/Koiginrin";
+import Koigoshiki from "./Koi/Koigoshiki";
+import Koibenigoi from "./Koi/Koibenigoi";
+import Koiasagi from "./Koi/Koiasagi";
+import Koiplatinum from "./Koi/Koiplatinum";
+import Koishusui from "./Koi/Koishusui";
 import { Container } from "react-bootstrap";
 const { Title, Text, Paragraph } = Typography;
 
@@ -22,6 +33,13 @@ const OrderPage = () => {
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const navigate = useNavigate();
   const [quantityInCart, setQuantityInCart] = useState(0); // Track quantity in cart
+  const [cardData, setCardData] = useState([]);
+  const [error, setError] = useState(null);
+  const [idKohaku, setIdKohaku] = useState(null);
+  const [filteredCards, setFilteredCards] = useState([]);
+  const [categoryData, setCategoryData] = useState([]);
+  const [id, setID] = useState();
+  const [categoryName, setCategoryName] = useState();
   console.log(selectedItem);
 
   useEffect(() => {
@@ -126,10 +144,6 @@ const OrderPage = () => {
       }
 
       toast.success("Đã thêm vào giỏ hàng!");
-
-      setTimeout(() => {
-        navigate("/koikygui");
-      }, 3000);
     } catch (error) {
       console.log(error);
       toast.error("Có lỗi xảy ra! " + (error.response?.data?.message || ""));
@@ -140,7 +154,45 @@ const OrderPage = () => {
   const handleOrderPlacement = () => {
     alert("Order placed!"); // Implement actual order placement logic here
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/getAllKoi");
+        console.log("Data received from API:", response.data); // Kiểm tra dữ liệu
+        if (Array.isArray(response.data.result)) {
+          setCardData(response.data.result); // Lấy mảng từ thuộc tính 'result'
+          setCategoryData(response.data.categoryList);
+          console.log("CategoryData" + categoryData);
+          console.log("Card data set successfully:", response.data.result); // Kiểm tra sau khi set
+          console.log(
+            "Category Data set successfully:",
+            response.data.categoryList
+          );
+        } else {
+          console.error("Dữ liệu không phải là mảng:", response.data);
+        }
+      } catch (err) {
+        console.error("Error fetching data:", err); // Ghi lại lỗi
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    fetchData();
+  }, []);
+  useEffect(() => {
+    const card = categoryData.find(
+      (card) => card._id === selectedItem.CategoryID
+    );
+    if (card) {
+      setCategoryName(card.CategoryName);
+      console.log("Categoryname" + categoryName);
+    }
+  }, [categoryData]); // Run this effect when categoryData changes
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
   return (
     <>
       <Navbar />
@@ -154,8 +206,7 @@ const OrderPage = () => {
         <Container>
           <div
             style={{
-              paddingTop: "150px",
-              padding: "20px",
+              padding: "16px",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -164,11 +215,15 @@ const OrderPage = () => {
             }}
           >
             <Card
-              title={<Title level={1}>Order Page</Title>}
+              title={
+                <Title level={1} style={{ textAlign: "center", color: "red" }}>
+                  Thông tin
+                </Title>
+              }
               style={{
                 boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
-                width: "100%",
-                maxWidth: "1500px",
+                width: "80%",
+                maxWidth: "1000px",
               }}
             >
               {selectedItem ? (
@@ -215,7 +270,7 @@ const OrderPage = () => {
                       {selectedItem.KoiName}
                     </Title>
                     <hr style={{ margin: "10px 0" }} />
-                    <Paragraph>
+                    <Paragraph style={{ paddingTop: "18px" }}>
                       <h3 style={{ fontSize: "25px", textAlign: "left" }}>
                         Price:{" "}
                         <span style={{ fontSize: "25px", color: "red" }}>
@@ -229,9 +284,23 @@ const OrderPage = () => {
                             : "Contact for Price"}
                         </span>
                       </h3>
+                      <Text>
+                        Tình trạng: Sẵn hàng, xem và lựa chọn cá trực tiếp tại
+                        trại{" "}
+                        <span
+                          style={{
+                            fontWeight: "600",
+                            color: "red",
+                            fontSize: "25px",
+                          }}
+                        >
+                          IKoi
+                        </span>
+                        .
+                      </Text>
                     </Paragraph>
                     <hr style={{ margin: "10px 0" }} />
-                    <Paragraph style={{ fontSize: "20px", textAlign: "left" }}>
+                    <Paragraph>
                       <strong>Description: </strong>
                       {selectedItem.Description}
                     </Paragraph>
@@ -239,19 +308,20 @@ const OrderPage = () => {
                       <div style={{ fontSize: "20px", textAlign: "left" }}>
                         <label>
                           <strong>Quantity: </strong>
-                          <select
-                            style={{ fontSize: "20px", color: "red" }}
+                          <input
+                            type="number"
+                            style={{
+                              fontSize: "14px",
+                              color: "red",
+                              width: "48%",
+                            }}
                             value={selectedQuantity}
                             onChange={(e) =>
                               setSelectedQuantity(e.target.value)
-                            } // Cập nhật giá trị khi chọn
-                          >
-                            {Array.from({ length: maxQuantity }, (_, index) => (
-                              <option key={index} value={index + 1}>
-                                {index + 1}
-                              </option>
-                            ))}
-                          </select>
+                            } // Update value on change
+                            min="1" // Set minimum value to 1
+                            max={maxQuantity} // Set maximum value
+                          />
                         </label>
                       </div>
                     </Paragraph>
@@ -327,76 +397,20 @@ const OrderPage = () => {
                 <Spin tip="Loading..." />
               )}
             </Card>
-
-            {selectedItem && (
-              <Card style={{ marginTop: "40px", width: "100%" }}>
-                <Title level={2}>
-                  Chi tiết về cá Koi : {selectedItem.KoiName}
-                </Title>
-                <Paragraph>
-                  {selectedItem.Description ||
-                    "Thông tin chi tiết về cá Koi không có sẵn."}
-                </Paragraph>
-                <ul>
-                  <li>
-                    <strong>Age: </strong>
-                    <Text>{selectedItem.Age}</Text>
-                  </li>
-                  <li>
-                    <strong>Origin: </strong>
-                    {selectedItem.Origin}
-                  </li>
-                  <li>
-                    <strong>Gender: </strong>
-                    {selectedItem.Gender}
-                  </li>
-                  <li>
-                    <strong>Size: </strong>
-                    {selectedItem.Size}
-                  </li>
-                  <li>
-                    <strong>Breed: </strong>
-                    {selectedItem.Breed}
-                  </li>
-                  <li>
-                    <strong>Daily Food Amount: </strong>
-                    {selectedItem.DailyFoodAmount}
-                  </li>
-                  <li>
-                    <strong>Filtering Ratio: </strong>
-                    {selectedItem.FilteringRatio}
-                  </li>
-                </ul>
-              </Card>
-            )}
-
-            <Card style={{ marginTop: "40px", width: "100%" }}>
-              <Title level={4} style={{ color: "red" }}>
-                Nguồn gốc, xuất xứ của cá chép Koi Nhật Bản
-              </Title>
-              <Paragraph>
-                Hiện từ đầu thế kỷ 20, năm 1914, để tôn vinh hoàng tử Hirohito,
-                Nhật Bản đã cho triển lãm giống cá chép Koi đầu tiên tại Tokyo
-                và đảo Niigata chính thức được mang tên Niigata Koi...
-              </Paragraph>
-              <Title level={4} style={{ color: "red" }}>
-                Các chủng loại cá Koi Nhật Bản từ xưa đến nay
-              </Title>
-              <Paragraph>
-                Cá Koi được chia ra làm hai loại: <br /> Koi chuẩn và Koi
-                bướm...
-              </Paragraph>
-              <Title level={4} style={{ color: "red" }}>
-                Màu sắc, tên gọi từng dòng theo màu sắc và cách phân biệt theo
-                từng loại tên
-              </Title>
-              <Paragraph>
-                Người Nhật tin rằng những mảng màu trên mình cá chép Koi khi là
-                những hình xăm sẽ luôn luôn mang lại sự may mắn...
-              </Paragraph>
-            </Card>
           </div>
         </Container>
+        {categoryName === "Kohaku" && <Koikohaku />}
+        {categoryName === "Ogon" && <Koiogon />}
+        {categoryName === "Showa" && <Koishowa />}
+        {categoryName === "Tancho" && <Koitancho />}
+        {categoryName === "Bekko" && <Koibekko />}
+        {categoryName === "Ginrin" && <Koiginrin />}
+        {categoryName === "Doitsu" && <Koidoitsu />}
+        {categoryName === "Goshiki" && <Koigoshiki />}
+        {categoryName === "Benigoi" && <Koibenigoi />}
+        {categoryName === "Asagi" && <Koiasagi />}
+        {categoryName === "Platinum" && <Koiplatinum />}
+        {categoryName === "Shusui" && <Koishusui />}
       </Layout>
       <Footer />
     </>

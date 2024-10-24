@@ -1,4 +1,3 @@
-import { Form, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
@@ -7,7 +6,8 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axiosInstance from "../An/Utils/axiosJS";
-import { Container } from "react-bootstrap";
+
+import { Form, Button, Spinner, Container } from "react-bootstrap";
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
   authDomain: import.meta.env.VITE_AUTH_DOMAIN,
@@ -22,14 +22,17 @@ const storage = getStorage(app); // Khởi tạo Firebase Storage
 
 export default function Kyguikoi() {
   const [cardData, setCardData] = useState([]); // Dữ liệu danh mục
-  const [loading, setLoading] = useState(true);
+
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [categoryData, setCategoryData] = useState([]);
   const navigate = useNavigate();
   const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(false);
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true); // Start loading
+
     const formData = new FormData(event.target);
 
     try {
@@ -214,6 +217,10 @@ export default function Kyguikoi() {
 
     fetchData();
   }, []);
+  const postDataToAPI = async (data) => {
+    // Simulate API call
+    return new Promise((resolve) => setTimeout(resolve, 2000)); // Simulates a delay
+  };
 
   return (
     <Container>
@@ -610,8 +617,22 @@ export default function Kyguikoi() {
               type="submit"
               variant="success"
               style={{ borderRadius: "20px", width: "8%" }}
+              disabled={loading} // Disable button while loading
             >
-              Ký Gửi
+              {loading ? (
+                <>
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                  <span className="sr-only">Loading...</span>
+                </>
+              ) : (
+                "Ký Gửi"
+              )}
             </Button>
           </div>
         </Form>

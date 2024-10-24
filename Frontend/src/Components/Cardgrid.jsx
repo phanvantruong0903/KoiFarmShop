@@ -75,7 +75,7 @@ const CardGrid = ({ cardData }) => {
             : "Tất cả"}
         </Text>
       </Divider>
-      <Row gutter={[, 16]} style={{ marginBottom: "20px" }}>
+      <Row gutter={[16, 16]} style={{ marginBottom: "20px" }}>
         <Col>
           <Text
             style={{ cursor: "pointer", marginRight: "20px" }}
@@ -240,9 +240,7 @@ const CardGrid = ({ cardData }) => {
                 <br />
                 {card.Status === 2 && <Text>F1</Text>}
                 {card.Status === 3 && <Text>Việt</Text>}
-                <Text strong style={{ color: "#FF5722" }}>
-                  {card.Description}
-                </Text>
+
                 <br />
                 <Text strong style={{ color: "#FF5722" }}>
                   {card.Price
@@ -291,9 +289,7 @@ const CardGrid = ({ cardData }) => {
                 </Text>
                 <br />
                 {card.Status === 1 && <Text>Nhật</Text>}
-                <Text strong style={{ color: "#FF5722" }}>
-                  {card.Description}
-                </Text>
+
                 <br />
                 <Text strong style={{ color: "#FF5722" }}>
                   {card.Price
