@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import CardGrid from "./Cardgrid";
 import axios from "axios";
 import "./Koikygui.css";
+import { Container } from "react-bootstrap";
 
 const { Content } = Layout;
 const { Title } = Typography;

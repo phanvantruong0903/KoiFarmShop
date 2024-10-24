@@ -3,67 +3,62 @@ import React, { useState } from "react";
 import { Card, Row, Col, Typography, Divider } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useOrder } from "../Context/OrderContext";
+import { Container } from "react-bootstrap";
+
 const { Text } = Typography;
 
 const CardGrid = ({ cardData }) => {
   const navigate = useNavigate();
-  const [category, setCategory] = useState("kygui"); // State for category switch
+  const [category, setCategory] = useState("All"); // State for category switch
   const { addedKoiIds } = useOrder(); // Get added Koi IDs
   console.log(addedKoiIds);
+
   const handleCategoryChange = (newCategory) => {
     setCategory(newCategory);
   };
 
-  // Group Koi fish by CategoryID and collect additional details
-
-  const ikoiCategories = () => {
-    const categoryMap = {};
-    cardData.forEach((card) => {
-      if (card.Status === 2 || card.Status === 3) {
-        if (!categoryMap[card.CategoryID]) {
-          categoryMap[card.CategoryID] = {
-            count: 0,
-            KoiName: card.KoiName,
-            Image: card.Image,
-            Price: card.Price,
-            Age: card.Age,
-            Description: card.Description,
-            Origin: card.Origin,
-            Gender: card.Gender,
-            CategoryID: card.CategoryID,
-          };
+  // Group Koi fish by Size, Breed, and Status
+  const groupCards = (status) => {
+    return cardData
+      .filter((card) => card.Status === status)
+      .reduce((acc, card) => {
+        const key = `${card.Size}-${card.Breed}-${card.Status}`; // Create a unique key
+        if (!acc[key]) {
+          acc[key] = { count: 0, card }; // Initialize if key doesn't exist
         }
-        categoryMap[card.CategoryID].count++;
-      }
-    });
-    return categoryMap;
+        acc[key].count += 1; // Increment count
+        return acc;
+      }, {});
   };
-  const ikoi = ikoiCategories();
 
-  const nhatCategories = () => {
-    const categoryMap = {};
-    cardData.forEach((card) => {
-      if (card.Status === 1) {
-        if (!categoryMap[card.CategoryID]) {
-          categoryMap[card.CategoryID] = {
-            count: 0,
-            KoiName: card.KoiName,
-            Image: card.Image,
-            Price: card.Price,
-            Age: card.Age,
-            Description: card.Description,
-            Origin: card.Origin,
-            Gender: card.Gender,
-            CategoryID: card.CategoryID,
-          };
-        }
-        categoryMap[card.CategoryID].count++;
+  const groupedKygui = groupCards(4); // Grouping for Cá Ký Gửi
+  const groupedNhat = groupCards(1); // Grouping for Cá Koi Nhật
+  const groupedIkoi = cardData
+    .filter((card) => card.Status === 2 || card.Status === 3) // Include both statuses
+    .reduce((acc, card) => {
+      const key = `${card.Size}-${card.Breed}-${card.Status}`; // Create a unique key
+      if (!acc[key]) {
+        acc[key] = { count: 0, card }; // Initialize if key doesn't exist
       }
-    });
-    return categoryMap;
-  };
-  const nhat = nhatCategories();
-
+      acc[key].count += 1; // Increment count
+      return acc;
+    }, {});
+  const groupAll = cardData
+    .filter(
+      (card) =>
+        card.Status === 2 ||
+        card.Status === 3 ||
+        card.Status === 4 ||
+        card.Status === 1
+    ) // Include both statuses
+    .reduce((acc, card) => {
+      const key = `${card.Size}-${card.Breed}-${card.Status}`; // Create a unique key
+      if (!acc[key]) {
+        acc[key] = { count: 0, card }; // Initialize if key doesn't exist
+      }
+      acc[key].count += 1; // Increment count
+      return acc;
+    }, {});
   return (
     <div className="container" style={{ padding: "0" }}>
       <Divider
@@ -75,10 +70,20 @@ const CardGrid = ({ cardData }) => {
             ? "Cá Ký Gửi"
             : category === "ikoi"
             ? "Cá Ikoi"
-            : "Cá Koi Nhật"}
+            : category === "nhat"
+            ? "Cá Koi Nhật"
+            : "Tất cả"}
         </Text>
       </Divider>
       <Row gutter={[16, 16]} style={{ marginBottom: "20px" }}>
+        <Col>
+          <Text
+            style={{ cursor: "pointer", marginRight: "20px" }}
+            onClick={() => handleCategoryChange("All")}
+          >
+            Tất cả
+          </Text>
+        </Col>
         <Col>
           <Text
             style={{ cursor: "pointer", marginRight: "20px" }}
@@ -104,140 +109,196 @@ const CardGrid = ({ cardData }) => {
           </Text>
         </Col>
       </Row>
-
       <Row gutter={[16, 16]}>
-        {category === "kygui" &&
-          cardData
-            .filter((card) => card.Status === 4)
-            .map((card) => (
-              <Col
-                key={card._id}
-                xs={12}
-                sm={8}
-                md={4}
-                lg={4}
-                xl={4}
-                className="mb-4"
+        {category === "All" &&
+          Object.values(groupAll).map(({ count, card }) => (
+            <Col
+              key={card._id}
+              xs={12}
+              sm={8}
+              md={4}
+              lg={4}
+              xl={4}
+              className="mb-4"
+            >
+              <Card
+                size="default"
+                hoverable
+                style={{ width: "100%", borderRadius: "8px", height: "100%" }}
+                cover={
+                  <img
+                    alt={card.KoiName}
+                    src={card.Image}
+                    style={{
+                      height: "250px",
+                      objectFit: "cover",
+                      borderRadius: "8px 8px 0 0",
+                    }}
+                  />
+                }
+                onClick={() =>
+                  navigate("/order", { state: { selectedItem: card } })
+                }
               >
-                <Card
-                  hoverable
-                  style={{ width: "100%", borderRadius: "8px", height: "100%" }}
-                  cover={
-                    <img
-                      alt={card.KoiName}
-                      src={card.Image}
-                      style={{
-                        height: "250px",
-                        objectFit: "cover",
-                        borderRadius: "8px 8px 0 0",
-                      }}
-                    />
-                  }
-                  onClick={() =>
-                    navigate("/order", { state: { selectedItem: card } })
-                  } // Pass the card as state
-                >
-                  <Text strong>{card.KoiName || "N/A"}</Text>
-                  <br />
-                  <Text strong style={{ color: "#FF5722" }}>
-                    {card.Price
-                      ? `${card.Price.toLocaleString()} VND`
-                      : "Liên Hệ"}
-                  </Text>
-                </Card>
-              </Col>
-            ))}
+                <Text strong>{card.KoiName || "N/A"}</Text>
+                <br />
+                <Text>Số Lượng : {count}</Text>
+                <br />
+                <Text>Size : {card.Size} cm</Text>
+                <br />
+                {card.Status === 1 && <Text>Nhật Nhập Khẩu</Text>}
+                {card.Status === 2 && <Text>F1</Text>}
+                {card.Status === 3 && <Text>Việt</Text>}
+                {card.Status === 4 && <Text>Ký Gửi</Text>}
+                <br />
+                <Text strong style={{ color: "#FF5722" }}>
+                  {card.Price
+                    ? `${card.Price.toLocaleString()} VND`
+                    : "Liên Hệ"}
+                </Text>
+              </Card>
+            </Col>
+          ))}
+        {category === "kygui" &&
+          Object.values(groupedKygui).map(({ count, card }) => (
+            <Col
+              key={card._id}
+              xs={12}
+              sm={8}
+              md={4}
+              lg={4}
+              xl={4}
+              className="mb-4"
+            >
+              <Card
+                hoverable
+                style={{ width: "100%", borderRadius: "8px", height: "100%" }}
+                cover={
+                  <img
+                    alt={card.KoiName}
+                    src={card.Image}
+                    style={{
+                      height: "250px",
+                      objectFit: "cover",
+                      borderRadius: "8px 8px 0 0",
+                    }}
+                  />
+                }
+                onClick={() =>
+                  navigate("/order", { state: { selectedItem: card } })
+                }
+              >
+                <Text strong>
+                  {card.KoiName || "N/A"} ({count})
+                </Text>
+                <br />
+                <Text strong style={{ color: "#FF5722" }}>
+                  {card.Price
+                    ? `${card.Price.toLocaleString()} VND`
+                    : "Liên Hệ"}
+                </Text>
+              </Card>
+            </Col>
+          ))}
 
         {category === "ikoi" &&
-          cardData
-            .filter((card) => card.Status === 2 || card.Status === 3)
-            .map((card) => (
-              <Col
-                key={card._id}
-                xs={12}
-                sm={8}
-                md={4}
-                lg={4}
-                xl={4}
-                className="mb-4"
+          Object.values(groupedIkoi).map(({ count, card }) => (
+            <Col
+              key={card._id}
+              xs={12}
+              sm={8}
+              md={4}
+              lg={4}
+              xl={4}
+              className="mb-4"
+            >
+              <Card
+                hoverable
+                style={{ width: "100%", borderRadius: "8px", height: "100%" }}
+                cover={
+                  <img
+                    alt={card.KoiName}
+                    src={card.Image}
+                    style={{
+                      height: "250px",
+                      objectFit: "cover",
+                      borderRadius: "8px 8px 0 0",
+                    }}
+                  />
+                }
+                onClick={() =>
+                  navigate("/order", { state: { selectedItem: card } })
+                }
               >
-                <Card
-                  hoverable
-                  style={{ width: "100%", borderRadius: "8px", height: "100%" }}
-                  cover={
-                    <img
-                      alt={card.KoiName}
-                      src={card.Image}
-                      style={{
-                        height: "250px",
-                        objectFit: "cover",
-                        borderRadius: "8px 8px 0 0",
-                      }}
-                    />
-                  }
-                  onClick={() =>
-                    navigate("/order", { state: { selectedItem: card } })
-                  } // Pass the card as state
-                >
-                  <Text strong>{card.KoiName || "N/A"}</Text>
-                  <br />
+                <Text strong>
+                  {card.KoiName || "N/A"} ({count})
+                </Text>
+                <br />
+                <Text strong style={{ color: "#FF5722" }}>
+                  {card.Origin}
+                </Text>
+                <br />
+                {card.Status === 2 && <Text>F1</Text>}
+                {card.Status === 3 && <Text>Việt</Text>}
 
-                  <Text strong style={{ color: "#FF5722" }}>
-                    {card.Origin}
-                  </Text>
-                  <Text strong style={{ color: "#FF5722" }}>
-                    {card.Description}
-                  </Text>
-                  <br />
-                  <Text strong style={{ color: "#FF5722" }}>
-                    {card.Price
-                      ? `${card.Price.toLocaleString()} VND`
-                      : "Liên Hệ"}
-                  </Text>
-                </Card>
-              </Col>
-            ))}
+                <br />
+                <Text strong style={{ color: "#FF5722" }}>
+                  {card.Price
+                    ? `${card.Price.toLocaleString()} VND`
+                    : "Liên Hệ"}
+                </Text>
+              </Card>
+            </Col>
+          ))}
+
         {category === "nhat" &&
-          cardData
-            .filter((card) => card.Status === 1)
-            .map((card) => (
-              <Col
-                key={card._id}
-                xs={12}
-                sm={8}
-                md={4}
-                lg={4}
-                xl={4}
-                className="mb-4"
+          Object.values(groupedNhat).map(({ count, card }) => (
+            <Col
+              key={card._id}
+              xs={12}
+              sm={8}
+              md={4}
+              lg={4}
+              xl={4}
+              className="mb-4"
+            >
+              <Card
+                hoverable
+                style={{ width: "100%", borderRadius: "8px", height: "100%" }}
+                cover={
+                  <img
+                    alt={card.KoiName}
+                    src={card.Image}
+                    style={{
+                      height: "250px",
+                      objectFit: "cover",
+                      borderRadius: "8px 8px 0 0",
+                    }}
+                  />
+                }
+                onClick={() =>
+                  navigate("/order", { state: { selectedItem: card } })
+                }
               >
-                <Card
-                  hoverable
-                  style={{ width: "100%", borderRadius: "8px", height: "100%" }}
-                  cover={
-                    <img
-                      alt={card.KoiName}
-                      src={card.Image}
-                      style={{
-                        height: "250px",
-                        objectFit: "cover",
-                        borderRadius: "8px 8px 0 0",
-                      }}
-                    />
-                  }
-                  onClick={() =>
-                    navigate("/order", { state: { selectedItem: card } })
-                  } // Pass the card as state
-                >
-                  <Text strong>{card.KoiName || "N/A"}</Text>
-                  <br />
-                  <Text strong style={{ color: "#FF5722" }}>
-                    {card.Price
-                      ? `${card.Price.toLocaleString()} VND`
-                      : "Liên Hệ"}
-                  </Text>
-                </Card>
-              </Col>
-            ))}
+                <Text strong>
+                  {card.KoiName || "N/A"} ({count})
+                </Text>
+                <br />
+                <Text strong style={{ color: "#FF5722" }}>
+                  {card.Origin}
+                </Text>
+                <br />
+                {card.Status === 1 && <Text>Nhật</Text>}
+
+                <br />
+                <Text strong style={{ color: "#FF5722" }}>
+                  {card.Price
+                    ? `${card.Price.toLocaleString()} VND`
+                    : "Liên Hệ"}
+                </Text>
+              </Card>
+            </Col>
+          ))}
       </Row>
     </div>
   );
