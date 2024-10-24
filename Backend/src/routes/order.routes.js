@@ -8,6 +8,7 @@ import {
   getOrderDetailController,
   makeOrderDetailController,
   makeOrdersDetailController,
+  removeItemsDetailController,
   updateOrderDetailController
 } from '../controllers/orderDetailController.js'
 import { createOrderController, getOrderController, saveOrderController } from '../controllers/order.controllers.js'
@@ -23,6 +24,7 @@ orderRouter.post('/detail/buy', buyNowController)
 orderRouter.get('/detail/:orderID', getOrderDetailController)
 orderRouter.post('/detail/edit', updateOrderDetailController)
 orderRouter.post('/detail/price', getKoiQuantityController)
+orderRouter.post('/detail/remove', removeItemsDetailController)
 //Order
 orderRouter.post('/create/:orderDetailID', createOrderController)
 orderRouter.get('/',accessTokenValidator, wrapAsync(getOrderController))

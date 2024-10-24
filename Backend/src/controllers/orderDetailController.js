@@ -71,6 +71,30 @@ export const getOrderDetailController = async (req, res) => {
     return res.status(500).json({ error: error.message })
   }
 };
+export const removeItemsDetailController = async (req, res) => {
+  try {
+    const reqOrderDTCookie = req.cookies && req.cookies.orderDT ? JSON.parse(req.cookies.orderDT) : {}
+    const result = await orderDetailService.removeItem(req.body,reqOrderDTCookie);
+    console.log("result: ", result)
+    res.cookie('orderDT', JSON.stringify(result.orderDT), {
+      httpOnly: true,
+      maxAge: 1800000 // 30 mins
+    });
+    if(result!==null && result.orderDT.TotalPrice>=0){
+      return res.json({
+        message: USERS_MESSAGES.REMOVE_ITEM_SUCCESS,
+        result
+      })
+    }else{
+      return res.json({
+        message: USERS_MESSAGES.ORDER_NOT_FOUND
+      })
+    }
+    
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+};
 
 
 export const updateOrderDetailController = async (req, res) => {

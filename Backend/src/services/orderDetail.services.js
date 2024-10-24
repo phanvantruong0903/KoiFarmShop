@@ -119,6 +119,26 @@ class OrderDetailService {
         }
     }
 
+    async removeItem(payload, reqOrderDTCookie){
+        let orderDetail = reqOrderDTCookie
+        const removedKoi = await databaseService.kois.findOne({_id: new ObjectId(payload.KoiID)})
+        console.log("removed koi: ", removedKoi)
+        let removedItemPrice = removedKoi?.Price
+        console.log("removed item price: ", removedItemPrice)
+        const removedOrder = orderDetail?.Items.filter(item=>{
+            if(item.KoiID !== payload.KoiID){
+                return {
+                    KoiID: item.KoiID,
+                    Quantity:item.Quantity
+                }
+            }
+        })
+        return {orderDT:{
+            Items: removedOrder,
+            TotalPrice: orderDetail.TotalPrice - removedItemPrice
+        }}
+    }
+
     async updateItemQuantity(payload, reqOrderDTCookie) {
         const koiList = await this.getSamePropertiesKoi(payload.KoiID)
         console.log("koiList: ", koiList)
