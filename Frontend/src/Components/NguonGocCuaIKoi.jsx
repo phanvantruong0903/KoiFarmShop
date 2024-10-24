@@ -1,85 +1,131 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "./Footer";
 import Navbar from "./Navbar/Navbar";
 import { Container } from "react-bootstrap";
+import axios from "axios";
+import "./Css/supplierStyle.css";
+
+import { Layout, Typography } from "antd";
+const { Title, Text, Paragraph } = Typography;
+
 export default function NguonGocCuaIKoi() {
+  const [error, setError] = useState(null);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchSupplierData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:4000/manager/manage-supplier/get-all"
+        );
+        if (response.status === 200) {
+          setData(response.data.result);
+        } else {
+          setError("Failed to fetch supplier details.");
+        }
+      } catch (error) {
+        setError("Error fetching supplier details.");
+      }
+    };
+    fetchSupplierData();
+  }, []);
+
   return (
     <>
-      <div>
-        <Navbar />
-      </div>
-      <Container
-        style={{
-          padding: "20px",
-          paddingTop: "100px",
-        }}
-      >
+      <Navbar />
+      <Container style={{ padding: "20px", paddingTop: "100px" }}>
         <div>
-          <img
-            src="src/assets/Red_Modern_Travel_Presentation__6_-removebg-preview.png"
-            style={{ paddingLeft: "1039px" }}
-          />
+          <h1 style={{ color: "red" }}>Nguồn Gốc Của IKoi</h1>
+          <Paragraph className="paragraph-Style">
+            <strong>Vì sao chúng tôi chọn Koi</strong>
+            <br />
+            Trung Quốc cũng được biết đến là nơi có lịch sử lai tạo Cá Koi lâu
+            đời, thậm chí lâu hơn Nhật Bản. Koi do người Trung Quốc lai tạo hoặc
+            nuôi không hề xấu nhưng xét về các phẩm chất, giá trị nghệ thuật
+            đỉnh cao thì chưa bằng Koi Nhật.
+            <br />
+            Người Việt Nam có xu hướng chơi Koi Trung Quốc theo đại trà. Chỉ
+            những người chơi Koi chuyên nghiệp mới lựa chọn Koi Nhật Bản thuần
+            chủng. Koi Nhật Bản hội tụ đầy đủ các phẩm chất mà không loại Koi ở
+            quốc gia nào có được:
+            <ul>
+              <li>
+                Thân hình như chiếc tàu ngầm, bụng không to, không phệ, thon
+                gọn, thân đuôi dầy, phần lưng dầy. Cá nhìn chắc khỏe, vạm vỡ,
+                cấu trúc tốt có tiềm năng phát triển kích thước khủng trong
+                tương lai.
+              </li>
+              <li>
+                Màu sắc rõ ràng, hoa văn rõ nét, đường biên không lem nhem, mảng
+                màu nào ra mảng màu đó. Màu nhìn dầy, màu sang, không lòe loẹt.
+              </li>
+              <li>
+                Koi hòa đồng, tính tình thân thiện, sức đề kháng tốt do được
+                nuôi theo đúng tiêu chuẩn hồ chuyên nghiệp tại Nhật.
+              </li>
+            </ul>
+            Nếu là người chơi koi chuyên nghiệp, luôn phải tính đến giá trị
+            trong tương lai. Nuôi koi phục vụ đam mê nhưng phải mang đến kinh
+            tế. Nuôi Koi Nhật chắc chắn càng nuôi càng ra kinh tế. Koi Nhật có
+            nhiều phẩm chất tốt, màu đẹp, cấu trúc body chuẩn nên phát triển
+            kích thước lớn. Nuôi Koi Nhật rất dễ bán, ký gửi, thanh lý, đấu giá.
+            Các dòng koi khác chỉ đẹp 1 năm đầu nhưng càng nuôi càng vỡ màu, lem
+            nhem, cá béo bụng mất giá.
+          </Paragraph>
         </div>
-        <div style={{ marginTop: "-300px" }}>
-          <h1 style={{ textAlign: "center", fontWeight: "800", color: "red" }}>
-            Nguồn Gốc Của IKoi
+        <div>
+          <h1 style={{ color: "red" }}>
+            Những Koi Farm Nhật nào được chúng tôi lựa chọn
           </h1>
-          <hr />
-          <p style={{ fontWeight: "400", fontSize: "15px" }}>
-            IKoi được thành lập với sứ mệnh mang đến cho những người yêu thích
-            cá Koi những sản phẩm chất lượng cao, đáp ứng nhu cầu về cả thẩm mỹ
-            và sức khỏe của cá. Chúng tôi tự hào là một trong những nhà cung cấp
-            cá Koi hàng đầu tại Việt Nam, với nguồn gốc và chất lượng được đảm
-            bảo.
-          </p>
-          <p style={{ fontWeight: "400", fontSize: "15px" }}>
-            Nguồn gốc của IKoi xuất phát từ những trang trại cá Koi nổi tiếng
-            tại Nhật Bản, nơi được biết đến với việc nuôi dưỡng và phát triển
-            các giống cá Koi đẹp và độc đáo nhất thế giới. Chúng tôi đã hợp tác
-            chặt chẽ với các chuyên gia và nhà sản xuất cá Koi hàng đầu để đảm
-            bảo rằng mỗi con cá mà chúng tôi cung cấp đều mang trong mình vẻ đẹp
-            và sức sống mạnh mẽ.
-          </p>
-          <p style={{ fontWeight: "400", fontSize: "15px" }}>
-            Tại IKoi, chúng tôi không chỉ cung cấp cá Koi mà còn mang đến cho
-            khách hàng những kiến thức và kỹ thuật chăm sóc cá tốt nhất. Đội ngũ
-            chuyên gia của chúng tôi luôn sẵn sàng hỗ trợ và tư vấn để bạn có
-            thể chăm sóc cho những chú cá Koi của mình một cách hiệu quả nhất.
-          </p>
-          <p style={{ fontWeight: "400", fontSize: "15px" }}>
-            Chúng tôi cam kết mang đến những sản phẩm và dịch vụ tốt nhất, giúp
-            bạn tạo ra không gian sống động và đầy màu sắc với những chú cá Koi
-            tuyệt đẹp. Hãy cùng IKoi khám phá thế giới cá Koi và trải nghiệm
-            niềm đam mê với chúng tôi!
-          </p>
-          <p style={{ fontWeight: "400", fontSize: "15px" }}>
-            Chúng tôi cũng tổ chức các sự kiện định kỳ, nơi bạn có thể gặp gỡ
-            các chuyên gia trong ngành và tìm hiểu thêm về cách nuôi và chăm sóc
-            cá Koi. Bên cạnh đó, bạn sẽ có cơ hội tham gia các buổi hội thảo và
-            khóa học trực tiếp, giúp bạn nâng cao kiến thức và kỹ năng trong
-            việc chăm sóc cá.
-          </p>
-          <p style={{ fontWeight: "400", fontSize: "15px" }}>
-            IKoi không ngừng mở rộng danh mục sản phẩm của mình để phục vụ nhu
-            cầu đa dạng của khách hàng. Chúng tôi cung cấp các loại thức ăn chất
-            lượng cao, thiết bị lọc nước, và các sản phẩm hỗ trợ chăm sóc cá
-            Koi, tất cả đều được lựa chọn kỹ lưỡng để đảm bảo sức khỏe và sự
-            phát triển tốt nhất cho cá.
-          </p>
-          <p style={{ fontWeight: "400", fontSize: "15px" }}>
-            Hãy theo dõi chúng tôi trên các kênh truyền thông xã hội để cập nhật
-            thông tin về các sản phẩm mới, chương trình khuyến mãi và các sự
-            kiện thú vị liên quan đến cá Koi. IKoi luôn sẵn sàng đồng hành cùng
-            bạn trong hành trình khám phá thế giới cá Koi đầy màu sắc!
-          </p>
+          <Paragraph className="paragraph-Style">
+            <strong>Vì sao chúng tôi chọn Koi</strong>
+            <br />
+            Nhật Koi Farm hiện là đối tác chính của: Dainichi Koi Farm, Koi Farm
+            Omosako, Marudo Koi Farm, Yagenji Koi Farm , Takeda Koi Farm,Koi
+            Farm Sakai , Higashiyama Koi Farm , Koi Farm Yamamatsu , Koi Farm
+            Shibata , Koi Farm Koshiji , Koi Farm Koshiji , Danichi Omosako , D
+            <br />
+            Mỗi Koi Farm chuyên thế mạnh về 1 dòng Koi. Vì vậy để có nhiều koi
+            đẹp phải tìm kiếm ở nhiều Koi fam khác nhau. Điểm chung duy nhất các
+            koi farm này đều thuộc vùng Ojiya, Nhật Bản – được mệnh danh là Thủ
+            đô cá Koi của Nhật Bản. 80% nhà lai tạo nổi tiếng của Nhật và 90%
+            các giải thưởng lớn về cá Koi đều thuộc về Niigata.
+          </Paragraph>
+        </div>
+        {error && <div className="error">{error}</div>}
+        <div className="supplier-list">
+          {data.map((supplier) => (
+            <div key={supplier._id} className="supplier-item">
+              <Paragraph className="paragraph-Style">
+                <h3>{supplier.SupplierName}</h3>
+                <p className="text-Style">
+                  <strong>Address:</strong> {supplier.Address}
+                </p>
+                <p className="text-Style">
+                  <strong>Country:</strong> {supplier.Country}z``
+                </p>
+                <p className="text-Style">
+                  <strong>Phone:</strong> {supplier.PhoneNumber}
+                </p>
+                <p className="text-Style">{supplier.SupplierDescription}</p>
+                {supplier.SupplierImage && (
+                  <img
+                    src={supplier.SupplierImage}
+                    alt={supplier.SupplierName}
+                    className="supplier-image"
+                  />
+                )}
+              </Paragraph>
+            </div>
+          ))}
         </div>
       </Container>
       <div style={{ display: "flex" }}>
         <div style={{ width: "30%" }}>
-          <img src="src/assets/img_4.png" />
+          <img src="src/assets/img_4.png" alt="Image 4" />
         </div>
         <div style={{ width: "30%" }}>
-          <img src="src/assets/img_5.png" />
+          <img src="src/assets/img_5.png" alt="Image 5" />
         </div>
       </div>
       <div
@@ -88,12 +134,10 @@ export default function NguonGocCuaIKoi() {
           backgroundImage: `url("src/assets/e.jpg")`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          height: "100vh", // Đảm bảo chiều cao đủ để chiếm toàn bộ không gian
+          height: "100vh",
         }}
       ></div>
-      <div>
-        <Footer />
-      </div>
+      <Footer />
     </>
   );
 }

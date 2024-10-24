@@ -69,6 +69,7 @@ export default function Navbar() {
           <Link to="/" className="nav-link">
             TRANG CHỦ
           </Link>
+
           <Dropdown
             className="nav-dropdown"
             onMouseEnter={() => setShowDropdown1(true)}
