@@ -238,12 +238,6 @@ export default function Koikohaku() {
         <Container>
           <div>
             <div style={{ paddingTop: "110px", textAlign: "center" }}>
-              <div>
-                <img
-                  src="src/assets/Red_Modern_Travel_Presentation__6_-removebg-preview.png"
-                  style={{ paddingLeft: "1138px", marginTop: "-30px" }}
-                />
-              </div>
               <h1
                 style={{ marginTop: "-330px", fontWeight: "800", color: "red" }}
               >

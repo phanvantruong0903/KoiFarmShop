@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import CardGrid from "./Cardgrid";
 import axios from "axios";
 import "./Koikygui.css";
+import { Container } from "react-bootstrap";
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -84,102 +85,105 @@ export default function Koikygui() {
   return (
     <Layout>
       <Navbar />
-      <Content
-        style={{
-          padding: "20px",
-          display: "flex",
-          marginTop: "80px",
-          minHeight: "100vh",
-        }}
-      >
-        <div
+
+      <Container>
+        <Content
           style={{
-            marginRight: "20px",
-            marginLeft: "10px",
-            zIndex: "9999",
-            position: "sticky",
-            top: "100px",
-            width: "200px",
-            height: "fit-content",
-            padding: "10px",
-            backgroundColor: "transparent",
+            display: "flex",
+            marginTop: "80px",
+            minHeight: "100vh",
           }}
         >
-          <div className="radio-group" style={{ marginTop: "15px" }}>
-            <Title level={5}>CHỌN LOÀI CÁ</Title>
-            <Radio.Group
-              onChange={handleCategoryChange}
-              value={selectedCategory}
-              style={{ display: "block" }}
-            >
-              <Radio
-                value="All"
-                style={{ display: "block", marginBottom: "10px" }}
+          <div
+            style={{
+              marginRight: "20px",
+              marginLeft: "10px",
+              zIndex: "9999",
+              position: "sticky",
+              top: "100px",
+              width: "200px",
+              height: "fit-content",
+              padding: "10px",
+              backgroundColor: "transparent",
+            }}
+          >
+            <div className="radio-group" style={{ marginTop: "15px" }}>
+              <Title level={5}>CHỌN LOÀI CÁ</Title>
+              <Radio.Group
+                onChange={handleCategoryChange}
+                value={selectedCategory}
+                style={{ display: "block" }}
               >
-                All ({cardData.length})
-              </Radio>
-              {categoryData.map((card) => {
-                const categoryName = card.CategoryName;
-                const count = breedCounts[card._id] ?? 0;
-                return (
-                  <Radio
-                    key={card._id}
-                    value={card._id}
-                    style={{ display: "block", marginBottom: "10px" }}
-                  >
-                    {categoryName} ({count})
-                  </Radio>
-                );
-              })}
-            </Radio.Group>
-          </div>
+                <Radio
+                  value="All"
+                  style={{ display: "block", marginBottom: "10px" }}
+                >
+                  All ({cardData.length})
+                </Radio>
+                {categoryData.map((card) => {
+                  const categoryName = card.CategoryName;
+                  const count = breedCounts[card._id] ?? 0;
+                  return (
+                    <Radio
+                      key={card._id}
+                      value={card._id}
+                      style={{ display: "block", marginBottom: "10px" }}
+                    >
+                      {categoryName} ({count})
+                    </Radio>
+                  );
+                })}
+              </Radio.Group>
+            </div>
 
-          <div className="price-filter" style={{ marginTop: "20px" }}>
-            <Title level={5}>CHỌN GIÁ</Title>
-            <Input
-              placeholder="Giá tối thiểu (19.000)"
-              value={minPrice}
-              onChange={handleMinPriceChange}
-              style={{ marginBottom: "10px" }}
-              type="number"
-              min={19000}
-              max={20000000}
-            />
-            <Input
-              placeholder="Giá tối đa (20.000.000)"
-              value={maxPrice}
-              onChange={handleMaxPriceChange}
-              type="number"
-              min={19000}
-              max={20000000}
-            />
+            <div className="price-filter" style={{ marginTop: "20px" }}>
+              <Title level={5}>CHỌN GIÁ</Title>
+              <Input
+                placeholder="Giá tối thiểu (19.000)"
+                value={minPrice}
+                onChange={handleMinPriceChange}
+                style={{ marginBottom: "10px" }}
+                type="number"
+                min={19000}
+                max={20000000}
+              />
+              <Input
+                placeholder="Giá tối đa (20.000.000)"
+                value={maxPrice}
+                onChange={handleMaxPriceChange}
+                type="number"
+                min={19000}
+                max={20000000}
+              />
+            </div>
+            <div className="size-filter" style={{ marginTop: "20px" }}>
+              <Title level={5}>CHỌN KÍCH THƯỚC</Title>
+              <Select
+                value={selectedSize}
+                onChange={handleSizeChange}
+                style={{ width: "100%" }}
+              >
+                <Option value="All">All Sizes</Option>
+                <Option value="20">20cm</Option>
+                <Option value="25">25cm</Option>
+                <Option value="30">30cm</Option>
+                <Option value="35">35cm</Option>
+                <Option value="40">40cm</Option>
+                <Option value="45">45cm</Option>
+                <Option value="50">50cm</Option>
+                <Option value="55">55cm</Option>
+                <Option value="60">60cm</Option>
+                <Option value="65">65cm</Option>
+                <Option value="70">70cm</Option>
+                <Option value="75">75cm</Option>
+                {/* Add more size options as needed */}
+              </Select>
+            </div>
           </div>
-          <div className="size-filter" style={{ marginTop: "20px" }}>
-            <Title level={5}>CHỌN KÍCH THƯỚC</Title>
-            <Select
-              value={selectedSize}
-              onChange={handleSizeChange}
-              style={{ width: "100%" }}
-            >
-              <Option value="All">All Sizes</Option>
-              <Option value="20">20cm</Option>
-              <Option value="25">25cm</Option>
-              <Option value="30">30cm</Option>
-              <Option value="35">35cm</Option>
-              <Option value="40">40cm</Option>
-              <Option value="45">45cm</Option>
-              <Option value="50">50cm</Option>
-              <Option value="55">55cm</Option>
-              <Option value="60">60cm</Option>
-              <Option value="65">65cm</Option>
-              <Option value="70">70cm</Option>
-              <Option value="75">75cm</Option>
-              {/* Add more size options as needed */}
-            </Select>
-          </div>
-        </div>
-        <CardGrid cardData={filteredCards} />
-      </Content>
+          <CardGrid cardData={filteredCards} />
+        </Content>
+      </Container>
+
       <Footer className="footer" />
     </Layout>
   );
