@@ -18,6 +18,7 @@ export default function Koikygui() {
   const [categoryData, setCategoryData] = useState([]);
   const [selectedSize, setSelectedSize] = useState("All");
   const [minPrice, setMinPrice] = useState("0");
+  const [categoryCounts, setCategoryCounts] = useState([]);
   const [maxPrice, setMaxPrice] = useState("20000000");
 
   useEffect(() => {
@@ -26,7 +27,23 @@ export default function Koikygui() {
         const response = await axios.get("http://localhost:4000/getAllKoi");
         if (Array.isArray(response.data.result)) {
           setCardData(response.data.result);
-          setCategoryData(response.data.categoryList);
+
+          // Initialize category count object
+          const categoryCounts = {};
+          response.data.result.forEach((card) => {
+            if (categoryCounts[card.CategoryID]) {
+              categoryCounts[card.CategoryID]++;
+            } else {
+              categoryCounts[card.CategoryID] = 1;
+            }
+          });
+
+          // Update categoryData with counts
+          const categoryData = response.data.categoryList.map((category) => ({
+            ...category,
+            count: categoryCounts[category._id] || 0,
+          }));
+          setCategoryData(categoryData);
         }
       } catch (err) {
         setError(err);
@@ -37,7 +54,9 @@ export default function Koikygui() {
 
     fetchData();
   }, []);
-
+  useEffect(() => {
+    console.log(categoryData);
+  }, []);
   const handleCategoryChange = (e) => setSelectedCategory(e.target.value);
   const handleSizeChange = (value) => setSelectedSize(value);
   const handleMinPriceChange = (e) => setMinPrice(e.target.value);
@@ -65,7 +84,7 @@ export default function Koikygui() {
         style={{
           padding: "20px",
           display: "flex",
-          marginTop: "80px", 
+          marginTop: "80px",
           minHeight: "100vh",
         }}
       >
@@ -75,11 +94,11 @@ export default function Koikygui() {
             marginLeft: "10px",
             width: "200px",
             padding: "10px",
-            position: "relative", 
+            position: "relative",
             top: "0",
-            zIndex: "1", 
-            border: "none", 
-            boxShadow: "none", 
+            zIndex: "1",
+            border: "none",
+            boxShadow: "none",
           }}
         >
           <div className="radio-group" style={{ marginTop: "15px" }}>

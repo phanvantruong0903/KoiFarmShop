@@ -38,16 +38,16 @@ export default function Gioithieusankygui() {
                 level={1}
                 style={{ color: "#e74c3c", marginBottom: "20px" }}
               >
-                Ký Gửi
+                IKoi
               </Title>
               <Paragraph style={{ color: "#333", marginBottom: "15px" }}>
-                99% người nuôi cá Koi đều mong em koi của mình được “gả” vào gia
-                đình tốt, đảm bảo cuộc sống, tương lai...
+                Chào mừng bạn đến với IKoi, nơi cung cấp dịch vụ ký gửi cá Koi
+                chất lượng nhất...
               </Paragraph>
 
               {/* Quy trình ký gửi */}
               <Paragraph style={{ color: "#333", marginBottom: "15px" }}>
-                <strong>Quy trình ký gửi cá Koi</strong>
+                <strong>Quy trình ký gửi cá Koi tại IKoi</strong>
                 <ul>
                   <li>
                     Ký gửi cá Koi offline: Cung cấp thông tin Koi cần ký gửi
@@ -55,7 +55,7 @@ export default function Gioithieusankygui() {
                   </li>
                   <li>
                     Ký gửi cá Koi online: Đăng tải thông tin chi tiết của Koi
-                    cần ký gửi trên hệ thống website.
+                    cần ký gửi trên hệ thống website IKoi.
                   </li>
                 </ul>
               </Paragraph>
@@ -71,7 +71,7 @@ export default function Gioithieusankygui() {
                 <ol>
                   <li>Chụp ảnh chi tiết Koi cần ký gửi.</li>
                   <li>Cung cấp thông tin: Tên, tuổi, giới tính...</li>
-                  <li>OnKoi – Quang Minh kiểm tra Koi.</li>
+                  <li>IKoi kiểm tra Koi.</li>
                   <li>Thương thảo hợp đồng ký gửi.</li>
                   <li>Ký hợp đồng ký gửi.</li>
                   <li>Hỗ trợ khách xem cá.</li>
@@ -89,7 +89,7 @@ export default function Gioithieusankygui() {
                     Koi phải có giấy chứng nhận, ưu tiên các Koi thuần chủng.
                   </li>
                   <li>Khách hàng ký gửi chịu trách nhiệm về chất lượng Koi.</li>
-                  <li>Chúng tôi cam kết cung cấp thông tin trung thực.</li>
+                  <li>IKoi cam kết cung cấp thông tin trung thực.</li>
                   <li>Chi phí ký gửi hợp lý.</li>
                 </ul>
               </Paragraph>
@@ -138,8 +138,8 @@ export default function Gioithieusankygui() {
                 {isExpanded && (
                   <>
                     <Paragraph style={{ color: "#333", marginBottom: "15px" }}>
-                      OnKoi – Quang Minh là trang trại cá Koi với hệ thống hồ
-                      nuôi chuyên nghiệp...
+                      IKoi là trang trại cá Koi với hệ thống hồ nuôi chuyên
+                      nghiệp...
                     </Paragraph>
                     <Paragraph style={{ color: "#333", marginBottom: "15px" }}>
                       <h5 style={{ color: "#e74c3c", marginTop: "20px" }}>

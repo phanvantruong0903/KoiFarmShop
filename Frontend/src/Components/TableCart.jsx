@@ -3,32 +3,69 @@ import { useNavigate } from "react-router-dom";
 import { useOrder } from "../Context/OrderContext";
 import axios from "axios";
 import { Empty } from "antd"; // Import only Empty from Ant Design
-
+import Cookies from "js-cookie";
 export default function ShoppingCart() {
   const orderDetail = useOrder();
   const [koiList, setKoiList] = useState([]);
   const [error, setError] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0); // Initialize to 0
 
+  // useEffect(() => {
+  //   const storedKoiList = JSON.parse(localStorage.getItem("koiList")) || [];
+  //   const storedTotalPrice =
+  //     parseFloat(localStorage.getItem("totalPrice")) || 0;
+
+  //   const updatedKoiList = storedKoiList.map((koi) => ({
+  //     ...koi,
+  //     quantity: koi.quantity || 1,
+  //   }));
+
+  //   setKoiList(updatedKoiList);
+  //   setTotalPrice(storedTotalPrice);
+
+  //   // Check if the koi list is empty and orderId is available
+  //   if (updatedKoiList.length === 0 && orderDetail?.orderId) {
+  //     fetchOrderDetails(orderDetail.orderId);
+  //   }
+  // }, [orderDetail]);
   useEffect(() => {
-    const storedKoiList = JSON.parse(localStorage.getItem("koiList")) || [];
-    const storedTotalPrice =
-      parseFloat(localStorage.getItem("totalPrice")) || 0;
-
-    const updatedKoiList = storedKoiList.map((koi) => ({
-      ...koi,
-      quantity: koi.quantity || 1,
-    }));
-
-    setKoiList(updatedKoiList);
-    setTotalPrice(storedTotalPrice);
-
-    // Check if the koi list is empty and orderId is available
-    if (updatedKoiList.length === 0 && orderDetail?.orderId) {
-      fetchOrderDetails(orderDetail.orderId);
-    }
+    const fetchOrderDetails = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/order/detail", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        });
+        console.log(response);
+        if (response.status === 200) {
+          const { koiList, reqCookie } = response.data.result;
+          const { Items, TotalPrice } = reqCookie;
+          const koiMap = new Map(koiList.map((koi) => [koi._id, koi]));
+          const updatedKoiList = Items.map((item) => {
+            const koi = koiMap.get(item.KoiID);
+            return koi ? { ...koi, quantity: item.Quantity } : null;
+          }).filter((koi) => koi !== null);
+          setKoiList(updatedKoiList);
+          // Save to localStorage
+          // localStorage.setItem("koiList", JSON.stringify(updatedKoiList));
+          setTotalPrice(TotalPrice);
+          console.log("Order details fetched and stored in localStorage.");
+        } else {
+          console.error(`API request failed with status: ${response.status}`);
+          setError("Failed to fetch order details.");
+        }
+      } catch (error) {
+        // Log thêm thông tin lỗi
+        console.error(
+          "Error fetching order details:",
+          error.response ? error.response.data : error.message
+        );
+        setError("Error fetching order details.");
+      }
+    };
+    fetchOrderDetails();
   }, [orderDetail]);
-
   const fetchOrderDetails = async () => {
     try {
       const response = await axios.get("http://localhost:4000/order/detail", {
@@ -47,10 +84,11 @@ export default function ShoppingCart() {
           return koi ? { ...koi, quantity: item.Quantity } : null;
         }).filter((koi) => koi !== null);
         setKoiList(updatedKoiList);
-        setTotalPrice(TotalPrice);
         // Save to localStorage
-        localStorage.setItem("koiList", JSON.stringify(updatedKoiList));
-        localStorage.setItem("totalPrice", TotalPrice.toString());
+        // localStorage.setItem("koiList", JSON.stringify(updatedKoiList));
+        const orderDetails = JSON.parse(Cookies.get("orderDT") || "{}");
+        const totalPriceFromCookies = orderDetails.TotalPrice || 0;
+        setTotalPrice(totalPriceFromCookies);
         console.log("Order details fetched and stored in localStorage.");
       } else {
         console.error(`API request failed with status: ${response.status}`);
@@ -73,7 +111,6 @@ export default function ShoppingCart() {
       setError("Invalid quantity.");
       return;
     }
-
     try {
       const response = await axios.post(
         "http://localhost:4000/order/detail/edit",
@@ -97,21 +134,18 @@ export default function ShoppingCart() {
           setError(result); // Hiển thị thông điệp từ phản hồi
           return;
         }
-
         const updatedKoiList = koiList.map((koi) =>
           koi._id === koiId ? { ...koi, quantity } : koi
         );
 
         // Kiểm tra cấu trúc phản hồi để lấy totalPrice
-        const newTotalPrice = response.data.result.orderDT.TotalPrice;
-
-        if (newTotalPrice !== undefined) {
+        const { Items, TotalPrice } = response.data.result.orderDT;
+        if (TotalPrice !== undefined) {
           setKoiList(updatedKoiList);
-          setTotalPrice(newTotalPrice);
-
+          setTotalPrice(TotalPrice);
           // Lưu dữ liệu đã cập nhật vào localStorage
-          localStorage.setItem("koiList", JSON.stringify(updatedKoiList));
-          localStorage.setItem("totalPrice", newTotalPrice.toString());
+          // localStorage.setItem("koiList", JSON.stringify(updatedKoiList));
+          // localStorage.setItem("totalPrice", newTotalPrice.toString());
         } else {
           setError("Failed to retrieve updated total price.");
         }

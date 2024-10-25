@@ -80,7 +80,9 @@ export default function Navbar() {
               id="dropdown-basic"
               className="nav-dropdown-toggle"
             >
-              GIỚI THIỆU
+              <Link to="/gioithieu" className="nav-link">
+                GIỚI THIỆU
+              </Link>
             </Dropdown.Toggle>
             <CSSTransition
               in={showDropdown1}
@@ -261,13 +263,58 @@ export default function Navbar() {
               </Dropdown.Menu>
             </CSSTransition>
           </Dropdown>
-          <Link
-            to="/lienhe"
-            className="nav-link"
-            style={{ paddingLeft: "12px" }}
+          <Dropdown
+            className="nav-dropdown"
+            onMouseEnter={() => setShowDropdown5(true)}
+            onMouseLeave={() => setShowDropdown5(false)}
+            show={showDropdown4}
           >
-            LIÊN HỆ
-          </Link>
+            <Dropdown.Toggle
+              id="dropdown-basic"
+              className="nav-dropdown-toggle"
+            >
+              <Link to="/lonhapkhau" className="nav-link">
+                LÔ NHẬP KHẨU CÁ KOI TỪ NHẬT BẢN
+              </Link>
+            </Dropdown.Toggle>
+            <CSSTransition
+              in={showDropdown4}
+              timeout={300}
+              classNames="dropdown"
+              mountOnEnter
+              unmountOnExit
+            >
+              <Dropdown.Menu className="custom-menu">
+                <Dropdown.Item
+                  href="/kygui"
+                  onMouseEnter={() => setActiveItem("/kygui")}
+                  onMouseLeave={() => setActiveItem(null)}
+                  className={activeItem === "/kygui" ? "active" : ""}
+                >
+                  KOI KÝ GỬI
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item
+                  href="/koikygui"
+                  onMouseEnter={() => setActiveItem("/koikygui")}
+                  onMouseLeave={() => setActiveItem(null)}
+                  className={activeItem === "/koikygui" ? "active" : ""}
+                >
+                  KOI ĐANG BÁN
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </CSSTransition>
+          </Dropdown>
+          <Dropdown>
+            <Dropdown.Toggle
+              id="dropdown-basic"
+              className="nav-dropdown-toggle"
+            >
+              <Link to="/lienhe" className="nav-link">
+                LIÊN HỆ
+              </Link>
+            </Dropdown.Toggle>
+          </Dropdown>
         </div>
         <div className="auth-links">
           {isLoggedIn ? (

@@ -4,15 +4,19 @@ import Navbar from "./Components/Navbar/Navbar";
 import Footer from "./Components/Footer";
 import "../src/Home.css";
 import Slideshow from "./Components/Slideshow";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "./Context/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Carousel } from "antd";
 import { Link } from "react-router-dom";
-
+import "./Components/Css/homeStyle.css";
 import axios from "axios";
-
+import { Typography } from "antd";
+import { Button, Container } from "react-bootstrap";
+const { Title, Text, Paragraph } = Typography;
+import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap CSS is imported
+import { Card, Row, Col } from "react-bootstrap";
 export default function Home() {
   const isAuthenticated = localStorage.getItem("accessToken");
   const location = useLocation();
@@ -20,7 +24,7 @@ export default function Home() {
   const { logout } = useAuth();
   const [suppliers, setSuppliers] = useState([]);
   const [koidata, setKoiData] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const { message } = location.state || {};
     const storedMessage = localStorage.getItem("toastMessage");
@@ -43,6 +47,7 @@ export default function Home() {
         ]);
         setSuppliers(suppliersResponse.data.result);
         setKoiData(koiResponse.data.result);
+        console.log(koiData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -144,7 +149,9 @@ export default function Home() {
       name: "shusui",
     },
   ];
-
+  const handleShowMore = () => {
+    navigate("/koikygui");
+  };
   return (
     <>
       <div>
@@ -153,6 +160,7 @@ export default function Home() {
       <div style={{ width: "100%", height: "100%" }}>
         <Slideshow />
       </div>
+
       <h4
         style={{
           marginTop: "40px",
@@ -193,7 +201,46 @@ export default function Home() {
           )
         )}
       </Carousel>
-
+      <div className="secIntroduce">
+        <div className="container container-fluid">
+          <div className="row-fix">
+            <div className="item">
+              <div className="block-child">
+                <img src="src/assets/homeStyle1.jpg" />
+              </div>
+            </div>
+            <div className="item">
+              <div className="block-child">
+                <div className="child-item head-title">
+                  <h2 style={{ color: "red", fontSize: "15px" }}>GIỚI THIỆU</h2>
+                  <div className="straight-line"></div>
+                </div>
+                <div>
+                  <h1>IKoi Farm</h1>
+                </div>
+                <Paragraph className="paragraph-Style">
+                  Với niềm đam mê với cá Koi chúng tôi đã thành lập nên IKoi
+                  nhằm phục vụ nhu cầu chơi cá trên mảnh đất hình chữ S
+                </Paragraph>
+                <Paragraph className="paragraph-Style">
+                  Chúng tôi tự hào là đối tác của nhiều Koi Farm uy tín tại Nhật
+                  Bản. Tất cả các dòng cá cũng như các sản phẩm liên quan được
+                  cung cấp trên hệ thống đều được chúng tôi chọn lọc và chăm sóc
+                  cẩn thận trước khi xuất trại. IKOI FARM cam kết mang lại những
+                  giá trị tốt nhất đến với khách hàng của mình.
+                </Paragraph>
+                <div style={{ textAlign: "center" }}>
+                  <Button variant="danger">
+                    <Link to={"/gioithieu"} style={{ color: "white" }}>
+                      Xem thêm
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <h4
         style={{
           marginTop: "70px",
@@ -211,7 +258,7 @@ export default function Home() {
         dots={false}
         style={{ marginLeft: "50px", marginRight: "50px" }}
       >
-        {Array.from({ length: Math.ceil(suppliers.length / 4) }).map(
+        {Array.from({ length: Math.ceil(suppliers.length / 12) }).map(
           (_, index) => (
             <div key={index}>
               <div style={{ display: "flex", justifyContent: "space-around" }}>
@@ -251,92 +298,68 @@ export default function Home() {
         Các loại cá mới
       </h4>
 
-      <Carousel
-        arrows
-        style={{ marginLeft: "50px", marginRight: "50px" }}
-        dots={false}
-      >
-        {Array.from({ length: Math.ceil(koidata.length / 6) }).map(
-          (_, index) => (
-            <div key={index}>
-              <div style={{ display: "flex", justifyContent: "space-around" }}>
-                {koidata.slice(index * 6, index * 6 + 6).map((koi, idx) => (
-                  <div className="image-item" key={idx}>
-                    <Link to={`/koikygui`}>
-                      <img
-                        src={koi.Image}
-                        alt={koi.KoiName}
-                        className="carousel-image"
-                        loading="lazy"
-                      />
-                      <h3
-                        style={{
-                          fontFamily: "Arial, sans-serif",
-                          fontWeight: 300,
-                          opacity: 0.7,
-                          marginTop: "20px",
-                          fontSize: "16px",
-                          textAlign: "center",
-                        }}
-                      >
-                        {koi.KoiName}
-                      </h3>
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )
-        )}
-      </Carousel>
+      <Container>
+        <Row style={{ margin: "50px", justifyContent: "center" }}>
+          {koidata.slice(0, 8).map((koi, idx) => (
+            <Col
+              key={idx}
+              md={3}
+              sm={10}
+              xs={12}
+              style={{ marginBottom: "50px" }}
+            >
+              <Card
+                style={{
+                  border: "none",
+                  borderRadius: "8px",
+                  maxWidth: "500px",
+                  height: "auto",
+                  marginBottom: "10px",
+                }}
+              >
+                <Link to={"/koikygui"}>
+                  <img
+                    src={koi.Image}
+                    alt={koi.alt}
+                    loading="lazy"
+                    style={{
+                      height: "300px", // Height of the image
+                      objectFit: "cover",
+                      width: "100%",
+                      borderRadius: "8px 8px 0 0",
+                    }}
+                  />
+                </Link>
 
-      <div
-        className="animated-section hidden"
-        style={{
-          display: "flex",
-          backgroundImage: `url("src/assets/b.png")`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          width: "100%",
-          marginTop: "40px",
-        }}
-      >
-        <div
-          style={{
-            width: "100%",
-            margin: "100px",
-            color: "white",
-            display: "flex",
-            fontSize: "20px",
-          }}
-        >
-          <div
-            style={{
-              width: "100%",
-              color: "black",
-              fontSize: "20px",
-              marginTop: "50px",
-              fontWeight: "400",
-              marginLeft: "5px",
-              paddingRight: "1000px",
-            }}
-          >
-            <h1>Giới Thiệu về IKoi</h1>
-            <p style={{ fontWeight: "400", fontSize: "15px" }}>
-              IKoi là một cửa hàng chuyên cung cấp cá koi và các sản phẩm liên
-              quan đến việc chăm sóc cá koi...
-            </p>
-            <p style={{ fontWeight: "400", fontSize: "15px" }}>
-              Với đội ngũ nhân viên chuyên nghiệp, chúng tôi cam kết mang đến
-              cho bạn những sản phẩm tốt nhất.
-            </p>
-            <p style={{ fontWeight: "400", fontSize: "15px" }}>
-              Chúng tôi cung cấp cá koi chất lượng cao, phụ kiện và các dịch vụ
-              chăm sóc, bảo trì hồ cá.
-            </p>
+                <Card.Body style={{ padding: "10px" }}>
+                  <Card.Title
+                    style={{ fontSize: "1.1em", textAlign: "center" }}
+                  >
+                    {koi.KoiName}
+                  </Card.Title>
+                  <Paragraph>
+                    <strong style={{ color: "red" }}>Size</strong>: {koi.Size}
+                  </Paragraph>
+                  <Paragraph>
+                    <strong style={{ color: "red" }}>Gender</strong>:{" "}
+                    {koi.Gender}
+                  </Paragraph>
+                  <Paragraph>
+                    Size: 15 cm - 90 cm Nguồn gốc: Sakai, Matsue, Momotaro Chất
+                    lượng: Đẹp, Xuất sắc Loại: Thuần chủng Nhật Bản Xuất xứ:
+                    Nhật Bản
+                  </Paragraph>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+          <div style={{ textAlign: "center" }}>
+            <Button variant="danger">
+              <Link to={"/koikygui"}>Xem Thêm</Link>
+            </Button>
           </div>
-        </div>
-      </div>
+        </Row>
+      </Container>
       <Footer />
       <ToastContainer />
     </>

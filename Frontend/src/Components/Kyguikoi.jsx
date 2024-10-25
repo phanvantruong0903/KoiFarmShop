@@ -6,7 +6,6 @@ import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axiosInstance from "../An/Utils/axiosJS";
-
 import { Form, Button, Spinner, Container } from "react-bootstrap";
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
