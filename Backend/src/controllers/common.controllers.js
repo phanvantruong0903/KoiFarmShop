@@ -91,12 +91,11 @@ export const guestGetSupplierController = async (req, res) => {
   }
 }
 
-
 export const getKoiGroupIDController = async (req, res) => {
   try {
     const koiInGroupKOI = await databaseService.groupKois.find().toArray()
 
-    const GroupKoi = koiInGroupKOI.map((GroupKoi) => GroupKoi._id.toString())
+    const GroupKoi = koiInGroupKOI.map((groupKoi) => groupKoi._id.toString())
 
     const Koi = await databaseService.kois.find({ GroupKoiID: { $in: GroupKoi } }).toArray()
 
@@ -104,15 +103,18 @@ export const getKoiGroupIDController = async (req, res) => {
       const groupId = koi.GroupKoiID
 
       if (!accumulator[groupId]) {
-        accumulator[groupId] = [] 
+        accumulator[groupId] = { groupId, kois: [] }
       }
 
-      accumulator[groupId].push(koi)
+      accumulator[groupId].kois.push(koi)
 
-      return accumulator 
+      return accumulator
     }, {})
 
-    const groupedKoiArray = Object.values(groupedKoi)
+    const groupedKoiArray = Object.values(groupedKoi).map((item) => ({
+      groupId: item.groupId,
+      result: item.kois
+    }))
 
     res.json(groupedKoiArray)
   } catch (error) {
