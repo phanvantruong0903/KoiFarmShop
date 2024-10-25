@@ -152,7 +152,7 @@ managerRouter.post(
   wrapAsync(createNewSupplierController)
 )
 
-managerRouter.get('/getRevenue', accessTokenValidator, isAdminValidator, wrapAsync(getRevenueController))
+managerRouter.get('/getRevenue', wrapAsync(getRevenueController))
 
 managerRouter.get('/getProfit', wrapAsync(getProfitController))
 
