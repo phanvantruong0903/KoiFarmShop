@@ -4,6 +4,9 @@ import { useOrder } from "../Context/OrderContext";
 import axios from "axios";
 import { Empty } from "antd"; // Import only Empty from Ant Design
 import Cookies from "js-cookie";
+import { Table, Input, Typography } from "antd";
+
+const { Title, Text } = Typography;
 export default function ShoppingCart() {
   const orderDetail = useOrder();
   const [koiList, setKoiList] = useState([]);
@@ -154,56 +157,63 @@ export default function ShoppingCart() {
       setError("Error updating quantity: " + error.message);
     }
   };
-
+  const columns = [
+    {
+      title: "Koi Name",
+      dataIndex: "KoiName",
+      key: "KoiName",
+    },
+    {
+      title: "Image",
+      dataIndex: "Image",
+      key: "Image",
+      render: (image) => (
+        <img src={image} alt="Koi" style={{ maxWidth: "100px" }} />
+      ),
+    },
+    {
+      title: "Price",
+      dataIndex: "Price",
+      key: "Price",
+      render: (price) => price.toLocaleString(),
+    },
+    {
+      title: "Quantity",
+      dataIndex: "quantity",
+      key: "quantity",
+      render: (text, koi) => (
+        <Input
+          type="number"
+          min={1}
+          value={text}
+          onChange={(e) => {
+            const newQuantity = parseInt(e.target.value, 10);
+            if (!isNaN(newQuantity) && newQuantity >= 1) {
+              handleQuantityChange(koi._id, newQuantity);
+            } else {
+              handleQuantityChange(koi._id, 1);
+            }
+          }}
+          style={{ width: "80px" }}
+        />
+      ),
+    },
+  ];
   return (
     <div style={{ padding: "20px", width: "100%" }}>
-      <h2>Koi Order Details</h2>
+      <Title level={2}>Koi Order Details</Title>
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <Text type="danger">{error}</Text>}
       {koiList.length > 0 ? (
         <>
-          <table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr>
-                <th>Koi Name</th>
-                <th>Image</th>
-                <th>Price</th>
-                <th>Quantity</th>
-              </tr>
-            </thead>
-            <tbody>
-              {koiList.map((koi) => (
-                <tr key={koi._id}>
-                  <td>{koi.KoiName}</td>
-                  <td>
-                    <img
-                      src={koi.Image}
-                      alt="Koi"
-                      style={{ maxWidth: "100px" }}
-                    />
-                  </td>
-                  <td>{koi.Price.toLocaleString()}</td>
-                  <td>
-                    <input
-                      type="number"
-                      min={1}
-                      value={koi.quantity}
-                      onChange={(e) => {
-                        const newQuantity = parseInt(e.target.value, 10);
-                        if (!isNaN(newQuantity) && newQuantity >= 1) {
-                          handleQuantityChange(koi._id, newQuantity);
-                        } else {
-                          handleQuantityChange(koi._id, 1);
-                        }
-                      }}
-                      style={{ width: "80px" }}
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <h3 style={{ marginTop: "20px" }}>
+          <Table
+            dataSource={koiList}
+            columns={columns}
+            rowKey="_id"
+            pagination={false}
+            style={{ marginTop: "20px" }}
+          />
+          <Title level={3} style={{ marginTop: "20px" }}>
             Total Price:{" "}
             {totalPrice > 0
               ? totalPrice.toLocaleString("en-US", {
@@ -212,10 +222,10 @@ export default function ShoppingCart() {
                 })
               : "0.00"}{" "}
             VND
-          </h3>
+          </Title>
         </>
       ) : (
-        <Empty description={error || "No Koi items in this order."} />
+        <Text>{error || "No Koi items in this order."}</Text>
       )}
     </div>
   );
