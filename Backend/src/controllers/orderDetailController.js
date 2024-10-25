@@ -23,15 +23,22 @@ export const makeOrdersDetailController = async (req, res) => {
   try {
     let reqCookie = req.cookies && req.cookies.orderDT ? JSON.parse(req.cookies.orderDT) : {}; // fix phải check có trong cookies trước
     const result = await orderDetailService.makeArrayOrder(req.body, reqCookie);
+    if(result.orderDT){
       res.cookie('orderDT', JSON.stringify(result.orderDT), {
         httpOnly: true,
         maxAge: 1800000 // 30 mins
       });
+      return res.json({
+        message: USERS_MESSAGES.MAKE_ORDER_SUCCESS,
+        result
+      })
+    }else{
+      return res.json({
+        result
+      })
+    }
       // res.clearCookie('orderDT')
-    return res.json({
-      message: USERS_MESSAGES.MAKE_ORDER_SUCCESS,
-      result
-    })
+    
   } catch (error) {
     return res.status(500).json({ error: error.message })
   }
