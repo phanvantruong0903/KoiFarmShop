@@ -7,7 +7,13 @@ import { defaultErrorHandler } from './middlewares/error.middlewares.js'
 import cors from 'cors' // Thêm import cho cors
 
 import managerRouter from './routes/manager.routes.js'
-import { authorizationController, createNewKoiKiGuiController, getCategory, getKoiByIDController } from './controllers/common.controllers.js'
+import {
+  authorizationController,
+  createNewKoiKiGuiController,
+  guestGetAllSupplierController,
+  guestGetSupplierController,
+  getKoiByIDController
+} from './controllers/common.controllers.js'
 import { getKoiByCategoryIDController } from './controllers/home.controllers.js'
 
 import { createNewKoiKiGuiValidator } from './middlewares/common.middlewares.js'
@@ -24,7 +30,7 @@ const app = express()
 app.use(
   cors({
     origin: 'http://localhost:3000',
-    credentials: true,
+    credentials: true
   })
 )
 const PORT = process.env.PORT || 4000
@@ -42,15 +48,19 @@ app.get('/', (req, res) => {
 app.post('/ki-gui', createNewKoiKiGuiValidator, wrapAsync(createNewKoiKiGuiController))
 
 app.use('/users', usersRouter)
-app.get('/categories/getCategory', getCategory)
+// app.get('/categories/getCategory', getCategory)
 
 app.use('/manager', managerRouter)
 app.get('/koi/:KoiID', wrapAsync(getKoiByIDController))
-app.use('/kois/:CategoryID', getKoiByCategoryIDController)
-app.use('/getAllKoi', wrapAsync(getAllKoiController))
+app.use('/kois/:CategoryID', wrapAsync(getKoiByCategoryIDController))
+app.use('/getAllKoi', wrapAsync(wrapAsync(getAllKoiController)))
 app.use('/order', orderRouter)
 
-app.post('/authorization', accessTokenValidator, authorizationController)
+app.post('/authorization', accessTokenValidator, wrapAsync(authorizationController))
+
+app.get('/get-all-supplier', wrapAsync(guestGetAllSupplierController))
+
+app.get('/supplierDetail/:_id', wrapAsync(guestGetSupplierController))
 
 app.use('/payment', paymentRouter)
 
