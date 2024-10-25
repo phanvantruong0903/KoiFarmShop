@@ -12,7 +12,8 @@ import {
   createNewKoiKiGuiController,
   guestGetAllSupplierController,
   guestGetSupplierController,
-  getKoiByIDController
+  getKoiByIDController,
+  getKoiGroupIDController
 } from './controllers/common.controllers.js'
 import { getKoiByCategoryIDController } from './controllers/home.controllers.js'
 
@@ -61,6 +62,8 @@ app.post('/authorization', accessTokenValidator, wrapAsync(authorizationControll
 app.get('/get-all-supplier', wrapAsync(guestGetAllSupplierController))
 
 app.get('/supplierDetail/:_id', wrapAsync(guestGetSupplierController))
+
+app.get('/get-kois-groupKoiID',wrapAsync(getKoiGroupIDController))
 
 app.use('/payment', paymentRouter)
 
