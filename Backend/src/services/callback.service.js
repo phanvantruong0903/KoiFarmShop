@@ -29,15 +29,15 @@ export const callback = async (req, res) => {
       console.log('Order details from embed_data:', reqOrderDetails)
       console.log('Order from embed_data:', reqOrder)
 
-      // const koiIDs = reqOrderDetails.Items.map((item) => item.KoiID)
+      const koiIDs = reqOrderDetails.Items.map((item) => item.KoiID)
 
-      // for (const koiID of koiIDs) {
-      //   await databaseService.kois.findOneAndUpdate(
-      //     { _id: new ObjectId(koiID) }, // Tìm kiếm theo _id và trạng thái
-      //     { $set: { Status: 0 } }, // Cập nhật trạng thái thành 1
-      //     { new: true } // Trả về đối tượng đã cập nhật
-      //   )
-      // }
+      for (const koiID of koiIDs) {
+        await databaseService.kois.findOneAndUpdate(
+          { _id: new ObjectId(koiID) }, // Tìm kiếm theo _id và trạng thái
+          { $set: { Status: 0 } }, // Cập nhật trạng thái thành 1
+          { new: true } // Trả về đối tượng đã cập nhật
+        )
+      }
 
       if (!reqOrderDetails) {
         result.returncode = -1

@@ -280,7 +280,7 @@ export const getRevenueController = async (req, res) => {
 
 export const getProfitController = async (req, res) => {
   try {
-    const orders = await databaseService.order.find({ Status: 5 }).toArray()
+    const orders = await databaseService.order.find({ Status: 2 }).toArray()
 
     if (orders.length > 0) {
       const orderDetailIDs = orders.map((order) => new ObjectId(order.OrderDetailID))
@@ -296,26 +296,13 @@ export const getProfitController = async (req, res) => {
 
           const checkKoi = await databaseService.kois.find({ _id: { $in: koiID } }).toArray()
           if (checkKoi.length > 0) {
-            const statuses = checkKoi.map((koi) => koi.Status)
             const koiPrices = checkKoi.map((koi) => koi.TotalPrice) // Lưu giá từ bảng kois
 
             for (let i = 0; i < statuses.length; i++) {
-              const status = statuses[i]
-              const orderDate = new Date(orderDetail.OrderDate)
+              const orderDate = new Date(orders.OrderDate)
               const formattedDate = `${orderDate.getUTCDate().toString().padStart(2, '0')}/${(orderDate.getUTCMonth() + 1).toString().padStart(2, '0')}/${orderDate.getUTCFullYear()}`
 
-              if (status === 4) {
-                const consign = await databaseService.consigns.findOne({ KoiID: koiID[i] })
-                if (consign) {
-                  dailyProfitStats[formattedDate] =
-                    (dailyProfitStats[formattedDate] || 0) + (koiPrices[i] - (consign.TotalPrice || 0))
-                }
-              } else {
-                const invoice = await databaseService.invoice.findOne({ KoiID: koiID[i] })
-                if (invoice) {
-                  dailyCostStats[formattedDate] = (dailyCostStats[formattedDate] || 0) + (invoice.TotalPrice || 0)
-                }
-              }
+
             }
           }
         }

@@ -1,0 +1,6 @@
+.navbar {
+  position: fixed; /* Fix the navbar at the top */
+  top: 0;
+  width: 100%; /* Full width */
+  z-index: 10; /* Higher z-index than the filter and other content */
+}

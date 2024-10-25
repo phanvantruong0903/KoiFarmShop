@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "./Components/Navbar/Navbar";
 import Footer from "./Components/Footer";
 import "../src/Home.css";
@@ -8,54 +8,51 @@ import { useLocation } from "react-router-dom";
 import { useAuth } from "./Context/AuthContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Carousel } from "antd";
+import { Link } from "react-router-dom";
+
+import axios from "axios";
 
 export default function Home() {
   const isAuthenticated = localStorage.getItem("accessToken");
   const location = useLocation();
   const [lastMessage, setLastMessage] = useState("");
-  // const logout = () => {
-  //   localStorage.removeItem("accessToken");
-  //   localStorage.removeItem("refreshToken");
-  //   window.location.reload();
-  // };
-  const { googleAuthUrl, logout } = useAuth();
-
-  // const getGoogleAuthUrl = () => {
-  //   const { VITE_GOOGLE_CLIENT_ID, VITE_GOOGLE_REDIRECT_URI } = import.meta.env;
-  //   const url = "https://accounts.google.com/o/oauth2/v2/auth";
-  //   const query = {
-  //     client_id: VITE_GOOGLE_CLIENT_ID,
-  //     redirect_uri: VITE_GOOGLE_REDIRECT_URI,
-  //     response_type: "code",
-  //     scope: [
-  //       "https://www.googleapis.com/auth/userinfo.email",
-  //       "https://www.googleapis.com/auth/userinfo.profile",
-  //     ].join(" "),
-  //     prompt: "consent",
-  //     access_type: "offline",
-  //   };
-  //   return `${url}?${new URLSearchParams(query)}`;
-  // };
-
-  // const googleAuthUrl = getGoogleAuthUrl();
+  const { logout } = useAuth();
+  const [suppliers, setSuppliers] = useState([]);
+  const [koidata, setKoiData] = useState([]);
 
   useEffect(() => {
     const { message } = location.state || {};
-
-    // Kiểm tra message từ localStorage
     const storedMessage = localStorage.getItem("toastMessage");
 
     if (message && message !== lastMessage && message !== storedMessage) {
-      toast.success(message); // Hiển thị toast chỉ khi message mới
-      setLastMessage(message); // Cập nhật lastMessage
-      localStorage.setItem("toastMessage", message); // Lưu message vào localStorage
+      toast.success(message);
+      setLastMessage(message);
+      localStorage.setItem("toastMessage", message);
     }
   }, [location.state, lastMessage]);
+
   const [menu, setMenu] = useState("home");
-  console.log(localStorage);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [suppliersResponse, koiResponse] = await Promise.all([
+          axios.get("http://localhost:4000/manager/manage-supplier/get-all"),
+          axios.get("http://localhost:4000/getAllKoi"),
+        ]);
+        setSuppliers(suppliersResponse.data.result);
+        setKoiData(koiResponse.data.result);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   useEffect(() => {
     const sections = document.querySelectorAll(".animated-section");
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -78,19 +75,221 @@ export default function Home() {
       });
     };
   }, []);
+
   const formData = JSON.parse(localStorage.getItem("formData"));
   useEffect(() => {
     console.log("Dữ liệu đã nhận:", formData);
   }, [formData]);
+
+  // Dữ liệu cá koi
+  const koiData = [
+    {
+      src: "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSF62ZKcYBGSES34-RM4mkYAlHTR5UE6sSH5iHY4cldO_J6akbS",
+      alt: "Koi Kohaku",
+      name: "kohaku",
+    },
+    {
+      src: "https://img.freepik.com/free-vector/two-japanese-koi-fish-swimming_53876-16876.jpg?t=st=1729766790~exp=1729770390~hmac=e30f21be0c38122abcccda143523b9408f3daafe15997d96f38cf1fdac7c28f8&w=740",
+      alt: "Koi Ogon",
+      name: "ogon",
+    },
+    {
+      src: "https://img.freepik.com/free-vector/hand-drawn-koi-fish-illustration_23-2149550939.jpg?t=st=1729766836~exp=1729770436~hmac=ae9929a8793bc4606ffb72fabc7686a5cede10bfaac0e64d0654b6cf022a2142&w=740",
+      alt: "Koi Showa",
+      name: "showa",
+    },
+    {
+      src: "https://img.freepik.com/premium-photo/drawing-two-koi-fish-with-word-fish-bottom_1280401-268.jpg?w=740",
+      alt: "Koi Tancho",
+      name: "tancho",
+    },
+    {
+      src: "https://img.freepik.com/free-vector/hand-drawn-koi-illustration_23-2149602610.jpg?t=st=1729766876~exp=1729770476~hmac=dfc319cb549e9c2c48c693a2da7afd9a81017976d42fb95edd256a1920cd4f97&w=740",
+      alt: "Koi Bekko",
+      name: "bekko",
+    },
+    {
+      src: "https://img.freepik.com/premium-photo/beautiful-koi-fish-pond-with-elegance-color-koi-fish-ai-generated_1078402-29646.jpg?w=1060",
+      alt: "Koi Doitsu",
+      name: "doitsu",
+    },
+    {
+      src: "https://img.freepik.com/premium-photo/two-koi-fish-are-displayed-white-surface_916107-60786.jpg?w=740",
+      alt: "Koi Girin",
+      name: "girin",
+    },
+    {
+      src: "https://img.freepik.com/free-vector/flat-design-koi-fish-illustration_23-2149526706.jpg?t=st=1729766951~exp=1729770551~hmac=c4592a1147ce588898d3ea0f448a2586866b078d40c28a4791c3b24d074582b9&w=740",
+      alt: "Koi Goshiki",
+      name: "goshiki",
+    },
+    {
+      src: "https://img.freepik.com/free-vector/flat-design-koi-fish-illustration_23-2149520773.jpg?t=st=1729766968~exp=1729770568~hmac=16f6005d6fa0088aeed939934b43112a04b067aea5c515711558634cffd157f0&w=740",
+      alt: "Koi Benigoi",
+      name: "benigoi",
+    },
+    {
+      src: "https://img.freepik.com/free-vector/hand-drawn-koi-illustration_23-2149594029.jpg?t=st=1729767019~exp=1729770619~hmac=d5a59aca482045eabed4a506478363d47a0b91df78b960f92c2188ef931dc9f2&w=740",
+      alt: "Koi Asagi",
+      name: "asagi",
+    },
+    {
+      src: "https://img.freepik.com/premium-photo/two-koi-fish-are-side-by-side-with-word-kodak-bottom_1097251-8030.jpg?w=740",
+      alt: "Koi Platinum",
+      name: "platinum",
+    },
+    {
+      src: "https://img.freepik.com/premium-photo/koi-fish-is-swimming-pond-with-red-white-pattern_886588-42346.jpg?w=1060",
+      alt: "Koi Shusui",
+      name: "shusui",
+    },
+  ];
 
   return (
     <>
       <div>
         <Navbar menu={menu} setMenu={setMenu} />
       </div>
-      <div style={{ width: "100%", height: "100%", mar: "1000px" }}>
+      <div style={{ width: "100%", height: "100%" }}>
         <Slideshow />
       </div>
+      <h4
+        style={{
+          marginTop: "40px",
+          marginLeft: "10%",
+          marginBottom: "40px",
+          color: "#FFB6C1",
+        }}
+      >
+        Xu hướng tìm kiếm
+      </h4>
+      <Carousel
+        autoplay
+        style={{ marginLeft: "50px", marginRight: "50px" }}
+        autoplaySpeed={6000}
+        dots={false}
+      >
+        {Array.from({ length: Math.ceil(koiData.length / 6) }).map(
+          (_, index) => (
+            <div key={index}>
+              <div style={{ display: "flex", justifyContent: "space-around" }}>
+                {koiData.slice(index * 6, index * 6 + 6).map((koi, idx) => (
+                  <div className="image-item" key={idx}>
+                    <Link to={koi.name}>
+                      {" "}
+                      {/* Thay đổi đường dẫn theo yêu cầu */}
+                      <img
+                        src={koi.src}
+                        alt={koi.alt}
+                        className="carousel-image"
+                        loading="lazy"
+                      />
+                      <h3>{koi.name}</h3>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )
+        )}
+      </Carousel>
+
+      <h4
+        style={{
+          marginTop: "70px",
+          marginLeft: "10%",
+          marginBottom: "40px",
+          color: "#FFB6C1",
+        }}
+      >
+        Các nhà cung cấp hàng đầu
+      </h4>
+
+      <Carousel
+        autoplay
+        autoplaySpeed={10000}
+        dots={false}
+        style={{ marginLeft: "50px", marginRight: "50px" }}
+      >
+        {Array.from({ length: Math.ceil(suppliers.length / 4) }).map(
+          (_, index) => (
+            <div key={index}>
+              <div style={{ display: "flex", justifyContent: "space-around" }}>
+                {suppliers
+                  .slice(index * 4, index * 4 + 4)
+                  .map((supplier, idx) => (
+                    <div
+                      className="supplier-item"
+                      key={idx}
+                      style={{ textAlign: "center" }}
+                    >
+                      <img
+                        src={supplier.SupplierImage}
+                        alt={supplier.SupplierName}
+                        className="supplier-image"
+                        loading="lazy"
+                      />
+                      <h3 style={{ fontSize: "18px", marginTop: "15px" }}>
+                        {supplier.SupplierName}
+                      </h3>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )
+        )}
+      </Carousel>
+
+      <h4
+        style={{
+          marginTop: "70px",
+          marginLeft: "10%",
+          marginBottom: "40px",
+          color: "#FFB6C1",
+        }}
+      >
+        Các loại cá mới
+      </h4>
+
+      <Carousel
+        arrows
+        style={{ marginLeft: "50px", marginRight: "50px" }}
+        dots={false}
+      >
+        {Array.from({ length: Math.ceil(koidata.length / 6) }).map(
+          (_, index) => (
+            <div key={index}>
+              <div style={{ display: "flex", justifyContent: "space-around" }}>
+                {koidata.slice(index * 6, index * 6 + 6).map((koi, idx) => (
+                  <div className="image-item" key={idx}>
+                    <Link to={`/koikygui`}>
+                      <img
+                        src={koi.Image}
+                        alt={koi.KoiName}
+                        className="carousel-image"
+                        loading="lazy"
+                      />
+                      <h3
+                        style={{
+                          fontFamily: "Arial, sans-serif",
+                          fontWeight: 300,
+                          opacity: 0.7,
+                          marginTop: "20px",
+                          fontSize: "16px",
+                          textAlign: "center",
+                        }}
+                      >
+                        {koi.KoiName}
+                      </h3>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )
+        )}
+      </Carousel>
+
       <div
         className="animated-section hidden"
         style={{
@@ -99,6 +298,7 @@ export default function Home() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           width: "100%",
+          marginTop: "40px",
         }}
       >
         <div
@@ -124,97 +324,21 @@ export default function Home() {
             <h1>Giới Thiệu về IKoi</h1>
             <p style={{ fontWeight: "400", fontSize: "15px" }}>
               IKoi là một cửa hàng chuyên cung cấp cá koi và các sản phẩm liên
-              quan đến hồ cá. Với sứ mệnh mang đến cho khách hàng những giống cá
-              koi chất lượng cao cùng dịch vụ tận tâm nhất, IKoi đã nhanh chóng
-              trở thành điểm đến tin cậy cho những người yêu thích nuôi cá koi
-              tại Việt Nam.
+              quan đến việc chăm sóc cá koi...
             </p>
             <p style={{ fontWeight: "400", fontSize: "15px" }}>
-              Chúng tôi tự hào cung cấp một loạt các sản phẩm đa dạng, từ cá koi
-              nhập khẩu chính hãng cho đến các phụ kiện hồ cá chất lượng. Đội
-              ngũ nhân viên của chúng tôi là những chuyên gia có kinh nghiệm,
-              luôn sẵn sàng tư vấn và hỗ trợ khách hàng trong việc lựa chọn sản
-              phẩm phù hợp nhất với nhu cầu của mình.
+              Với đội ngũ nhân viên chuyên nghiệp, chúng tôi cam kết mang đến
+              cho bạn những sản phẩm tốt nhất.
             </p>
             <p style={{ fontWeight: "400", fontSize: "15px" }}>
-              Không chỉ dừng lại ở việc bán hàng, IKoi còn cam kết cung cấp dịch
-              vụ chăm sóc và bảo trì hồ cá, giúp khách hàng duy trì một môi
-              trường sống tốt nhất cho những chú cá koi của mình. Hãy đến với
-              IKoi để trải nghiệm sự khác biệt và khám phá thế giới cá koi đầy
-              màu sắc!
-            </p>
-            <br />
-          </div>
-        </div>
-      </div>
-
-      <div
-        className="animated-section hidden"
-        style={{
-          display: "flex",
-          backgroundImage: `url("src/assets/c.jpg")`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "100vh", // Đảm bảo chiều cao đủ để chiếm toàn bộ không gian
-        }}
-      >
-        <div
-          style={{
-            width: "100%",
-            margin: "100px",
-            color: "white",
-            display: "flex",
-            justifyContent: "flex-end", // Căn chỉnh nội dung sang bên phải
-          }}
-        >
-          <div
-            style={{
-              width: "50%", // Có thể điều chỉnh lại chiều rộng theo ý muốn
-              color: "black",
-              fontSize: "15px",
-              marginTop: "80px",
-              paddingLeft: "20px",
-            }}
-          >
-            <h2>Nuôi Cá Koi Nên Đồng Hành Cùng Chuyên Gia Tại IKoi</h2>
-            <p style={{ fontSize: "15px", fontWeight: "400" }}>
-              Tại IKoi, chúng tôi tin rằng việc nuôi cá koi không chỉ đơn thuần
-              là sở thích mà còn là một hành trình đầy nghệ thuật và tâm huyết.
-              Cá koi không chỉ là cá chép cảnh, mà còn mang ý nghĩa phong thủy,
-              đem lại tài lộc và may mắn cho gia chủ. Với kinh nghiệm dày dạn,
-              đội ngũ chuyên gia của IKoi luôn sẵn sàng đồng hành cùng bạn trong
-              từng bước đi của quá trình nuôi cá.
-            </p>
-            <p style={{ fontSize: "15px", fontWeight: "400" }}>
-              Chúng tôi cam kết cung cấp không chỉ những giống cá koi chất lượng
-              cao mà còn cả các dịch vụ tư vấn chuyên sâu về kỹ thuật nuôi thả.
-              Mỗi khách hàng đều có nhu cầu và mong muốn riêng, và đội ngũ của
-              IKoi sẽ giúp bạn lựa chọn những giải pháp phù hợp nhất để tạo dựng
-              một hồ cá hoàn hảo.
-            </p>
-            <p style={{ fontSize: "15px", fontWeight: "400" }}>
-              Hãy để IKoi trở thành người bạn đồng hành tin cậy trong hành trình
-              nuôi cá koi của bạn. Với sự tận tâm và chuyên nghiệp, chúng tôi
-              chắc chắn rằng bạn sẽ có những trải nghiệm tuyệt vời và thành công
-              trong việc chăm sóc những chú cá koi của mình.
+              Chúng tôi cung cấp cá koi chất lượng cao, phụ kiện và các dịch vụ
+              chăm sóc, bảo trì hồ cá.
             </p>
           </div>
         </div>
       </div>
-      <div
-        className="animated-section hidden"
-        style={{
-          display: "flex",
-          backgroundImage: `url("src/assets/e.jpg")`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "100vh", // Đảm bảo chiều cao đủ để chiếm toàn bộ không gian
-        }}
-      ></div>
-
-      <div>
-        <Footer />
-      </div>
+      <Footer />
+      <ToastContainer />
     </>
   );
 }
