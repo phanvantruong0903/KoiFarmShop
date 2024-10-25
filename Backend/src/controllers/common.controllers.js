@@ -5,6 +5,7 @@ import { ErrorWithStatus } from '../models/Errors.js'
 import databaseService from '../services/database.service.js'
 import koisService from '../services/kois.services.js'
 import { ObjectId } from 'mongodb'
+import suplliersService from '../services/suppliers.services.js'
 
 export const createNewKoiKiGuiController = async (req, res) => {
   try {
@@ -15,18 +16,6 @@ export const createNewKoiKiGuiController = async (req, res) => {
     })
   } catch (error) {
     return res.status(500).json({ error: error.message })
-  }
-}
-
-export const getCategory = async (req, res) => {
-  try {
-    const category = await databaseService._db.collection(process.env.DB_CATEGORY_COLLECTION).find().toArray()
-    res.json({
-      categoryList: category
-    })
-  } catch (error) {
-    console.error('Lỗi khi lấy danh sách category:', error)
-    res.status(500).json({ message: 'Lỗi khi lấy danh sách category' })
   }
 }
 
@@ -74,5 +63,30 @@ export const getKoiByIDController = async (req, res) => {
     })
   } catch (error) {
     res.status(404).json({ messga: 'Koi not found' })
+  }
+}
+
+export const guestGetAllSupplierController = async (req, res) => {
+  try {
+    const result = await suplliersService.guestGetAllSupplier()
+    return res.json({
+      message: MESSAGES.GET_ALL_SUPPLIER_SUCCESS,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+
+export const guestGetSupplierController = async (req, res) => {
+  try {
+    const { _id } = req.params
+    const result = await suplliersService.guestGetSupplier(_id)
+    return res.json({
+      message: MESSAGES.GET_SUPPLIER_SUCCESS,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
   }
 }
