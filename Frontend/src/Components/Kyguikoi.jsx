@@ -615,7 +615,7 @@ export default function Kyguikoi() {
             <Button
               type="submit"
               variant="success"
-              style={{ borderRadius: "20px", width: "8%" }}
+              style={{ borderRadius: "20px", width: "10%" }}
               disabled={loading} // Disable button while loading
             >
               {loading ? (

@@ -493,9 +493,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-
       <Footer style={{ paddingTop: "20px" }} />
-      <ToastContainer />
     </>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Button, Card, Col, Row, Typography, Layout, Spin } from "antd";
 import Navbar from "./Navbar/Navbar";
@@ -8,18 +8,19 @@ import { useOrder } from "../Context/OrderContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FaCartPlus } from "react-icons/fa";
-import Koikohaku from "./Koi/Koikohaku";
-import Koiogon from "./Koi/Koiogon";
-import Koishowa from "./Koi/Koishowa";
-import Koitancho from "./Koi/Koitancho";
-import Koibekko from "./Koi/Koibekko";
-import Koidoitsu from "./Koi/Koidoitsu";
-import Koiginrin from "./Koi/Koiginrin";
-import Koigoshiki from "./Koi/Koigoshiki";
-import Koibenigoi from "./Koi/Koibenigoi";
-import Koiasagi from "./Koi/Koiasagi";
-import Koiplatinum from "./Koi/Koiplatinum";
-import Koishusui from "./Koi/Koishusui";
+import Kohaku from "./ThongTinCaKoi/Kohaku";
+import Asagi from "./ThongTinCaKoi/Asagi";
+import Bekko from "./ThongTinCaKoi/Bekko";
+import Benigoi from "./ThongTinCaKoi/Benigoi";
+import Doitsu from "./ThongTinCaKoi/Doitsu";
+import Ginrin from "./ThongTinCaKoi/Ginrin";
+import Goshiki from "./ThongTinCaKoi/Goshiki";
+import Ogon from "./ThongTinCaKoi/Ogon";
+import Platinum from "./ThongTinCaKoi/Platinum";
+import Showa from "./ThongTinCaKoi/Showa";
+import Shusui from "./ThongTinCaKoi/Shusui";
+import Tancho from "./ThongTinCaKoi/Tancho";
+
 import { Container } from "react-bootstrap";
 const { Title, Text, Paragraph } = Typography;
 
@@ -304,12 +305,30 @@ const OrderPage = () => {
                       </Text>
                     </Paragraph>
                     <hr style={{ margin: "10px 0" }} />
-                    <Paragraph>
+                    <Paragraph
+                      style={{
+                        fontSize: "20px",
+                        textAlign: "left",
+                        color: "red",
+                      }}
+                    >
                       <strong>Description: </strong>
                       {selectedItem.Description}
                     </Paragraph>
-                    <Paragraph style={{ fontSize: "20px", textAlign: "left" }}>
-                      <div style={{ fontSize: "20px", textAlign: "left" }}>
+                    <Paragraph
+                      style={{
+                        fontSize: "20px",
+                        textAlign: "left",
+                        color: "red",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontSize: "20px",
+                          textAlign: "left",
+                          color: "red",
+                        }}
+                      >
                         <label>
                           <strong>Quantity: </strong>
                           <input
@@ -403,18 +422,18 @@ const OrderPage = () => {
             </Card>
           </div>
         </Container>
-        {categoryName === "Kohaku" && <Koikohaku />}
-        {categoryName === "Ogon" && <Koiogon />}
-        {categoryName === "Showa" && <Koishowa />}
-        {categoryName === "Tancho" && <Koitancho />}
-        {categoryName === "Bekko" && <Koibekko />}
-        {categoryName === "Ginrin" && <Koiginrin />}
-        {categoryName === "Doitsu" && <Koidoitsu />}
-        {categoryName === "Goshiki" && <Koigoshiki />}
-        {categoryName === "Benigoi" && <Koibenigoi />}
-        {categoryName === "Asagi" && <Koiasagi />}
-        {categoryName === "Platinum" && <Koiplatinum />}
-        {categoryName === "Shusui" && <Koishusui />}
+        {categoryName === "Kohaku" && <Kohaku />}
+        {categoryName === "Ogon" && <Ogon />}
+        {categoryName === "Showa" && <Showa />}
+        {categoryName === "Tancho" && <Tancho />}
+        {categoryName === "Bekko" && <Bekko />}
+        {categoryName === "Ginrin" && <Ginrin />}
+        {categoryName === "Doitsu" && <Doitsu />}
+        {categoryName === "Goshiki" && <Goshiki />}
+        {categoryName === "Benigoi" && <Benigoi />}
+        {categoryName === "Asagi" && <Asagi />}
+        {categoryName === "Platinum" && <Platinum />}
+        {categoryName === "Shusui" && <Shusui />}
       </Layout>
       <Footer />
     </>

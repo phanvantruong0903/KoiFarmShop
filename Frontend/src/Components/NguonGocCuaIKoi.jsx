@@ -35,79 +35,66 @@ export default function NguonGocCuaIKoi() {
       <Navbar />
       <Container style={{ padding: "20px", paddingTop: "100px" }}>
         <div>
-          <h1 style={{ color: "red" }}>Nguồn Gốc Của IKoi</h1>
+          <div style={{ textAlign: "center" }}>
+            <h1 style={{ color: "red" }}>Nguồn Gốc Của IKoi</h1>
+          </div>
           <div>
-            <strong>Vì sao chúng tôi chọn Koi</strong>
             <br />
             <Paragraph className="paragraph-Style">
-              Trung Quốc cũng được biết đến là nơi có lịch sử lai tạo Cá Koi lâu
-              đời, thậm chí lâu hơn Nhật Bản. Koi do người Trung Quốc lai tạo
-              hoặc nuôi không hề xấu nhưng xét về các phẩm chất, giá trị nghệ
-              thuật đỉnh cao thì chưa bằng Koi Nhật.
+              Cá Koi có nguồn gốc từ Trung Quốc, nơi có truyền thống lai tạo lâu
+              đời. Tuy nhiên, cá Koi Nhật Bản lại được biết đến với những phẩm
+              chất và giá trị nghệ thuật vượt trội hơn hẳn. Sự khác biệt này
+              khiến nhiều người Việt Nam ưa chuộng Koi Nhật Bản vì sự hoàn hảo
+              trong từng chi tiết.
             </Paragraph>
             <br />
             <Paragraph className="paragraph-Style">
-              Người Việt Nam có xu hướng chơi Koi Trung Quốc theo đại trà. Chỉ
-              những người chơi Koi chuyên nghiệp mới lựa chọn Koi Nhật Bản thuần
-              chủng. Koi Nhật Bản hội tụ đầy đủ các phẩm chất mà không loại Koi
-              ở quốc gia nào có được:
+              Koi Nhật Bản nổi bật với nhiều đặc điểm ưu việt:
             </Paragraph>
             <ul>
               <li>
                 <Paragraph className="paragraph-Style">
-                  Thân hình như chiếc tàu ngầm, bụng không to, không phệ, thon
-                  gọn, thân đuôi dầy, phần lưng dầy. Cá nhìn chắc khỏe, vạm vỡ,
-                  cấu trúc tốt có tiềm năng phát triển kích thước khủng trong
-                  tương lai.
+                  Thân hình thon gọn, khỏe mạnh với cấu trúc tốt, giúp cá có
+                  tiềm năng phát triển lớn.
                 </Paragraph>
               </li>
               <li>
                 <Paragraph className="paragraph-Style">
-                  Màu sắc rõ ràng, hoa văn rõ nét, đường biên không lem nhem,
-                  mảng màu nào ra mảng màu đó. Màu nhìn dầy, màu sang, không lòe
-                  loẹt.
+                  Màu sắc và hoa văn rõ ràng, không lem nhem, tạo nên vẻ đẹp nổi
+                  bật.
                 </Paragraph>
               </li>
               <li>
                 <Paragraph className="paragraph-Style">
-                  {" "}
-                  Koi hòa đồng, tính tình thân thiện, sức đề kháng tốt do được
-                  nuôi theo đúng tiêu chuẩn hồ chuyên nghiệp tại Nhật.
+                  Tính cách hòa đồng và sức đề kháng tốt, nhờ vào phương pháp
+                  nuôi dưỡng chuyên nghiệp.
                 </Paragraph>
               </li>
             </ul>
             <Paragraph className="paragraph-Style">
-              Nếu là người chơi koi chuyên nghiệp, luôn phải tính đến giá trị
-              trong tương lai. Nuôi koi phục vụ đam mê nhưng phải mang đến kinh
-              tế. Nuôi Koi Nhật chắc chắn càng nuôi càng ra kinh tế. Koi Nhật có
-              nhiều phẩm chất tốt, màu đẹp, cấu trúc body chuẩn nên phát triển
-              kích thước lớn. Nuôi Koi Nhật rất dễ bán, ký gửi, thanh lý, đấu
-              giá. Các dòng koi khác chỉ đẹp 1 năm đầu nhưng càng nuôi càng vỡ
-              màu, lem nhem, cá béo bụng mất giá.
+              Việc nuôi Koi không chỉ là sở thích mà còn là một khoản đầu tư,
+              với tiềm năng mang lại giá trị kinh tế trong tương lai. Koi Nhật
+              Bản có sức hút đặc biệt và dễ dàng tiêu thụ.
             </Paragraph>
           </div>
         </div>
         <div>
           <h1 style={{ color: "red" }}>
-            Những Koi Farm Nhật nào được chúng tôi lựa chọn
+            Các Koi Farm Nhật Bản Chúng Tôi Tin Dùng
           </h1>
           <div>
-            <strong>Vì sao chúng tôi chọn Koi</strong>
+            <strong>Tại sao chúng tôi chọn Koi?</strong>
             <br />
             <Paragraph className="paragraph-Style">
-              Nhật Koi Farm hiện là đối tác chính của: Dainichi Koi Farm, Koi
-              Farm Omosako, Marudo Koi Farm, Yagenji Koi Farm , Takeda Koi
-              Farm,Koi Farm Sakai , Higashiyama Koi Farm , Koi Farm Yamamatsu ,
-              Koi Farm Shibata , Koi Farm Koshiji , Koi Farm Koshiji , Danichi
-              Omosako , D
+              Nhật Koi Farm là đối tác của nhiều Koi Farm nổi tiếng như
+              Dainichi, Omosako, và Marudo. Mỗi farm đều có thế mạnh riêng, giúp
+              chúng tôi cung cấp những con Koi đẹp nhất.
             </Paragraph>
             <br />
             <Paragraph className="paragraph-Style">
-              Mỗi Koi Farm chuyên thế mạnh về 1 dòng Koi. Vì vậy để có nhiều koi
-              đẹp phải tìm kiếm ở nhiều Koi fam khác nhau. Điểm chung duy nhất
-              các koi farm này đều thuộc vùng Ojiya, Nhật Bản – được mệnh danh
-              là Thủ đô cá Koi của Nhật Bản. 80% nhà lai tạo nổi tiếng của Nhật
-              và 90% các giải thưởng lớn về cá Koi đều thuộc về Niigata.
+              Tất cả các farm này đều nằm tại Ojiya, Nhật Bản, được xem là trung
+              tâm của ngành nuôi cá Koi, nơi tập trung nhiều nhà lai tạo danh
+              tiếng.
             </Paragraph>
           </div>
         </div>
@@ -118,16 +105,24 @@ export default function NguonGocCuaIKoi() {
               <Paragraph className="paragraph-Style">
                 <h3 style={{ color: "red" }}>{supplier.SupplierName}</h3>
                 <p className="text-Style">
-                  <strong>Address:</strong> {supplier.Address}
+                  <strong style={{ color: "red" }}>Địa chỉ:</strong>{" "}
+                  {supplier.Address}
                 </p>
                 <p className="text-Style">
-                  <strong>Country:</strong> {supplier.Country}z``
+                  <strong style={{ color: "red" }}>Quốc gia:</strong>{" "}
+                  {supplier.Country}
                 </p>
                 <p className="text-Style">
-                  <strong>Phone:</strong> {supplier.PhoneNumber}
+                  <strong style={{ color: "red" }}>Điện thoại:</strong>{" "}
+                  {supplier.PhoneNumber}
                 </p>
                 <Paragraph className="text-Style">
+                  <strong style={{ color: "red" }}>Mô tả:</strong>{" "}
                   {supplier.SupplierDescription}
+                </Paragraph>
+                <Paragraph className="text-Style">
+                  <strong style={{ color: "red" }}>Website:</strong>{" "}
+                  {supplier.Website}
                 </Paragraph>
                 {supplier.SupplierImage && (
                   <img
@@ -140,15 +135,16 @@ export default function NguonGocCuaIKoi() {
             </div>
           ))}
         </div>
+        <div style={{ display: "flex" }}>
+          <div style={{ width: "30%" }}>
+            <img src="src/assets/img_4.png" alt="Image 4" />
+          </div>
+          <div style={{ width: "70%" }}>
+            <img src="src/assets/img_5.png" alt="Image 5" />
+          </div>
+        </div>
       </Container>
-      <div style={{ display: "flex" }}>
-        <div style={{ width: "30%" }}>
-          <img src="src/assets/img_4.png" alt="Image 4" />
-        </div>
-        <div style={{ width: "30%" }}>
-          <img src="src/assets/img_5.png" alt="Image 5" />
-        </div>
-      </div>
+
       <div
         style={{
           display: "flex",
