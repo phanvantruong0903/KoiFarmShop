@@ -55,6 +55,10 @@ const OrderPage = () => {
     }
   }, [selectedItem, maxQuantity]);
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const sendOrderDetails = async () => {
       try {
         const response = await axios.post(
