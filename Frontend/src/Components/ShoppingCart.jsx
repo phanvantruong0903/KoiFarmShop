@@ -5,38 +5,14 @@ import TableCart from "./TableCart";
 
 import { Form, Button, Spinner, Container } from "react-bootstrap";
 export default function ShoppingCart() {
-  const navigate = useNavigate();
-
-  const handlePayment = () => {
-    navigate("/formfillinformation");
-  };
-
   return (
-    <>
-      <div>
-        <Navbar />
-        <Container>
-          <div style={{ paddingTop: "150px" }}>
-            <h4 style={{ textAlign: "center" }}>Giỏ hàng của bạn</h4>
-            <TableCart />
-            <div style={{ marginTop: "20px", textAlign: "center" }}>
-              <Button
-                variant="danger"
-                onClick={handlePayment}
-                style={{
-                  marginTop: "-55px",
-                  marginBottom: "55px",
-                  borderRadius: "51px",
-                  height: "57px",
-                }}
-              >
-                Tiến Hành Bước Tiếp Theo
-              </Button>
-            </div>
-          </div>
-        </Container>
-        <Footer />
-      </div>
-    </>
+    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      <Navbar />
+      <Container style={{ flex: "1", paddingTop: "130px", textAlign: "center" }}>
+        <h4 style={{ fontSize: "24px", fontWeight: "bold" }}>Giỏ hàng của bạn</h4>
+        <TableCart />
+      </Container>
+      <Footer />
+    </div>
   );
 }

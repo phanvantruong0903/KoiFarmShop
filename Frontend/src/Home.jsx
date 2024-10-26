@@ -46,15 +46,13 @@ export default function Home() {
           axios.get("http://localhost:4000/getAllKoi"),
         ]);
         setSuppliers(suppliersResponse.data.result);
-        setKoiData(koiResponse.data.result);
-        console.log(koiData);
+        setKoiData(koiResponse.data.result.slice(0,12));
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
-  }, []);
+  }, [koidata]);
 
   useEffect(() => {
     const sections = document.querySelectorAll(".animated-section");
@@ -192,7 +190,7 @@ export default function Home() {
                         className="carousel-image"
                         loading="lazy"
                       />
-                      <h3>{koi.name}</h3>
+                      <h3>Koi {koi.name.charAt(0).toUpperCase() + koi.name.slice(1)}</h3>
                     </Link>
                   </div>
                 ))}
@@ -243,7 +241,7 @@ export default function Home() {
       </div>
       <h4
         style={{
-          marginTop: "70px",
+          marginTop: "60px",
           marginLeft: "10%",
           marginBottom: "40px",
           color: "#FFB6C1",
@@ -289,8 +287,8 @@ export default function Home() {
 
       <h4
         style={{
-          marginTop: "70px",
-          marginLeft: "10%",
+          marginTop: "60px",
+          marginLeft: "9%",
           marginBottom: "40px",
           color: "#FFB6C1",
         }}
@@ -298,98 +296,53 @@ export default function Home() {
         Các loại cá mới
       </h4>
 
-      <Container>
-        <Row style={{ margin: "50px 0", justifyContent: "center" }}>
-          {koidata.slice(0, 8).map((koi, idx) => (
-            <Col
-              key={idx}
-              md={3}
-              sm={10}
-              xs={12}
-              style={{
-                marginBottom: "30px",
-              }}
-            >
-              <Card
-                style={{
-                  border: "none",
-                  borderRadius: "8px",
-                  maxWidth: "500px",
-                  height: "auto",
-                  margin: "0 10px", // Add horizontal margin to separate cards
-                }}
-              >
-                <div style={{ marginTop: "0px" }}>
-                  <img
-                    src={koi.Image}
-                    alt={koi.KoiName}
-                    className="image"
-                    onClick={() =>
-                      navigate("/order", {
-                        state: { selectedItem: koi },
-                      })
-                    }
-                    style={{ cursor: "pointer" }} // Optional: change cursor to pointer for better UX
-                  />
-                </div>
-
-                <Card.Body style={{ padding: "10px" }}>
-                  <Card.Title
-                    style={{ fontSize: "1.1em", textAlign: "center" }}
-                  >
-                    {koi.KoiName}
-                  </Card.Title>
-                  <Paragraph>
-                    <strong style={{ color: "red" }}>Size</strong>: {koi.Size}
-                  </Paragraph>
-                  <Paragraph>
-                    <strong style={{ color: "red" }}>Gender</strong>:{" "}
-                    {koi.Gender}
-                  </Paragraph>
-                  <Paragraph>
-                    <strong style={{ color: "red" }}>Size:</strong> 15 cm - 90
-                    cm
-                  </Paragraph>
-                  <Paragraph>
-                    <strong style={{ color: "red" }}>Nguồn Gốc:</strong> Sakai,
-                    Matsue, Momotaro Chất lượng: Đẹp, Xuất sắc Loại: Thuần chủng
-                    Nhật Bản Xuất xứ: Nhật Bản
-                  </Paragraph>
-
-                  <div style={{ textAlign: "center" }}>
-                    <Button
-                      variant="danger"
-                      className="btnType_1"
-                      onClick={() =>
-                        navigate("/order", {
-                          state: { selectedItem: koi },
-                        })
-                      }
-                    >
-                      Giá {new Intl.NumberFormat("vi-VN").format(koi.Price)} VND
-                    </Button>
+      <Carousel
+        arrows
+        style={{
+          marginLeft: "50px",
+          marginRight: "50px",
+          marginBottom: "50px",
+        }}
+        dots={false}
+      >
+        {Array.from({ length: Math.ceil(koidata.length / 6) }).map(
+          (_, index) => (
+            <div key={index}>
+              <div style={{ display: "flex", justifyContent: "space-around" }}>
+                {koidata.slice(index * 6, index * 6 + 6).map((koi, idx) => (
+                  <div className="image-item" key={idx}>
+                    <Link to={`/koikygui`}>
+                      <img
+                        src={koi.Image}
+                        alt={koi.KoiName}
+                        className="carousel-image"
+                        loading="lazy"
+                      />
+                      <h3
+                        style={{
+                          fontFamily: "Arial, sans-serif",
+                          fontWeight: 300,
+                          opacity: 0.7,
+                          marginTop: "20px",
+                          fontSize: "16px",
+                          textAlign: "center",
+                        }}
+                      >
+                        {koi.KoiName}
+                      </h3>
+                    </Link>
                   </div>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-          <div
-            style={{ textAlign: "center", marginTop: "20px", width: "100%" }}
-          >
-            <Button variant="danger">
-              <Link
-                to={"/koikygui"}
-                style={{ color: "white", textDecoration: "none" }}
-              >
-                Xem Thêm
-              </Link>
-            </Button>
-          </div>
-        </Row>
-        <div>
+                ))}
+              </div>
+            </div>
+          )
+        )}
+      </Carousel>
+      <Container>
+        <div >
           <div className="head-title">
             <div className="straight-line2"></div>
-            <h1 style={{ fontSize: "50px", textAlign: "center" }}>
+            <h1 style={{ fontSize: "40px", textAlign: "center" }}>
               Ký Gửi Cá Koi Bên IKoi
             </h1>
           </div>
@@ -404,7 +357,6 @@ export default function Home() {
             </Paragraph>
           </div>
 
-          {/* Flex Container for Images and Right Block */}
           <div className="flex-container">
             <div className="left-block">
               <div className="dad-block">
@@ -420,7 +372,6 @@ export default function Home() {
                 />
               </div>
             </div>
-            {/* Right Block for Introduction */}
             <div className="right-block">
               <h2>Giới Thiệu Về IKoi</h2>
               <Paragraph className="paragraph-style">
@@ -439,17 +390,19 @@ export default function Home() {
           </div>
         </div>
       </Container>
-      <div
+
+      {/* <div
         className="image-background"
         style={{
           backgroundImage: "url('src/assets/home6.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           width: "100%",
-          height: "500px", // Adjust as needed
+          height: "500px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          marginTop: "-20px", // Adjust this value to move it closer
         }}
       >
         <div
@@ -458,13 +411,16 @@ export default function Home() {
             color: "white",
             padding: "20px",
             borderRadius: "10px",
-            maxWidth: "1000px", // Set a max-width for the content
+            maxWidth: "1000px",
             width: "100%",
             paddingTop: "20px",
           }}
         >
           <div className="block-child">
-            <div className="child-item head-title">
+            <div
+              className="child-item head-title"
+              style={{ marginBottom: "10px" }}
+            >
               <h2 style={{ fontSize: "20px" }}>Hợp tác cùng IKoi</h2>
               <div className="straight-line"></div>
             </div>
@@ -483,16 +439,9 @@ export default function Home() {
               dưỡng cá hiện đại, giúp cá khỏe mạnh phát triển tốt sau khi xuất
               trại.
             </Paragraph>
-            <div style={{ width: "100%" }}>
-              <Button variant="danger">
-                <Link to={"/gioithieu"} style={{ color: "white" }}>
-                  Trở thành đối tác của ikoi
-                </Link>
-              </Button>
-            </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <Footer style={{ paddingTop: "20px" }} />
     </>
   );

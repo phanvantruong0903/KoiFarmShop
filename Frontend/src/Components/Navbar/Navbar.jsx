@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../Navbar/Navbar.css"; // Ensure this CSS file exists
@@ -14,11 +14,11 @@ export default function Navbar() {
   const [showDropdown2, setShowDropdown2] = useState(false);
   const [showDropdown3, setShowDropdown3] = useState(false);
   const [showDropdown4, setShowDropdown4] = useState(false);
-  const [showDropdown5, setShowDropdown5] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false); // State to track scroll position
   const navigate = useNavigate();
+
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
     setIsLoggedIn(!!accessToken);
@@ -44,6 +44,39 @@ export default function Navbar() {
   const handleStateSignUp = () => {
     navigate("/Login", { state: { type: "signUp" } });
   };
+
+  const servicesMenu = useMemo(() => {
+    return (
+      <Dropdown.Menu className="custom-menu">
+        <Dropdown.Item
+          href="/kygui"
+          onMouseEnter={() => setActiveItem("/kygui")}
+          onMouseLeave={() => setActiveItem(null)}
+          className={activeItem === "/kygui" ? "active" : ""}
+        >
+          KOI KÝ GỬI
+        </Dropdown.Item>
+        <Dropdown.Divider />
+        <Dropdown.Item
+          href="/koikygui"
+          onMouseEnter={() => setActiveItem("/koikygui")}
+          onMouseLeave={() => setActiveItem(null)}
+          className={activeItem === "/koikygui" ? "active" : ""}
+        >
+          KOI ĐANG BÁN
+        </Dropdown.Item>
+        <Dropdown.Divider />
+        <Dropdown.Item
+          href="/lonhapkhau" // Thêm liên kết đến trang lô nhập khẩu
+          onMouseEnter={() => setActiveItem("/lonhapkhau")}
+          onMouseLeave={() => setActiveItem(null)}
+          className={activeItem === "/lonhapkhau" ? "active" : ""}
+        >
+          LÔ NHẬP KHẨU
+        </Dropdown.Item>
+      </Dropdown.Menu>
+    );
+  }, [activeItem]);
 
   return (
     <div
@@ -115,9 +148,7 @@ export default function Navbar() {
                   href="/gioithieuvekoiviet"
                   onMouseEnter={() => setActiveItem("/gioithieuvekoiviet")}
                   onMouseLeave={() => setActiveItem(null)}
-                  className={
-                    activeItem === "/gioithieuvekoiviet" ? "active" : ""
-                  }
+                  className={activeItem === "/gioithieuvekoiviet" ? "active" : ""}
                 >
                   GIỚI THIỆU VỀ CÁ KOI VIỆT
                 </Dropdown.Item>
@@ -126,15 +157,14 @@ export default function Navbar() {
                   href="/gioithieuvekoinhat"
                   onMouseEnter={() => setActiveItem("/gioithieuvekoinhat")}
                   onMouseLeave={() => setActiveItem(null)}
-                  className={
-                    activeItem === "/gioithieuvekoinhat" ? "active" : ""
-                  }
+                  className={activeItem === "/gioithieuvekoinhat" ? "active" : ""}
                 >
                   GIỚI THIỆU VỀ CÁ KOI NHẬT
                 </Dropdown.Item>
               </Dropdown.Menu>
             </CSSTransition>
           </Dropdown>
+
           <Dropdown
             className="nav-dropdown"
             onMouseEnter={() => setShowDropdown2(true)}
@@ -184,6 +214,7 @@ export default function Navbar() {
               </Dropdown.Menu>
             </CSSTransition>
           </Dropdown>
+
           <Dropdown
             className="nav-dropdown"
             onMouseEnter={() => setShowDropdown3(true)}
@@ -224,6 +255,7 @@ export default function Navbar() {
               </Dropdown.Menu>
             </CSSTransition>
           </Dropdown>
+
           <Dropdown
             className="nav-dropdown"
             onMouseEnter={() => setShowDropdown4(true)}
@@ -243,36 +275,10 @@ export default function Navbar() {
               mountOnEnter
               unmountOnExit
             >
-              <Dropdown.Menu className="custom-menu">
-                <Dropdown.Item
-                  href="/kygui"
-                  onMouseEnter={() => setActiveItem("/kygui")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  className={activeItem === "/kygui" ? "active" : ""}
-                >
-                  KOI KÝ GỬI
-                </Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item
-                  href="/koikygui"
-                  onMouseEnter={() => setActiveItem("/koikygui")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  className={activeItem === "/koikygui" ? "active" : ""}
-                >
-                  KOI ĐANG BÁN
-                </Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item
-                  href="/lonhapkhau"
-                  onMouseEnter={() => setActiveItem("/lonhapkhau")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  className={activeItem === "/lonhapkhau" ? "active" : ""}
-                >
-                  LÔ NHẬP KHẨU CÁ KOI TỪ NHẬT BẢN
-                </Dropdown.Item>
-              </Dropdown.Menu>
+              {servicesMenu}
             </CSSTransition>
           </Dropdown>
+
 
           <Dropdown>
             <Dropdown.Toggle
@@ -285,6 +291,7 @@ export default function Navbar() {
             </Dropdown.Toggle>
           </Dropdown>
         </div>
+
         <div className="auth-links">
           {isLoggedIn ? (
             <Dropdown className="custom-dropdown">
