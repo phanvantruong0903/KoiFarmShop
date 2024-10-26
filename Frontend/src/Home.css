@@ -54,3 +54,8 @@
   color: darkgray; /* Màu khi hover */
 }
 
+.subtle-hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.3); /* White with 30% opacity */
+  margin: 20px 0; /* Adjust spacing as needed */
+}

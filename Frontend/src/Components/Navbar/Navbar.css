@@ -18,7 +18,49 @@
 
 .navbar-content {
   display: flex;
-  align-items: center; /* Căn giữa theo chiều dọc */
+  align-items: center; /* Căn giữa theo chiều dọc */.nav-dropdown {
+    margin-left: 15px;
+  }
+  
+  .custom-menu {
+    background-color: #1d1d1d;
+    border: none;
+  }
+  
+  /* Khoảng cách giữa các mục dropdown */
+  .custom-menu .dropdown-item {
+    padding: 10px 15px; /* Thay đổi padding để tăng kích thước mục */
+  }
+  
+  .custom-menu .dropdown-item:hover {
+    background-color: rgba(0, 0, 0, 0.3); /* Màu nền hover cho mục dropdown */
+  }
+  
+  /* Điều chỉnh kích thước logo và các liên kết */
+  .logo {
+    width: 80px;
+    height: auto;
+  }
+  
+  .nav-links {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* Cho phép các mục xuống dòng nếu không đủ không gian */
+  }
+  
+  .auth-links {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* Đẩy các nút đăng nhập và giỏ hàng sang bên phải */
+  }
+  
+  /* Thay đổi kiểu dáng icon giỏ hàng */
+  .cart-icon {
+    color: white;
+    font-size: 25px; /* Kích thước icon giỏ hàng */
+    margin-left: 20px;
+  }
+  
   justify-content: space-between; /* Phân bổ không gian giữa các mục */
   width: 90%;
   margin: 0 auto;

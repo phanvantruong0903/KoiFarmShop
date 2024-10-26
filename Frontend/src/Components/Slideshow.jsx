@@ -8,10 +8,6 @@ const images = [
   "src/assets/koi3.webp",
   "src/assets/koi4.avif",
   "src/assets/koi5.jpg",
-  "src/assets/alo1.jpg",
-  "src/assets/alo2.jpg",
-  "src/assets/alo3.jpg",
-  "src/assets/alo4.jpeg",
   // Add more image paths here
 ];
 
