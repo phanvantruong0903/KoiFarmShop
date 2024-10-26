@@ -42,8 +42,8 @@ export default function ShoppingCart() {
         });
         console.log(response);
         if (response.status === 200) {
-          const { koiList, reqCookie } = response.data.result;
-          const { Items, TotalPrice } = reqCookie;
+          const { koiList, orderDT } = response.data.result;
+          const { Items, TotalPrice } = orderDT;
           const koiMap = new Map(koiList.map((koi) => [koi._id, koi]));
           const updatedKoiList = Items.map((item) => {
             const koi = koiMap.get(item.KoiID);
@@ -79,8 +79,8 @@ export default function ShoppingCart() {
       });
       console.log(response);
       if (response.status === 200) {
-        const { koiList, reqCookie } = response.data.result;
-        const { Items, TotalPrice } = reqCookie;
+        const { koiList, orderDT } = response.data.result;
+        const { Items, TotalPrice } = orderDT;
         const koiMap = new Map(koiList.map((koi) => [koi._id, koi]));
         const updatedKoiList = Items.map((item) => {
           const koi = koiMap.get(item.KoiID);

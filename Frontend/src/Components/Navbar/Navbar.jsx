@@ -261,24 +261,19 @@ export default function Navbar() {
                 >
                   KOI ĐANG BÁN
                 </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item
+                  href="/lonhapkhau"
+                  onMouseEnter={() => setActiveItem("/lonhapkhau")}
+                  onMouseLeave={() => setActiveItem(null)}
+                  className={activeItem === "/lonhapkhau" ? "active" : ""}
+                >
+                  LÔ NHẬP KHẨU CÁ KOI TỪ NHẬT BẢN
+                </Dropdown.Item>
               </Dropdown.Menu>
             </CSSTransition>
           </Dropdown>
-          <Dropdown
-            className="nav-dropdown"
-            onMouseEnter={() => setShowDropdown5(true)}
-            onMouseLeave={() => setShowDropdown5(false)}
-            show={showDropdown5}
-          >
-            <Dropdown.Toggle
-              id="dropdown-basic"
-              className="nav-dropdown-toggle"
-            >
-              <Link to="/lonhapkhau" className="nav-link">
-                LÔ NHẬP KHẨU CÁ KOI TỪ NHẬT BẢN
-              </Link>
-            </Dropdown.Toggle>
-          </Dropdown>
+
           <Dropdown>
             <Dropdown.Toggle
               id="dropdown-basic"

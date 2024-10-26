@@ -86,8 +86,6 @@ export default function Kyguikoi() {
         "Gender",
         "Size",
         "Breed",
-        "DailyFoodAmount",
-        "FilteringRatio",
         "Age",
         "email",
         "phone_number",
@@ -126,6 +124,15 @@ export default function Kyguikoi() {
         return;
       }
 
+      // Parse Size and Age as integers, DailyFoodAmount and FilteringRatio as floats
+      const dataToSend = {
+        ...formData,
+        Size: parseInt(formData.Size, 10),
+        Age: parseInt(formData.Age, 10),
+        DailyFoodAmount: parseFloat(formData.DailyFoodAmount),
+        FilteringRatio: parseFloat(formData.FilteringRatio),
+      };
+
       const imageRef = ref(storage, `koiImages/${formData.Image[0].name}`);
       const videoRef = ref(storage, `koiVideos/${formData.Video[0].name}`);
 
@@ -135,11 +142,9 @@ export default function Kyguikoi() {
       await uploadBytes(videoRef, formData.Video[0].originFileObj);
       const videoUrl = await getDownloadURL(videoRef);
 
-      const dataToSend = {
-        ...formData,
-        Image: imageUrl,
-        Video: videoUrl,
-      };
+      // Update dataToSend with the URLs
+      dataToSend.Image = imageUrl;
+      dataToSend.Video = videoUrl;
 
       const response = await axios.post(
         "http://localhost:4000/ki-gui",
