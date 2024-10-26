@@ -532,6 +532,7 @@ class OrderDetailService {
 
             console.log("newPrice: ", newPrice)
             orderDT = {
+                _id: new ObjectId(),
                 Items: [{
                     KoiID: koiID,
                     Quantity: payload.Quantity
@@ -541,10 +542,7 @@ class OrderDetailService {
         }
 
         return {
-            orderDT: {
-                _id: new ObjectId(),
-                ...orderDT
-            }
+            orderDT
         }
     }
     async getMinMaxPrice(payload) {
