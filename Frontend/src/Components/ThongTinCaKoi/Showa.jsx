@@ -267,10 +267,6 @@ export default function Showa() {
       <Layout>
         <Container>
           <div>
-            <div style={{ paddingTop: "110px", textAlign: "center" }}>
-              <h1 className="nameOfKoi">CÁ KOI SHOWA</h1>
-              <hr />
-            </div>
             <div>
               <div className="body_StyleKoiOfPage">
                 <h2>Nội Dung Bài Viết</h2>

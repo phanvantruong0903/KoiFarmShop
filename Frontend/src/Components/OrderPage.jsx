@@ -279,32 +279,650 @@ const OrderPage = () => {
         <Container>
           <div
             style={{
-              padding: "16px",
               display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "column",
-              flexGrow: 1,
+              width: "80%",
+              maxWidth: "1000px",
+              margin: "0 auto",
+              flexWrap: "wrap",
+              padding: "20px",
+              borderRadius: "8px",
             }}
           >
-            <Card
-              title={
-                <Title level={1} style={{ textAlign: "center", color: "red" }}>
-                  Thông tin
-                </Title>
-              }
+            <div
               style={{
-                boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
-                width: "80%",
-                maxWidth: "1000px",
+                flex: "1 1 50%",
+                textAlign: "center",
+                paddingRight: "10px",
               }}
             >
               {selectedItem ? (
-                <Row
-                  gutter={16}
-                  style={{ alignItems: "flex-start", marginTop: "20px" }}
+                <>
+                  <img
+                    src={selectedItem.Image}
+                    alt={selectedItem.KoiName}
+                    style={{
+                      height: "400px",
+                      width: "100%",
+                      objectFit: "cover",
+                      borderRadius: "8px",
+                    }}
+                  />
+                  <video
+                    controls
+                    style={{
+                      width: "100%",
+                      marginTop: "10px",
+                      borderRadius: "8px",
+                    }}
+                  >
+                    <source src={selectedItem.Video} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                </>
+              ) : (
+                <Spin tip="Loading..." />
+              )}
+            </div>
+            <div
+              style={{
+                flex: "1 1 50%",
+                paddingLeft: "20px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
+              <Title level={1} style={{ color: "red" }}>
+                {selectedItem.KoiName}
+              </Title>
+              {selectedItem && (
+                <>
+                  <hr style={{ margin: "10px 0" }} />
+                  <Paragraph style={{ paddingTop: "18px" }}>
+                    <h3 style={{ fontSize: "25px", textAlign: "left" }}>
+                      Price:{" "}
+                      <span style={{ fontSize: "25px", color: "red" }}>
+                        {" "}
+                        {new Intl.NumberFormat("vi-VN").format(
+                          selectedItem.Price
+                        )}{" "}
+                        VND
+                      </span>
+                    </h3>
+                    <Text>
+                      Tình trạng: Sẵn hàng, xem và lựa chọn cá trực tiếp tại
+                      trại{" "}
+                      <span
+                        style={{
+                          fontWeight: "600",
+                          color: "red",
+                          fontSize: "25px",
+                        }}
+                      >
+                        IKoi
+                      </span>
+                      .
+                    </Text>
+                  </Paragraph>
+                  <hr style={{ margin: "10px 0" }} />
+                  <Paragraph>
+                    <Text
+                      style={{
+                        fontWeight: "bold",
+                        textDecoration: "underline",
+                      }}
+                    >
+                      Ưu đãi:
+                    </Text>
+                    <ul>
+                      <li>
+                        Mua nhiều tặng nhiều: Mua 20 tặng 5; Mua 12 tặng 3; Mua
+                        30 tặng 9 (áp dụng với cá Koi Việt , Koi F1 phụ thuộc
+                        vào size).
+                      </li>
+                      <li>
+                        Giá trị đơn hàng từ 1.500.000đ tặng kèm 1 chai vi sinh
+                        (không hợp nhất với combo khác).
+                      </li>
+                      <li>Miễn phí ship từ trại ra các bến xe tại Hà Nội.</li>
+                    </ul>
+                  </Paragraph>
+                  <Paragraph
+                    style={{
+                      fontSize: "20px",
+                      textAlign: "left",
+                      color: "red",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontSize: "20px",
+                        textAlign: "left",
+                        color: "red",
+                      }}
+                    >
+                      {selectedItem.Size > 20 && (
+                        <label>
+                          <strong>Quantity: </strong>
+                          <input
+                            type="number"
+                            style={{
+                              fontSize: "14px",
+                              color: "red",
+                              width: "48%",
+                            }}
+                            value={selectedQuantity}
+                            onChange={(e) =>
+                              setSelectedQuantity(e.target.value)
+                            }
+                            min="1"
+                            max={maxQuantity}
+                          />
+                        </label>
+                      )}
+                      {selectedItem.Size < 20 && (
+                        <label>
+                          <strong>Quantity: </strong>
+                          <input
+                            type="number"
+                            style={{
+                              fontSize: "14px",
+                              color: "red",
+                              width: "48%",
+                            }}
+                            value={selectedQuantity}
+                            onChange={(e) =>
+                              setSelectedQuantity(e.target.value)
+                            }
+                            min="1"
+                            max={maxQuantity}
+                            disabled
+                          />
+                        </label>
+                      )}
+                    </div>
+                    <div
+                      style={{
+                        fontSize: "20px",
+                        textAlign: "left",
+                        color: "red",
+                      }}
+                    >
+                      {selectedItem.Size < 20 && (
+                        <Paragraph
+                          style={{
+                            fontSize: "20px",
+                            textAlign: "left",
+                            color: "red",
+                          }}
+                        >
+                          <strong>Combo: </strong>
+                          <input
+                            type="number"
+                            style={{
+                              fontSize: "14px",
+                              color: "red",
+                              width: "48%",
+                            }}
+                            value={comboQuantity}
+                            onChange={(e) => {
+                              const value = Math.max(e.target.value, 1);
+                              setComboQuantity(value);
+                              setSelectedQuantity(value * 25);
+                            }}
+                            min="1"
+                          />
+                        </Paragraph>
+                      )}
+                    </div>
+                  </Paragraph>
+                  <Paragraph style={{ fontSize: "20px", textAlign: "left" }}>
+                    <strong>Certificate ID: </strong>
+                    <Text style={{ fontSize: "20px", color: "red" }}>
+                      {selectedItem.CertificateID}
+                    </Text>
+                  </Paragraph>
+                  <Paragraph>
+                    <div
+                      style={{
+                        display: "flex",
+                        paddingTop: "20px",
+                        gap: "10px",
+                      }}
+                    >
+                      <Button
+                        type="primary"
+                        danger
+                        size="large"
+                        onClick={handleOrderPlacement}
+                        disabled={isAddedToCart}
+                        style={{
+                          flex: "0 1 40%", // Adjust width
+                          padding: "10px", // Reduce padding
+                          borderRadius: "8px",
+                          fontSize: "18px", // Reduce font size
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Mua Ngay
+                      </Button>
+                      <Button
+                        style={{
+                          flex: "1 1 60%", // Adjust width
+                          padding: "20px", // Increase padding
+                          borderRadius: "8px",
+                          fontSize: "22px", // Increase font size
+                          fontWeight: "bold",
+                          backgroundColor:
+                            isAddedToCart ||
+                            quantityInCart + selectedQuantity > maxQuantity
+                              ? "#f0f0f0"
+                              : "#ffffff", // Change color when disabled
+                          color:
+                            isAddedToCart ||
+                            quantityInCart + selectedQuantity > maxQuantity
+                              ? "#a0a0a0"
+                              : "red", // Change text color when disabled
+                          border: "2px solid red", // Border color
+                          transition: "background-color 0.3s, transform 0.2s", // Transition effect
+                          cursor:
+                            isAddedToCart ||
+                            quantityInCart + selectedQuantity > maxQuantity
+                              ? "not-allowed"
+                              : "pointer", // Change cursor
+                          opacity:
+                            isAddedToCart ||
+                            quantityInCart + selectedQuantity > maxQuantity
+                              ? 0.6
+                              : 1, // Reduce opacity when disabled
+                        }}
+                        onClick={handleAddToCart}
+                        loading={loading}
+                        size="large"
+                        disabled={
+                          isAddedToCart ||
+                          quantityInCart + selectedQuantity > maxQuantity
+                        }
+                        onMouseEnter={(e) => {
+                          if (
+                            !(
+                              isAddedToCart ||
+                              quantityInCart + selectedQuantity > maxQuantity
+                            )
+                          ) {
+                            e.currentTarget.style.backgroundColor = "red"; // Hover background color
+                            e.currentTarget.style.color = "#FFFFFF"; // Hover text color
+                            e.currentTarget.style.transform = "scale(1.05)"; // Hover scale
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (
+                            !(
+                              isAddedToCart ||
+                              quantityInCart + selectedQuantity > maxQuantity
+                            )
+                          ) {
+                            e.currentTarget.style.backgroundColor = "#FFFFFF"; // Reset background
+                            e.currentTarget.style.color = "red"; // Reset text color
+                            e.currentTarget.style.transform = "scale(1)"; // Reset scale
+                          }
+                        }}
+                      >
+                        <FaCartPlus style={{ marginRight: "8px" }} />
+                        {isAddedToCart ? "Đã Thêm" : "Thêm Vào Giỏ Hàng"}
+                      </Button>
+                    </div>
+                  </Paragraph>
+                  {isAddedToCart && (
+                    <Paragraph
+                      style={{
+                        color: "green",
+                        fontWeight: "bold",
+                        marginTop: "10px",
+                      }}
+                    >
+                      Hàng đã vào giỏ hàng của bạn!
+                    </Paragraph>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+          <div>
+            <div
+              style={{
+                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)", // Add box-shadow
+                padding: "8px", // Add padding
+                borderRadius: "4px", // Round the corners
+                width: "100%", // Ensure it takes full width
+                marginBottom: "10px", // Space below the text
+                background: "#E4E0E1",
+              }}
+            >
+              <Text
+                style={{
+                  display: "block",
+                  fontWeight: "bold",
+                  fontSize: "25px",
+                }}
+              >
+                CHI TIẾT SẢN PHẨM
+              </Text>
+            </div>
+            <Paragraph
+              style={{
+                fontSize: "20px",
+                lineHeight: "1.5",
+                background: "whitesmoke",
+              }}
+            >
+              <ul style={{ listStyleType: "none", paddingLeft: "0" }}>
+                <li
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "15px",
+                    marginBottom: "8px",
+                  }}
                 >
-                  <Col span={12} style={{ textAlign: "center" }}>
+                  <span style={{ fontWeight: "normal", fontSize: "20px" }}>
+                    Size:{" "}
+                  </span>
+                  {selectedItem.Size}
+                </li>
+                <li
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "20px",
+                    marginBottom: "8px",
+                  }}
+                >
+                  <span style={{ fontWeight: "normal", fontSize: "20px" }}>
+                    Loài:{" "}
+                  </span>
+                  {selectedItem.Breed}
+                </li>
+                <li
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "20px",
+                    marginBottom: "8px",
+                  }}
+                >
+                  <span style={{ fontWeight: "normal", fontSize: "20px" }}>
+                    Lượng thức ăn / ngày:{" "}
+                  </span>
+                  {selectedItem.DailyFoodAmount}
+                </li>
+                <li
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "20px",
+                    marginBottom: "8px",
+                  }}
+                >
+                  <span style={{ fontWeight: "normal", fontSize: "20px" }}>
+                    Tỷ lệ lọc:{" "}
+                  </span>
+                  {selectedItem.FilteringRatio}
+                </li>
+                <li
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "20px",
+                    marginBottom: "8px",
+                  }}
+                >
+                  <span style={{ fontWeight: "normal", fontSize: "20px" }}>
+                    Certificate ID:{" "}
+                  </span>
+                  {selectedItem.CertificateID}
+                </li>
+              </ul>
+            </Paragraph>
+          </div>
+          <div>
+            <div
+              style={{
+                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)", // Add box-shadow
+                padding: "8px", // Add padding
+                borderRadius: "4px", // Round the corners
+                width: "100%", // Ensure it takes full width
+                marginBottom: "10px", // Space below the text
+                background: "#E4E0E1",
+              }}
+            >
+              <Text
+                style={{
+                  display: "block",
+                  fontWeight: "bold",
+                  fontSize: "25px",
+                }}
+              >
+                MÔ TẢ KOI
+              </Text>
+            </div>
+            <Paragraph style={{ fontSize: "20px", background: "whitesmoke" }}>
+              {selectedItem.Description}
+              <br />
+              <span style={{ fontWeight: "Bold", fontSize: "20px" }}>
+                CHÍNH SÁCH BẢO HÀNH:
+              </span>
+              <ul>
+                <li>
+                  Bảo hành 01 năm cho tất cả các lỗi về cá Koi chính hãng tại
+                  Ikoi.
+                </li>
+                <li>
+                  Đảm bảo sức khỏe và chất lượng cá trong suốt thời gian bảo
+                  hành.
+                </li>
+                <li>
+                  Hỗ trợ tư vấn miễn phí về cách chăm sóc và nuôi dưỡng cá Koi.
+                </li>
+              </ul>
+            </Paragraph>
+          </div>
+        </Container>
+
+        {categoryName === "Kohaku" && (
+          <div>
+            <h1
+              style={{
+                textAlign: "center",
+                paddingBottom: "50px",
+                color: "red",
+              }}
+            >
+              Giới thiệu về Koi Kohaku
+            </h1>
+            <Kohaku />
+          </div>
+        )}
+        {categoryName === "Ogon" && (
+          <div>
+            {" "}
+            <h1
+              style={{
+                textAlign: "center",
+                paddingBottom: "50px",
+                color: "red",
+              }}
+            >
+              Giới thiệu về Koi Ogon
+            </h1>
+            <Ogon />
+          </div>
+        )}
+        {categoryName === "Showa" && (
+          <div>
+            <hr />
+            <h1
+              style={{
+                textAlign: "center",
+                paddingBottom: "50px",
+                color: "red",
+              }}
+            >
+              Giới thiệu về Koi Showa
+            </h1>
+            <Showa />
+          </div>
+        )}
+        {categoryName === "Tancho" && (
+          <div>
+            <h1
+              style={{
+                textAlign: "center",
+                paddingBottom: "50px",
+                color: "red",
+              }}
+            >
+              Giới thiệu về Koi Tancho
+            </h1>
+            <Tancho />
+          </div>
+        )}
+        {categoryName === "Bekko" && (
+          <div>
+            <h1
+              style={{
+                textAlign: "center",
+                paddingBottom: "50px",
+                color: "red",
+              }}
+            >
+              Giới thiệu về Koi Bekko
+            </h1>
+            <Bekko />
+          </div>
+        )}
+        {categoryName === "Ginrin" && (
+          <div>
+            <h1
+              style={{
+                textAlign: "center",
+                paddingBottom: "50px",
+                color: "red",
+              }}
+            >
+              Giới thiệu về Koi Ginrin
+            </h1>
+            <Ginrin />
+          </div>
+        )}
+        {categoryName === "Doitsu" && (
+          <div>
+            <h1
+              style={{
+                textAlign: "center",
+                paddingBottom: "50px",
+                color: "red",
+              }}
+            >
+              Giới thiệu về Koi Doitsu
+            </h1>
+            <Doitsu />
+          </div>
+        )}
+        {categoryName === "Goshiki" && (
+          <div>
+            <h1
+              style={{
+                textAlign: "center",
+                paddingBottom: "50px",
+                color: "red",
+              }}
+            >
+              Giới thiệu về Koi Goshiki
+            </h1>
+            <Goshiki />
+          </div>
+        )}
+        {categoryName === "Benigoi" && (
+          <div>
+            <h1
+              style={{
+                textAlign: "center",
+                paddingBottom: "50px",
+                color: "red",
+              }}
+            >
+              Giới thiệu về Koi Benigoi
+            </h1>
+            <Benigoi />
+          </div>
+        )}
+        {categoryName === "Asagi" && (
+          <div>
+            <h1
+              style={{
+                textAlign: "center",
+                paddingBottom: "50px",
+                color: "red",
+              }}
+            >
+              Giới thiệu về Koi Asagi
+            </h1>
+            <Asagi />
+          </div>
+        )}
+        {categoryName === "Platinum" && (
+          <div>
+            <h1
+              style={{
+                textAlign: "center",
+                paddingBottom: "50px",
+                color: "red",
+              }}
+            >
+              Giới thiệu về Koi Platinum
+            </h1>
+            <Platinum />
+          </div>
+        )}
+        {categoryName === "Shusui" && (
+          <div>
+            <h1
+              style={{
+                textAlign: "center",
+                paddingBottom: "50px",
+                color: "red",
+              }}
+            >
+              Giới thiệu về Koi Shusui
+            </h1>
+            <Shusui />
+          </div>
+        )}
+      </Layout>
+      <Footer />
+    </>
+  );
+};
+
+export default OrderPage;
+{
+  /* <div
+              style={{
+                display: "flex",
+                width: "80%",
+                maxWidth: "1000px",
+
+                margin: "0 auto",
+                flexWrap: "wrap",
+                padding: "20px",
+                borderRadius: "8px",
+              }}
+            >
+              <div
+                style={{
+                  flex: "1 1 50%",
+                  textAlign: "center",
+                  paddingRight: "10px",
+                }}
+              >
+                {selectedItem ? (
+                  <>
                     <img
                       src={selectedItem.Image}
                       alt={selectedItem.KoiName}
@@ -326,35 +944,35 @@ const OrderPage = () => {
                       <source src={selectedItem.Video} type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
-                  </Col>
-                  <Col
-                    span={12}
-                    style={{
-                      paddingLeft: "20px",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Title
-                      level={2}
-                      style={{ color: "red", textAlign: "left" }}
-                    >
-                      {selectedItem.KoiName}
-                    </Title>
+                  </>
+                ) : (
+                  <Spin tip="Loading..." />
+                )}
+              </div>
+              <div
+                style={{
+                  flex: "1 1 50%",
+                  paddingLeft: "20px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                <Title level={1} style={{ color: "red" }}>
+                  {selectedItem.KoiName}
+                </Title>
+                {selectedItem && (
+                  <>
                     <hr style={{ margin: "10px 0" }} />
                     <Paragraph style={{ paddingTop: "18px" }}>
                       <h3 style={{ fontSize: "25px", textAlign: "left" }}>
                         Price:{" "}
                         <span style={{ fontSize: "25px", color: "red" }}>
-                          {selectedItem.Price
-                            ? (
-                                selectedItem.Price * selectedQuantity
-                              ).toLocaleString("en-US", {
-                                style: "currency",
-                                currency: "VND",
-                              })
-                            : "Contact for Price"}
+                          {" "}
+                          {new Intl.NumberFormat("vi-VN").format(
+                            selectedItem.Price
+                          )}{" "}
+                          VND
                         </span>
                       </h3>
                       <Text>
@@ -373,15 +991,27 @@ const OrderPage = () => {
                       </Text>
                     </Paragraph>
                     <hr style={{ margin: "10px 0" }} />
-                    <Paragraph
-                      style={{
-                        fontSize: "20px",
-                        textAlign: "left",
-                        color: "red",
-                      }}
-                    >
-                      <strong>Description: </strong>
-                      {selectedItem.Description}
+                    <Paragraph>
+                      <Text
+                        style={{
+                          fontWeight: "bold",
+                          textDecoration: "underline",
+                        }}
+                      >
+                        Ưu đãi:
+                      </Text>
+                      <ul>
+                        <li>
+                          Mua nhiều tặng nhiều: Mua 20 tặng 5; Mua 12 tặng 3;
+                          Mua 30 tặng 9 (áp dụng với cá Koi Việt , Koi F1 phụ
+                          thuộc vào size).
+                        </li>
+                        <li>
+                          Giá trị đơn hàng từ 1.500.000đ tặng kèm 1 chai vi sinh
+                          (không hợp nhất với combo khác).
+                        </li>
+                        <li>Miễn phí ship từ trại ra các bến xe tại Hà Nội.</li>
+                      </ul>
                     </Paragraph>
                     <Paragraph
                       style={{
@@ -410,9 +1040,9 @@ const OrderPage = () => {
                               value={selectedQuantity}
                               onChange={(e) =>
                                 setSelectedQuantity(e.target.value)
-                              } // Update value on change
-                              min="1" // Set minimum value to 1
-                              max={maxQuantity} // Set maximum value
+                              }
+                              min="1"
+                              max={maxQuantity}
                             />
                           </label>
                         )}
@@ -429,10 +1059,10 @@ const OrderPage = () => {
                               value={selectedQuantity}
                               onChange={(e) =>
                                 setSelectedQuantity(e.target.value)
-                              } // Update value on change
-                              min="1" // Set minimum value to 1
-                              max={maxQuantity} // Set maximum value
-                              disabled // Disable editing
+                              }
+                              min="1"
+                              max={maxQuantity}
+                              disabled
                             />
                           </label>
                         )}
@@ -462,11 +1092,11 @@ const OrderPage = () => {
                               }}
                               value={comboQuantity}
                               onChange={(e) => {
-                                const value = Math.max(e.target.value, 1); // Ensure minimum value is 1
-                                setComboQuantity(value); // Update combo quantity
-                                setSelectedQuantity(value * 25); // Multiply by the base quantity (25 in this case)
+                                const value = Math.max(e.target.value, 1);
+                                setComboQuantity(value);
+                                setSelectedQuantity(value * 25);
                               }}
-                              min="1" // Set minimum value to 1
+                              min="1"
                             />
                           </Paragraph>
                         )}
@@ -478,7 +1108,6 @@ const OrderPage = () => {
                         {selectedItem.CertificateID}
                       </Text>
                     </Paragraph>
-
                     <Paragraph>
                       <div
                         style={{
@@ -494,32 +1123,43 @@ const OrderPage = () => {
                           onClick={handleOrderPlacement}
                           disabled={isAddedToCart}
                           style={{
-                            flex: 1,
-                            padding: "20px",
+                            flex: "0 1 40%", // Đặt width nhỏ hơn
+                            padding: "10px", // Giảm padding
                             borderRadius: "8px",
-                            fontSize: "25px",
+                            fontSize: "18px", // Giảm font size
                             fontWeight: "bold",
                           }}
                         >
                           Mua Ngay
                         </Button>
-
                         <Button
-                          type="primary"
-                          danger
+                          style={{
+                            flex: "1 1 60%", // Đặt width lớn hơn
+                            padding: "20px", // Tăng padding
+                            borderRadius: "8px",
+                            fontSize: "22px", // Tăng font size
+                            fontWeight: "bold",
+                            backgroundColor: "#ffffff", // Màu nền trắng
+                            color: "red", // Màu chữ cam
+                            border: "2px solid red", // Viền cam
+                            transition: "background-color 0.3s, transform 0.2s", // Hiệu ứng chuyển đổi
+                          }}
                           onClick={handleAddToCart}
                           loading={loading}
                           size="large"
                           disabled={
                             isAddedToCart ||
                             quantityInCart + selectedQuantity > maxQuantity
-                          } // Disable if total exceeds max quantity
-                          style={{
-                            flex: 1,
-                            padding: "15px",
-                            borderRadius: "8px",
-                            fontSize: "20px",
-                            fontWeight: "bold",
+                          }
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = "red"; // Màu nền khi hover
+                            e.currentTarget.style.color = "#FFFFFF"; // Màu chữ trắng khi hover
+                            e.currentTarget.style.transform = "scale(1.05)"; // Phóng to nút khi hover
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = "#FFFFFF"; // Màu nền lại khi không hover
+                            e.currentTarget.style.color = "red"; // Màu chữ lại khi không hover
+                            e.currentTarget.style.transform = "scale(1)"; // Trở lại kích thước ban đầu
                           }}
                         >
                           <FaCartPlus style={{ marginRight: "8px" }} />
@@ -538,30 +1178,9 @@ const OrderPage = () => {
                         Hàng đã vào giỏ hàng của bạn!
                       </Paragraph>
                     )}
-                  </Col>
-                </Row>
-              ) : (
-                <Spin tip="Loading..." />
-              )}
-            </Card>
-          </div>
-        </Container>
-        {categoryName === "Kohaku" && <Kohaku />}
-        {categoryName === "Ogon" && <Ogon />}
-        {categoryName === "Showa" && <Showa />}
-        {categoryName === "Tancho" && <Tancho />}
-        {categoryName === "Bekko" && <Bekko />}
-        {categoryName === "Ginrin" && <Ginrin />}
-        {categoryName === "Doitsu" && <Doitsu />}
-        {categoryName === "Goshiki" && <Goshiki />}
-        {categoryName === "Benigoi" && <Benigoi />}
-        {categoryName === "Asagi" && <Asagi />}
-        {categoryName === "Platinum" && <Platinum />}
-        {categoryName === "Shusui" && <Shusui />}
-      </Layout>
-      <Footer />
-    </>
-  );
-};
-
-export default OrderPage;
+                  </>
+                )}
+              </div>
+            </div>
+          </div> */
+}
