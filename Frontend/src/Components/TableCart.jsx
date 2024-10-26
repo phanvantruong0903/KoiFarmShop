@@ -74,7 +74,7 @@ export default function ShoppingCart() {
     };
 
     fetchOrderDetails();
-  }, [orderDetail]);
+  }, []);
 
   const handleUpdateQuantity = async (koiId, newQuantity) => {
     // Validate newQuantity
