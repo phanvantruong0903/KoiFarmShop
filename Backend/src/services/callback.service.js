@@ -33,9 +33,9 @@ export const callback = async (req, res) => {
 
       for (const koiID of koiIDs) {
         await databaseService.kois.findOneAndUpdate(
-          { _id: new ObjectId(koiID) }, // Tìm kiếm theo _id và trạng thái
-          { $set: { Status: 0 } }, // Cập nhật trạng thái thành 1
-          { new: true } // Trả về đối tượng đã cập nhật
+          { _id: new ObjectId(koiID) },
+          { $set: { Status: 0 } }, 
+          { new: true } 
         )
       }
 
@@ -44,10 +44,10 @@ export const callback = async (req, res) => {
         result.returnmessage = 'No order data found in embed_data'
       } else {
         const result = await saveOrderToDatabase(reqOrderDetails,reqOrder)
-        console.log("database value: ", result)
+
 
         await databaseService.order.findOneAndUpdate(
-          { _id: new ObjectId(OrderID) },
+          { _id: new ObjectId(result.order._id) },
           { $set: { Status: 2 } },
           { new: true }
         )
@@ -95,7 +95,7 @@ export const saveOrderToDatabase = async (reqOrderDetailCookie,reqOrderCookie) =
     _id: new ObjectId(),
     UserID: reqOrderCookie.UserID,
     // OrderDetailID: newOrderDT._id,
-    OrderDetailID: orderDT?._id,
+    OrderDetailID: reqOrderDetailCookie?._id,
     ShipAddress: reqOrderCookie.ShipAddress,
     Description: reqOrderCookie.Description,
     OrderDate: reqOrderCookie.OrderDate || new Date(),
@@ -108,5 +108,5 @@ export const saveOrderToDatabase = async (reqOrderDetailCookie,reqOrderCookie) =
   } else {
     return  'Fail to save'
   }
-  return {orderDT, order}
+  return {orderDT, order: newOrder}
 }
