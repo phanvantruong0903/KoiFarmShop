@@ -46,9 +46,10 @@ class OrderDetailService {
     }
     async buyNow(payload, reqCookie) {
         const koiListObject = await this.filterKoiId(payload)
-        if (!koiListObject) {
+        if(koiListObject.message){
             return 'Koi not found'
         }
+
         const koiID = koiListObject.FirstKoiID
         const koiList = (await this.getSamePropertiesKoi(koiID)).filter(koi => koi.Status != 0)
         if (!koiList) {
@@ -116,23 +117,34 @@ class OrderDetailService {
 
     async removeItem(payload, reqOrderDTCookie) {
         let orderDetail = reqOrderDTCookie
-        const removedKoi = await databaseService.kois.findOne({ _id: new ObjectId(payload.KoiID) })
-        console.log("removed koi: ", removedKoi)
-        let removedItemPrice = removedKoi?.Price
-        console.log("removed item price: ", removedItemPrice)
-        const removedOrder = orderDetail?.Items.filter(item => {
-            if (item.KoiID !== payload.KoiID) {
-                return {
-                    KoiID: item.KoiID,
-                    Quantity: item.Quantity
+        if(orderDetail && orderDetail.Items){
+            const foundItem = orderDetail.Items.find(item => item.KoiID === payload.KoiID)
+            if(!foundItem){
+                return `Koi with id '${payload.KoiID}' not found`
+            }
+            const koiList = (await this.getSamePropertiesKoi(payload.KoiID)).filter(koi=> koi.Status != 0)
+            const removedKoiList = koiList.slice(0, foundItem.Quantity)
+            console.log("remove koi list: ", removedKoiList)
+            let removedItemPrice = removedKoiList.reduce((total, koi)=>{
+                return total + Number(koi.Price)
+            }, 0)
+            console.log("removed item price: ", removedItemPrice)
+            const removedOrder = orderDetail?.Items.filter(item => {
+                if (item.KoiID !== payload.KoiID) {
+                    return {
+                        KoiID: item.KoiID,
+                        Quantity: item.Quantity
+                    }
+                }
+            })
+            return {
+                orderDT: {
+                    Items: removedOrder,
+                    TotalPrice: Number(orderDetail.TotalPrice) - Number(removedItemPrice)
                 }
             }
-        })
-        return {
-            orderDT: {
-                Items: removedOrder,
-                TotalPrice: orderDetail.TotalPrice - removedItemPrice
-            }
+        }else{
+            return 'Order not found'
         }
     }
 
@@ -463,7 +475,10 @@ class OrderDetailService {
         let newPrice = 0
         let orderDT, koiList
         const koiListObject = await this.filterKoiId(payload)
-        let koiID = koiListObject.FirstKoiID
+        if(koiListObject.message){
+            return 'Koi not found'
+        }
+        let koiID = koiListObject.FirstKoiID  
         const samePropertiesKois = (await this.getSamePropertiesKoi(koiID)).filter(koi => koi.Status != 0)
 
         if (reqCookie && reqCookie.Items) {
@@ -512,8 +527,8 @@ class OrderDetailService {
             koiList = samePropertiesKois.slice(0, payload.Quantity)
             console.log("else koi list: ", koiList)
             newPrice = koiList?.reduce((total, koi) => {
-                return total + Number(koi.Price); // Ensure koi.Price is a number
-            }, 0); // Initial total is 0
+                return total + Number(koi.Price); 
+            }, 0); 
 
             console.log("newPrice: ", newPrice)
             orderDT = {

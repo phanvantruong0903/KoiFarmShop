@@ -103,7 +103,7 @@ export const removeItemsDetailController = async (req, res) => {
     const result = await orderDetailService.removeItem(req.body,reqOrderDTCookie);
     console.log("result: ", result)
     
-    if(result!==null && result.orderDT.TotalPrice>=0){
+    if(result.orderDT.TotalPrice>=0){
       res.cookie('orderDT', JSON.stringify(result.orderDT), {
         httpOnly: true,
         maxAge: 1800000 // 30 mins
