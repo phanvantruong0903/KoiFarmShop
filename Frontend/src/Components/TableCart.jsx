@@ -5,6 +5,8 @@ import axios from "axios";
 import { Empty } from "antd"; // Import only Empty from Ant Design
 import Cookies from "js-cookie";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import { Typography } from "antd";
+const { Text } = Typography;
 
 export default function ShoppingCart() {
   const orderDetail = useOrder();
@@ -39,40 +41,28 @@ export default function ShoppingCart() {
     const fetchOrderDetails = async () => {
       try {
         const response = await axios.get("http://localhost:4000/order/detail", {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           withCredentials: true,
         });
-        console.log(response);
+
         if (response.status === 200) {
-          const { koiList, orderDT } = response.data.result;
-          const { Items, TotalPrice } = orderDT;
-          const koiMap = new Map(koiList.map((koi) => [koi._id, koi]));
-          const updatedKoiList = Items.map((item) => {
-            const koi = koiMap.get(item.KoiID);
-            return koi ? { ...koi, quantity: item.Quantity } : null;
-          }).filter((koi) => koi !== null);
-          setKoiList(updatedKoiList);
-          // Save to localStorage
-          // localStorage.setItem("koiList", JSON.stringify(updatedKoiList));
-          setTotalPrice(TotalPrice);
-          console.log("Order details fetched and stored in localStorage.");
+          // Xử lý dữ liệu...
         } else {
-          console.error(`API request failed with status: ${response.status}`);
           setError("Failed to fetch order details.");
         }
       } catch (error) {
-        // Log thêm thông tin lỗi
-        console.error(
-          "Error fetching order details:",
-          error.response ? error.response.data : error.message
-        );
-        setError("Error fetching order details.");
+        // Chỉ ghi lại thông báo lỗi một lần
+        if (!errorHandled) {
+          console.error("Error fetching order details:", error);
+          setError("Error fetching order details.");
+          setErrorHandled(true); // Cập nhật trạng thái để tránh ghi lại
+        }
       }
     };
+
     fetchOrderDetails();
   }, [orderDetail]);
+
   const fetchOrderDetails = async () => {
     try {
       const response = await axios.get("http://localhost:4000/order/detail", {
@@ -290,7 +280,7 @@ export default function ShoppingCart() {
           </div>
         </>
       ) : (
-        <Text>{error || "No Koi items in this order."}</Text>
+        <Text style={{color: '#FF6A00'}}>{error || "No Koi items in this order."}</Text>
       )}
     </div>
   );
