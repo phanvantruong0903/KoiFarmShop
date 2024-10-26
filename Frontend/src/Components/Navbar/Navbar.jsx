@@ -14,6 +14,7 @@ export default function Navbar() {
   const [showDropdown2, setShowDropdown2] = useState(false);
   const [showDropdown3, setShowDropdown3] = useState(false);
   const [showDropdown4, setShowDropdown4] = useState(false);
+  const [showDropdown5, setShowDropdown5] = useState(false);
   const [activeItem, setActiveItem] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false); // State to track scroll position
@@ -267,7 +268,7 @@ export default function Navbar() {
             className="nav-dropdown"
             onMouseEnter={() => setShowDropdown5(true)}
             onMouseLeave={() => setShowDropdown5(false)}
-            show={showDropdown4}
+            show={showDropdown5}
           >
             <Dropdown.Toggle
               id="dropdown-basic"
@@ -277,33 +278,6 @@ export default function Navbar() {
                 LÔ NHẬP KHẨU CÁ KOI TỪ NHẬT BẢN
               </Link>
             </Dropdown.Toggle>
-            <CSSTransition
-              in={showDropdown4}
-              timeout={300}
-              classNames="dropdown"
-              mountOnEnter
-              unmountOnExit
-            >
-              <Dropdown.Menu className="custom-menu">
-                <Dropdown.Item
-                  href="/kygui"
-                  onMouseEnter={() => setActiveItem("/kygui")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  className={activeItem === "/kygui" ? "active" : ""}
-                >
-                  KOI KÝ GỬI
-                </Dropdown.Item>
-                <Dropdown.Divider />
-                <Dropdown.Item
-                  href="/koikygui"
-                  onMouseEnter={() => setActiveItem("/koikygui")}
-                  onMouseLeave={() => setActiveItem(null)}
-                  className={activeItem === "/koikygui" ? "active" : ""}
-                >
-                  KOI ĐANG BÁN
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </CSSTransition>
           </Dropdown>
           <Dropdown>
             <Dropdown.Toggle

@@ -90,3 +90,34 @@ export const guestGetSupplierController = async (req, res) => {
     return res.status(500).json({ error: error.message })
   }
 }
+
+export const getKoiGroupIDController = async (req, res) => {
+  try {
+    const koiInGroupKOI = await databaseService.groupKois.find().toArray()
+
+    const GroupKoi = koiInGroupKOI.map((groupKoi) => groupKoi._id.toString())
+
+    const Koi = await databaseService.kois.find({ GroupKoiID: { $in: GroupKoi } }).toArray()
+
+    const groupedKoi = Koi.reduce((accumulator, koi) => {
+      const groupId = koi.GroupKoiID
+
+      if (!accumulator[groupId]) {
+        accumulator[groupId] = { groupId, kois: [] }
+      }
+
+      accumulator[groupId].kois.push(koi)
+
+      return accumulator
+    }, {})
+
+    const groupedKoiArray = Object.values(groupedKoi).map((item) => ({
+      groupId: item.groupId,
+      result: item.kois
+    }))
+
+    res.json(groupedKoiArray)
+  } catch (error) {
+    res.json('lỗi tại lấy koi theo groupkoiid ' + error.message)
+  }
+}

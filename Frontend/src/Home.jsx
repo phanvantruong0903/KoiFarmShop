@@ -299,14 +299,16 @@ export default function Home() {
       </h4>
 
       <Container>
-        <Row style={{ margin: "50px", justifyContent: "center" }}>
+        <Row style={{ margin: "50px 0", justifyContent: "center" }}>
           {koidata.slice(0, 8).map((koi, idx) => (
             <Col
               key={idx}
               md={3}
               sm={10}
               xs={12}
-              style={{ marginBottom: "50px" }}
+              style={{
+                marginBottom: "30px",
+              }}
             >
               <Card
                 style={{
@@ -314,22 +316,22 @@ export default function Home() {
                   borderRadius: "8px",
                   maxWidth: "500px",
                   height: "auto",
-                  marginBottom: "10px",
+                  margin: "0 10px", // Add horizontal margin to separate cards
                 }}
               >
-                <Link to={"/koikygui"}>
+                <div style={{ marginTop: "0px" }}>
                   <img
                     src={koi.Image}
-                    alt={koi.alt}
-                    loading="lazy"
-                    style={{
-                      height: "300px", // Height of the image
-                      objectFit: "cover",
-                      width: "100%",
-                      borderRadius: "8px 8px 0 0",
-                    }}
+                    alt={koi.KoiName}
+                    className="image"
+                    onClick={() =>
+                      navigate("/order", {
+                        state: { selectedItem: koi },
+                      })
+                    }
+                    style={{ cursor: "pointer" }} // Optional: change cursor to pointer for better UX
                   />
-                </Link>
+                </div>
 
                 <Card.Body style={{ padding: "10px" }}>
                   <Card.Title
@@ -345,23 +347,153 @@ export default function Home() {
                     {koi.Gender}
                   </Paragraph>
                   <Paragraph>
-                    Size: 15 cm - 90 cm Nguồn gốc: Sakai, Matsue, Momotaro Chất
-                    lượng: Đẹp, Xuất sắc Loại: Thuần chủng Nhật Bản Xuất xứ:
-                    Nhật Bản
+                    <strong style={{ color: "red" }}>Size:</strong> 15 cm - 90
+                    cm
                   </Paragraph>
+                  <Paragraph>
+                    <strong style={{ color: "red" }}>Nguồn Gốc:</strong> Sakai,
+                    Matsue, Momotaro Chất lượng: Đẹp, Xuất sắc Loại: Thuần chủng
+                    Nhật Bản Xuất xứ: Nhật Bản
+                  </Paragraph>
+
+                  <div style={{ textAlign: "center" }}>
+                    <Button
+                      variant="danger"
+                      className="btnType_1"
+                      onClick={() =>
+                        navigate("/order", {
+                          state: { selectedItem: koi },
+                        })
+                      }
+                    >
+                      Giá {new Intl.NumberFormat("vi-VN").format(koi.Price)} VND
+                    </Button>
+                  </div>
                 </Card.Body>
               </Card>
             </Col>
           ))}
-          <div style={{ textAlign: "center" }}>
+          <div
+            style={{ textAlign: "center", marginTop: "20px", width: "100%" }}
+          >
             <Button variant="danger">
-              <Link to={"/koikygui"}>Xem Thêm</Link>
+              <Link
+                to={"/koikygui"}
+                style={{ color: "white", textDecoration: "none" }}
+              >
+                Xem Thêm
+              </Link>
             </Button>
           </div>
         </Row>
+        <div>
+          <div className="head-title">
+            <div className="straight-line2"></div>
+            <h1 style={{ fontSize: "50px", textAlign: "center" }}>
+              Ký Gửi Cá Koi Bên IKoi
+            </h1>
+          </div>
+          <div style={{ paddingTop: "20px" }}>
+            <Paragraph className="paragraph-style">
+              Cá Koi là loại cá chép cảnh cao cấp đến từ Nhật Bản và ngày càng
+              được ưa chuộng tại các quốc gia khác, trong đó có Việt Nam. Chính
+              vì thế mà nhu cầu sở hữu những cá Koi rõ ràng về nguồn gốc, đẹp và
+              khỏe mạnh tăng lên. Nhằm giúp mọi người sở hữu những chú cá Koi
+              tốt, ISHI KOI FARM xin trân trọng giới thiệu chức năng đấu giá cá
+              Koi dưới đây.
+            </Paragraph>
+          </div>
+
+          {/* Flex Container for Images and Right Block */}
+          <div className="flex-container">
+            <div className="left-block">
+              <div className="dad-block">
+                <div className="child-1">
+                  <p style={{ color: "red", fontWeight: "bold" }}>
+                    IKOI KÝ GỬI
+                  </p>
+                </div>
+                <img
+                  src="src/assets/home3.jpg"
+                  alt="IKOI Background"
+                  className="background-image"
+                />
+              </div>
+            </div>
+            {/* Right Block for Introduction */}
+            <div className="right-block">
+              <h2>Giới Thiệu Về IKoi</h2>
+              <Paragraph className="paragraph-style">
+                IKoi tự hào cung cấp những chú cá Koi chất lượng cao nhất từ
+                Nhật Bản, mang đến cho khách hàng những trải nghiệm tuyệt vời và
+                sự hài lòng. Với đội ngũ chuyên gia tận tâm, chúng tôi cam kết
+                đảm bảo sức khỏe và vẻ đẹp của từng chú cá Koi, giúp bạn dễ dàng
+                chọn lựa những chú cá phù hợp nhất cho hồ cá của mình.
+              </Paragraph>
+              <Paragraph className="paragraph-style">
+                Ngoài ra, chúng tôi còn cung cấp dịch vụ chăm sóc cá Koi chuyên
+                nghiệp, tư vấn kỹ thuật và các giải pháp nuôi dưỡng để bạn có
+                thể yên tâm tận hưởng niềm đam mê cá Koi.
+              </Paragraph>
+            </div>
+          </div>
+        </div>
       </Container>
-      <Footer />
-      <ToastContainer />
+      <div
+        className="image-background"
+        style={{
+          backgroundImage: "url('src/assets/home6.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          width: "100%",
+          height: "500px", // Adjust as needed
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <div
+          className="item"
+          style={{
+            color: "white",
+            padding: "20px",
+            borderRadius: "10px",
+            maxWidth: "1000px", // Set a max-width for the content
+            width: "100%",
+            paddingTop: "20px",
+          }}
+        >
+          <div className="block-child">
+            <div className="child-item head-title">
+              <h2 style={{ fontSize: "20px" }}>Hợp tác cùng IKoi</h2>
+              <div className="straight-line"></div>
+            </div>
+            <h3 style={{ fontSize: "50px" }}>
+              Nếu Bạn Đang Tìm Nguồn Cung Cấp Cá Koi Nhật Bản Tại Việt Nam IKoi
+              Sẽ Là Một Lựa Chọn Đúng Đắn.
+            </h3>
+            <Paragraph className="paragraph-Style" style={{ color: "white" }}>
+              Chúng tôi chỉ nhập các dòng cá thuần chủng trực tiếp từ các trang
+              trại cá uy tín tại Nhật Bản. Nguồn cung cấp dồi dào và đảm bảo
+              được chất lượng cá cũng như giá thành. Chất lượng cá luôn được đảm
+              bảo từ khâu chọn lựa cá tại trại cá của đối tác Nhật Bản.
+            </Paragraph>
+            <Paragraph className="paragraph-Style" style={{ color: "white" }}>
+              Các lô cá về thường xuyên, chủng loại đa dạng. Hệ thống hồ nuôi,
+              dưỡng cá hiện đại, giúp cá khỏe mạnh phát triển tốt sau khi xuất
+              trại.
+            </Paragraph>
+            <div style={{ width: "100%" }}>
+              <Button variant="danger">
+                <Link to={"/gioithieu"} style={{ color: "white" }}>
+                  Trở thành đối tác của ikoi
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Footer style={{ paddingTop: "20px" }} />
     </>
   );
 }

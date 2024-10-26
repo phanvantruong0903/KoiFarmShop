@@ -49,6 +49,7 @@ import FormFillInformation from "./Components/FormFillInformation";
 import Chart from "./An/Pages/Charts/Charts";
 import PaymentMethod from "./Components/Paymentmethod";
 import ManageInvoices from "./An/Pages/Manager/ManageInvoices";
+import Locakoinhapkhau from "./Components/LoCaKoiNhapKhau";
 const router = createBrowserRouter([
   {
     path: "/login/oauth",
@@ -199,6 +200,10 @@ const router = createBrowserRouter([
     element: <PaymentMethod />,
   },
   {
+    path: "/lonhapkhau",
+    element: <Locakoinhapkhau />,
+  },
+  {
     path: "/DashBoard",
     element: <DashBoard />, // DashBoard component
     children: [
@@ -217,14 +222,14 @@ const router = createBrowserRouter([
             <Chart />
           </Suspense>
         ),
-      }, {
+      },
+      {
         path: "manager/ManageInvoices",
         element: (
           <Suspense fallback={<Spinner />}>
             <ManageInvoices />
           </Suspense>
         ),
-
       },
       {
         path: "staff/Orders",

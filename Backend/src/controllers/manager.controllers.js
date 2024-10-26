@@ -254,23 +254,37 @@ export const getRevenueController = async (req, res) => {
   try {
     const Orders = await databaseService.order.find({ Status: 2 }).toArray()
 
+    const orderDetailIds = Orders.map((order) => new ObjectId(order.OrderDetailID)) 
+
+
+    const OrderDetails = await databaseService.orderDetail
+      .find({
+        _id: { $in: orderDetailIds  }
+      })
+      .toArray()
+
+      console.log(OrderDetails)
+
     const dailyRevenue = Orders.reduce((accumulator, order) => {
-      const orderDate = new Date(order.OrderDate).toISOString().split('T')[0] // ví dụ OrderDate trong db là 2024-10-13T07:40:36.198+00:00 thì tách chữ T ra
-      const amount = order.TotalPrice || 0
+      const orderDate = new Date(order.OrderDate).toISOString().split('T')[0]
+      const detail = OrderDetails.find((d) => d._id.equals(new ObjectId(order.OrderDetailID)))
+      const orderTotal = detail ? detail.TotalPrice : 0 
 
       if (accumulator[orderDate]) {
-        accumulator[orderDate] += amount
+        accumulator[orderDate] += orderTotal
       } else {
-        accumulator[orderDate] = amount
+        accumulator[orderDate] = orderTotal
       }
 
-      return accumulator // return về các object chứa 2 field là date và total price
-    }, {}) // truyền đối số ini cho accumulator là 1 object rỗng
+      return accumulator
+    }, {})
 
     const dailyRevenueArray = Object.entries(dailyRevenue).map(([Date, TotalPrice]) => ({
       Date,
       TotalPrice
     }))
+
+    console.log(dailyRevenueArray)
 
     return res.json(dailyRevenueArray)
   } catch (error) {
@@ -301,8 +315,6 @@ export const getProfitController = async (req, res) => {
             for (let i = 0; i < statuses.length; i++) {
               const orderDate = new Date(orders.OrderDate)
               const formattedDate = `${orderDate.getUTCDate().toString().padStart(2, '0')}/${(orderDate.getUTCMonth() + 1).toString().padStart(2, '0')}/${orderDate.getUTCFullYear()}`
-
-
             }
           }
         }
@@ -421,6 +433,3 @@ export const getgroupKoiController = async (req, res) => {
     return res.status(500).json({ error: error.message })
   }
 }
-
-
-

@@ -2,8 +2,8 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer";
 import TableCart from "./TableCart";
-import { Container } from "react-bootstrap";
 
+import { Form, Button, Spinner, Container } from "react-bootstrap";
 export default function ShoppingCart() {
   const navigate = useNavigate();
 
@@ -20,7 +20,18 @@ export default function ShoppingCart() {
             <h4 style={{ textAlign: "center" }}>Giỏ hàng của bạn</h4>
             <TableCart />
             <div style={{ marginTop: "20px", textAlign: "center" }}>
-              <button onClick={handlePayment}>Tiến Hành Bước Tiếp Theo</button>
+              <Button
+                variant="danger"
+                onClick={handlePayment}
+                style={{
+                  marginTop: "-55px",
+                  marginBottom: "55px",
+                  borderRadius: "51px",
+                  height: "57px",
+                }}
+              >
+                Tiến Hành Bước Tiếp Theo
+              </Button>
             </div>
           </div>
         </Container>

@@ -66,10 +66,386 @@ img {
   line-height: 30px;
 }
 .straight-line {
-  border-bottom: 2px solid var(--red); /* Set the bottom border */
+  border-bottom: 3px solid var(--red); /* Set the bottom border */
   height: 0; /* No height */
   width: 133px; /* Fixed width */
 }
+.straight-line2 {
+  border-bottom: 3px solid var(--red); /* Set the bottom border */
+  height: 0; /* No height */
+  width: 300px; /* Fixed width */
+}
 :root {
   --red: #ff0000; /* Example red color */
+}
+.dad-block {
+  position: relative;
+  padding-bottom: 58%;
+  overflow: hidden; /* Ensure children are contained */
+}
+
+.child-1 {
+  width: 30%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: white; /* Better contrast for text */
+  font-size: 24px; /* Adjust font size for better readability */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow for better visibility */
+}
+
+.dad-block .child-3 {
+  width: 65%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.dad-block-56 {
+  position: relative;
+  padding-bottom: 56%;
+}
+
+.blur-background {
+  position: relative;
+  overflow: hidden; /* Contain the blurred background */
+}
+
+.absoPosi {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: contain;
+  z-index: 2;
+}
+
+.blur-background .imgBlurBg {
+  width: 300%;
+  position: absolute;
+  height: 300%;
+  filter: blur(8px);
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 1;
+}
+
+/* Additional Responsive Styles */
+@media (max-width: 768px) {
+  .head-title h1 {
+    font-size: 36px; /* Smaller font size for mobile */
+  }
+
+  .child-1 {
+    font-size: 18px; /* Adjust font size for smaller screens */
+  }
+
+  .dad-block {
+    padding-bottom: 70%; /* Adjust padding for better aspect ratio on mobile */
+  }
+}
+.right-block {
+  margin-top: 40px; /* Space above the right block */
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners */
+}
+
+.right-block h2 {
+  font-size: 28px; /* Title size */
+  color: red; /* Title color */
+  text-align: left; /* Align text to the left */
+}
+
+.right-block .paragraph-style {
+  font-size: 16px; /* Paragraph font size */
+  line-height: 1.6; /* Spacing between lines */
+  color: #333; /* Darker text color for readability */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .right-block {
+    margin-top: 20px; /* Reduce margin on smaller screens */
+    padding: 15px; /* Adjust padding */
+  }
+
+  .right-block h2 {
+    font-size: 24px; /* Smaller title size for mobile */
+  }
+}
+.flex-container {
+  display: flex;
+  justify-content: space-between; /* Space between content */
+  align-items: flex-start; /* Align items at the top */
+  position: relative; /* Allows for absolute positioning of children */
+  margin-top: 20px; /* Space above the flex container */
+}
+
+.dad-block {
+  position: relative;
+  width: 65%; /* Adjust width as needed */
+  padding-bottom: 58%; /* Maintain aspect ratio */
+}
+
+.child-1 {
+  width: 30%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: white;
+  font-size: 24px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.child-3 {
+  width: 65%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.right-block {
+  width: 30%; /* Adjust width to fit alongside the images */
+  margin-left: 20px; /* Space between images and right block */
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.right-block h2 {
+  font-size: 28px;
+  color: red;
+  text-align: left;
+}
+
+.paragraph-style {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .flex-container {
+    flex-direction: column; /* Stack vertically on smaller screens */
+    align-items: center; /* Center items */
+  }
+
+  .dad-block,
+  .right-block {
+    width: 100%; /* Full width on mobile */
+    margin-left: 0; /* Remove left margin */
+  }
+
+  .right-block {
+    margin-top: 20px; /* Add margin on top for spacing */
+  }
+}
+.dad-block {
+  position: relative; /* Allow absolute positioning for child elements */
+  width: 100%; /* Full width */
+  height: 400px; /* Set a specific height for the block */
+  overflow: hidden; /* Hide overflow to maintain clean edges */
+}
+
+.child-1 {
+  position: absolute; /* Absolutely positioned */
+  top: 20px; /* Adjust vertical position */
+  left: 20px; /* Adjust horizontal position */
+  color: white; /* Text color */
+  font-size: 36px; /* Font size */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Shadow for better visibility */
+  opacity: 0; /* Start hidden */
+  animation: fadeIn 1s forwards; /* Fade in effect */
+  z-index: 2; /* Above the image */
+}
+
+.background-image {
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  object-fit: cover; /* Maintain aspect ratio */
+  position: absolute; /* Absolutely positioned */
+  top: 0; /* Align to top */
+  left: 0; /* Align to left */
+  z-index: 1; /* Below the text and koi image */
+}
+
+.child-3 {
+  position: absolute; /* Absolutely positioned */
+  bottom: 0; /* Align to bottom */
+  right: 0; /* Align to right */
+  z-index: 3; /* Above the background image */
+  opacity: 0; /* Start hidden */
+  animation: fadeIn 1.5s forwards; /* Fade in effect */
+}
+
+.dad-block-56 {
+  position: relative;
+  padding-bottom: 56%; /* Maintain aspect ratio */
+}
+
+.blur-background {
+  position: absolute; /* Absolutely positioned */
+  top: 0; /* Align to top */
+  left: 0; /* Align to left */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: hidden; /* Hide overflow */
+}
+
+.absoPosi {
+  position: absolute; /* Absolutely positioned */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Center adjustment */
+  object-fit: contain; /* Maintain aspect ratio */
+  z-index: 4; /* Above everything */
+}
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .child-1 {
+    font-size: 24px; /* Adjust font size on smaller screens */
+  }
+}
+.dad-block {
+  position: relative;
+  width: 100%;
+  height: 500px; /* Adjust the height as needed */
+  overflow: hidden;
+}
+
+.child-1 {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  color: white;
+  font-size: 42px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.background-image {
+  width: 100%;
+  height: 80%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.child-3 {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 60%; /* Adjust the width as needed */
+  z-index: 3;
+}
+
+.dad-block-56 {
+  position: relative;
+  padding-bottom: 56.25%; /* Maintain aspect ratio */
+}
+
+.blur-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.absoPosi {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 4;
+}
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.left-block {
+  width: 70%;
+  position: relative;
+  padding-bottom: 58%;
+  overflow: hidden;
+}
+
+.dad-block {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.child-1 {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: white;
+  font-size: 36px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.background-image {
+  width: 100%;
+  height: 80%;
+  object-fit: cover;
+}
+
+.right-block {
+  width: 27%;
+  margin-left: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.right-block h2 {
+  font-size: 28px;
+  color: red;
+  text-align: left;
+}
+
+.paragraph-style {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+}
+.image-background {
+  background-image: url(src/assets/home6.png);
+  background-size: cover;
+  background-position: center center;
+  width: 100%;
+  height: 600px;
+  padding-top: 19px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
