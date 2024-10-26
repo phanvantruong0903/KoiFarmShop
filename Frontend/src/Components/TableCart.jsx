@@ -131,11 +131,15 @@ export default function ShoppingCart() {
     try {
       const response = await axios.post(
         "http://localhost:4000/order/detail/remove",
-        { KoiID: koiId.toString() }
+        { KoiID: koiId.toString() },
+        {
+          withCredentials: true,
+        }
       );
       if (response.status === 200) {
         alert(response.data.message || "Deleted successfully");
         console.log(response);
+        window.location.reload(); // Reload the page
       }
     } catch (error) {
       console.error(
