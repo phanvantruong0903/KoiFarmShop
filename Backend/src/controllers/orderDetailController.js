@@ -45,14 +45,21 @@ export const makeOrdersDetailController = async (req, res) => {
 };
 export const buyNowController = async (req, res) => {
   try {
-    let reqCookie = req.cookies?.orderDT
+    let reqCookie = req.cookies?.buyNowDT
     reqCookie = {}; // tạo cookies mới cho func buyNow 
     const result = await orderDetailService.buyNow(req.body, reqCookie);
-    console.log("result: ", result)
-    return res.json({
-      message: USERS_MESSAGES.BUY_ORDER_SUCCESS,
-      result
-    })
+    if(result.buyNowDT){
+      res.cookie('buyNowDT', JSON.stringify(result.buyNowDT))
+      return res.json({
+        message: USERS_MESSAGES.BUY_ORDER_SUCCESS,
+        result
+      })
+    }else{
+      return res.json({
+        result
+      })
+    }
+    
   } catch (error) {
     return res.status(500).json({ error: error.message })
   }
@@ -60,18 +67,29 @@ export const buyNowController = async (req, res) => {
 
 export const getOrderDetailController = async (req, res) => {
   try {
-    let reqCookie = req.cookies && req.cookies.orderDT ? JSON.parse(req.cookies.orderDT) : {}; // fix phải check có trong cookies trước
+    if(!req.cookies.buyNowDT && !req.cookies.orderDT){
+      return res.json({
+        message: USERS_MESSAGES.ORDER_NOT_FOUND
+      })
+    }
+    let reqCookie = req.cookies && req.cookies.buyNowDT ? JSON.parse(req.cookies.buyNowDT) : JSON.parse(req.cookies.orderDT); // fix phải check có trong cookies trước
+    console.log(reqCookie)
+    if(!reqCookie || reqCookie === undefined){
+      return res.json({
+        message: USERS_MESSAGES.ORDER_NOT_FOUND
+      })
+    }
     const result = await orderDetailService.fetchOrder(reqCookie);
 
     console.log("result: ", result)
-    if(result!==null){
+    if(result.orderDT){
       return res.json({
         message: USERS_MESSAGES.GET_ORDER_SUCCESS,
         result
       })
     }else{
       return res.json({
-        message: USERS_MESSAGES.ORDER_NOT_FOUND
+        result
       })
     }
     
