@@ -62,7 +62,18 @@ export default function Koikygui() {
   const handleMinPriceChange = (e) => setMinPrice(e.target.value);
   const handleMaxPriceChange = (e) => setMaxPrice(e.target.value);
 
-  if (loading) return <Spin size="large" />;
+  if (loading)
+    return (
+      <Spin
+        size="large"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      />
+    );
   if (error)
     return <Alert message="Error" description={error.message} type="error" />;
 

@@ -41,6 +41,7 @@ const OrderPage = () => {
   const [categoryData, setCategoryData] = useState([]);
   const [id, setID] = useState();
   const [categoryName, setCategoryName] = useState();
+  const [comboQuantity, setComboQuantity] = useState(1); // Track combo quantity
   console.log(selectedItem);
 
   useEffect(() => {
@@ -72,16 +73,28 @@ const OrderPage = () => {
         );
 
         if (response.status === 200) {
-          console.log(response.data);
-          setMaxQuantity(response.data.result.CategoryName.Quantity); // Cập nhật maxQuantity
-          console.log(selectedQuantity);
+          let maxQty;
+          if (selectedItem.Size >= 5 && selectedItem.Size <= 14) {
+            maxQty = 39;
+            setSelectedQuantity(39); // Default to 39
+          } else if (selectedItem.Size >= 15 && selectedItem.Size <= 17) {
+            maxQty = 25;
+            setSelectedQuantity(25); // Default to 25
+          } else if (selectedItem.Size >= 18 && selectedItem.Size <= 20) {
+            maxQty = 12; // Default to 12, with an extra 3
+            setSelectedQuantity(12);
+          } else {
+            maxQty = response.data.result.CategoryName.Quantity; // Fallback for other sizes
+            setSelectedQuantity(1); // Default to 1 for other sizes
+          }
+          setMaxQuantity(maxQty); // Update maxQuantity
         }
       } catch (error) {
         console.error("Error sending order details:", error);
       }
     };
     sendOrderDetails();
-  }, []);
+  }, [selectedItem]);
 
   const handleAddToCart = async () => {
     if (!selectedItem || loading) return;
@@ -96,6 +109,8 @@ const OrderPage = () => {
 
     setLoading(true);
     try {
+      const price = 500000; // Fixed price for all combinations
+
       const response = await axios.post(
         "http://localhost:4000/order/detail/makes",
         {
@@ -105,14 +120,12 @@ const OrderPage = () => {
           Quantity: parseInt(selectedQuantity),
         },
         {
-          withCredentials: true, // This enables sending cookies with the request
+          withCredentials: true,
         }
       );
 
       if (response.status === 200) {
-        console.log("Add to cart successfull" + response.data.message);
-        console.log(response.data.result);
-        console.log("Order id  " + response.data.result.orderDT._id);
+        console.log("Add to cart successful: " + response.data.message);
         setOrderId(response.data.result.orderDT._id);
       }
 
@@ -122,30 +135,24 @@ const OrderPage = () => {
       );
 
       if (existingItem) {
-        // Update quantity in cart
-
         existingItem.quantity += parseInt(selectedQuantity);
       } else {
-        // Add new item to cart with the current selected quantity
         existingCart.push({
           itemId: selectedItem._id,
           message: "Hàng đã vào giỏ hàng của bạn",
           quantity: parseInt(selectedQuantity),
           koi: selectedItem,
+          price: price, // Store fixed price in the cart
         });
       }
 
-      // Set the cart back to local storage
       localStorage.setItem("cart", JSON.stringify(existingCart));
-
-      // Update the local state quantity
       setQuantityInCart(
         existingItem ? existingItem.quantity : parseInt(selectedQuantity)
       );
 
-      // Check if the new quantity equals the maxQuantity
       if (totalQuantity === maxQuantity) {
-        setIsAddedToCart(true); // Set added state if max quantity is reached
+        setIsAddedToCart(true);
       }
 
       toast.success("Đã thêm vào giỏ hàng!");
@@ -156,8 +163,72 @@ const OrderPage = () => {
       setLoading(false);
     }
   };
-  const handleOrderPlacement = () => {
-    alert("Order placed!"); // Implement actual order placement logic here
+  const handleOrderPlacement = async () => {
+    if (!selectedItem || loading) return;
+
+    const totalQuantity = quantityInCart + selectedQuantity;
+
+    // Prevent adding if total exceeds maxQuantity
+    if (totalQuantity > maxQuantity) {
+      toast.error("Số lượng vượt quá giới hạn cho phép.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const price = 500000; // Fixed price for all combinations
+
+      const response = await axios.post(
+        "http://localhost:4000/order/detail/makes",
+        {
+          Size: parseInt(selectedItem.Size),
+          Breed: selectedItem.Breed,
+          CategoryID: selectedItem.CategoryID,
+          Quantity: parseInt(selectedQuantity),
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (response.status === 200) {
+        console.log("Add to cart successful: " + response.data.message);
+        setOrderId(response.data.result.orderDT._id);
+      }
+
+      const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+      const existingItem = existingCart.find(
+        (item) => item.itemId === selectedItem._id
+      );
+
+      if (existingItem) {
+        existingItem.quantity += parseInt(selectedQuantity);
+      } else {
+        existingCart.push({
+          itemId: selectedItem._id,
+          message: "Hàng đã vào giỏ hàng của bạn",
+          quantity: parseInt(selectedQuantity),
+          koi: selectedItem,
+          price: price, // Store fixed price in the cart
+        });
+      }
+
+      localStorage.setItem("cart", JSON.stringify(existingCart));
+      setQuantityInCart(
+        existingItem ? existingItem.quantity : parseInt(selectedQuantity)
+      );
+
+      if (totalQuantity === maxQuantity) {
+        setIsAddedToCart(true);
+      }
+      navigate("/formfillinformation");
+      toast.success("Đã thêm vào giỏ hàng!");
+    } catch (error) {
+      console.log(error);
+      toast.error("Có lỗi xảy ra! " + (error.response?.data?.message || ""));
+    } finally {
+      setLoading(false);
+    }
   };
   useEffect(() => {
     const fetchData = async () => {
@@ -346,6 +417,40 @@ const OrderPage = () => {
                             max={maxQuantity} // Set maximum value
                           />
                         </label>
+                      </div>
+                      <div
+                        style={{
+                          fontSize: "20px",
+                          textAlign: "left",
+                          color: "red",
+                        }}
+                      >
+                        {selectedItem.Size < 20 && (
+                          <Paragraph
+                            style={{
+                              fontSize: "20px",
+                              textAlign: "left",
+                              color: "red",
+                            }}
+                          >
+                            <strong>Combo: </strong>
+                            <input
+                              type="number"
+                              style={{
+                                fontSize: "14px",
+                                color: "red",
+                                width: "48%",
+                              }}
+                              value={comboQuantity}
+                              onChange={(e) => {
+                                const value = Math.max(e.target.value, 1); // Ensure minimum value is 1
+                                setComboQuantity(value); // Update combo quantity
+                                setSelectedQuantity(value * 25); // Multiply by the base quantity (25 in this case)
+                              }}
+                              min="1" // Set minimum value to 1
+                            />
+                          </Paragraph>
+                        )}
                       </div>
                     </Paragraph>
                     <Paragraph style={{ fontSize: "20px", textAlign: "left" }}>

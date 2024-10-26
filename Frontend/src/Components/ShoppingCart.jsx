@@ -2,8 +2,8 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer";
 import TableCart from "./TableCart";
-import { Container } from "react-bootstrap";
 
+import { Form, Button, Spinner, Container } from "react-bootstrap";
 export default function ShoppingCart() {
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
