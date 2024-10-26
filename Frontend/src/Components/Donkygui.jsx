@@ -3,6 +3,7 @@ import Footer from "./Footer";
 import Navbar from "./Navbar/Navbar";
 import { Button, List, Typography, Spin, Alert, Layout } from "antd";
 import axiosInstance from "../An/Utils/axiosJS";
+import { Container } from "react-bootstrap";
 
 const { Title, Text } = Typography;
 
@@ -46,6 +47,8 @@ export default function DonKyGuiPage() {
         </div>
         <div style={{ padding: "50px" }}>
           <Title level={2}>Danh Sách Ký Gửi Của Khách Hàng</Title>
+        </div>
+        <Container>
           {consignList.length > 0 ? (
             <List
               itemLayout="vertical"
@@ -118,9 +121,6 @@ export default function DonKyGuiPage() {
                           Price: {koi?.Price ?? "N/A"}
                         </Text>
                         <br />
-                        <Text strong style={{ fontSize: "25px" }}>
-                          Description: {koi?.Description ?? "N/A"}
-                        </Text>
                       </div>
                     </div>
                     <hr />
@@ -134,7 +134,7 @@ export default function DonKyGuiPage() {
           ) : (
             <Text>No consign items available.</Text>
           )}
-        </div>
+        </Container>
         <Footer />
       </Layout>
     </>

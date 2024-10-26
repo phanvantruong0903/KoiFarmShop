@@ -76,37 +76,9 @@ export default function Kyguikoi() {
     setFormData((prevData) => ({ ...prevData, [key]: date }));
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (values) => {
     setLoading(true);
     try {
-      const requiredFields = [
-        "PositionCare",
-        "Method",
-        "CategoryID",
-        "Gender",
-        "Size",
-        "Breed",
-        "Age",
-        "email",
-        "phone_number",
-        "name",
-        "address",
-        "KoiName",
-        "Origin",
-      ];
-
-      for (const field of requiredFields) {
-        if (!formData[field]) {
-          toast.error(`${field} là trường bắt buộc.`);
-          return;
-        }
-      }
-
-      if (!formData.Image || !formData.Video) {
-        toast.error("Vui lòng chọn ảnh và video!");
-        return;
-      }
-
       const shippedDateObj = formData.shippedDate
         ? new Date(formData.shippedDate)
         : null;
@@ -126,13 +98,20 @@ export default function Kyguikoi() {
 
       // Parse Size and Age as integers, DailyFoodAmount and FilteringRatio as floats
       const dataToSend = {
-        ...formData,
+        ...values,
+        PositionCare: formData.PositionCare.toString(),
+        Method: formData.Method.toString(),
+        CategoryID: formData.CategoryID.toString(),
+        Gender: formData.Gender.toString(),
         Size: parseInt(formData.Size, 10),
-        Age: parseInt(formData.Age, 10),
+        Breed: formData.Breed.toString(),
         DailyFoodAmount: parseFloat(formData.DailyFoodAmount),
         FilteringRatio: parseFloat(formData.FilteringRatio),
+        Age: parseInt(formData.Age, 10),
+        shippedDate: shippedDateObj ? shippedDateObj.toISOString() : null,
+        receiptDate: receiptDateObj ? receiptDateObj.toISOString() : null,
       };
-
+      console.log(dataToSend);
       const imageRef = ref(storage, `koiImages/${formData.Image[0].name}`);
       const videoRef = ref(storage, `koiVideos/${formData.Video[0].name}`);
 
@@ -174,22 +153,14 @@ export default function Kyguikoi() {
       const response = await axiosInstance.get("users/me");
       if (response.data) {
         setUserData(response.data.result);
-        setFormData((prevData) => ({
-          ...prevData,
-          email: response.data.result.email,
-          name: response.data.result.name,
-          address: response.data.result.address,
-          phone_number: response.data.result.phone_number,
-          ShipAddress: response.data.result.address,
-        }));
+        console.log("Fetched user data:", response.data.result); // Debug log
       }
     } catch (error) {
-      console.error("Có lỗi xảy ra khi lấy thông tin người dùng:", error);
+      console.error("Error fetching user data:", error);
     } finally {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     fetchUserData();
   }, []);
@@ -215,45 +186,65 @@ export default function Kyguikoi() {
         {loading ? (
           <Spin size="large" style={{ display: "block", margin: "auto" }} />
         ) : (
-          <Form style={{ maxWidth: "800px", margin: "auto" }}>
+          <Form
+            style={{ maxWidth: "800px", margin: "auto" }}
+            onFinish={handleSubmit}
+            initialValues={{
+              email: userData?.email || "",
+              name: userData?.name || "",
+              address: userData?.address || "",
+              phone_number: userData?.phone_number || "",
+              ShipAddress: userData?.address || "",
+            }}
+          >
             <div style={{ color: "black" }}>
               <Title level={3}>Thông tin khách hàng</Title>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div style={{ width: "48%" }}>
-                  <Form.Item label="Địa chỉ email (*)">
-                    <Input
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="Nhập địa chỉ email (name@example.com)"
-                    />
+                  <Form.Item
+                    label="Địa chỉ email (*)"
+                    name="email"
+                    rules={[
+                      {
+                        required: true,
+                        type: "email",
+                        message: "Vui lòng nhập email hợp lệ.",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Nhập địa chỉ email (name@example.com)" />
                   </Form.Item>
-                  <Form.Item label="Địa chỉ (*)">
-                    <Input
-                      name="address"
-                      value={formData.address}
-                      onChange={handleChange}
-                      placeholder="Nhập địa chỉ"
-                    />
+                  <Form.Item
+                    label="Địa chỉ (*)"
+                    name="address"
+                    rules={[
+                      { required: true, message: "Vui lòng nhập địa chỉ." },
+                    ]}
+                  >
+                    <Input placeholder="Nhập địa chỉ" />
                   </Form.Item>
                 </div>
                 <div style={{ width: "48%" }}>
-                  <Form.Item label="Số điện thoại (*)">
-                    <Input
-                      name="phone_number"
-                      value={formData.phone_number}
-                      onChange={handleChange}
-                      type="number"
-                      placeholder="Nhập số điện thoại"
-                    />
+                  <Form.Item
+                    label="Số điện thoại (*)"
+                    name="phone_number"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Vui lòng nhập số điện thoại",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Nhập số điện thoại" />
                   </Form.Item>
-                  <Form.Item label="Tên người ký gửi (*)">
-                    <Input
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="Nhập họ và tên"
-                    />
+                  <Form.Item
+                    label="Tên người ký gửi (*)"
+                    name="name"
+                    rules={[
+                      { required: true, message: "Vui lòng nhập họ và tên." },
+                    ]}
+                  >
+                    <Input placeholder="Nhập họ và tên" />
                   </Form.Item>
                 </div>
               </div>
@@ -261,7 +252,15 @@ export default function Kyguikoi() {
               <Title level={3}>Thông Tin Ký Gửi</Title>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div style={{ width: "48%" }}>
-                  <Form.Item label="Nơi chăm sóc koi (*)">
+                  <Form.Item
+                    label="Nơi chăm sóc koi (*)"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Vui lòng Nơi chăm sóc koi.",
+                      },
+                    ]}
+                  >
                     <Radio.Group
                       name="PositionCare"
                       value={formData.PositionCare}
@@ -271,7 +270,15 @@ export default function Kyguikoi() {
                       <Radio value="IKoiFarm">IKoiFarm</Radio>
                     </Radio.Group>
                   </Form.Item>
-                  <Form.Item label="Phương thức nhận koi (*)">
+                  <Form.Item
+                    label="Phương thức nhận koi (*)"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Vui lòng Phương thức nhận koi.",
+                      },
+                    ]}
+                  >
                     <Radio.Group
                       name="Method"
                       value={formData.Method}
@@ -509,9 +516,8 @@ export default function Kyguikoi() {
             <div style={{ textAlign: "center", marginTop: "20px" }}>
               <Button
                 type="primary"
-                onClick={handleSubmit}
+                htmlType="submit"
                 loading={loading}
-                style={{ borderRadius: "20px", width: "10%" }}
                 disabled={loading}
               >
                 Ký Gửi
@@ -519,7 +525,6 @@ export default function Kyguikoi() {
             </div>
           </Form>
         )}
-        <ToastContainer />
       </div>
     </Container>
   );

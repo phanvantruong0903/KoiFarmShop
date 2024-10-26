@@ -14,7 +14,6 @@ export default function ShoppingCart() {
   const [error, setError] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0); // Initialize to 0
   const navigate = useNavigate();
-
   const handlePayment = () => {
     navigate("/formfillinformation");
   };
@@ -41,67 +40,43 @@ export default function ShoppingCart() {
     const fetchOrderDetails = async () => {
       try {
         const response = await axios.get("http://localhost:4000/order/detail", {
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+          },
           withCredentials: true,
         });
-
+        console.log(response);
         if (response.status === 200) {
-          // Xử lý dữ liệu...
+          const { koiList, orderDT } = response.data.result;
+          const { Items, TotalPrice } = orderDT;
+          const koiMap = new Map(koiList.map((koi) => [koi._id, koi]));
+          const updatedKoiList = Items.map((item) => {
+            const koi = koiMap.get(item.KoiID);
+            return koi ? { ...koi, quantity: item.Quantity } : null;
+          }).filter((koi) => koi !== null);
+          setKoiList(updatedKoiList);
+          // Save to localStorage
+          // localStorage.setItem("koiList", JSON.stringify(updatedKoiList));
+          setTotalPrice(TotalPrice);
+          console.log("Order details fetched and stored in localStorage.");
         } else {
+          console.error(`API request failed with status: ${response.status}`);
           setError("Failed to fetch order details.");
         }
       } catch (error) {
-        // Chỉ ghi lại thông báo lỗi một lần
-        if (!errorHandled) {
-          console.error("Error fetching order details:", error);
-          setError("Error fetching order details.");
-          setErrorHandled(true); // Cập nhật trạng thái để tránh ghi lại
-        }
+        // Log thêm thông tin lỗi
+        console.error(
+          "Error fetching order details:",
+          error.response ? error.response.data : error.message
+        );
+        setError("Error fetching order details.");
       }
     };
 
     fetchOrderDetails();
   }, [orderDetail]);
 
-  const fetchOrderDetails = async () => {
-    try {
-      const response = await axios.get("http://localhost:4000/order/detail", {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      });
-      console.log(response);
-      if (response.status === 200) {
-        const { koiList, orderDT } = response.data.result;
-        const { Items, TotalPrice } = orderDT;
-        const koiMap = new Map(koiList.map((koi) => [koi._id, koi]));
-        const updatedKoiList = Items.map((item) => {
-          const koi = koiMap.get(item.KoiID);
-          return koi ? { ...koi, quantity: item.Quantity } : null;
-        }).filter((koi) => koi !== null);
-        setKoiList(updatedKoiList);
-        // Save to localStorage
-        // localStorage.setItem("koiList", JSON.stringify(updatedKoiList));
-        const orderDetails = JSON.parse(Cookies.get("orderDT") || "{}");
-        const totalPriceFromCookies = orderDetails.TotalPrice || 0;
-        setTotalPrice(totalPriceFromCookies);
-        console.log("Order details fetched and stored in localStorage.");
-      } else {
-        console.error(`API request failed with status: ${response.status}`);
-        setError("Failed to fetch order details.");
-      }
-    } catch (error) {
-      // Log thêm thông tin lỗi
-      console.error(
-        "Error fetching order details:",
-        error.response ? error.response.data : error.message
-      );
-      setError("Error fetching order details.");
-    }
-  };
-
-  const handleQuantityChange = async (koiId, newQuantity) => {
+  const handleUpdateQuantity = async (koiId, newQuantity) => {
     // Validate newQuantity
     const quantity = parseInt(newQuantity);
     if (isNaN(quantity) || quantity < 0) {
@@ -136,7 +111,7 @@ export default function ShoppingCart() {
         );
 
         // Kiểm tra cấu trúc phản hồi để lấy totalPrice
-        const { Items, TotalPrice } = response.data.result.orderDT;
+        const { TotalPrice } = response.data.result.orderDT;
         if (TotalPrice !== undefined) {
           setKoiList(updatedKoiList);
           setTotalPrice(TotalPrice);
@@ -151,7 +126,24 @@ export default function ShoppingCart() {
       setError("Error updating quantity: " + error.message);
     }
   };
-
+  const handleDeleteKoi = async (koiId) => {
+    console.log(`Deleting Koi with ID: ${koiId}`);
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/order/detail/remove",
+        { KoiID: koiId.toString() }
+      );
+      if (response.status === 200) {
+        alert(response.data.message || "Deleted successfully");
+        console.log(response);
+      }
+    } catch (error) {
+      console.error(
+        "Error during deletion:",
+        error.response ? error.response.data : error.message
+      );
+    }
+  };
   return (
     <div style={{ padding: "20px", width: "100%" }}>
       {error && <p style={{ color: "red" }}>{error}</p>}
@@ -198,9 +190,9 @@ export default function ShoppingCart() {
                         onChange={(e) => {
                           const newQuantity = parseInt(e.target.value, 10);
                           if (!isNaN(newQuantity) && newQuantity >= 1) {
-                            handleQuantityChange(koi._id, newQuantity);
+                            handleUpdateQuantity(koi._id, newQuantity);
                           } else {
-                            handleQuantityChange(koi._id, 1);
+                            handleUpdateQuantity(koi._id, 1);
                           }
                         }}
                         style={{ width: "70px" }}
@@ -216,20 +208,30 @@ export default function ShoppingCart() {
                     >
                       {(koi.Price * koi.quantity).toLocaleString()}đ
                     </span>
-                    <span
-                      style={{ cursor: "pointer", marginLeft: "10px" }}
-                      onMouseEnter={(e) =>
-                        (e.currentTarget.firstChild.style.color = "red")
-                      }
-                      onMouseLeave={(e) =>
-                        (e.currentTarget.firstChild.style.color = "#D3D3D3")
-                      }
-                    >
-                      <i
-                        className="fa fa-trash"
-                        aria-hidden="true"
-                        style={{ fontSize: "20px", color: "#D3D3D3" }}
-                      ></i>
+                    <span>
+                      <button
+                        style={{
+                          cursor: "pointer",
+                          marginLeft: "10px",
+                          background: "none",
+                          border: "none",
+                          padding: "0",
+                          outline: "none",
+                        }}
+                        onMouseEnter={(e) =>
+                          (e.currentTarget.firstChild.style.color = "red")
+                        }
+                        onMouseLeave={(e) =>
+                          (e.currentTarget.firstChild.style.color = "#D3D3D3")
+                        }
+                        onClick={() => handleDeleteKoi(koi._id)} // Use a function wrapper to avoid immediate invocation
+                      >
+                        <i
+                          className="fa fa-trash"
+                          aria-hidden="true"
+                          style={{ fontSize: "20px", color: "#D3D3D3" }}
+                        ></i>
+                      </button>
                     </span>
                   </td>
                 </tr>
@@ -280,7 +282,9 @@ export default function ShoppingCart() {
           </div>
         </>
       ) : (
-        <Text style={{color: '#FF6A00'}}>{error || "No Koi items in this order."}</Text>
+        <Text style={{ color: "#FF6A00" }}>
+          {error || "No Koi items in this order."}
+        </Text>
       )}
     </div>
   );

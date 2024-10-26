@@ -109,8 +109,6 @@ const OrderPage = () => {
 
     setLoading(true);
     try {
-      const price = 500000; // Fixed price for all combinations
-
       const response = await axios.post(
         "http://localhost:4000/order/detail/makes",
         {
@@ -142,7 +140,6 @@ const OrderPage = () => {
           message: "Hàng đã vào giỏ hàng của bạn",
           quantity: parseInt(selectedQuantity),
           koi: selectedItem,
-          price: price, // Store fixed price in the cart
         });
       }
 
@@ -400,23 +397,45 @@ const OrderPage = () => {
                           color: "red",
                         }}
                       >
-                        <label>
-                          <strong>Quantity: </strong>
-                          <input
-                            type="number"
-                            style={{
-                              fontSize: "14px",
-                              color: "red",
-                              width: "48%",
-                            }}
-                            value={selectedQuantity}
-                            onChange={(e) =>
-                              setSelectedQuantity(e.target.value)
-                            } // Update value on change
-                            min="1" // Set minimum value to 1
-                            max={maxQuantity} // Set maximum value
-                          />
-                        </label>
+                        {selectedItem.Size > 20 && (
+                          <label>
+                            <strong>Quantity: </strong>
+                            <input
+                              type="number"
+                              style={{
+                                fontSize: "14px",
+                                color: "red",
+                                width: "48%",
+                              }}
+                              value={selectedQuantity}
+                              onChange={(e) =>
+                                setSelectedQuantity(e.target.value)
+                              } // Update value on change
+                              min="1" // Set minimum value to 1
+                              max={maxQuantity} // Set maximum value
+                            />
+                          </label>
+                        )}
+                        {selectedItem.Size < 20 && (
+                          <label>
+                            <strong>Quantity: </strong>
+                            <input
+                              type="number"
+                              style={{
+                                fontSize: "14px",
+                                color: "red",
+                                width: "48%",
+                              }}
+                              value={selectedQuantity}
+                              onChange={(e) =>
+                                setSelectedQuantity(e.target.value)
+                              } // Update value on change
+                              min="1" // Set minimum value to 1
+                              max={maxQuantity} // Set maximum value
+                              disabled // Disable editing
+                            />
+                          </label>
+                        )}
                       </div>
                       <div
                         style={{
