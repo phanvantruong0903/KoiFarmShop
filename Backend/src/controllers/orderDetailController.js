@@ -67,18 +67,18 @@ export const buyNowController = async (req, res) => {
 
 export const getOrderDetailController = async (req, res) => {
   try {
-    if(!req.cookies.buyNowDT && !req.cookies.orderDT){
-      return res.json({
-        message: USERS_MESSAGES.ORDER_NOT_FOUND
-      })
-    }
-    let reqCookie = req.cookies && req.cookies.buyNowDT ? JSON.parse(req.cookies.buyNowDT) : JSON.parse(req.cookies.orderDT); // fix phải check có trong cookies trước
-    console.log(reqCookie)
-    if(!reqCookie || reqCookie === undefined){
-      return res.json({
-        message: USERS_MESSAGES.ORDER_NOT_FOUND
-      })
-    }
+    // if(!req.cookies.buyNowDT && !req.cookies.orderDT){
+    //   return res.json({
+    //     message: USERS_MESSAGES.ORDER_NOT_FOUND
+    //   })
+    // }
+    let reqCookie = req.cookies && req.cookies.orderDT ? JSON.parse(req.cookies.orderDT) : {}; // fix phải check có trong cookies trước
+    // console.log(reqCookie)
+    // if(!reqCookie){
+    //   return res.json({
+    //     message: USERS_MESSAGES.ORDER_NOT_FOUND
+    //   })
+    // }
     const result = await orderDetailService.fetchOrder(reqCookie);
 
     console.log("result: ", result)
