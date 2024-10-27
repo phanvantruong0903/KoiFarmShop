@@ -5,7 +5,6 @@ import { useAuth } from "../../Context/AuthContext";
 import { IoBarChartOutline } from "react-icons/io5";
 import { PiChartLineUpLight } from "react-icons/pi";
 import "../Css/TopBar.css";
-
 export default function TopBar({ children, name, role }) {
   const { logout } = useAuth();
   const location = useLocation();
@@ -23,7 +22,7 @@ export default function TopBar({ children, name, role }) {
               <NavDropdown title="Menu Quản Lý" id="basic-nav-dropdown" className="underline">
                 <NavDropdown.Item
                   as={Link}
-                  to="/DashBoard/staff/Profiles"
+                  to="/NewDashBoard/staff/Profiles"
                   className="dropdown-item-custom"
                 >
                   Hồ Sơ
