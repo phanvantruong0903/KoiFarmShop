@@ -11,18 +11,20 @@ import { Link } from "react-router-dom";
 const { Title } = Typography;
 
 export default function Locakoinhapkhau() {
-  const [suppliers, setSuppliers] = useState([]);
-  const [koidata, setKoiData] = useState([]);
+  const [koiData, setKoiData] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [suppliersResponse, koiResponse] = await Promise.all([
-          axios.get("http://localhost:4000/manager/manage-supplier/get-all"),
-          axios.get("http://localhost:4000/getAllKoi"),
-        ]);
-        setSuppliers(suppliersResponse.data.result);
-        setKoiData(koiResponse.data.result);
+        const response = await axios.get(
+          "http://localhost:4000/get-kois-groupKoiID"
+        );
+        if (response.status === 200) {
+          console.log("Data fetched successfully:", response.data.result);
+          setKoiData(response.data.result || []); // Ensure koiData is an array
+        } else {
+          console.error("Unexpected response status:", response.status);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -30,6 +32,20 @@ export default function Locakoinhapkhau() {
 
     fetchData();
   }, []);
+
+  // Log koiData whenever it updates
+  useEffect(() => {
+    console.log("koiData updated:", koiData);
+  }, [koiData]);
+
+  // This useEffect logs koiData whenever it updates
+  useEffect(() => {
+    if (koiData) {
+      console.log("koiData updated:", koiData);
+    } else {
+      console.log("koiData is still null or undefined.");
+    }
+  }, [koiData]);
 
   return (
     <>
@@ -44,7 +60,7 @@ export default function Locakoinhapkhau() {
               </Button>
             </div>
             <div className="listPrBlock active">
-              {koidata.map((koi) => (
+              {koiData.map((koi) => (
                 <div className="wrapWidth" key={koi._id}>
                   <Card
                     style={{
