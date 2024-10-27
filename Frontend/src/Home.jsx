@@ -46,7 +46,7 @@ export default function Home() {
           axios.get("http://localhost:4000/getAllKoi"),
         ]);
         setSuppliers(suppliersResponse.data.result);
-        setKoiData(koiResponse.data.result.slice(0,12));
+        setKoiData(koiResponse.data.result.slice(0, 12));
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -190,7 +190,10 @@ export default function Home() {
                         className="carousel-image"
                         loading="lazy"
                       />
-                      <h3>Koi {koi.name.charAt(0).toUpperCase() + koi.name.slice(1)}</h3>
+                      <h3>
+                        Koi{" "}
+                        {koi.name.charAt(0).toUpperCase() + koi.name.slice(1)}
+                      </h3>
                     </Link>
                   </div>
                 ))}
@@ -339,7 +342,7 @@ export default function Home() {
         )}
       </Carousel>
       <Container>
-        <div >
+        <div>
           <div className="head-title">
             <div className="straight-line2"></div>
             <h1 style={{ fontSize: "40px", textAlign: "center" }}>
@@ -391,7 +394,7 @@ export default function Home() {
         </div>
       </Container>
 
-      {/* <div
+      <div
         className="image-background"
         style={{
           backgroundImage: "url('src/assets/home6.png')",
@@ -441,7 +444,7 @@ export default function Home() {
             </Paragraph>
           </div>
         </div>
-      </div> */}
+      </div>
       <Footer style={{ paddingTop: "20px" }} />
     </>
   );
