@@ -393,16 +393,7 @@ class OrderDetailService {
     }
     async filterKoiId(payload) {
         let koiList
-        if (payload.CategoryID && (payload.Breed === 'Viet' || payload.Breed === 'F1')) {
-            koiList = await databaseService.kois
-                .find(
-                    {
-                        CategoryID: payload.CategoryID,
-                        Breed: payload.Breed,
-                        Size: Number(payload.Size)
-                    })
-                .toArray()
-        } else if (payload.CategoryID && payload.Price) {
+        if (payload.CategoryID && payload.Price) {
             koiList = await databaseService.kois
                 .find(
                     {
@@ -425,6 +416,7 @@ class OrderDetailService {
             koiList = await databaseService.kois
                 .find(
                     {
+                        CategoryID: payload.CategoryID,
                         Breed: payload.Breed,
                         Size: Number(payload.Size)
                     })
@@ -448,22 +440,21 @@ class OrderDetailService {
         const koi = await databaseService.kois.findOne({ _id: new ObjectId(KoiID) })
         let koiProperties, koiList
         if (koi) {
-            if (koi.Breed === 'Viet' || koi.Breed === 'F1') {
-                console.log("koi Viet hoac F1")
+            // if (koi.Breed === 'Viet' || koi.Breed === 'F1') {
                 koiProperties = {
                     CategoryID: koi.CategoryID,
                     Breed: koi.Breed,
                     Size: Number(koi.Size)
                 }
-            } else {
-                console.log("koi Nhat")
-                koiProperties = {
-                    CategoryID: koi.CategoryID,
-                    Breed: koi.Breed,
-                    Size: Number(koi.Size),
-                    Price: Number(koi.Price)
-                }
-            }
+            // } 
+            // else {
+            //     koiProperties = {
+            //         CategoryID: koi.CategoryID,
+            //         Breed: koi.Breed,
+            //         Size: Number(koi.Size),
+            //         Price: Number(koi.Price)
+            //     }
+            // }
             koiList = await databaseService.kois.find(koiProperties).toArray()
             return koiList
         } else {
@@ -479,6 +470,7 @@ class OrderDetailService {
             return 'Koi not found'
         }
         let koiID = koiListObject.FirstKoiID  
+        console.log("koi id: ", koiListObject)
         const samePropertiesKois = (await this.getSamePropertiesKoi(koiID)).filter(koi => koi.Status != 0)
 
         if (reqCookie && reqCookie.Items) {

@@ -44,7 +44,7 @@ export const callback = async (req, res) => {
         result.returnmessage = 'No order data found in embed_data'
       } else {
         const result = await saveOrderToDatabase(reqOrderDetails,reqOrder)
-
+        console.log(result)
 
         await databaseService.order.findOneAndUpdate(
           { _id: new ObjectId(result.order._id) },
@@ -79,7 +79,7 @@ export const saveOrderToDatabase = async (reqOrderDetailCookie,reqOrderCookie) =
   }
 
   const newOrderDT = {
-    _id: reqOrderDetailCookie._id,
+    _id: new ObjectId(),
     Items: reqOrderDetailCookie.Items,
     TotalPrice: reqOrderDetailCookie.TotalPrice
   }
@@ -95,7 +95,7 @@ export const saveOrderToDatabase = async (reqOrderDetailCookie,reqOrderCookie) =
     _id: new ObjectId(),
     UserID: reqOrderCookie.UserID,
     // OrderDetailID: newOrderDT._id,
-    OrderDetailID: reqOrderDetailCookie?._id,
+    OrderDetailID: newOrderDT?._id,
     ShipAddress: reqOrderCookie.ShipAddress,
     Description: reqOrderCookie.Description,
     OrderDate: reqOrderCookie.OrderDate || new Date(),
