@@ -243,9 +243,9 @@ export const getAllConsignFromUserController = async (req, res) => {
 
 export const getOrderController = async (req, res) => {
   try {
-    const userID = req.body.userID
+    const userID = req.body.userID.toString().trim()
 
-    const orders = await databaseService.order.find({ UserID: new ObjectId(userID) }).toArray()
+    const orders = await databaseService.order.find({ UserID: userID }).toArray()
 
     if (orders.length === 0) {
       return res.json({ message: 'Order null' })
@@ -261,15 +261,30 @@ export const getOrderController = async (req, res) => {
       }
 
       if (!orderDetailID || !ObjectId.isValid(orderDetailID)) {
-        continue 
+        continue
       }
 
       const orderDetail = await databaseService.orderDetail.findOne({ _id: new ObjectId(orderDetailID) })
 
       if (orderDetail) {
+        const koiIDS = orderDetail.Items.map((order) => new ObjectId(order.KoiID))
+
+        const koiDetails = await databaseService.kois.find({ _id: { $in: koiIDS } }).toArray()
+
+        console.log(koiDetails)
+
+        const koiMap = {}
+        koiDetails.forEach((koi) => {
+          koiMap[koi._id] = koi
+        })
+
         orderDetails.push({
           OrderDate: order.OrderDate,
-          ...orderDetail
+          TotalPrice: orderDetail.TotalPrice,
+          Items: orderDetail.Items.map((order) => ({
+            ...order,
+            KoiInfo: koiMap[order.KoiID]
+          }))
         })
       }
     }
@@ -279,7 +294,7 @@ export const getOrderController = async (req, res) => {
       orderDetails
     })
   } catch (error) {
-    console.error('Error:', error) 
+    console.error('Error:', error)
     return res.status(500).json({
       message: 'Error at get Order ' + error.message
     })

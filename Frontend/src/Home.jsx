@@ -204,7 +204,7 @@ export default function Home() {
           <div className="row-fix">
             <div className="item">
               <div className="block-child">
-                <img src="src/assets/homeStyle1.jpg" />
+                <img src="src/assets/homeStyle1.jpg" loading="lazy" />
               </div>
             </div>
             <div className="item">
@@ -369,6 +369,7 @@ export default function Home() {
                   src="src/assets/home3.jpg"
                   alt="IKOI Background"
                   className="background-image"
+                  loading="lazy"
                 />
               </div>
             </div>

@@ -57,10 +57,13 @@ export const callback = async (req, res) => {
         } else {
           res.clearCookie('order')
           res.clearCookie('orderDT')
-          result.returncode = 1
-          result.returnmessage = 'success'
+          result.returncode = 1;
+          result.returnmessage = 'Payment successful.';
+          return res.json({ success: true, message: 'Payment successful.' });
         }
       }
+
+      
     }
   } catch (ex) {
     result.returncode = 0 // ZaloPay server sẽ callback lại (tối đa 3 lần)
