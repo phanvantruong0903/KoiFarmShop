@@ -69,7 +69,6 @@ export default function ShoppingCart() {
           "Error fetching order details:",
           error.response ? error.response.data : error.message
         );
-        setError("Error fetching order details.");
       }
     };
 
