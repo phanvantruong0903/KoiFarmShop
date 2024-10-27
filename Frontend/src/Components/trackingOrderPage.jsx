@@ -23,7 +23,9 @@ export default function TrackingOrderPage() {
     const fetchUserData = async () => {
       setLoading(true);
       try {
-        const response = await axiosInstance.get("users/me");
+        const response = await axiosInstance.get(
+          "http://localhost:4000/users/me"
+        );
         if (response.data) {
           setUserData(response.data.result);
 
@@ -52,7 +54,7 @@ export default function TrackingOrderPage() {
       try {
         const response = await axios.get(
           "http://localhost:4000/users/get-orders",
-          { params: { userID: userID.toString() } } // Use params to send query parameters
+          { userID: userID.toString() } // Send userID in the request body
         );
 
         console.log("API Response:", response); // Log the entire response
