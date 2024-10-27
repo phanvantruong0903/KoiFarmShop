@@ -25,6 +25,7 @@ import { accessTokenValidator } from './middlewares/users.middlewares.js'
 import paymentRouter from './routes/payments.routes.js'
 import orderRouter from './routes/order.routes.js'
 import cookieParser from 'cookie-parser'
+import bodyParser from 'body-parser';
 
 config()
 const app = express()
@@ -38,6 +39,7 @@ const PORT = process.env.PORT || 4000
 app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }))
+app.use(bodyParser.json());
 databaseService.connect().then(() => {
   databaseService.indexUsers()
 })

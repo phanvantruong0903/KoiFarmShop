@@ -48,13 +48,13 @@ export default function TrackingOrderPage() {
     const fetchOrders = async () => {
       if (!userData) return;
 
-      const userID = userData._id; // Assuming userData has _id property
-      console.log("Fetching orders for User ID:", userID);
+      const userId = userData._id; // Assuming userData has _id property
+      console.log("Fetching orders for User ID:", userId);
 
       try {
         const response = await axios.get(
           "http://localhost:4000/users/get-orders",
-          { userID: userID.toString() } // Send userID in the request body
+          { params: { userID: userId } } // Gửi userID qua query parameters
         );
 
         console.log("API Response:", response); // Log the entire response

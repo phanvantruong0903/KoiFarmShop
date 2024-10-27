@@ -243,7 +243,9 @@ export const getAllConsignFromUserController = async (req, res) => {
 
 export const getOrderController = async (req, res) => {
   try {
-    const userID = req.body.userID.toString().trim()
+    const userID = req.query.userID;
+
+    console.log(userID)
 
     const orders = await databaseService.order.find({ UserID: userID }).toArray()
 
