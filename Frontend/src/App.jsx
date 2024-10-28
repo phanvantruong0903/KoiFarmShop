@@ -49,7 +49,6 @@ import FormFillInformation from "./Components/FormFillInformation";
 import Chart from "./An/Pages/Charts/Charts";
 import PaymentMethod from "./Components/Paymentmethod";
 import ManageInvoices from "./An/Pages/Manager/ManageInvoices";
-import Test from "./An/Ant Design/Components/Test";
 import Profiles from "./An/Ant Design/Pages/Profiles";
 import AnTopBar from "./An/Ant Design/Components/ANTDTopbar";
 import Locakoinhapkhau from "./Components/LoCaKoiNhapKhau";
@@ -204,44 +203,28 @@ const router = createBrowserRouter([
   {
     path: "/paymentmethod",
     element: <PaymentMethod />,
-  }, {
-    path: 'Test',
-    element: (
-      <Suspense fallback={<Spinner />}>
-        <Test />
-      </Suspense>
-    )
-
   },
   {
-    path: '/NewDashboard',
+    path: "/NewDashboard",
     element: <AnTopBar />,
-    children: [{
-      path: "staff/Profiles",
-      element: (
-
-        <Profiles />
-
-      ),
-    }, {
-      path: "staff/Consigns",
-      element: (
-        <Consigns />
-      )
-    }, {
-      path: "staff/Invoices",
-      element: (
-        <Invoices />
-      )
-    },{
-      path: "staff/Suppliers",
-      element: (
-        <Suppliers />
-      )
-      
-    }
-    ]
-
+    children: [
+      {
+        path: "staff/Profiles",
+        element: <Profiles />,
+      },
+      {
+        path: "staff/Consigns",
+        element: <Consigns />,
+      },
+      {
+        path: "staff/Invoices",
+        element: <Invoices />,
+      },
+      {
+        path: "staff/Suppliers",
+        element: <Suppliers />,
+      },
+    ],
   },
   {
     path: "/lonhapkhau",
@@ -306,7 +289,7 @@ const router = createBrowserRouter([
             <ManageKoi />
           </Suspense>
         ),
-      }
+      },
     ],
   },
 ]);
