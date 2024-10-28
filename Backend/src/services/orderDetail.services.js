@@ -310,7 +310,7 @@ class OrderDetailService {
                 })
                 .toArray();
         }
-        const filteredKois = koisList.filter(koi => koi.Status !== 0);
+        const filteredKois = koisList.filter(koi => koi.Status != 0);
         console.log('list: ', filteredKois)
         quantity = filteredKois?.length
         console.log('quantity: ', quantity)
@@ -368,11 +368,13 @@ class OrderDetailService {
             ]
         }
         const breedPricing = koiPrices[payload.Breed]
+        console.log("bre: ", breedPricing)
         const priceCheck = breedPricing?.find((range) => payload.Size >= range.min && payload.Size < range.max)
+        console.log("price check: ", priceCheck)
         if (filteredKois.length > 0 && priceCheck)
             return {
                 CategoryName: {
-                    Price: priceCheck.price,
+                    priceCheck,
                     Quantity: quantity,
                     Description: priceCheck.description
                 }
