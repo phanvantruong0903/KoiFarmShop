@@ -1,6 +1,7 @@
 import CryptoJS from 'crypto-js'
 import databaseService from './database.service.js'
 import { ObjectId } from 'mongodb'
+import orderDetailService from './orderDetail.services.js'
 
 export const callback = async (req, res) => {
   let result = {}
@@ -29,15 +30,26 @@ export const callback = async (req, res) => {
       console.log('Order details from embed_data:', reqOrderDetails)
       console.log('Order from embed_data:', reqOrder)
 
-      const koiIDs = reqOrderDetails.Items.map((item) => item.KoiID)
-
-      for (const koiID of koiIDs) {
+      const koiIDsList = await Promise.all(
+        reqOrderDetails.Items.map(async (item) => {
+          const samePropertiesKoiList = (await orderDetailService.getSamePropertiesKoi(item.KoiID)).filter(koi=> koi.Status != 0);
+          const koiList = samePropertiesKoiList.slice(0, item.Quantity).map(koi => koi._id); 
+          return koiList;
+        })
+      );
+    
+      const flattenedKoiIDs = koiIDsList.flat();
+      
+      console.log('Flattened koiIDs:', flattenedKoiIDs);
+      
+      for (const koiID of flattenedKoiIDs) {
         await databaseService.kois.findOneAndUpdate(
-          { _id: new ObjectId(koiID) },
+          { _id: koiID },
           { $set: { Status: 0 } }, 
           { new: true } 
-        )
+        );
       }
+      
 
       if (!reqOrderDetails) {
         result.returncode = -1
