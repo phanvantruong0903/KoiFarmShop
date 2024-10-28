@@ -60,28 +60,51 @@ class AdminsService {
 
   async updateStatusKoi(KoiIDInput) {
     try {
-      // check koi là nhập khẩu hay được ký gửi
       const checkKoi = await databaseService.consigns.find({ KoiID: KoiIDInput }).toArray()
-      if (checkKoi) {
-        await databaseService.kois.findOneAndUpdate(
-          { _id: new ObjectId(KoiIDInput) },
-          { $bit: { Status: { xor: 4 } } },
-          { new: true }
-        )
-      } else {
-        // nếu koi không phải là ký gửi vì không tồn tại trong collection consigns
-        // check xem nó có phải là nhập khẩu hay không vì origin là f1 hoặc việt thì không disable
-        checkKoi = await databaseService.kois.findOne({ _id: new ObjectId(KoiIDInput), Status: 1 })
-        if (checkKoi) {
+
+      if (checkKoi.length > 0) {
+        // Kiểm tra nếu có kết quả
+        // Nếu có trong consigns, thực hiện XOR với 4
+        if (koi.Status === 4) {
           await databaseService.kois.findOneAndUpdate(
             { _id: new ObjectId(KoiIDInput) },
-            { $bit: { Status: { xor: 1 } } },
+            { $set: { Status: 0 } },
             { new: true }
           )
-        } else if (!checkKoi) {
-          return { success: false, message: 'Koi not found' }
         } else {
-          return { success: true, message: 'Koi có nguồn gốc F1 hoặc thuần việt không thể update' }
+          await databaseService.kois.findOneAndUpdate(
+            { _id: new ObjectId(KoiIDInput) },
+            { $set: { Status: 4 } },
+            { new: true }
+          )
+        }
+      } else {
+        const koi = await databaseService.kois.findOne({ _id: new ObjectId(KoiIDInput) })
+
+        if (!koi) {
+          return { success: false, message: 'Koi not found' }
+        }
+
+        if (koi.Status === 2 || koi.Status === 3) {
+          return { success: false, message: 'Koi có nguồn gốc F1 hoặc thuần việt không thể update' }
+        }
+
+        if (koi.Status === 1) {
+          await databaseService.kois.findOneAndUpdate(
+            { _id: new ObjectId(KoiIDInput) },
+            { $set: { Status: 0 } },
+            { new: true }
+          )
+          return { success: true, message: 'Update successfully' }
+        } else if (koi.Status === 0) {
+          await databaseService.kois.findOneAndUpdate(
+            { _id: new ObjectId(KoiIDInput) },
+            { $set: { Status: 1 } },
+            { new: true }
+          )
+          return { success: true, message: 'Update successfully' }
+        } else {
+          return { success: true, message: 'Error' }
         }
       }
 

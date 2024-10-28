@@ -864,61 +864,189 @@ export default function CaKoiNhat() {
                   cũng biết cá koi có bao nhiêu loại và phân biệt được các loại
                   cá koi cảnh này. Cùng tìm hiểu các dòng cá được ưa chuộng và
                   phổ biến tại Việt Nam
+                  <div>
+                    <span id="21">2.1. Tìm hiểu về Cá koi Kohaku</span>
+                    <span style={{ fontWeight: "bold", color: "blue" }}>
+                      Cá Koi Kohaku
+                    </span>{" "}
+                    là dòng cá koi được ưa thích và phổ biến nhất trên thị
+                    trường. Với đặc điểm trên thân sẽ có màu đỏ và màu trắng là
+                    dòng cá đặc trưng có khả năng sinh sản rất tốt, và cũng là
+                    một trong những dòng cá có tuổi thọ cao. Chính vì vậy mà nó
+                    còn được gọi là “Cá Trường Thọ”.
+                    <div style={{ textAlign: "center" }}>
+                      <img src="src/assets/CaKoiNhat/4-1.jpg" />
+                      <Paragraph>Cá koi Kohaku</Paragraph>
+                    </div>
+                  </div>
+                  <div>
+                    <span id="22">2.2. Tìm hiểu về cá koi Chagoi</span>
+                    <span style={{ fontWeight: "bold", color: "blue" }}>
+                      Cá koi chagoi
+                    </span>{" "}
+                    được mệnh danh là loài cá koi dẫn đàn, loài cá này có sức
+                    sống rất mạnh, có khả năng bơi nhanh, đuôi vẫy mạnh, thân
+                    thiện và giản dị nên là loài cá được nuôi phổ biến. Loại cá
+                    koi chagoi này có đặc điểm là màu sắc đặc, không có màu.
+                    Giống cá này khá phàm ăn, do đó chúng lớn nhanh chóng và dễ
+                    dàng đạt được kích thước lớn sau một thời gian ngắn nuôi.
+                    <div style={{ textAlign: "center" }}>
+                      <img src="src/assets/CaKoiNhat/4-2.jpg" />
+                      <Paragraph>
+                        Cá Koi Chagoi là một dòng cá được nuôi phổ biến
+                      </Paragraph>
+                    </div>
+                    Vây ngực, vây lưng và đuôi của cá koi chagoi khá dày và
+                    cứng, râu dài và cứng. Cá koi chagoi được chia làm 3 loại
+                    theo màu sắc: chagoi nâu, chagoi xanh nhạt, chagoi xanh xám.
+                  </div>
+                  <div>
+                    <span id="23">2.3. Tìm hiểu về cá koi Taisho Sanke</span>
+                    Sanke là một trong ba giống koi thuần chủng phổ biến nhất –
+                    Gosanke. Gosanke bao gồm 3 dòng là Kohaku koi, Showa và
+                    Sanke. Do đó, đặc điểm của cá là cơ thể vẫn giữ màu đỏ,
+                    trắng giống Kohaku, và xen lẫn với màu đen. Vẻ đẹp và giá
+                    trị của cá koi Taisho Sanke được đánh giá bằng các mảng màu
+                    trắng trên thân. Được mệnh danh là “tam hùng” trong các loại
+                    cá, giống cá koi Taisho Sanke được ưa chuộng ở khắp nơi trên
+                    thế giới, mảng trắng càng nhiều, cá càng sạch, càng đẹp và
+                    giá trị sẽ tăng
+                  </div>
+                  <div>
+                    <span id="24">
+                      2.4. Tìm hiểu về cá koi showa sanshoku (showa)
+                    </span>
+                    Đặc điểm của Cá koi Showa trên thân sẽ có màu đỏ - trắng -
+                    đen giống dòng Taisho Sanke, tuy nhiên lại sở hữu sắc đen,
+                    thường gọi là sumi hoàn toàn khác biệt. cá koi showa
+                    sanshoku có phần sumi nhiều hơn, xuất hiện ở đầu xuống tới
+                    miệng còn Taisho Sanke thì hoàn toàn không có.
+                    <div style={{ textAlign: "center" }}>
+                      <img src="src/assets/CaKoiNhat/5.webp" />
+                      <Paragraph>Phân biệt cá koi Showa và Sanke</Paragraph>
+                    </div>
+                    Cá koi showa sanshoku còn được gọi là "cá chép may mắn". Cá
+                    sẽ có một nắp đen lớn trên đầu, khi đó 3 màu đỏ, đen, trắng
+                    sẽ được phân bổ đồng đều, sẽ có nhiều màu đen hơn giống cá
+                    koi sanke. Người ta tin rằng màu đen sẽ giết chết tà ma, xua
+                    đuổi vận đen và mang lại may mắn. Vì vậy, nhiều thương lái,
+                    chủ cửa hàng đã chọn loại cá này để nuôi. Chính vì vậy mà
+                    chú cá koi Showa được mọi người đặc biệt ưa chuộng.
+                    <br />
+                    Showa được chia thành nhiều dòng khác nhau, phổ biến nhất
+                    là: Hi Showa, Tancho Showa, Maruten Showa, Ginrin Showa,
+                    Kindai Showa
+                  </div>
+                  <div>
+                    <span id="25">2.5. Tìm hiểu về cá koi Goromo </span>
+                    Cá koi Nhật Bản Goromo chính là sự lai tạo phát triển lên từ
+                    hai loại cá Koi nhật là Kohaku và Asagi. Cá koi Goromo có
+                    thân hình nổi bật là các đường nét hoa văn nổi trên màu
+                    trắng hoặc màu sắc trắng sữa, xen lẫn vào là màu đỏ hết sức
+                    đặc biệt
+                    <div style={{ textAlign: "center" }}>
+                      <img src="src/assets/CaKoiNhat/6.jpg" />
+                      <Paragraph>Cá koi Goromo</Paragraph>
+                    </div>
+                  </div>
+                  <div>
+                    <span id="26">2.6. Tìm hiểu về cá koi Hikari Utsuri</span>
+                    Là loại cá Koi được lai tạo từ cá koi utsuri. Cá koi Hikari
+                    Utsuri thuộc dòng cá kim loại có màu sắc cơ bản bao gồm là
+                    đen - vàng, đen - trắng, đen - cam…
+                    <div style={{ textAlign: "center" }}>
+                      <img src="Frontend/src/assets/CaKoiNhat/7.jpg" />
+                      <Paragraph>Cá koi Hikari Utsuri</Paragraph>
+                    </div>
+                  </div>
+                  <span id="27">2.7. Tìm hiểu cá koi Bekko</span>
+                  Cá koi bekko có hình dạng tương đối giống Utsuri, trên thân
+                  chỉ có 2 màu sắc là: Shiro Bekko (trắng – đen), Aka Bekko (đỏ
+                  – đen) hoặc Ki Bekko (vàng – đen).
+                  <br />
+                  Đặc điểm của cá koi bekko là mắt to, mình rong và vảy đục
+                  không có ánh kim, phần vai và bụng thường mập và có xu hướng
+                  bầu và tròn hơn các loại Koi khác.
+                  <span id="28">2.8. Tìm hiểu về cá koi Asagi</span>
+                  Cá koi asagi có thể nói là một trong những dòng koi đầu tiên
+                  xuất hiện tại Nhật. Trải qua một khoảng thời gian dài khoảng
+                  160 năm, Asagi với hai dòng Narumi Asagi và Kongo Asagi đã cho
+                  ra những hậu duệ của giống Asagi Magoi (Narumi là tên của ngôi
+                  làng sản sinh ra toàn bộ giống Asagi)..
+                  <div style={{ textAlign: "center" }}>
+                    <img src="Frontend/src/assets/CaKoiNhat/8.jpg" />
+                    <Paragraph>Cá koi Asagi</Paragraph>
+                  </div>
+                  <span id="29">2.9. Tìm hiều về cá koi Goshiki </span>
+                  Về cá koi Goshiki trong tiếng nhật có nghĩa là “ngũ sắc”, cũng
+                  được mệnh danh là những “kẻ đánh cắp ánh đèn sân khấu. Từ đó
+                  ta có thể thấy được màu sắc đặc biệt của cá Koi đẹp này. Nếu
+                  thả loại cá koi này vào nước lạnh thì màu của nó có khả năng
+                  sẽ tối hơn so với bình thường
+                  <div style={{ textAlign: "center" }}>
+                    <img src="Frontend/src/assets/CaKoiNhat/9.jpg" />
+                    <Paragraph>
+                      Cá koi Goshiki - kẻ đánh cắp ánh đèn sân khấu
+                    </Paragraph>
+                  </div>
+                  <span id="210">2.10. Tìm hiểu Cá koi Karashi</span>
+                  <span style={{ fontWeight: "bold", color: "blue" }}>
+                    Karashi Koi
+                  </span>{" "}
+                  là dòng cá được gây giống từ 2 giống cá cha mẹ là Kigoi và
+                  Chagoi, có màu sắc biến đổi từ màu be, màu vàng nhạt đến màu
+                  vàng đậm. Thời điểm mới được lai tạo những chú cá Koi Karashi
+                  bị nhiều người coi là kỳ lạ. Trải qua nhiều năm, giá trị của
+                  cá koi Karashi dần dần mới được công nhận, và nhanh chóng trở
+                  nên nổi tiếng và được nhiều người yêu thích.
+                  <div style={{ textAlign: "center" }}>
+                    <img src="Frontend/src/assets/CaKoiNhat/10.jpg" />
+                    <Paragraph>
+                      Đây là loại cá lớn nhanh, dễ đạt kích cỡ lớn sau 2-3 năm
+                      nuôi thích hợp, cá có khả năng thích nghi cao với môi
+                      trường và dạn người.
+                    </Paragraph>
+                  </div>
+                  <span id="211">
+                    2.11. Tìm hiểu về cá koi Benigoi (mud pond)
+                  </span>
+                  <span style={{ fontWeight: "bold", color: "blue" }}>
+                    Cá koi Benigoi
+                  </span>{" "}
+                  thuộc dòng cá koi đơn sắc với tông màu đỏ nổi bật. Toàn bộ
+                  vảy, vây và từ chóp mũi đến đuôi đều là màu đỏ, hoàn toàn
+                  không có vạch hay mảng màu trắng nào. Vì vậy, trông loại cá
+                  này giống như một quả ớt khổng lồ.
+                  <br />
+                  Khá nhiều người nhầm lẫn cá chép koi Benigoi và Higoi với nhau
+                  bởi đều cùng màu đỏ. Tuy nhiên, nếu để ý kỹ thì dễ dàng nhận
+                  thấy, koi Higoi có tông màu đỏ hơi cam, còn koi Benigoi thì
+                  toàn thân đỏ sậm. Đặc biệt, với dòng koi Ginrin (kích thước
+                  nhỏ) thì chỗ vảy sẽ phát quang lấp lánh, óng ánh. Đây là loại
+                  cá có khá dễ sống, có khả năng thích nghi cao với môi trường
+                  <div style={{ textAlign: "center" }}>
+                    <img src="Frontend/src/assets/CaKoiNhat/11.jpg" />
+                    <Paragraph>
+                      Koi Benigoi toàn thân màu đỏ như một quả ớt khổng lồ, phần
+                      vây có thể phản quang nếu thuộc biến thể Ginrin
+                    </Paragraph>
+                  </div>
+                  <span id="212">2.12. Cá Koi Hikarimuji mono</span>
+                  <span style={{ fontWeight: "bold", color: "blue" }}>
+                    Cá koi Benigoi
+                  </span>{" "}
+                  Hikarimuji mono được yêu thích do đặc điểm có ánh kim loại ở
+                  mặt sau và chỉ có 1 màu sắc duy nhất trên thân mình. Các dòng
+                  koi Hikarimuji mono phổ biến: platinum ogon (màu trắng bạc),
+                  hi ogon (màu đỏ), nezu ogon (màu đen), yamabuki ogon (màu
+                  vàng), orenji ogon (màu cam) và mukashi ogon (màu xám
+                  bạc).Hikarimuji mono được yêu thích do đặc điểm có ánh kim
+                  loại ở mặt sau và chỉ có 1 màu sắc duy nhất trên thân mình.
+                  Các dòng koi Hikarimuji mono phổ biến: platinum ogon (màu
+                  trắng bạc), hi ogon (màu đỏ), nezu ogon (màu đen), yamabuki
+                  ogon (màu vàng), orenji ogon (màu cam) và mukashi ogon (màu
+                  xám bạc).
                 </Paragraph>
-                <ul className="text-Style">
-                  <li>
-                    <span className="span-Style">Akamuji: </span>{" "}
-                    <Text className="text-Style ">
-                      là một loài cá đỏ thông thường và thường xuất hiện trong
-                      quá trình sinh sản của loài Kohaku. Trước đây, ở Nhật Bản,
-                      các con cá Akamuji thường bị đánh bại để làm cá bột. Tuy
-                      nhiên, từ năm 1990, chúng trở nên phổ biến và thường được
-                      trưng bày trong thể loại Kawarimono như Benigoi hoặc Hiaka
-                      tại triển lãm. Một con cá Akamuji có các mảng trắng trên
-                      đầu vây được gọi là Aka Hajiro.
-                    </Text>
-                  </li>
-                  <li>
-                    <span className="span-Style">Shiromuji:</span>{" "}
-                    <Text className="text-Style ">
-                      Shiromuji đối lập với Akamuji khi có thân hình trắng toàn
-                      phần và xuất hiện trong quá trình sinh sản của loài
-                      Kohaku. Ở Nhật Bản, các con cá Shiromuji không được coi là
-                      có giá trị. Thay vào đó, loài cá koi tương tự có vảy kim
-                      loại - bạch kim koi lại được ưa chuộng.
-                    </Text>
-                  </li>
-                  <li>
-                    <span className="span-Style">Komoyō:</span>{" "}
-                    <Text className="text-Style ">
-                      Với loài cá Komoyō, kích thước của các dấu đỏ rất nhỏ, chỉ
-                      chiếm ít hơn ¼ chiều dài của chúng. Chúng không được đánh
-                      giá cao.
-                    </Text>
-                  </li>
-                  <li>
-                    <span className="span-Style">Ōmoyō:</span>{" "}
-                    <Text className="text-Style ">
-                      Ngược lại với Komoyō, loài cá Ōmoyō có các dấu đỏ lớn, ít
-                      nhất là một phần tư chiều dài của cá. Điều này được đánh
-                      giá cao và theo lứa tuổi của cá, các dấu hiệu sẽ tách biệt
-                      để tạo ra những mô hình thú vị.
-                    </Text>
-                  </li>
-                  <li>
-                    <span className="span-Style">Dangara:</span>{" "}
-                    <Text className="text-Style">
-                      là một mô hình dấu hiệu tách biệt giống như bước đá trong
-                      một hồ bơi. Đây là những giá trị rất lớn trong cạnh tranh.
-                      Một sọc đơn từ đầu đến đuôi không có giá trị ở Nhật Bản,
-                      nhưng nếu nó tạo thành một mô hình zig-zag thì được gọi là
-                      inazuma. Tên này bắt nguồn từ triển lãm All Nippon Show
-                      năm 1970, khi người chiến thắng đã tạo ra một hình mẫu
-                      inazuma nổi bật. Dangara cũng có thể có hai đốm đỏ, được
-                      gọi là Hai bước.
-                    </Text>
-                  </li>
-                </ul>
               </div>
               <div id="3">
                 <h3 style={{ color: "red" }}>
