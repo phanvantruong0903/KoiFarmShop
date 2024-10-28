@@ -5,6 +5,7 @@ import axios from "axios";
 import "../Css/koiStyle.css";
 import { Layout, Typography } from "antd";
 const { Text, Paragraph } = Typography;
+import { Spin } from "antd"; // Import the Spin component
 export default function Ogon() {
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -239,7 +240,20 @@ export default function Ogon() {
       setFilteredCards(filtered);
     }
   }, [idOgon, cardData]);
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Spin size="large" /> {/* You can adjust the size if needed */}
+      </div>
+    );
+  }
   if (error) return <div>Error: {error.message}</div>;
   return (
     <>

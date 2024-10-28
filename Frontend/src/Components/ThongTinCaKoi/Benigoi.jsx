@@ -8,6 +8,7 @@ import { Layout } from "antd";
 import { Typography } from "antd";
 import "../Css/koiStyle.css";
 const { Title, Text, Paragraph } = Typography;
+import { Spin } from "antd"; // Import the Spin component
 export default function Benigoi() {
   const [menu, setMenu] = useState("home");
   const [cardData, setCardData] = useState([]);
@@ -228,7 +229,20 @@ export default function Benigoi() {
       setFilteredCards(filtered);
     }
   }, [idBenigoi, cardData]);
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Spin size="large" /> {/* You can adjust the size if needed */}
+      </div>
+    );
+  }
   if (error) return <div>Error: {error.message}</div>;
   return (
     <>
@@ -256,41 +270,55 @@ export default function Benigoi() {
                     <ul>
                       <li>
                         <span onClick={handleScroll31} className="contentBox">
-                          3.1 Hình dáng
+                          3.1 Chọn Benigoi Koi qua hình dáng
                         </span>
                       </li>
                       <li>
                         {" "}
                         <span onClick={handleScroll32} className="contentBox">
-                          3.2 Màu sắc
+                          3.2 Chọn Cá Koi Benigoi qua màu sắc
                         </span>
                       </li>
                       <li>
                         {" "}
                         <span onClick={handleScroll33} className="contentBox">
-                          3.3 Tiêu chí để chọn koi Goshiki nhỏ
+                          3.3 Chọn Benigoi Koi qua hoa văn
+                        </span>
+                      </li>
+                      <li>
+                        {" "}
+                        <span onClick={handleScroll33} className="contentBox">
+                          3.4 Chọn Cá Koi Benigoi qua dáng bơi
                         </span>
                       </li>
                     </ul>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
                     <span onClick={handleScroll4} className="contentBox">
-                      4. Cách chăm sóc Cá Koi Goshiki
+                      4. Cách chăm sóc Benigoi Koi
                     </span>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
                     <span onClick={handleScroll5} className="contentBox">
-                      5. Ý nghĩa đối với phong thủy
+                      5. Giá cá koi Benigoi bao nhiêu?
                     </span>
+                    <ul>
+                      <li>
+                        <span onClick={handleScroll31} className="contentBox">
+                          5.1 Giá cá koi Benigoi F1
+                        </span>
+                      </li>
+                      <li>
+                        {" "}
+                        <span onClick={handleScroll32} className="contentBox">
+                          5.2 Giá cá koi Benigoi Nhật chuẩn
+                        </span>
+                      </li>
+                    </ul>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
                     <span onClick={handleScroll6} className="contentBox">
-                      6. Giá cá koi Goshiki bao nhiêu?
-                    </span>
-                  </li>
-                  <li style={{ paddingTop: "10px" }}>
-                    <span onClick={handleScroll7} className="contentBox">
-                      7. Tại sao nên mua Goshiki Koi tại IKoi?
+                      6. Tại sao nên mua cá Koi Benigoi tại Siêu thị Cá Koi VN?
                     </span>
                   </li>
                 </ul>
@@ -299,243 +327,259 @@ export default function Benigoi() {
               <div>
                 <h2 className="noidungchitiet">Nội dung chi tiết</h2>
                 <Paragraph className="paragraph-Style">
-                  Xuất xứ từ Nhật với vẻ đẹp thuần khiết và những ưu điểm nổi
-                  trội, Cá Koi Goshiki đảm bảo sẽ đem đến cho các bạn những trải
-                  nghiệm thú vị với những màu sắc tươi đẹp kết hợp lại tạo sức
-                  hút đối với người xem. Hơn nữa, Goshiki Koi còn là giống cá
-                  mang lại rất nhiều may mắn cho gia chủ, sẽ là một trải nghiệm
-                  thú vị khi sở hữu chúng.
+                  Cá Koi Benigoi là dòng cá phổ biến rất được ưa chuộng trong
+                  những năm gần đây bởi chúng sở hữu nhiều đặc điểm nổi bật. Đối
+                  với những người chuyên chơi cá Koi chắc hẳn không còn xa lạ gì
+                  đối với loại cá này. Bạn đã biết gì về loại cá này chưa? Hãy
+                  cùng Siêu thị Cá Koi VN tìm hiểu rõ hơn về loại cá này ngay
+                  trong bài viết dưới đây.
                 </Paragraph>
               </div>
               <div id="1">
-                <h3 style={{ color: "red" }}>
-                  1. Giới thiệu về cá koi Goshiki{" "}
-                </h3>
+                <h3 style={{ color: "red" }}>1. Giới thiệu cá Koi Benigoi</h3>
                 <div>
                   <Paragraph className="paragraph-Style">
-                    Trong tiếng Nhật, Goshiki có nghĩa là ngũ sắc. Khi kết hợp
-                    một con cá koi Asagi và một con cá koi Kohaku, ta sẽ tạo ra
-                    dòng cá koi Goshiki. Điều này khiến cho những nhà tạo giống
-                    cảm thấy ấn tượng vì sự phong phú màu sắc của loại cá này.
-                    <br />
-                    Những con cá koi Goshiki được phát triển bằng cách giảm
-                    thiểu đến mức tối đa màu Ai trên các bệt màu Hi. Khi làm như
-                    vậy, ta sẽ tạo ra một loại cá koi có màu Ai trải dài từ đầu
-                    đến đuôi, nhưng chỉ nằm phía trên vùng Shiroji. Nếu ta bỏ đi
-                    Ai trên vùng Shiroji, ta sẽ có một con cá koi Kohaku. Điều
-                    này cho thấy rằng một con cá koi Kohaku có thể có sự xuất
-                    hiện của Asagi.
+                    Cũng giống như dòng Chagoi Koi, Cá Koi Benigoi là dòng cá có
+                    màu đơn sắc, toàn bộ vảy và vây cá đều có màu đỏ trông như
+                    quả ớt khổng lồ. Nếu thả Benigoi Koi trong hồ Koi thì loài
+                    cá này có phần nổi bật hơn so với các loại cá khác. Đối với
+                    dòng cá nhỏ hơn là Girin Benigoi thì vảy cá có màu óng ánh,
+                    đẹp mắt, lộng lẫy và lôi cuốn mọi ánh mắt từ cái nhìn đầu
+                    tiên. Do đó, cùng mang một màu đỏ nhưng nhiều người thường
+                    nhầm lẫn giữa Benigoi Koi và Higoi.
                   </Paragraph>
                 </div>
-                <div>
-                  <Text className="text-Style">
-                    Hiện có ba dòng cá koi Goshiki khác nhau.
-                  </Text>
-                  <ul style={{ paddingTop: "10px" }}>
-                    <li>
-                      <Paragraph className="paragraph-Style">
-                        Dòng đầu tiên mang nhiều đặc điểm của Asagi, với dấu Ai
-                        xuất hiện trên toàn thân và cả trên Hi và Shiroji. Vùng
-                        Hi trên thân của chúng cũng phải đậm để các vảy có Ai
-                        phân bố đều trên toàn thân.
-                      </Paragraph>
-                    </li>
-                    <li>
-                      <Paragraph className="paragraph-Style">
-                        Dòng cá koi Goshiki thứ hai, đã được lựa chọn kỹ càng,
-                        chỉ có Ai trên vùng Shiroji. Thường thì, chúng có dòng
-                        máu của Kohaku, và thiết kế Hi của chúng rất đậm.
-                      </Paragraph>
-                    </li>
-                    <li>
-                      <Paragraph className="paragraph-Style">
-                        Dòng cá koi Goshiki thứ ba có thêm dòng máu của Haijiro,
-                        cùng huyết hệ với Goshiki. Điều này khiến cho vây ngực
-                        của chúng có Motoguro, một đặc tính đến từ Haijiro. Loại
-                        cá này được tạo ra thông qua lai tạo với Haijiro, chứ
-                        không phải là sự lựa chọn từ Goshiki.
-                      </Paragraph>
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <Paragraph className="paragraph-Style">
-                    Ginrin Goshiki được tạo ra thông qua việc phối giống giữa
-                    một con Ginrin Kohaku và một con Goishiki. Chogoroun là một
-                    nhà nhân giống nổi tiếng nhưng chỉ sản xuất được ít con lai
-                    đẹp. Loại cá này chỉ thật sự thu hút khi đến 2 tuổi. Goshiki
-                    Sanke được tạo ra thông qua việc phối giống giữa một con
-                    Asagi và một con Sanke.
-                  </Paragraph>
-                </div>
-                <div style={{ textAlign: "center" }}>
-                  <img
-                    src="src/assets/Koi-Goshiki/ca-koi-goshiki-3 (1).webp"
-                    style={{ width: "50%" }}
-                  />
-                  <div style={{ textAlign: "center" }}>
-                    <Text className="text-Style">
-                      Cá Koi Goshiki vô cùng nổi bật
-                    </Text>
-                  </div>
-                </div>
+                <ul>
+                  <li>
+                    <Paragraph className="paragraph-Style">
+                      Mức độ chăm sóc: Dễ dàng
+                    </Paragraph>
+                  </li>
+                  <li>
+                    <Paragraph className="paragraph-Style">
+                      Mức độ chăm sóc: Dễ dàng
+                    </Paragraph>
+                  </li>
+                  <li>
+                    <Paragraph className="paragraph-Style">
+                      {" "}
+                      Tính cách: Hòa Bình
+                    </Paragraph>
+                  </li>
+                  <li>
+                    <Paragraph className="paragraph-Style">
+                      Điều kiện nước: 36-90◦F, KH 2-12, pH 6,8-7,2
+                    </Paragraph>
+                  </li>
+                  <li>
+                    <Paragraph className="paragraph-Style">
+                      Kích thước tối đa: 90 cm
+                    </Paragraph>
+                  </li>
+                  <li>
+                    <Paragraph className="paragraph-Style">
+                      Màu sắc: Đỏ
+                    </Paragraph>
+                  </li>
+                  <li>
+                    <Paragraph className="paragraph-Style">
+                      Chế độ ăn: Ăn tạp
+                    </Paragraph>
+                  </li>
+                </ul>
               </div>
 
               <div id="2">
-                <h3 style={{ color: "red" }}>2. Cách nhận biết Goshiki Koi</h3>
-                <div>
-                  <Paragraph className="paragraph-Style">
-                    Để trở thành một con cá koi Goshiki đẹp, nó cần phải có nét
-                    đẹp của dòng máu Kohaku với những vết Ai chỉ nên xuất hiện
-                    trên vùng Shiroji. Nếu một con cá có nhiều dòng máu Asagi,
-                    thì những vệt Ai sẽ xuất hiện trên toàn bộ các vảy của thân
-                    cá. Goshiki không được có ánh kim và không nên bị lẫn lộn
-                    với một con Kujaku hoặc một con koi Goromo, hai loại cá chỉ
-                    có vệt màu khác duy nhất trên vùng Hi.
-                  </Paragraph>
-                  <ul>
-                    <li>
-                      <Paragraph className="paragraph-Style">
-                        Điểm đầu tiên để nhận biết một con Goshiki đẹp là khuôn
-                        màu của nó giống như Kohaku, với những bệt màu Hi lớn
-                        trên vùng Shiroji.
-                      </Paragraph>
-                    </li>
-                    <li>
-                      <Paragraph className="paragraph-Style">
-                        Điểm thứ hai là tối thiểu những vảy của vùng Shiroji
-                        phải có bong mờ trên gờ vẩy.
-                      </Paragraph>
-                    </li>
-                    <li>
-                      <Paragraph className="paragraph-Style">
-                        Điểm thứ ba là màu sắc của những bệt màu là Hi, nhưng
-                        đôi khi cũng có bệt màu Ai nằm lên trên.
-                      </Paragraph>
-                    </li>
-                  </ul>
-                </div>
+                <h3 style={{ color: "red" }}>
+                  2. Cách nhận biết cá Koi Benigoi
+                </h3>
+
                 <div style={{ textAlign: "center" }}>
-                  <img src="src/assets/Koi-Goshiki/ca-koi-goshiki-2.webp" />
+                  <img src="src/assets/Koi Benigoi/BENIGOI1.jpg" />
                   <div style={{ textAlign: "center" }}>
-                    <Text className="text-Style">Dòng cá Koi Kuro Goshiki</Text>
+                    <Text className="text-Style">Dòng cá Koi Benigoi</Text>
                   </div>
                 </div>
               </div>
               <div id="3">
-                <h3 style={{ color: "red" }}>3. Cách chọn mua cá Koi Ginrin</h3>
+                <h3 style={{ color: "red" }}>3. Cách chọn cá Koi Benigoi</h3>
                 <div>
                   <Paragraph className="paragraph-Style">
-                    Những người đã có kinh nghiệm với việc nuôi và chơi Koi sẽ
-                    hiểu được rằng, để đánh giá được phẩm chất tương lai của một
-                    con cá Koi Goshiki, ta cần phải quan sát kỹ càng và chăm sóc
-                    nó thật tốt.
+                    Để lựa chọn được Benigoi Koi đẹp, bạn cần phải xét dựa trên
+                    hai phương diện là màu sắc và hình sáng của cá cụ thể:
                   </Paragraph>
                   <ul style={{ fontSize: "15px", fontWeight: "400" }}>
                     <li>
                       <span id="31" className="text-Style">
-                        3.1 Hình dáng
+                        3.1 Chọn Benigoi Koi qua hình dáng
                       </span>
                       <Paragraph className="paragraph-Style">
-                        Về hình dáng, Koi Goshiki cần có thân hình như một chiếc
-                        tàu ngầm, với bụng không quá phệ, phình hay ngắt quãng
-                        quá sâu như dáng cá nóc. Điểm đầu và điểm kết thúc của
-                        thân cá phải được bơi thẳng và uyển chuyển. Phần đuôi
-                        cần đầy đặn, cong tròn và mịn màng khi sờ vào. Đuôi ngắn
-                        hoặc không căng sẽ cho thấy con cá không đủ phẩm chất để
-                        phát triển độ dài và độ khủng. Da của Koi Goshiki phải
-                        sáng, sạch, nhắn, min và trơn bóng. Chọn Koi da nhờ nhợ,
-                        mờ nhạt, tróc vẩy hoặc trầy xước là điều tuyệt đối không
-                        nên làm.
+                        Khi chọn Benigoi Koi qua hình dáng, bạn cần lưu ý các
+                        điều sau:
                       </Paragraph>
+                      <ul>
+                        <li>
+                          <Paragraph className="paragraph-Style">
+                            Khi chọn cá Koi Benigoi, bạn nên chọn cá có thân
+                            hình như một chiếc tàu ngầm, bụng cá không phệ,
+                            không ngắt quãng như dáng cá nóc. Nếu chọn con cá
+                            mập quá thì thân cá thường bị ngắn, còn chọn cá dài
+                            quá thì dáng cá phát triển sẽ như hình con lươn, sau
+                            này khó phát triển về độ lớn.
+                          </Paragraph>
+                        </li>
+                        <li>
+                          <Paragraph className="paragraph-Style">
+                            Bạn cần quan sát thật kỹ dáng bơi của cá bơi điểm
+                            bắt đầu và điểm kết thúc, lúc cá bơi cao và lúc cá
+                            bơi thấp có hình dáng như thế nào. Bạn hãy quan sát
+                            thật kỹ để phát hiện cá có khỏe mạnh hay không. Nếu
+                            dáng cá bơi không thẳng thì bạn không nên chọn.
+                            Benigoi Koi đẹp chuẩn là cá phải có dáng hơi thẳng
+                            và uyển chuyển.
+                          </Paragraph>
+                        </li>
+                        <li>
+                          <Paragraph className="paragraph-Style">
+                            Chọn cá có phần đuôi cong tròn và sờ vào phải mịn.
+                            Trường hợp đuôi cá không cong tròn mà có hình trái
+                            tim cũng được. Nếu đuôi cá ngắn, không căng thì khả
+                            năng trong tương lai, cá sẽ khó phát triển và đến độ
+                            dài và sức mạnh cần thiết.
+                          </Paragraph>
+                        </li>
+                        <li>
+                          <Paragraph className="paragraph-Style">
+                            Nên chọn cá Koi Benigoi có lớp da phải sáng, sạch,
+                            nhẵn mịn và trơn bóng. Bởi lớp da cá đẹp, tốt sẽ tác
+                            động đến vẻ đẹp của vảy cá, làm cho vảy cá đều đặn
+                            hơn. Tránh trường hợp bạn chọn những con cá có màu
+                            sắc mờ nhạt, da tróc vảy, trầy xước.
+                          </Paragraph>
+                        </li>
+                        <li>
+                          <Paragraph className="paragraph-Style">
+                            Bạn cũng không nên chọn những con cá có dáng bơi lắc
+                            lư, lay động, cá bị hở trâu, râu cá không đều, miệng
+                            cá méo và phần cuối thân cá bị cong.
+                          </Paragraph>
+                        </li>
+                      </ul>
                     </li>
                     <li>
                       <span id="32" className="text-Style">
-                        3.2 Màu sắc
+                        3.2 Chọn Cá Koi Benigoi qua màu sắc
                       </span>
                       <Paragraph className="paragraph-Style">
-                        Về màu sắc, Koi Goshiki cần có khuôn màu đẹp của Kohaku,
-                        với khoang màu đậm và rõ nét. Đường biên của các khoang
-                        màu cần được xác định rõ ràng, không bị lem nhem. Vệt Ai
-                        chỉ nên xuất hiện ở vùng Shiroji và không nên xuất hiện
-                        ở vùng Hi.
+                        Khi chọn Benigoi Koi thông qua màu sắc, bạn cần lưu ý:
                       </Paragraph>
+                      <ul>
+                        <li>
+                          <Paragraph className="paragraph-Style">
+                            Toàn thân cá phải có màu đỏ, không được có các đốm
+                            trắng trên ngực
+                          </Paragraph>
+                        </li>
+                        <li>
+                          <Paragraph className="paragraph-Style">
+                            Trường hợp cá Koi có màu đốm trắng ở ngựa thì không
+                            phải là cá Koi Benigoi mà là dòng cá Koi Aka Hajiro.
+                          </Paragraph>
+                        </li>
+                      </ul>
                     </li>
                     <li>
                       <span id="33" className="text-Style">
-                        3.3 Tiêu chí để chọn koi Goshiki nhỏ
+                        3.3 Chọn Benigoi Koi qua hoa văn
                       </span>
                       <Paragraph className="paragraph-Style">
-                        Khi chọn một con Koi Goshiki nhỏ, ta cần chọn con cá
-                        mang dòng máu của Kohaku nhiều hơn và điểm Ai nên được
-                        giới hạn ở trên vùng Shiroji. Nếu Koi Goshiki mang dòng
-                        máu Asagi, các điểm Ai sẽ xuất hiện trên toàn bộ vảy của
-                        thân cá. Koi Goshiki không nên có ánh kim, vì điều này
-                        sẽ dễ khiến ta nhầm lẫn với Koi Kujaku và Koi Goromo.
-                        Vảy của Koi Goshiki nên có màu xám hoặc màu xanh Ai, với
-                        sự thống nhất. Tối thiểu, vảy của vùng Shiroji phải có
-                        bong mờ trên gờ vẩy.
+                        Cách chọn Benigoi Koi thông qua hoa văn trên cá như sau:
+                      </Paragraph>
+                      <ul>
+                        <li>
+                          <Paragraph className="paragraph-Style">
+                            Sự phân bố màu cá tổng thể cân bằng tốt và không tập
+                            trung ở một nơi hoặc một phía nhất định.
+                          </Paragraph>
+                        </li>
+                        <li>
+                          <Paragraph className="paragraph-Style">
+                            Đặc điểm nổi bật của cá Koi Benigoi nằm ở đỉnh đầu
+                          </Paragraph>
+                        </li>
+                        <li>
+                          <Paragraph className="paragraph-Style">
+                            Vị trí của các mảng trên đỉnh đầy phải ở giữa đầu ,
+                            nhỏ hơn mặt trước của miệng, không nhiều hơn nắp sọ
+                            và không có mắt ở hai bên.
+                          </Paragraph>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <span id="34" className="text-Style">
+                        3.4 Chọn Cá Koi Benigoi qua dáng bơi
+                      </span>
+                      <Paragraph className="paragraph-Style">
+                        Để chọn được Benigoi Koi, bạn không thể bỏ qua tiêu chí
+                        về dáng bơi của cá. Dù đã chọn được cá Koi Benigoi đạt
+                        các tiêu chí trên nhưng nếu dáng bơi của cá không uyển
+                        chuyển, duyên dáng, mượt mà thì vẫn chưa phải là cá hoàn
+                        hảo. Nếu cá Koi bơi xoắn trong nước, bơi như rắn hoặc
+                        thường bơi sang một bên thì không đủ tiêu chuẩn là con
+                        cá Koi đẹp.
                         <br />
-                        Koi Goshiki có hai biến thể: Goshiki kiểu cũ với vảy tối
-                        hơn và có thể xuất hiện trên cả điểm vảy của Hi. Khi
-                        nuôi Koi Goshiki kiểu cũ, con cá sẽ có xu hướng tối màu
-                        cuối cùng có thể giống với Koi màu xám đen
+                        Nhìn chung, để chọn được cá Koi Benigoi đẹp thì không có
+                        bất cứ điểm nào khác ngoài màu đỏ, càng lớn, màu của
+                        Benigoi Koi càng đậm.
                       </Paragraph>
                     </li>
                   </ul>
                 </div>
                 <div style={{ textAlign: "center" }}>
                   <img
-                    src="src/assets/Koi-Goshiki/ca-koi-goshiki-1.webp"
+                    src="src/assets/Koi Benigoi/BENIGOI2.jpg"
                     style={{ width: "30%" }}
                   />
                   <div style={{ textAlign: "center" }}>
-                    <Text className="text-Style">Các dòng Cá Koi Goshiki</Text>
+                    <Text className="text-Style">Các dòng Cá Koi Benigoi</Text>
                   </div>
                 </div>
               </div>
               <div id="4">
-                <h3 style={{ color: "red" }}>
-                  4. Cách chăm sóc Cá Koi Goshiki
-                </h3>
+                <h3 style={{ color: "red" }}>4. Cách chăm sóc Benigoi Koi</h3>
                 <div>
                   <Paragraph className="paragraph-Style">
-                    Cá Koi Goshiki là dòng cá đẹp xuất xứ từ Nhật bản mang lại
-                    sự sung túc, may mắn. Được rất nhiều người yêu thích và nuôi
-                    dưỡng trong gia đình, có ý nghĩa về cả phong thủy lẫn thẩm
-                    mỹ. Hãy cùng tìm hiểu về cách chăm sóc cho các koi nói chung
-                    và Goshiki Koi nói riêng để có thể nuôi dưỡng đàn cá của
+                    Cá Koi Benigoi thực sự đẹp, không đơn thuần chỉ là chỉ hữu
+                    một màu sắc, body rắn chắc, khỏe mạnh mà còn bởi nhiều lý do
+                    khác như: tuổi thọ cao, đặc tính thân thiện, hòa đồng. Đặc
+                    biệt, hầu hết những người chơi cá Koi lâu năm đều coi loài
+                    cá này là vật phong thủy kinh nghiệp, mang đến nhiều may
+                    mắn, tài lộc nên chăm sóc rất cẩn thận. Cụ thể, các lưu ý
+                    khi chăm sóc Benigoi Koi như sau: thể nuôi dưỡng đàn cá của
                     mình một cách khỏe mạnh nhé:
                   </Paragraph>
                   <ul style={{ fontSize: "15px", fontWeight: "400" }}>
                     <li>
                       <Paragraph className="paragraph-Style">
-                        Yêu cầu phải chuẩn bị hồ nuôi, nguồn nước phù hợp với
-                        đàn cá. Không dùng nguồn nước bẩn cũng như diện tích hồ
-                        quá nhỏ, quá cạn.
+                        Duy trì độ PH trong hồ từ 7 - 7.5
                       </Paragraph>
                     </li>
                     <li>
                       <Paragraph className="paragraph-Style">
-                        Khi đưa cá về thả cần tắm thuốc tím giúp cá phòng và
-                        chữa bệnh. Sử dụng thuốc tím trong hồ cũng giúp khử vi
-                        khuẩn, diệt tảo giúp cá luôn khỏe mạnh.
+                        Nhiệt độ nước nên ổn định từ 20 - 27 độc C
                       </Paragraph>
                     </li>
                     <li>
                       <Paragraph className="paragraph-Style">
-                        Thường xuyên vệ sinh hồ nuôi, sử dụng các phương pháp
-                        lọc hồ để lọc sạch các chất thải. Dùng rong, tảo lượng
-                        vừa đủ thả vào hồ nuôi sẽ tạo nên môi trường sinh thái
-                        tốt cho cá phát triển
+                        Hàm lượng Oxy trong hồ nuôi tối thiểu từ 2,5mg/l
                       </Paragraph>
                     </li>
                     <li>
                       <Paragraph className="paragraph-Style">
-                        Là giống cá ăn tạp nên Goshiki ăn 1-2 lần / ngày. Mỗi
-                        lần cho ăn bạn không nên cho dư thừa sẽ làm ô nhiễm
-                        nguồn nước. Thức ăn của cá nên để nơi thoáng mát tránh
-                        ảnh hưởng đến sức khỏe của đàn cá.
+                        Khi nồng độ Nitrite trong nước quá cao hoặc có nhu cầu
+                        thay nước thì cứ 2 ngày rút đi một phần 3 thể tích nước
+                        trong hồ cho đến khi nước hồ đạt yêu cầu.
                       </Paragraph>
                     </li>
                     <li>

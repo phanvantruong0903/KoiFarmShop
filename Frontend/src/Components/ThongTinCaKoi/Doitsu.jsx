@@ -7,6 +7,7 @@ import axios from "axios";
 import Layout from "antd/es/layout/layout";
 import { Typography } from "antd";
 const { Title, Text, Paragraph } = Typography;
+import { Spin } from "antd"; // Import the Spin component
 export default function Doitsu() {
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -175,7 +176,20 @@ export default function Doitsu() {
       setFilteredCards(filtered);
     }
   }, [idDoitsu, cardData]);
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Spin size="large" /> {/* You can adjust the size if needed */}
+      </div>
+    );
+  }
   if (error) return <div>Error: {error.message}</div>;
 
   return (

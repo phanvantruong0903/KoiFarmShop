@@ -8,6 +8,7 @@ import Layout from "antd/es/layout/layout";
 import { Typography } from "antd";
 const { Title, Text, Paragraph } = Typography;
 import "../Css/koiStyle.css";
+import { Spin } from "antd"; // Import the Spin component
 export default function Ginrin() {
   const [menu, setMenu] = useState("home");
   const [cardData, setCardData] = useState([]);
@@ -177,7 +178,20 @@ export default function Ginrin() {
       setFilteredCards(filtered);
     }
   }, [idGinrin, cardData]);
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Spin size="large" /> {/* You can adjust the size if needed */}
+      </div>
+    );
+  }
   if (error) return <div>Error: {error.message}</div>;
 
   return (
@@ -246,7 +260,7 @@ export default function Ginrin() {
                 </Paragraph>
                 <div style={{ textAlign: "center" }}>
                   <img
-                    src="src/assets/Koi-Ginrin/ca-koi-kin-ginrin-kohaku-1.webp"
+                    src="src/assets/Koi-Ginrin/Cá koi Ginrin Showa 4.jpg"
                     style={{ width: "50%" }}
                   />
                   <p style={{ fontSize: "15px", fontWeight: "400" }}>
@@ -322,7 +336,7 @@ export default function Ginrin() {
                 </div>
                 <div style={{ textAlign: "center" }}>
                   <img
-                    src="src/assets/Koi-Ginrin/showa-grinrin.webp"
+                    src="Frontend/src/assets/Koi-Ginrin/ginrin-asagi.jpg"
                     style={{ width: "30%" }}
                   />
                   <div>
@@ -474,15 +488,16 @@ export default function Ginrin() {
               </div>
             </div>
           </div>
+          <div style={{ display: "flex" }}>
+            <div>
+              <img src="src/assets/img_4.png" />
+            </div>
+            <div style={{ objectFit: "cover", width: "100%" }}>
+              <img src="src/assets/img_5.png" />
+            </div>
+          </div>
         </Container>
-        <div style={{ display: "flex" }}>
-          <div>
-            <img src="src/assets/img_4.png" />
-          </div>
-          <div style={{ textAlign: "center" }}>
-            <img src="src/assets/img_5.png" />
-          </div>
-        </div>
+
         <div>
           {filteredCards && filteredCards.length > 0 ? (
             <CardGrid cardData={filteredCards} />

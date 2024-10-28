@@ -1,6 +1,8 @@
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer";
 import { Container } from "react-bootstrap";
+import { Layout, Typography } from "antd";
+const { Text, Paragraph } = Typography;
 export default function Kienthuckoi() {
   return (
     <>
@@ -10,11 +12,11 @@ export default function Kienthuckoi() {
         </div>
         <Container style={{ paddingTop: "150px" }}>
           <div>
-            <h1 style={{ textAlign: "center" }}>
+            <h1 style={{ textAlign: "center", color: "red" }}>
               Kiến thức nuôi cá Koi cơ bản cho người mới bắt đầu
             </h1>
             <div>
-              <p>
+              <Paragraph style={{ fontSize: "20px", paddingTop: "20px" }}>
                 Mấy năm trở lại đây thú chơi cá Koi đang dần nở rộ và được khá
                 nhiều người quan tâm nhất là người dùng Việt Nam. Cá Koi chính
                 là dòng cá mới được du nhập vào Việt Nam trong khoảng thời gian
@@ -23,15 +25,15 @@ export default function Kienthuckoi() {
                 hiểu rõ hơn về giống cá này, Cá Koi Biên Hòa xin giới thiệu đến
                 bạn những kiến thức nuôi cá Koi cơ bản cho người mới bắt đầu như
                 sau, hãy cùng tham khảo nhé!
-              </p>
+              </Paragraph>
               <div style={{ textAlign: "center" }}>
-                <img src="" />
+                <img src="src/assets/van-chuyen-ca-koi-tu-nhat-ve-viet-nam-uy-tin.jpg" />
               </div>
             </div>
           </div>
           <div>
             <h2>Nguồn gốc cá Koi</h2>
-            <p>
+            <Paragraph style={{ fontSize: "20px" }}>
               Cá Koi được bắt nguồn từ Nhật Bản, cụ thể tại Niigata mỗi dịp mùa
               đông đến nơi đây thường có lượng tuyết rơi rất dày và mọi thứ đều
               phủ bởi tuyết trắng từ đó các hoạt động nông nghiệp đều bị ngưng
@@ -46,11 +48,11 @@ export default function Kienthuckoi() {
               hình thành những chú cá chép với nhiều màu sắc đa dạng, từ đó cá
               Koi đã được ra đời và dần lan rộng khắp nước Nhật, và dần dần thú
               nuôi cá Koi đã lan rộng sang các nước khác.
-            </p>
+            </Paragraph>
           </div>
           <div>
             <h2>Tiêu chuẩn của hồ nuôi cá Koi</h2>
-            <p>
+            <Paragraph style={{ fontSize: "20px" }}>
               Cá Koi được bắt nguồn từ Nhật Bản, cụ thể tại Niigata mỗi dịp mùa
               đông đến nơi đây thường có lượng tuyết rơi rất dày và mọi thứ đều
               phủ bởi tuyết trắng từ đó các hoạt động nông nghiệp đều bị ngưng
@@ -59,44 +61,58 @@ export default function Kienthuckoi() {
               cách nuôi những chú cá chép trong các kênh rạch và tránh xa vùng
               trồng lúa, và đến mùa Thu họ bắt những chú cá này để muối và chỉ
               chừa lại vài con để duy trì giống nồi đến mùa xuân.
-            </p>
+            </Paragraph>
             <ul>
               <li>
-                <span style={{ fontWeight: "bold" }}>Bóng mát: </span>
+                <span
+                  style={{ fontWeight: "bold", fontSize: "25px", color: "red" }}
+                >
+                  Bóng mát:{" "}
+                </span>
                 <br />
-                <p>
+                <Paragraph style={{ fontSize: "20px" }}>
                   Xung quang hồ nuôi cá cần có độ phủ bóng ít nhất là 15%, bạn
                   có thể trồng cây xung quang hoặc dùng mái che vì cá Koi phát
                   triển mạnh mẽ ở điều kiện đủ ánh sáng và phải có bóng mát.
-                </p>
+                </Paragraph>
               </li>
               <li>
-                <span style={{ fontWeight: "bold" }}>Hệ thống tạo Oxy: </span>
+                <span
+                  style={{ fontWeight: "bold", fontSize: "25px", color: "red" }}
+                >
+                  Hệ thống tạo Oxy:{" "}
+                </span>
                 <br />
-                <p>
+                <Paragraph>
                   Cá Koi chính là loài cá khá đặc biệt vì chúng cần rất nhiều
                   oxy để phát triển tốt, vì vậy bạn cần lắp đặt hệ thống lọc
                   nước hoặc tạo nên sự luân chuyển của dòng nước để nguồn oxy
                   luôn được cung cấp đủ cho cá.
-                </p>
+                </Paragraph>
               </li>
               <li>
-                <span style={{ fontWeight: "bold" }}>
+                <span
+                  style={{ fontWeight: "bold", fontSize: "25px", color: "red" }}
+                >
                   Thảm thực vật trong hồ:{" "}
                 </span>
                 <br />
-                <p>
+                <Paragraph style={{ fontSize: "20px" }}>
                   Bạn cần tạo nên một thảm thực vật dưới hồ như rong rêu, đây là
                   những điều rất cần để giúp cá Koi có thể ẩn náo, đặc biệt đó
                   chính là môi trường tự nhiên, những thực vật này cũng tạo nên
                   oxi trong quá trình quan hợp và cũng là nguồn thức ăn để bổ
                   sung dinh dưỡng cho cá Koi.
-                </p>
+                </Paragraph>
               </li>
               <li>
-                <span style={{ fontWeight: "bold" }}>Nguồn thức ăn: </span>
+                <span
+                  style={{ fontWeight: "bold", fontSize: "25px", color: "red" }}
+                >
+                  Nguồn thức ăn:{" "}
+                </span>
                 <br />
-                <p>
+                <Paragraph style={{ fontSize: "20px" }}>
                   Cá Koi khi du nhập vào Việt Nam đa phần chúng ta chỉ sử dụng
                   cám làm thức ăn chính cho cá vì đây là nguồn thức ăn khá phổ
                   biến và rất dễ tìm mua, mỗi ngày bạn chỉ nên cho ăn 2 lần với
@@ -104,12 +120,16 @@ export default function Kienthuckoi() {
                   hoặc tình trạng của cá mà bạn cho ăn với lượng thức ăn phù
                   hợp. Thức ăn dư có thể làm ô nhiễm nguồn nước và gây bệnh cho
                   cá Koi.
-                </p>
+                </Paragraph>
               </li>
               <li>
-                <span style={{ fontWeight: "bold" }}>Yếu tố mật độ: </span>
+                <span
+                  style={{ fontWeight: "bold", fontSize: "25px", color: "red" }}
+                >
+                  Yếu tố mật độ:{" "}
+                </span>
                 <br />
-                <p>
+                <Paragraph style={{ fontSize: "20px" }}>
                   Cá Koi thường di chuyển theo đàn nên nhìn rất đẹp mắt do đó
                   chúng ta cần chú trọng đến yếu tố mật độ, không nên nuôi quá
                   nhiều cá trong không gian hồ quá hẹp điều này sẽ dẫn đến cá sẽ
@@ -119,7 +139,7 @@ export default function Kienthuckoi() {
                   nhiễm nguồn nước. Nên để khối lượng nước khoảng 1000 lít để
                   giúp cá phát triển tốt. Tuổi thọ của cá Koi có thể lên đến 100
                   tuổi nếu chúng được chăm sóc đúng cách.
-                </p>
+                </Paragraph>
               </li>
             </ul>
           </div>

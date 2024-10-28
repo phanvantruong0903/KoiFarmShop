@@ -20,8 +20,8 @@ export default function Locakoinhapkhau() {
           "http://localhost:4000/get-kois-groupKoiID"
         );
         if (response.status === 200) {
-          console.log("Data fetched successfully:", response.data.result);
-          setKoiData(response.data.result || []); // Ensure koiData is an array
+          console.log("Data fetched successfully:", response.data[0].result);
+          setKoiData(response.data[0].result || []); // Ensure koiData is an array
         } else {
           console.error("Unexpected response status:", response.status);
         }

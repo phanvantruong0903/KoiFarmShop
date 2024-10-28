@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Row, Col, Input, Button, Modal, Form } from "antd";
@@ -54,7 +54,8 @@ export default function Profile() {
   const [websiteError, setWebsiteError] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
   const toastIdRef = useRef(null);
-
+  const [currentComponent, setCurrentComponent] = useState("profile");
+  const navigate = useNavigate();
   useEffect(() => {
     const { message } = location.state || {};
     if (message) {
@@ -310,6 +311,9 @@ export default function Profile() {
   if (loading) {
     return <div>Loading...</div>;
   }
+  const handleNavigate = (path) => {
+    navigate(path); // Navigate to the specified path
+  };
 
   return (
     <>
@@ -397,7 +401,7 @@ export default function Profile() {
                 <li>
                   <Button
                     type="link"
-                    onClick={() => console.log("Đi đến Tài khoản của tôi")}
+                    onClick={() => handleNavigate("/profile")}
                     style={{ color: "black", marginTop: "15px" }}
                   >
                     <UserOutlined style={{ marginRight: "5px" }} />
@@ -407,7 +411,7 @@ export default function Profile() {
                 <li style={{ marginLeft: "25px" }}>
                   <Button
                     type="link"
-                    onClick={() => console.log("Đi đến Tài khoản của tôi")}
+                    onClick={() => handleNavigate("/profile")}
                     style={{ color: "#FF8C00" }}
                   >
                     Hồ sơ
@@ -416,7 +420,7 @@ export default function Profile() {
                 <li style={{ marginLeft: "25px" }}>
                   <Button
                     type="link"
-                    onClick={() => console.log("Đi đến Tài khoản của tôi")}
+                    onClick={() => handleNavigate("/changepassword")}
                     style={{ color: "black" }}
                   >
                     Đổi mật khẩu
@@ -425,7 +429,7 @@ export default function Profile() {
                 <li>
                   <Button
                     type="link"
-                    onClick={() => console.log("Đi đến Đơn mua")}
+                    onClick={() => handleNavigate("/trackingorder")}
                     style={{ color: "black" }}
                   >
                     <ShoppingCartOutlined style={{ marginRight: "5px" }} />
@@ -435,7 +439,7 @@ export default function Profile() {
                 <li>
                   <Button
                     type="link"
-                    onClick={() => console.log("Đi đến Thay đổi mật khẩu")}
+                    onClick={() => handleNavigate("/donkygui")}
                     style={{ color: "black" }}
                   >
                     <ShopOutlined style={{ marginRight: "5px" }} />

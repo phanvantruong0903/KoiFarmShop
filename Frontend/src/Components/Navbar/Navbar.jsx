@@ -148,7 +148,9 @@ export default function Navbar() {
                   href="/gioithieuvekoiviet"
                   onMouseEnter={() => setActiveItem("/gioithieuvekoiviet")}
                   onMouseLeave={() => setActiveItem(null)}
-                  className={activeItem === "/gioithieuvekoiviet" ? "active" : ""}
+                  className={
+                    activeItem === "/gioithieuvekoiviet" ? "active" : ""
+                  }
                 >
                   GIỚI THIỆU VỀ CÁ KOI VIỆT
                 </Dropdown.Item>
@@ -157,7 +159,9 @@ export default function Navbar() {
                   href="/gioithieuvekoinhat"
                   onMouseEnter={() => setActiveItem("/gioithieuvekoinhat")}
                   onMouseLeave={() => setActiveItem(null)}
-                  className={activeItem === "/gioithieuvekoinhat" ? "active" : ""}
+                  className={
+                    activeItem === "/gioithieuvekoinhat" ? "active" : ""
+                  }
                 >
                   GIỚI THIỆU VỀ CÁ KOI NHẬT
                 </Dropdown.Item>
@@ -235,7 +239,7 @@ export default function Navbar() {
               unmountOnExit
             >
               <Dropdown.Menu className="custom-menu">
-                {["kienthuckoi", "khuyenmai", "tintuc"].map((news, index) => (
+                {["kienthuckoi"].map((news, index) => (
                   <React.Fragment key={news}>
                     <Dropdown.Item
                       href={`/${news}`}
@@ -243,13 +247,10 @@ export default function Navbar() {
                       onMouseLeave={() => setActiveItem(null)}
                       className={activeItem === `/${news}` ? "active" : ""}
                     >
-                      {news === "kienthuckoi"
-                        ? "KIẾN THỨC KOI"
-                        : news === "khuyenmai"
-                        ? "KHUYẾN MÃI"
-                        : "TIN TỨC CÔNG TY"}
+                      {news === "kienthuckoi" ? "KIẾN THỨC KOI" : "OTHER VALUE"}{" "}
+                      {/* Replace "OTHER VALUE" with desired text */}
                     </Dropdown.Item>
-                    {index < 2 && <Dropdown.Divider />}
+                    {index < 2}
                   </React.Fragment>
                 ))}
               </Dropdown.Menu>
@@ -278,7 +279,6 @@ export default function Navbar() {
               {servicesMenu}
             </CSSTransition>
           </Dropdown>
-
 
           <Dropdown>
             <Dropdown.Toggle
