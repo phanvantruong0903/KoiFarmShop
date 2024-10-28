@@ -176,6 +176,7 @@ export default function Navbar() {
             show={showDropdown2}
           >
             <Dropdown.Toggle
+              href="/cakoinhat"
               id="dropdown-basic"
               className="nav-dropdown-toggle"
             >

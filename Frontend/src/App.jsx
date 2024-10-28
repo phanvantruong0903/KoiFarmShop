@@ -55,6 +55,7 @@ import Locakoinhapkhau from "./Components/LoCaKoiNhapKhau";
 import Consigns from "./An/Ant Design/Pages/Consigns";
 import Invoices from "./An/Ant Design/Pages/Invoices";
 import Suppliers from "./An/Ant Design/Pages/Suppliers";
+import CaKoiNhat from "./Components/CaKoiNhat";
 const router = createBrowserRouter([
   {
     path: "/login/oauth",
@@ -203,6 +204,10 @@ const router = createBrowserRouter([
   {
     path: "/paymentmethod",
     element: <PaymentMethod />,
+  },
+  {
+    path: "/cakoinhat",
+    element: <CaKoiNhat />,
   },
   {
     path: "/NewDashboard",

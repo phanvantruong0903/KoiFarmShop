@@ -44,21 +44,21 @@ const OrderPage = () => {
   const [comboQuantity, setComboQuantity] = useState(1); // Track combo quantity
   console.log(selectedItem);
 
-  useEffect(() => {
-    // Check local storage for existing cart data
-    const cartData = JSON.parse(localStorage.getItem("cart")) || [];
-    const existingItem = cartData.find(
-      (item) => item.itemId === selectedItem?._id
-    );
+  // useEffect(() => {
+  //   // Check local storage for existing cart data
+  //   const cartData = JSON.parse(localStorage.getItem("cart")) || [];
+  //   const existingItem = cartData.find(
+  //     (item) => item.itemId === selectedItem?._id
+  //   );
 
-    if (existingItem && existingItem.quantity === maxQuantity) {
-      setIsAddedToCart(true);
-      setQuantityInCart(existingItem.quantity || 0); // Set the quantity already in cart
-    }
-  }, [selectedItem, maxQuantity]);
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  //   if (existingItem && existingItem.quantity === maxQuantity) {
+  //     setIsAddedToCart(true);
+  //     setQuantityInCart(existingItem.quantity || 0); // Set the quantity already in cart
+  //   }
+  // }, [selectedItem, maxQuantity]);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
 
   useEffect(() => {
     const sendOrderDetails = async () => {
@@ -74,6 +74,7 @@ const OrderPage = () => {
 
         if (response.status === 200) {
           let maxQty;
+
           if (selectedItem.Size >= 5 && selectedItem.Size <= 14) {
             maxQty = 39;
             setSelectedQuantity(39); // Default to 39
@@ -123,35 +124,21 @@ const OrderPage = () => {
       );
 
       if (response.status === 200) {
+        const { result } = response.data; // Lấy thuộc tính 'result' từ phản hồi
+        console.log(result);
+        if (
+          typeof result === "string" &&
+          result.includes("available in stock")
+        ) {
+          setError(result); // Hiển thị thông điệp từ phản hồi
+          return;
+        }
         console.log("Add to cart successful: " + response.data.message);
         setOrderId(response.data.result.orderDT._id);
       }
-
-      const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-      const existingItem = existingCart.find(
-        (item) => item.itemId === selectedItem._id
-      );
-
-      if (existingItem) {
-        existingItem.quantity += parseInt(selectedQuantity);
-      } else {
-        existingCart.push({
-          itemId: selectedItem._id,
-          message: "Hàng đã vào giỏ hàng của bạn",
-          quantity: parseInt(selectedQuantity),
-          koi: selectedItem,
-        });
-      }
-
-      localStorage.setItem("cart", JSON.stringify(existingCart));
-      setQuantityInCart(
-        existingItem ? existingItem.quantity : parseInt(selectedQuantity)
-      );
-
       if (totalQuantity === maxQuantity) {
         setIsAddedToCart(true);
       }
-
       toast.success("Đã thêm vào giỏ hàng!");
     } catch (error) {
       console.log(error);
@@ -210,14 +197,6 @@ const OrderPage = () => {
         });
       }
 
-      localStorage.setItem("cart", JSON.stringify(existingCart));
-      setQuantityInCart(
-        existingItem ? existingItem.quantity : parseInt(selectedQuantity)
-      );
-
-      if (totalQuantity === maxQuantity) {
-        setIsAddedToCart(true);
-      }
       navigate("/formfillinformation");
       toast.success("Đã thêm vào giỏ hàng!");
     } catch (error) {
@@ -265,7 +244,7 @@ const OrderPage = () => {
   }, [categoryData]); // Run this effect when categoryData changes
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+
   return (
     <>
       <Navbar />
@@ -401,6 +380,7 @@ const OrderPage = () => {
                         color: "red",
                       }}
                     >
+                      {error && <p style={{ color: "red" }}>{error}</p>}
                       {selectedItem.Size > 20 && (
                         <label>
                           <strong>Quantity: </strong>

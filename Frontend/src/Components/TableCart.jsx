@@ -171,7 +171,7 @@ export default function ShoppingCart() {
                       alignItems: "center",
                       fontFamily: "Roboto, sans-serif",
                       fontSize: "15px",
-                      padding: "10px 0", // Thêm khoảng cách cho hàng
+                      padding: "10px 0",
                     }}
                   >
                     <img

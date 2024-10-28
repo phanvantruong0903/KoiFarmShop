@@ -52,7 +52,7 @@ export default function Home() {
       }
     };
     fetchData();
-  }, [koidata]);
+  }, []);
 
   useEffect(() => {
     const sections = document.querySelectorAll(".animated-section");
