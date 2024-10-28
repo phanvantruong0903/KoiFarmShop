@@ -54,9 +54,7 @@ export default function Koikygui() {
 
     fetchData();
   }, []);
-  useEffect(() => {
-    console.log(categoryData);
-  }, []);
+
   const handleCategoryChange = (e) => setSelectedCategory(e.target.value);
   const handleSizeChange = (value) => setSelectedSize(value);
   const handleMinPriceChange = (e) => setMinPrice(e.target.value);

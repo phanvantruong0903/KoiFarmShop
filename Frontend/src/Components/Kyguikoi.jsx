@@ -254,6 +254,7 @@ export default function Kyguikoi() {
                 <div style={{ width: "48%" }}>
                   <Form.Item
                     label="Nơi chăm sóc koi (*)"
+                    name="Method" // Ensure you have a name prop
                     rules={[
                       {
                         required: true,
@@ -272,17 +273,18 @@ export default function Kyguikoi() {
                   </Form.Item>
                   <Form.Item
                     label="Phương thức nhận koi (*)"
+                    name="Method"
                     rules={[
                       {
                         required: true,
-                        message: "Vui lòng Phương thức nhận koi.",
+                        message: "Vui lòng chọn phương thức nhận koi.",
                       },
                     ]}
                   >
                     <Radio.Group
+                      onChange={handleChange}
                       name="Method"
                       value={formData.Method}
-                      onChange={handleChange}
                     >
                       <Radio value="Online">Online</Radio>
                       <Radio value="Offline">Offline</Radio>
@@ -388,7 +390,16 @@ export default function Kyguikoi() {
                 />
               </Form.Item>
 
-              <Form.Item label="Giới Tính (*)">
+              <Form.Item
+                label="Giới Tính (*)"
+                name="Method"
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng chọn giới tính.",
+                  },
+                ]}
+              >
                 <Radio.Group
                   name="Gender"
                   value={formData.Gender}
@@ -417,7 +428,16 @@ export default function Kyguikoi() {
                 />
               </Form.Item>
 
-              <Form.Item label="Trạng Thái (*)">
+              <Form.Item
+                label="Trạng Thái (*)"
+                name="Method"
+                rules={[
+                  {
+                    required: true,
+                    message: "Vui lòng chọn trạng thái.",
+                  },
+                ]}
+              >
                 <Radio.Group
                   name="Breed"
                   value={formData.Breed}

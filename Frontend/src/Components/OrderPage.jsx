@@ -44,21 +44,21 @@ const OrderPage = () => {
   const [comboQuantity, setComboQuantity] = useState(1); // Track combo quantity
   console.log(selectedItem);
 
-  useEffect(() => {
-    // Check local storage for existing cart data
-    const cartData = JSON.parse(localStorage.getItem("cart")) || [];
-    const existingItem = cartData.find(
-      (item) => item.itemId === selectedItem?._id
-    );
+  // useEffect(() => {
+  //   // Check local storage for existing cart data
+  //   const cartData = JSON.parse(localStorage.getItem("cart")) || [];
+  //   const existingItem = cartData.find(
+  //     (item) => item.itemId === selectedItem?._id
+  //   );
 
-    if (existingItem && existingItem.quantity === maxQuantity) {
-      setIsAddedToCart(true);
-      setQuantityInCart(existingItem.quantity || 0); // Set the quantity already in cart
-    }
-  }, [selectedItem, maxQuantity]);
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  //   if (existingItem && existingItem.quantity === maxQuantity) {
+  //     setIsAddedToCart(true);
+  //     setQuantityInCart(existingItem.quantity || 0); // Set the quantity already in cart
+  //   }
+  // }, [selectedItem, maxQuantity]);
+  // useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, []);
 
   useEffect(() => {
     const sendOrderDetails = async () => {
@@ -74,6 +74,7 @@ const OrderPage = () => {
 
         if (response.status === 200) {
           let maxQty;
+
           if (selectedItem.Size >= 5 && selectedItem.Size <= 14) {
             maxQty = 39;
             setSelectedQuantity(39); // Default to 39
@@ -123,35 +124,21 @@ const OrderPage = () => {
       );
 
       if (response.status === 200) {
+        const { result } = response.data; // Lấy thuộc tính 'result' từ phản hồi
+        console.log(result);
+        if (
+          typeof result === "string" &&
+          result.includes("available in stock")
+        ) {
+          setError(result); // Hiển thị thông điệp từ phản hồi
+          return;
+        }
         console.log("Add to cart successful: " + response.data.message);
         setOrderId(response.data.result.orderDT._id);
       }
-
-      const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-      const existingItem = existingCart.find(
-        (item) => item.itemId === selectedItem._id
-      );
-
-      if (existingItem) {
-        existingItem.quantity += parseInt(selectedQuantity);
-      } else {
-        existingCart.push({
-          itemId: selectedItem._id,
-          message: "Hàng đã vào giỏ hàng của bạn",
-          quantity: parseInt(selectedQuantity),
-          koi: selectedItem,
-        });
-      }
-
-      localStorage.setItem("cart", JSON.stringify(existingCart));
-      setQuantityInCart(
-        existingItem ? existingItem.quantity : parseInt(selectedQuantity)
-      );
-
       if (totalQuantity === maxQuantity) {
         setIsAddedToCart(true);
       }
-
       toast.success("Đã thêm vào giỏ hàng!");
     } catch (error) {
       console.log(error);
@@ -210,14 +197,6 @@ const OrderPage = () => {
         });
       }
 
-      localStorage.setItem("cart", JSON.stringify(existingCart));
-      setQuantityInCart(
-        existingItem ? existingItem.quantity : parseInt(selectedQuantity)
-      );
-
-      if (totalQuantity === maxQuantity) {
-        setIsAddedToCart(true);
-      }
       navigate("/formfillinformation");
       toast.success("Đã thêm vào giỏ hàng!");
     } catch (error) {
@@ -265,7 +244,7 @@ const OrderPage = () => {
   }, [categoryData]); // Run this effect when categoryData changes
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+
   return (
     <>
       <Navbar />
@@ -401,6 +380,7 @@ const OrderPage = () => {
                         color: "red",
                       }}
                     >
+                      {error && <p style={{ color: "red" }}>{error}</p>}
                       {selectedItem.Size > 20 && (
                         <label>
                           <strong>Quantity: </strong>
@@ -448,7 +428,7 @@ const OrderPage = () => {
                         color: "red",
                       }}
                     >
-                      {selectedItem.Size < 20 && (
+                      {selectedItem.Size >= 15 && selectedItem.Size <= 17 && (
                         <Paragraph
                           style={{
                             fontSize: "20px",
@@ -474,6 +454,58 @@ const OrderPage = () => {
                           />
                         </Paragraph>
                       )}
+                      {selectedItem.Size >= 5 && selectedItem.Size <= 14 && (
+                        <Paragraph
+                          style={{
+                            fontSize: "20px",
+                            textAlign: "left",
+                            color: "red",
+                          }}
+                        >
+                          <strong>Combo: </strong>
+                          <input
+                            type="number"
+                            style={{
+                              fontSize: "14px",
+                              color: "red",
+                              width: "48%",
+                            }}
+                            value={comboQuantity}
+                            onChange={(e) => {
+                              const value = Math.max(e.target.value, 1);
+                              setComboQuantity(value);
+                              setSelectedQuantity(value * 39);
+                            }}
+                            min="1"
+                          />
+                        </Paragraph>
+                      )}
+                      {selectedItem.Size >= 18 && selectedItem.Size <= 20 && (
+                        <Paragraph
+                          style={{
+                            fontSize: "20px",
+                            textAlign: "left",
+                            color: "red",
+                          }}
+                        >
+                          <strong>Combo: </strong>
+                          <input
+                            type="number"
+                            style={{
+                              fontSize: "14px",
+                              color: "red",
+                              width: "48%",
+                            }}
+                            value={comboQuantity}
+                            onChange={(e) => {
+                              const value = Math.max(e.target.value, 1);
+                              setComboQuantity(value);
+                              setSelectedQuantity(value * 12);
+                            }}
+                            min="1"
+                          />
+                        </Paragraph>
+                      )}
                     </div>
                   </Paragraph>
                   <Paragraph style={{ fontSize: "20px", textAlign: "left" }}>
@@ -482,6 +514,7 @@ const OrderPage = () => {
                       {selectedItem.CertificateID}
                     </Text>
                   </Paragraph>
+                  {error && <p style={{ color: "red" }}>{error}</p>}
                   <Paragraph>
                     <div
                       style={{
@@ -495,7 +528,7 @@ const OrderPage = () => {
                         danger
                         size="large"
                         onClick={handleOrderPlacement}
-                        disabled={isAddedToCart}
+                        disabled={isAddedToCart || !!error} // Disable if there's an error
                         style={{
                           flex: "0 1 40%", // Adjust width
                           padding: "10px", // Reduce padding
@@ -515,24 +548,28 @@ const OrderPage = () => {
                           fontWeight: "bold",
                           backgroundColor:
                             isAddedToCart ||
-                            quantityInCart + selectedQuantity > maxQuantity
+                            quantityInCart + selectedQuantity > maxQuantity ||
+                            !!error
                               ? "#f0f0f0"
                               : "#ffffff", // Change color when disabled
                           color:
                             isAddedToCart ||
-                            quantityInCart + selectedQuantity > maxQuantity
+                            quantityInCart + selectedQuantity > maxQuantity ||
+                            !!error
                               ? "#a0a0a0"
                               : "red", // Change text color when disabled
                           border: "2px solid red", // Border color
                           transition: "background-color 0.3s, transform 0.2s", // Transition effect
                           cursor:
                             isAddedToCart ||
-                            quantityInCart + selectedQuantity > maxQuantity
+                            quantityInCart + selectedQuantity > maxQuantity ||
+                            !!error
                               ? "not-allowed"
                               : "pointer", // Change cursor
                           opacity:
                             isAddedToCart ||
-                            quantityInCart + selectedQuantity > maxQuantity
+                            quantityInCart + selectedQuantity > maxQuantity ||
+                            !!error
                               ? 0.6
                               : 1, // Reduce opacity when disabled
                         }}
@@ -541,13 +578,15 @@ const OrderPage = () => {
                         size="large"
                         disabled={
                           isAddedToCart ||
-                          quantityInCart + selectedQuantity > maxQuantity
-                        }
+                          quantityInCart + selectedQuantity > maxQuantity ||
+                          !!error
+                        } // Disable if there's an error
                         onMouseEnter={(e) => {
                           if (
                             !(
                               isAddedToCart ||
-                              quantityInCart + selectedQuantity > maxQuantity
+                              quantityInCart + selectedQuantity > maxQuantity ||
+                              !!error
                             )
                           ) {
                             e.currentTarget.style.backgroundColor = "red"; // Hover background color
@@ -559,7 +598,8 @@ const OrderPage = () => {
                           if (
                             !(
                               isAddedToCart ||
-                              quantityInCart + selectedQuantity > maxQuantity
+                              quantityInCart + selectedQuantity > maxQuantity ||
+                              !!error
                             )
                           ) {
                             e.currentTarget.style.backgroundColor = "#FFFFFF"; // Reset background
