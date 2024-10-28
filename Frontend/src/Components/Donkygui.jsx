@@ -212,16 +212,16 @@ export default function DonKyGuiPage() {
                       </Text>
                       <div style={{ display: "flex" }}>
                         <div style={{ marginTop: "20px" }}>
-                          <Text>Name: {userData?.name ?? "N/A"} years</Text>
+                          <Text>Name: {userData?.name ?? "N/A"}</Text>
                           <div style={{ marginBottom: "8px" }}></div>
                           <Text>Email: {userData?.email ?? "N/A"}</Text>
                         </div>
                         <div style={{ marginLeft: "220px", marginTop: "22px" }}>
                           <Text>
-                            Phone Number:{userData?.phone_number ?? "N/A"}
+                            Phone Number: {userData?.phone_number ?? "N/A"}
                           </Text>
                           <div style={{ marginTop: "10px" }}>
-                            <Text>Address:{userData?.address ?? "N/A"}</Text>
+                            <Text>Address: {userData?.address ?? "N/A"}</Text>
                           </div>
                         </div>
                       </div>

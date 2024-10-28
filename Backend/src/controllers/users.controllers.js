@@ -66,10 +66,8 @@ export const emailVerifyTokenController = async (req, res) => {
   //nếu mà xuống đc đây có nghĩa là user chưa verify
   //mình sẽ update lại user đó
   const result = await usersService.verifyEmail(user_id)
-  return res.json({
-    message: USERS_MESSAGES.VERIFY_EMAIL_SUCCESS,
-    result
-  })
+  const urlRedirect = `${process.env.CLIENT_REDIRECT_CALLBACK_VERIFY_EMAIL}?email_verify_token=${user.email_verify_token}`
+  return res.redirect(urlRedirect)
 }
 
 export const resendEmailVerifyController = async (req, res) => {

@@ -34,7 +34,7 @@ export const getAllKoiController = async (req, res) => {
     const result = await databaseService.kois.find().toArray()
     const categoryList = await databaseService.category.find().toArray()
 
-    const consigns = await databaseService.consigns.find({ State: 3 }).toArray()
+    const consigns = await databaseService.consigns.find({ State: 4 }).toArray()
     const consignIds = consigns.map((consign) => new ObjectId(consign.KoiID))
     const filteredResult = result.filter(
       (koi) =>
@@ -254,21 +254,20 @@ export const getRevenueController = async (req, res) => {
   try {
     const Orders = await databaseService.order.find({ Status: 2 }).toArray()
 
-    const orderDetailIds = Orders.map((order) => new ObjectId(order.OrderDetailID)) 
-
+    const orderDetailIds = Orders.map((order) => new ObjectId(order.OrderDetailID))
 
     const OrderDetails = await databaseService.orderDetail
       .find({
-        _id: { $in: orderDetailIds  }
+        _id: { $in: orderDetailIds }
       })
       .toArray()
 
-      console.log(OrderDetails)
+    console.log(OrderDetails)
 
     const dailyRevenue = Orders.reduce((accumulator, order) => {
       const orderDate = new Date(order.OrderDate).toISOString().split('T')[0]
       const detail = OrderDetails.find((d) => d._id.equals(new ObjectId(order.OrderDetailID)))
-      const orderTotal = detail ? detail.TotalPrice : 0 
+      const orderTotal = detail ? detail.TotalPrice : 0
 
       if (accumulator[orderDate]) {
         accumulator[orderDate] += orderTotal

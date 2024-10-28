@@ -254,7 +254,7 @@ export default function Kyguikoi() {
                 <div style={{ width: "48%" }}>
                   <Form.Item
                     label="Nơi chăm sóc koi (*)"
-                    name="Method" // Ensure you have a name prop
+                    name="Method1" // Ensure you have a name prop
                     rules={[
                       {
                         required: true,
@@ -273,7 +273,7 @@ export default function Kyguikoi() {
                   </Form.Item>
                   <Form.Item
                     label="Phương thức nhận koi (*)"
-                    name="Method"
+                    name="Method2"
                     rules={[
                       {
                         required: true,
