@@ -7,6 +7,7 @@ import CardGrid from "../Cardgrid";
 import { Layout, Typography } from "antd";
 const { Title, Text, Paragraph } = Typography;
 import "../Css/koiStyle.css";
+import { Spin } from "antd"; // Import the Spin component
 export default function Goshiki() {
   const [menu, setMenu] = useState("home");
   const [cardData, setCardData] = useState([]);
@@ -228,7 +229,20 @@ export default function Goshiki() {
       setFilteredCards(filtered);
     }
   }, [idGoshiki, cardData]);
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Spin size="large" /> {/* You can adjust the size if needed */}
+      </div>
+    );
+  }
   if (error) return <div>Error: {error.message}</div>;
 
   return (

@@ -8,6 +8,7 @@ import "../Css/koiStyle.css";
 import Layout from "antd/es/layout/layout";
 import { Typography } from "antd";
 import "../Css/koiStyle.css";
+import { Spin } from "antd"; // Import the Spin component
 const { Title, Text, Paragraph } = Typography;
 export default function Asagi() {
   const [menu, setMenu] = useState("home");
@@ -212,7 +213,20 @@ export default function Asagi() {
       setFilteredCards(filtered);
     }
   }, [idAsagi, cardData]);
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Spin size="large" /> {/* You can adjust the size if needed */}
+      </div>
+    );
+  }
   if (error) return <div>Error: {error.message}</div>;
 
   return (

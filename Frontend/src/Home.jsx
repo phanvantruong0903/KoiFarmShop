@@ -87,62 +87,61 @@ export default function Home() {
   // Dữ liệu cá koi
   const koiData = [
     {
-      src: "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSF62ZKcYBGSES34-RM4mkYAlHTR5UE6sSH5iHY4cldO_J6akbS",
+      src: "src/assets/nguon-goc-kohaku.jpg",
       alt: "Koi Kohaku",
       name: "kohaku",
     },
     {
-      src: "https://img.freepik.com/free-vector/two-japanese-koi-fish-swimming_53876-16876.jpg?t=st=1729766790~exp=1729770390~hmac=e30f21be0c38122abcccda143523b9408f3daafe15997d96f38cf1fdac7c28f8&w=740",
-      alt: "Koi Ogon",
+      src: "src/assets/Koi-Ogon-1/hi-ogon.jpg",
       name: "ogon",
     },
     {
-      src: "https://img.freepik.com/free-vector/hand-drawn-koi-fish-illustration_23-2149550939.jpg?t=st=1729766836~exp=1729770436~hmac=ae9929a8793bc4606ffb72fabc7686a5cede10bfaac0e64d0654b6cf022a2142&w=740",
+      src: "src/assets/Koi-Showa/doistu-showa.jpg",
       alt: "Koi Showa",
       name: "showa",
     },
     {
-      src: "https://img.freepik.com/premium-photo/drawing-two-koi-fish-with-word-fish-bottom_1280401-268.jpg?w=740",
+      src: "src/assets/Koi-Tancho/Tancho-Showa.png",
       alt: "Koi Tancho",
       name: "tancho",
     },
     {
-      src: "https://img.freepik.com/free-vector/hand-drawn-koi-illustration_23-2149602610.jpg?t=st=1729766876~exp=1729770476~hmac=dfc319cb549e9c2c48c693a2da7afd9a81017976d42fb95edd256a1920cd4f97&w=740",
+      src: "src/assets/Koi Bekko/ca-koi-bekko-4.webp",
       alt: "Koi Bekko",
       name: "bekko",
     },
     {
-      src: "https://img.freepik.com/premium-photo/beautiful-koi-fish-pond-with-elegance-color-koi-fish-ai-generated_1078402-29646.jpg?w=1060",
+      src: "src/assets/Koi-Doitsu/Cá koi Ginrin Showa 4.jpg",
       alt: "Koi Doitsu",
       name: "doitsu",
     },
     {
-      src: "https://img.freepik.com/premium-photo/two-koi-fish-are-displayed-white-surface_916107-60786.jpg?w=740",
+      src: "src/assets/Koi-Ginrin/Cá koi Ginrin Showa 4.jpg",
       alt: "Koi Girin",
       name: "girin",
     },
     {
-      src: "https://img.freepik.com/free-vector/flat-design-koi-fish-illustration_23-2149526706.jpg?t=st=1729766951~exp=1729770551~hmac=c4592a1147ce588898d3ea0f448a2586866b078d40c28a4791c3b24d074582b9&w=740",
+      src: "src/assets/koi-goshiki.jpg",
       alt: "Koi Goshiki",
       name: "goshiki",
     },
     {
-      src: "https://img.freepik.com/free-vector/flat-design-koi-fish-illustration_23-2149520773.jpg?t=st=1729766968~exp=1729770568~hmac=16f6005d6fa0088aeed939934b43112a04b067aea5c515711558634cffd157f0&w=740",
+      src: "src/assets/Koi Benigoi/BENIGOI1.jpg",
       alt: "Koi Benigoi",
       name: "benigoi",
     },
     {
-      src: "https://img.freepik.com/free-vector/hand-drawn-koi-illustration_23-2149594029.jpg?t=st=1729767019~exp=1729770619~hmac=d5a59aca482045eabed4a506478363d47a0b91df78b960f92c2188ef931dc9f2&w=740",
+      src: "src/assets/Koi-Asagi/4789c7fd1367ba7ae35a271f1b912a8c.png",
       alt: "Koi Asagi",
       name: "asagi",
     },
     {
-      src: "https://img.freepik.com/premium-photo/two-koi-fish-are-side-by-side-with-word-kodak-bottom_1097251-8030.jpg?w=740",
+      src: "src/assets/koi-platinum-ogon.jpg",
       alt: "Koi Platinum",
       name: "platinum",
     },
     {
-      src: "https://img.freepik.com/premium-photo/koi-fish-is-swimming-pond-with-red-white-pattern_886588-42346.jpg?w=1060",
+      src: "src/assets/Koi-shusui/R.jpg",
       alt: "Koi Shusui",
       name: "shusui",
     },

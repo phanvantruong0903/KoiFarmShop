@@ -36,7 +36,7 @@ import OrderingJapanKoi from "./Components/OrderingJapanKoi";
 import changePassword from "./Components/ChangePassword";
 const Staff = lazy(() => import("../src/An/Pages/Staff"));
 const Manager = lazy(() => import("./An/Pages/Manager/Manager"));
-const Profiles = lazy(() => import("../src/An/Pages/Staff/Profiles"));
+// const Profiles = lazy(() => import("../src/An/Pages/Staff/Profiles"));
 const Orders = lazy(() => import("../src/An/Pages/Staff/Orders"));
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; // Import style cho toast
@@ -49,7 +49,12 @@ import FormFillInformation from "./Components/FormFillInformation";
 import Chart from "./An/Pages/Charts/Charts";
 import PaymentMethod from "./Components/Paymentmethod";
 import ManageInvoices from "./An/Pages/Manager/ManageInvoices";
+import Profiles from "./An/Ant Design/Pages/Profiles";
+import AnTopBar from "./An/Ant Design/Components/ANTDTopbar";
 import Locakoinhapkhau from "./Components/LoCaKoiNhapKhau";
+import Consigns from "./An/Ant Design/Pages/Consigns";
+import Invoices from "./An/Ant Design/Pages/Invoices";
+import Suppliers from "./An/Ant Design/Pages/Suppliers";
 const router = createBrowserRouter([
   {
     path: "/login/oauth",
@@ -198,6 +203,28 @@ const router = createBrowserRouter([
   {
     path: "/paymentmethod",
     element: <PaymentMethod />,
+  },
+  {
+    path: "/NewDashboard",
+    element: <AnTopBar />,
+    children: [
+      {
+        path: "staff/Profiles",
+        element: <Profiles />,
+      },
+      {
+        path: "staff/Consigns",
+        element: <Consigns />,
+      },
+      {
+        path: "staff/Invoices",
+        element: <Invoices />,
+      },
+      {
+        path: "staff/Suppliers",
+        element: <Suppliers />,
+      },
+    ],
   },
   {
     path: "/lonhapkhau",

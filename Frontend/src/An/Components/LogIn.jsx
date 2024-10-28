@@ -48,7 +48,7 @@ function SignInForm() {
           }
           else if (result === "Manager") {
             toast.success("Login successfully");
-            navigate("/DashBoard/manager/Consign");
+            navigate("/NewDashBoard/staff/Profiles");
           }
         })
       navigate('/')

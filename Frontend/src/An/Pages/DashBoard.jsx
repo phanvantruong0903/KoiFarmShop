@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'antd/dist/reset.css'; 
+
 import { Container } from "react-bootstrap";
 import TopBar from "../Components/TopBar";
 import { useAuth } from "../../Context/AuthContext";
