@@ -79,7 +79,7 @@ usersRouter.patch(
   '/me',
   accessTokenValidator,
   verifiedUserValidator,
-  filterMiddleware(['name', 'address', 'phone_number', 'website', 'username', 'avatar']), //lọc ra những key cần thiết để update
+  filterMiddleware(['name', 'address', 'phone_number', 'website', 'username', 'picture']), //lọc ra những key cần thiết để update
   updateMeValidator,
   wrapAsync(updateMeController)
 )
@@ -115,6 +115,5 @@ usersRouter.get('/oauth/google', wrapAsync(oAuthController))
 usersRouter.get('/tat-ca-don-ki-gui', accessTokenValidator, wrapAsync(getAllConsignFromUserController))
 
 usersRouter.get('/get-orders', wrapAsync(getOrderController))
-
 
 export default usersRouter
