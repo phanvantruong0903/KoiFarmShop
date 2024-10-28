@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { HiLink } from "react-icons/hi";
 import { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
-import "../../Css/Modal.css";
+// import "../../Css/Modal.css";
 import axiosInstance from "../../Utils/axiosJS";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { initializeApp } from "firebase/app";
@@ -103,7 +103,7 @@ export default function ViewProfile({ actions, setactions, id }) {
             }
             alert('Profile updated successfully');
         } catch (error) {
-            console.log(error);
+            console.log(error.response.data);
         }
     };
 

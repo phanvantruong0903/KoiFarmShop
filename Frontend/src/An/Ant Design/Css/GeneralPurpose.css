@@ -1,0 +1,30 @@
+.Black-Strip {
+    cursor: pointer;
+    position: relative;
+    font-size: 1rem;
+    transition: background-color 0.6s ease;
+  }
+  
+  .ant-tabs-tab {
+    position: relative; 
+    padding-bottom: 5px; 
+  }
+  
+  .ant-tabs-tab::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0; 
+    height: 2px;
+    background-color: #007bff;
+    transition: width 0.6s ease;
+  }
+  
+  .ant-tabs-tab:hover::after,
+  .ant-tabs-tab-active::after {
+    width: 100%; /
+  }
+.fix-Table li a{
+    margin: 0!important;
+}
