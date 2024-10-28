@@ -3,9 +3,9 @@ import { Carousel } from "antd";
 import "./Slideshow.css"; // Ensure your CSS is included
 
 const images = [
-  "src/assets/koi1.jpg",
-  "src/assets/koi2.jpg",
-  "src/assets/koi3.webp",
+  "src/assets/pexels-quang-nguyen-vinh-222549-2131828.jpg",
+  "src/assets/van-chuyen-ca-koi-tu-nhat-ve-viet-nam-uy-tin.jpg",
+  "src/assets/image16-1661495517-88-width2048height1365.jpg",
   "src/assets/koi4.avif",
   "src/assets/koi5.jpg",
   // Add more image paths here

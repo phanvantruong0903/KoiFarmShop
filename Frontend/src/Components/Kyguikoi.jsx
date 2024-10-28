@@ -281,7 +281,11 @@ export default function Kyguikoi() {
                       },
                     ]}
                   >
-                    <Radio.Group onChange={handleChange}>
+                    <Radio.Group
+                      onChange={handleChange}
+                      name="Method"
+                      value={formData.Method}
+                    >
                       <Radio value="Online">Online</Radio>
                       <Radio value="Offline">Offline</Radio>
                     </Radio.Group>

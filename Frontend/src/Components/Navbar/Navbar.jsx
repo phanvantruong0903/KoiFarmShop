@@ -94,11 +94,13 @@ export default function Navbar() {
         pauseOnHover
       />
       <div className="navbar-content">
-        <img
-          src="src/assets/logo.png"
-          alt="Logo"
-          style={{ width: "100px", borderRadius: "50px", height: "100px" }}
-        />
+        <a href="/">
+          <img
+            src="src/assets/logo.png"
+            alt="Logo"
+            style={{ width: "100px", borderRadius: "50px", height: "100px" }}
+          />
+        </a>
         <div className="nav-links">
           <Link to="/" className="nav-link">
             TRANG CHỦ
