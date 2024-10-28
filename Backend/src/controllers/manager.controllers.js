@@ -29,6 +29,13 @@ export const getAllOrderController = async (req, res) => {
   })
 }
 
+export const getKoiAllController = async(req,res) =>{
+  const result = await databaseService.kois.find().toArray()
+  res.json({
+    result
+  })
+}
+
 export const getAllKoiController = async (req, res) => {
   try {
     const result = await databaseService.kois.find().toArray()

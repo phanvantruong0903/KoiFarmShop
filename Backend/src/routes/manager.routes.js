@@ -1,6 +1,7 @@
 import {
   createNewInvoiceGroupKoiController,
   createNewServiceController,
+  getKoiAllController,
   getProfitController,
   getRevenueController,
   updateOrderStatusController,
@@ -73,7 +74,7 @@ managerRouter.put(
 )
 managerRouter.get('/manage-order/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getAllOrderController))
 
-managerRouter.get('/manage-koi/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getAllKoiController))
+managerRouter.get('/manage-koi/get-all', accessTokenValidator, isAdminValidator, wrapAsync(getKoiAllController))
 
 managerRouter.put(
   '/manage-koi/updateKoi/:KoiID',
