@@ -146,6 +146,7 @@ const CardGrid = ({ cardData }) => {
                 <br />
                 <Text>Size : {card.Size} cm</Text>
                 <br />
+                Xuất xứ : {""}
                 {card.Status === 1 && <Text>Nhật Nhập Khẩu</Text>}
                 {card.Status === 2 && <Text>F1</Text>}
                 {card.Status === 3 && <Text>Việt</Text>}
@@ -191,6 +192,15 @@ const CardGrid = ({ cardData }) => {
                 <Text strong>
                   {card.KoiName || "N/A"} ({count})
                 </Text>
+                <Text>Số lượng : ({count})</Text>
+                <br />
+                <Text strong style={{ color: "#FF5722" }}>
+                  {card.Origin}
+                </Text>
+                <br />
+                Xuất xứ : {""}
+                {card.Status === 2 && <Text>F1</Text>}
+                {card.Status === 3 && <Text>Việt</Text>}
                 <br />
                 <Text strong style={{ color: "#FF5722" }}>
                   {card.Price
@@ -233,14 +243,15 @@ const CardGrid = ({ cardData }) => {
                 <Text strong>
                   {card.KoiName || "N/A"} ({count})
                 </Text>
+                <Text>Số lượng : ({count})</Text>
                 <br />
                 <Text strong style={{ color: "#FF5722" }}>
                   {card.Origin}
                 </Text>
                 <br />
+                Xuất xứ : {""}
                 {card.Status === 2 && <Text>F1</Text>}
                 {card.Status === 3 && <Text>Việt</Text>}
-
                 <br />
                 <Text strong style={{ color: "#FF5722" }}>
                   {card.Price
@@ -284,11 +295,14 @@ const CardGrid = ({ cardData }) => {
                   {card.KoiName || "N/A"} ({count})
                 </Text>
                 <br />
+                <Text>Số lượng ({count})</Text>
+                <br />
                 <Text strong style={{ color: "#FF5722" }}>
                   {card.Origin}
                 </Text>
                 <br />
-                {card.Status === 1 && <Text>Nhật</Text>}
+                Xuất xứ : {""}
+                {card.Status === 1 && <Text>Nhật Nhập Khẩu</Text>}
                 <br />
                 <Text strong style={{ color: "#FF5722" }}>
                   {card.Price
