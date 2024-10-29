@@ -55,26 +55,66 @@ const Footer = () => {
             </h2>
             <ul style={{ listStyle: "none", padding: 0 }}>
               <li style={{ marginBottom: "10px" }}>
-                <a href="/gioithieu">Giới thiệu</a>
+                <a href="/gioithieu" style={{ color: "white" }}>
+                  Giới thiệu{" "}
+                </a>
               </li>
-              <li style={{ marginBottom: "10px" }}>Cá Koi Nhật</li>
-              <li style={{ marginBottom: "10px" }}>Cá Koi F1</li>
-              <li style={{ marginBottom: "10px" }}>Cá Koi Mini</li>
-              <li style={{ marginBottom: "10px" }}>Giá Cá Koi</li>
+              <li style={{ marginBottom: "10px" }}>
+                <a href="/gioithieuvekoinhat" style={{ color: "white" }}>
+                  Cá Koi Nhật
+                </a>
+              </li>
+              <li style={{ marginBottom: "10px" }}>
+                {" "}
+                <a href="/gioithieuvekoif1" style={{ color: "white" }}>
+                  Cá Koi F1
+                </a>
+              </li>
+              <li style={{ marginBottom: "10px" }}>
+                {" "}
+                <a href="/gioithieuvekoiviet" style={{ color: "white" }}>
+                  Cá Koi Việt
+                </a>
+              </li>
             </ul>
           </div>
-
           <div style={{ flex: 1 }}>
-            <h2 style={{ paddingRight: "140px", marginBottom: "20px" }}>
-              Chính Sách
-            </h2>
+            <a href="/chinhsach">
+              <h2
+                style={{
+                  paddingRight: "140px",
+                  marginBottom: "20px",
+                  color: "white",
+                }}
+              >
+                Chính Sách
+              </h2>
+            </a>
             <ul style={{ listStyle: "none", paddingLeft: "20px" }}>
-              <li style={{ marginBottom: "10px" }}>Chính Sách Mua Hàng</li>
-              <li style={{ marginBottom: "10px" }}>Chính Sách Vận Chuyển</li>
-              <li style={{ marginBottom: "10px" }}>Chính Sách Đổi Trả</li>
-              <li style={{ marginBottom: "10px" }}>Chính Sách Bảo Hành</li>
               <li style={{ marginBottom: "10px" }}>
-                Chính Sách Bảo Mật Thông Tin
+                <a href="/chinhsachmuahang" style={{ color: "white" }}>
+                  Chính sách mua hàng
+                </a>
+              </li>
+              <li style={{ marginBottom: "10px" }}>
+                <a href="/chinhsachvanchuyen" style={{ color: "white" }}>
+                  Chính sách vận chuyển
+                </a>
+              </li>
+              <li style={{ marginBottom: "10px" }}>
+                <a href="/chinhsachdoitra" style={{ color: "white" }}>
+                  Chính sách đổi trả
+                </a>
+              </li>
+              <li style={{ marginBottom: "10px" }}>
+                <a href="/chinhsachbaohanh" style={{ color: "white" }}>
+                  Chính sách bảo hành
+                </a>
+              </li>
+              <li style={{ marginBottom: "10px" }}>
+                <a href="/chinhsachbaomatthongtin" style={{ color: "white" }}>
+                  Chính sách bảo mật thông tin
+                </a>
               </li>
             </ul>
           </div>

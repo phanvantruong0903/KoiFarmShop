@@ -4,15 +4,19 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 export default function VerifyEmail() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
-  React.useEffect(() => {
-    console.log(params);
-    const token = params.get("email_verify_token"); // LAM ON HOAT DONG
-    if (token) {
-      console.log(token);
-      localStorage.setItem("email_verify_token", token);
-      navigate("/profile");
-    }
-  }, [params]);
 
-  return;
+  React.useEffect(() => {
+    const token = params.get("email_verify_token");
+    if (token) {
+      console.log("Token found:", token);
+      localStorage.setItem("email_verify_token", token);
+      console.log("Navigating to /profile");
+
+      navigate("/Login");
+    } else {
+      console.log("No token found.");
+    }
+  }, [params, navigate]);
+
+  return null; // Ensure the component returns something
 }

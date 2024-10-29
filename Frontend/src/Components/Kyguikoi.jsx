@@ -489,9 +489,9 @@ export default function Kyguikoi() {
                   onChange={handleChange}
                   type="number"
                   placeholder="Nhập lượng thức ăn / ngày"
-                  step="0.01"
-                  min={0.01}
-                  max={1}
+                  step="1"
+                  min={1}
+                  max={100}
                 />
               </Form.Item>
 

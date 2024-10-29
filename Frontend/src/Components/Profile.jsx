@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Row, Col, Input, Button, Modal, Form } from "antd";
+import { Row, Col, Input, Button, Modal, Form, Spin } from "antd";
 import axiosInstance from "../An/Utils/axiosJS";
 import Footer from "./Footer";
 import Navbar from "./Navbar/Navbar";
@@ -58,24 +58,6 @@ export default function Profile() {
   const toastIdRef = useRef(null);
   const [currentComponent, setCurrentComponent] = useState("profile");
   const navigate = useNavigate();
-  useEffect(() => {
-    const { message } = location.state || {};
-    if (message) {
-      if (toastIdRef.current) {
-        toast.update(toastIdRef.current, {
-          render: message,
-          type: "success",
-          isLoading: false,
-          autoClose: 5000,
-        });
-      } else {
-        toastIdRef.current = toast.success(message, {
-          autoClose: 5000,
-          onClose: () => (toastIdRef.current = null),
-        });
-      }
-    }
-  }, [location.state]);
 
   const maskEmail = (email) => {
     const atIndex = email.indexOf("@");
@@ -210,7 +192,7 @@ export default function Profile() {
     if (selectedFile) {
       const imageUrl = await handleUploadImage(selectedFile);
       setUserData({ ...userData, avatar: imageUrl });
-      await updateUser("avatar", imageUrl); // Cập nhật URL hình ảnh lên server
+      await updateUser("picture", imageUrl); // Cập nhật URL hình ảnh lên server
       toast.success("Cập nhật ảnh đại diện thành công!");
       setShowImageModal(false); // Đóng modal sau khi tải ảnh thành công
     } else {
@@ -303,18 +285,27 @@ export default function Profile() {
         updateUser(field, userData[field])
       );
       await Promise.all(updatePromises);
-      toast.success("Cập nhật tất cả thông tin thành công.");
+      
       // Reload page after update
       window.location.reload();
     }
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <Spin
+          size="large"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        ></Spin>
+      </div>
+    );
   }
-  const handleNavigate = (path) => {
-    navigate(path); // Navigate to the specified path
-  };
 
   return (
     <>
@@ -336,9 +327,9 @@ export default function Profile() {
                 }}
               >
                 <div style={{ width: "40%" }}>
-                  {userData && userData.avatar ? (
+                  {userData && userData.picture ? (
                     <img
-                      src={userData.avatar}
+                      src={userData.picture}
                       alt="Profile"
                       style={{
                         width: "100px",
@@ -628,9 +619,9 @@ export default function Profile() {
                       span={12}
                       className="d-flex justify-content-center align-items-center"
                     >
-                      {userData.avatar ? (
+                      {userData.picture ? (
                         <img
-                          src={userData.avatar}
+                          src={userData.picture}
                           alt="Profile"
                           onClick={() => setShowImageModal(true)}
                           style={{
