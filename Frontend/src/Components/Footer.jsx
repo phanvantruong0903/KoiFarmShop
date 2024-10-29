@@ -33,7 +33,9 @@ const Footer = () => {
             />
           </div>
           <div style={{ flex: 1, marginRight: "60px" }}>
-            <h2 style={{ paddingRight: "200px", marginBottom: '20px' }}>Liên hệ</h2>
+            <h2 style={{ paddingRight: "200px", marginBottom: "20px" }}>
+              Liên hệ
+            </h2>
             <ul style={{ listStyle: "none", paddingLeft: "20px" }}>
               <li style={{ marginBottom: "10px" }}>
                 <FaLocationDot />: Phường Bến Thành, Quận 1, Hồ Chí Minh
@@ -48,9 +50,13 @@ const Footer = () => {
           </div>
 
           <div style={{ flex: 1 }}>
-            <h2 style={{ paddingRight: "200px", marginBottom: '20px' }}>Danh Mục</h2>
+            <h2 style={{ paddingRight: "200px", marginBottom: "20px" }}>
+              Danh Mục
+            </h2>
             <ul style={{ listStyle: "none", padding: 0 }}>
-              <li style={{ marginBottom: "10px" }}>Giới Thiệu</li>
+              <li style={{ marginBottom: "10px" }}>
+                <a href="/gioithieu">Giới thiệu</a>
+              </li>
               <li style={{ marginBottom: "10px" }}>Cá Koi Nhật</li>
               <li style={{ marginBottom: "10px" }}>Cá Koi F1</li>
               <li style={{ marginBottom: "10px" }}>Cá Koi Mini</li>
@@ -59,7 +65,9 @@ const Footer = () => {
           </div>
 
           <div style={{ flex: 1 }}>
-            <h2 style={{ paddingRight: "140px", marginBottom: '20px' }}>Chính Sách</h2>
+            <h2 style={{ paddingRight: "140px", marginBottom: "20px" }}>
+              Chính Sách
+            </h2>
             <ul style={{ listStyle: "none", paddingLeft: "20px" }}>
               <li style={{ marginBottom: "10px" }}>Chính Sách Mua Hàng</li>
               <li style={{ marginBottom: "10px" }}>Chính Sách Vận Chuyển</li>
@@ -72,11 +80,8 @@ const Footer = () => {
           </div>
         </div>
         <hr style={{ marginTop: "50px", borderColor: "white" }} />
-        <p
-          style={{ textAlign: "center", marginTop: "10px", fontSize: "14px" }}
-        >
-          Copyright © 2024. All Rights Reserved. Design Web
-          and SEO by FAGO AGENCY
+        <p style={{ textAlign: "center", marginTop: "10px", fontSize: "14px" }}>
+          Copyright © 2024. All Rights Reserved. Design Web and SEO by IKoi
         </p>
       </div>
     </div>

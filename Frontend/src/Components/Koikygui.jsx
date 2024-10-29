@@ -11,7 +11,7 @@ import { Container } from "react-bootstrap";
 const { Content } = Layout;
 const { Title } = Typography;
 
-export default function Koikygui() {
+export default function Koidangban() {
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

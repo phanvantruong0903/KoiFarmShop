@@ -66,8 +66,6 @@ export default function ChangePassword() {
     <>
       {/* Navbar Component */}
       <Layout>
-        <Navbar />
-
         <div style={{ paddingTop: "100px", backgroundColor: "smokegrey" }}>
           <Row justify="center">
             <Col>
@@ -130,7 +128,6 @@ export default function ChangePassword() {
           </Row>
         </div>
         {/* Footer Component */}
-        <Footer />
       </Layout>
     </>
   );

@@ -16,7 +16,7 @@ import Koishusui from "./Components/Koi/Koishusui";
 import Koiplatinum from "./Components/Koi/Koiplatinum";
 import Lienhe from "./Components/Lienhe";
 import Kienthuckoi from "./Components/Kienthuckoi";
-import Koikygui from "./Components/Koikygui";
+import Koidangban from "./Components/Koikygui";
 import Spinner from "./An/Components/Spinner";
 import DashBoard from "./An/Pages/DashBoard";
 import Home from "./Home";
@@ -130,8 +130,8 @@ const router = createBrowserRouter([
     element: <Gioithieusankygui />,
   },
   {
-    path: "/koikygui",
-    element: <Koikygui />,
+    path: "/koidangban",
+    element: <Koidangban />,
   },
   {
     path: "/login",

@@ -289,7 +289,6 @@ const CardGrid = ({ cardData }) => {
                 </Text>
                 <br />
                 {card.Status === 1 && <Text>Nhật</Text>}
-
                 <br />
                 <Text strong style={{ color: "#FF5722" }}>
                   {card.Price

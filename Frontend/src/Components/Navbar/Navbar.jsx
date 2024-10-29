@@ -45,39 +45,6 @@ export default function Navbar() {
     navigate("/Login", { state: { type: "signUp" } });
   };
 
-  const servicesMenu = useMemo(() => {
-    return (
-      <Dropdown.Menu className="custom-menu">
-        <Dropdown.Item
-          href="/kygui"
-          onMouseEnter={() => setActiveItem("/kygui")}
-          onMouseLeave={() => setActiveItem(null)}
-          className={activeItem === "/kygui" ? "active" : ""}
-        >
-          Koi ký gửi
-        </Dropdown.Item>
-        <Dropdown.Divider />
-        <Dropdown.Item
-          href="/koikygui"
-          onMouseEnter={() => setActiveItem("/koikygui")}
-          onMouseLeave={() => setActiveItem(null)}
-          className={activeItem === "/koikygui" ? "active" : ""}
-        >
-          Koi đang bán
-        </Dropdown.Item>
-        <Dropdown.Divider />
-        <Dropdown.Item
-          href="/lonhapkhau" // Thêm liên kết đến trang lô nhập khẩu
-          onMouseEnter={() => setActiveItem("/lonhapkhau")}
-          onMouseLeave={() => setActiveItem(null)}
-          className={activeItem === "/lonhapkhau" ? "active" : ""}
-        >
-          Lô nhập khẩu
-        </Dropdown.Item>
-      </Dropdown.Menu>
-    );
-  }, [activeItem]);
-
   return (
     <div
       className={`navbar ${isScrolled ? "navbar-scrolled" : ""}`} // Add class based on scroll
@@ -108,7 +75,7 @@ export default function Navbar() {
               className="nav-dropdown-toggle"
               href="/"
             >
-              Trang Chủ
+              Trang chủ
             </Dropdown.Toggle>
           </Dropdown>
 
@@ -123,7 +90,7 @@ export default function Navbar() {
               className="nav-dropdown-toggle"
               href="/gioithieu"
             >
-              Giới Thiệu
+              Giới thiệu
             </Dropdown.Toggle>
             <CSSTransition
               in={showDropdown1}
@@ -139,7 +106,7 @@ export default function Navbar() {
                   onMouseLeave={() => setActiveItem(null)}
                   className={activeItem === "/nguongocIKoi" ? "active" : ""}
                 >
-                  Nnguồn gốc của IKoi
+                  Nguồn gốc của IKoi
                 </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item
@@ -187,7 +154,7 @@ export default function Navbar() {
               id="dropdown-basic"
               className="nav-dropdown-toggle"
             >
-              Các Dòng Cá Koi
+              Các dòng cá Koi
             </Dropdown.Toggle>
             <CSSTransition
               in={showDropdown2}
@@ -275,7 +242,7 @@ export default function Navbar() {
             <Dropdown.Toggle
               id="dropdown-basic"
               className="nav-dropdown-toggle"
-              href="/kygui"
+              href="/koidangban"
             >
               Dịch vụ
             </Dropdown.Toggle>
@@ -286,7 +253,34 @@ export default function Navbar() {
               mountOnEnter
               unmountOnExit
             >
-              {servicesMenu}
+              <Dropdown.Menu className="custom-menu">
+                <Dropdown.Item
+                  href="/kygui"
+                  onMouseEnter={() => setActiveItem("/kygui")}
+                  onMouseLeave={() => setActiveItem(null)}
+                  className={activeItem === "/kygui" ? "active" : ""}
+                >
+                  Koi ký gửi
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item
+                  href="/koidangban"
+                  onMouseEnter={() => setActiveItem("/koidangban")}
+                  onMouseLeave={() => setActiveItem(null)}
+                  className={activeItem === "/koidangban" ? "active" : ""}
+                >
+                  Koi đang bán
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item
+                  href="/lonhapkhau" // Thêm liên kết đến trang lô nhập khẩu
+                  onMouseEnter={() => setActiveItem("/lonhapkhau")}
+                  onMouseLeave={() => setActiveItem(null)}
+                  className={activeItem === "/lonhapkhau" ? "active" : ""}
+                >
+                  Lô nhập khẩu
+                </Dropdown.Item>
+              </Dropdown.Menu>
             </CSSTransition>
           </Dropdown>
 
@@ -315,7 +309,7 @@ export default function Navbar() {
                 <Dropdown.Item href="/profile" className="custom-dropdown-item">
                   Xem hồ sơ
                 </Dropdown.Item>
-                <Dropdown.Divider />
+                {/* <Dropdown.Divider />
                 <Dropdown.Item
                   href="/trackingorder"
                   className="custom-dropdown-item"
@@ -342,7 +336,7 @@ export default function Navbar() {
                   className="custom-dropdown-item"
                 >
                   Đăng xuất
-                </Dropdown.Item>
+                </Dropdown.Item> */}
               </Dropdown.Menu>
             </Dropdown>
           ) : (

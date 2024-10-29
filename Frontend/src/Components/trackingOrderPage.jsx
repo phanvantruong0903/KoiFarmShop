@@ -2,7 +2,7 @@ import Navbar from "./Navbar/Navbar";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import { Table } from "react-bootstrap";
+import { Container, Table } from "react-bootstrap";
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Css/trackingorderpayStyle.css";
@@ -78,12 +78,8 @@ export default function TrackingOrderPage() {
 
   return (
     <>
-      <div>
-        <Navbar />
-      </div>
-      <div style={{ paddingTop: "100px", textAlign: "center" }}>
+      <Container>
         <h1>Tracking Order</h1>
-
         {/* Orders Table */}
         <Table striped bordered hover>
           <thead>
@@ -132,10 +128,7 @@ export default function TrackingOrderPage() {
           draggable
           pauseOnHover
         />
-      </div>
-      <div>
-        <Footer />
-      </div>
+      </Container>
     </>
   );
 }

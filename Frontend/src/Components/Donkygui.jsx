@@ -75,9 +75,8 @@ export default function DonKyGuiPage() {
       style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
     >
       <Layout style={{ backgroundColor: "whitesmoke" }}>
-        <Navbar />
         <Container style={{ paddingTop: "50px", paddingBottom: "10px" }}>
-          <Breadcrumb style={{ padding: "16px", marginTop: "10px" }}>
+          {/* <Breadcrumb style={{ padding: "16px", marginTop: "10px" }}>
             <Breadcrumb.Item href="/">
               <HomeOutlined />
               <span>Home</span>
@@ -85,7 +84,7 @@ export default function DonKyGuiPage() {
             <Breadcrumb.Item href="/donkygui">
               <span>Ký Gửi</span>
             </Breadcrumb.Item>
-          </Breadcrumb>
+          </Breadcrumb> */}
 
           <Row gutter={16}>
             <Col span={24}>
@@ -236,7 +235,6 @@ export default function DonKyGuiPage() {
             )}
           </Row>
         </Container>
-        <Footer />
       </Layout>
     </div>
   );

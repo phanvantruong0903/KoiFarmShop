@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Button, Card, Col, Row, Typography, Layout, Spin } from "antd";
+
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer";
 import { toast } from "react-toastify";
@@ -20,7 +20,20 @@ import Platinum from "./ThongTinCaKoi/Platinum";
 import Showa from "./ThongTinCaKoi/Showa";
 import Shusui from "./ThongTinCaKoi/Shusui";
 import Tancho from "./ThongTinCaKoi/Tancho";
-
+import {
+  Button,
+  Typography,
+  Spin,
+  Alert,
+  Layout,
+  Divider,
+  Row,
+  Col,
+  Breadcrumb,
+  Tooltip,
+  Card,
+} from "antd";
+import { HomeOutlined } from "@ant-design/icons";
 import { Container } from "react-bootstrap";
 const { Title, Text, Paragraph } = Typography;
 
@@ -173,7 +186,6 @@ const OrderPage = () => {
       return;
     }
 
-    setLoading(true);
     try {
       const response = await axios.post(
         "http://localhost:4000/order/detail/makes",
@@ -289,6 +301,24 @@ const OrderPage = () => {
         }}
       >
         <Container>
+          <div>
+            <Breadcrumb
+              style={{
+                padding: "16px",
+                marginTop: "10px",
+                backgroundColor: "#f7f7f7",
+                borderRadius: "5px",
+              }}
+            >
+              <Breadcrumb.Item style={{ color: "#1890ff" }} href="/">
+                <HomeOutlined />
+                <span>Home</span>
+              </Breadcrumb.Item>
+              <Breadcrumb.Item style={{ color: "#1890ff" }} href="/koidangban">
+                <span>Dịch vụ</span>
+              </Breadcrumb.Item>
+            </Breadcrumb>
+          </div>
           <div
             style={{
               display: "flex",

@@ -4,9 +4,21 @@ import Navbar from "./Navbar/Navbar";
 import { Container } from "react-bootstrap";
 import axios from "axios";
 import "./Css/supplierStyle.css";
-
-import { Layout, Typography } from "antd";
+import {
+  Button,
+  Typography,
+  Spin,
+  Alert,
+  Layout,
+  Divider,
+  Row,
+  Col,
+  Breadcrumb,
+  Tooltip,
+} from "antd";
+import { HomeOutlined } from "@ant-design/icons";
 import axiosInstance from "../An/Utils/axiosJS";
+
 const { Title, Text, Paragraph } = Typography;
 
 export default function NguonGocCuaIKoi() {
@@ -34,6 +46,7 @@ export default function NguonGocCuaIKoi() {
   return (
     <>
       <Navbar />
+
       <Container style={{ padding: "20px", paddingTop: "100px" }}>
         <div>
           <div style={{ textAlign: "center" }}>
