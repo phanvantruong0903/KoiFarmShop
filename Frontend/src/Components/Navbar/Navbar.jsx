@@ -337,6 +337,13 @@ export default function Navbar() {
                 >
                   Đăng xuất
                 </Dropdown.Item> */}
+                <Dropdown.Divider />
+                <Dropdown.Item
+                  onClick={handleLogout}
+                  className="custom-dropdown-item"
+                >
+                  Đăng xuất
+                </Dropdown.Item>{" "}
               </Dropdown.Menu>
             </Dropdown>
           ) : (
