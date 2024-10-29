@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Form, Descriptions, Divider, Input, Button, Select, Row, Col, Tag, Carousel, message, Upload, Image, Space, Modal } from 'antd';
+import { Avatar, Form, Descriptions, Divider, Input, Button, Select, Row, Col, Tag, Carousel, message, Upload, Image, Space, Modal, InputNumber } from 'antd';
 import { EditOutlined, CheckOutlined, CloseOutlined, UploadOutlined } from '@ant-design/icons';
 import axiosInstance from '../../Utils/axiosJS';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -9,13 +9,14 @@ export default function ConsignDetail({ consignID }) {
   const [consignData, setConsignData] = React.useState({});
   const [imageList, setImageList] = React.useState([]);
   const [video, setVideo] = React.useState(null);
+  const [catagoryList, setCatagoryList] = React.useState([]);
   const [validFieldForUpdate, setValidFieldForUpdate] = React.useState({
     name: "",
     address: "",
     phone_number: "",
     PositionCare: "",
     Method: "",
-    CategoryID: "4",
+    CategoryID: "",
     KoiName: "",
     Age: 0,
     Origin: "",
@@ -32,7 +33,18 @@ export default function ConsignDetail({ consignID }) {
     State: 0,
     Commission: 0
   });
-
+  React.useEffect(() => {
+    const fetchCatagory = async () => {
+      try {
+        const response = await axiosInstance.get('getAllKoi');
+        const { categoryList } = response.data;
+        setCatagoryList(categoryList);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchCatagory();
+  }, []);
   const [editField, setEditField] = React.useState(null);
   const [editValue, setEditValue] = React.useState(null);
   const [selectedAvatar, setSelectedAvatar] = React.useState(null);
@@ -158,6 +170,7 @@ export default function ConsignDetail({ consignID }) {
       content: `Are you sure you want to save changes to ${field}?`,
       onOk: async () => {
         try {
+
           const updatedFields = { ...validFieldForUpdate, [field]: editValue };
           setValidFieldForUpdate(updatedFields);
           setEditField(null);
@@ -182,7 +195,7 @@ export default function ConsignDetail({ consignID }) {
     setEditValue(null);
   };
 
-  const renderEditableItem = (label, value, field, inputType = 'text') => (
+  const renderEditableItem = (label, value, field, inputType) => (
     <Descriptions.Item label={label}>
       {editField === field ? (
         <>
@@ -207,15 +220,55 @@ export default function ConsignDetail({ consignID }) {
               <Select.Option value={3}>Việt Nam</Select.Option>
               <Select.Option value={4}>Ký Gửi</Select.Option>
             </Select>
-          ) : (
-            <Input value={editValue} onChange={(e) => setEditValue(e.target.value)} />
-          )}
+          )
+            :
+            inputType === 'selectSize' ? (
+              <InputNumber min={1} required value={editValue} onChange={(value) => setEditValue(value)} />
+            )
+
+
+
+              : inputType === 'selectCommission' ? (
+                <InputNumber min={0} required value={editValue} onChange={(value) => setEditValue(value)} suffix={"%"} />
+              ) : inputType === 'selectPrice' ? (
+                <InputNumber min={1000} required value={editValue} onChange={(value) => setEditValue(value)} suffix={'VND'} style={{ width: '10rem' }} />
+              ) : inputType === 'selectCategory' ? (
+                <Select value={editValue} onChange={(value) => setEditValue(value)}>
+                  {catagoryList.map((category) => (
+                    <Select.Option key={category._id} value={category._id}>
+                      {category.CategoryName}
+                    </Select.Option>
+                  ))}
+                </Select>
+              ) :
+      
+                inputType === 'setGender' ? (
+                  <Select value={editValue} onChange={(value) => setEditValue(value)}>
+                    <Select.Option value={'Male'} >Male</Select.Option>
+                    <Select.Option value={'Female'} > Female</Select.Option>
+                  </Select>) :
+                  inputType === 'selectBreed' ? (
+                    <Select value={editValue} onChange={(value) => setEditValue(value)}>
+                       <Select.Option value={'Nhập Khẩu Nhật'} >Nhập Khẩu Nhật</Select.Option>
+                      <Select.Option value={'Nhập Khẩu Việt'} >Nhập Khẩu Việt</Select.Option>
+                      <Select.Option value={'Nhập Khẩu Trung'} >Nhập Khẩu Trung</Select.Option>
+                      <Select.Option value={'Nhập Khẩu F1'} >Nhập Khẩu F1</Select.Option>
+                      </Select>
+                  ) :
+
+
+
+                  (
+                    <Input value={editValue} onChange={(e) => setEditValue(e.target.value)} />
+                  )}
           <Button icon={<CheckOutlined />} type="link" onClick={() => saveEdit(field)} />
           <Button icon={<CloseOutlined />} type="link" onClick={cancelEdit} />
         </>
       ) : (
         <>
-          {field === 'State' ? StateMapping(value) : field === 'Status' ? KoiStatusMapping(value) : value}
+          {field === 'State' ? StateMapping(value) : field === 'Status' ? KoiStatusMapping(value) : field === 'CategoryID' ? catagoryList.find((category) => category._id === value)?.CategoryName : value
+
+          }
           <Button icon={<EditOutlined />} type="link" onClick={() => toggleEdit(field, value)} />
         </>
       )}
@@ -225,10 +278,10 @@ export default function ConsignDetail({ consignID }) {
   return (
     <div style={{ padding: '20px' }}>
       <Form layout="vertical">
-        <Descriptions title="User Information" bordered>
-          <Descriptions.Item label="Full Name">{user.username}</Descriptions.Item>
-          {renderEditableItem("Address", user.address, "address")}
-          {renderEditableItem("Phone Number", user.phone_number, "phone_number")}
+        <Descriptions title="Thông tin người ký gửi" bordered>
+          <Descriptions.Item label="Tên người dùng">{user.name}</Descriptions.Item>
+          {renderEditableItem("Địa chỉ", user.address, "address")}
+          {renderEditableItem("Số điện thoại", user.phone_number, "phone_number")}
           <Descriptions.Item label="Verified">
             {user.verify ? 'Yes' : 'No'}
           </Descriptions.Item>
@@ -242,8 +295,9 @@ export default function ConsignDetail({ consignID }) {
         <Descriptions title="Consign Information" bordered>
           {renderEditableItem("Method", consign.Method, "Method", "selectMethod")}
           {renderEditableItem("Position Care", consign.PositionCare, "PositionCare")}
-          {renderEditableItem("State", consign.State, "State", "selectState")}
-          <Descriptions.Item label="Commission">{consign.Commission}</Descriptions.Item>
+          {renderEditableItem("Trạng thái đơn ký gửi", consign.State, "State", "selectState")}
+          {renderEditableItem("Hoa Hồng", consign.Commission, "Commission", "selectCommission")}
+
           <Descriptions.Item label="Total Price">
             {consign.TotalPrice == 0 ? (
               <Tag color="red">Not Provided</Tag>
@@ -257,18 +311,17 @@ export default function ConsignDetail({ consignID }) {
 
         <Descriptions title="Koi Information" bordered>
           {renderEditableItem("Koi Name", koi.KoiName, "KoiName")}
-          {renderEditableItem("Age", koi.Age, "Age")}
+          {renderEditableItem("Age", koi.Age, "Age", 'selectSize')}
           {renderEditableItem("Origin", koi.Origin, "Origin")}
-          {renderEditableItem("Gender", koi.Gender, "Gender")}
-          {renderEditableItem("Size (cm)", koi.Size, "Size")}
-          {renderEditableItem("Breed", koi.Breed, "Breed")}
+          {renderEditableItem("Gender", koi.Gender, "Gender", 'setGender')}
+          {renderEditableItem("Size (cm)", koi.Size, "Size", 'selectSize')}
+          {renderEditableItem("Breed", koi.Breed, "Breed", 'selectBreed')}
           {renderEditableItem("Certificate ID", koi.CertificateID, "CertificateID")}
-          {renderEditableItem("Price", formatCurrency(koi.Price), "Price")}
+          {renderEditableItem("Price", formatCurrency(koi.Price), "Price", "selectPrice")}
           {renderEditableItem("Daily Food Amount", koi.DailyFoodAmount, "DailyFoodAmount")}
-          {renderEditableItem("Filtering Ratio", koi.FilteringRatio, "FilteringRatio")}
+          {renderEditableItem("Filtering Ratio", koi.FilteringRatio, "FilteringRatio", 'selectSize')}
           {renderEditableItem("Status", koi.Status, "Status", "SelectStatus")}
-          <Space>
-          </Space>
+          {renderEditableItem("Category ID", koi.CategoryID, "CategoryID", 'selectCategory')}
           {renderEditableItem("Description", koi.Description, "Description")}
         </Descriptions>
         <Divider />

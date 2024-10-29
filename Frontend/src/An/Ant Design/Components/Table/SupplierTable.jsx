@@ -1,12 +1,12 @@
 import { Table, Avatar, Tag, Tooltip, message, Button, Dropdown, Menu, Checkbox, Input, Modal, Form, Select, Image, Upload } from "antd";
 import { CopyOutlined, DownOutlined } from "@ant-design/icons";
-import React from 'react';
+import React, { useEffect } from 'react';
 import axiosInstance from "../../../Utils/axiosJS";
 import moment from 'moment';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { initializeApp } from "firebase/app";
 
-export default function SupplierTable({ data, handleActionClick, Search }) {
+export default function SupplierTable({ data, showCreate, setCreate,ResetTable }) {
   const [selectedColumns, setSelectedColumns] = React.useState({});
   const [searchTerm, setSearchTerm] = React.useState('');
   const [isModalVisible, setIsModalVisible] = React.useState(false);
@@ -21,7 +21,11 @@ export default function SupplierTable({ data, handleActionClick, Search }) {
     messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
     appId: import.meta.env.VITE_APP_ID,
   };
-
+  useEffect(() => {
+    if (showCreate) {
+      showCreateModal();
+    }
+  }, [showCreate]);
   const app = initializeApp(firebaseConfig);
   const storage = getStorage(app);
   const showUpdateModal = (supplier) => {
@@ -29,24 +33,56 @@ export default function SupplierTable({ data, handleActionClick, Search }) {
     setIsModalVisible(true);
     form.setFieldsValue(supplier);
   };
+  const showCreateModal = () => {
+    setCurrentSupplier(null);
+    setIsModalVisible(true);
+  }
   const handleUpdate = async (values) => {
-    try {
-      const updatedData = { ...currentSupplier, ...values };
-      if (values.SupplierImage) {
-        const imageFile = values.SupplierImage;
-        const imageRef = ref(storage, `images/${imageFile.name}`);
-        await uploadBytes(imageRef, imageFile);
-        const downloadURL = await getDownloadURL(imageRef);
-        updatedData.SupplierImage = downloadURL;
+
+    setUploading(true);
+    if (showCreate == false) {
+      try {
+        const updatedData = { ...currentSupplier, ...values };
+        if (values.SupplierImage) {
+          const imageFile = values.SupplierImage;
+          const imageRef = ref(storage, `images/${imageFile.name}`);
+          await uploadBytes(imageRef, imageFile);
+          const downloadURL = await getDownloadURL(imageRef);
+          updatedData.SupplierImage = downloadURL;
+        }
+        await axiosInstance.put(`/manager/manage-supplier/${currentSupplier._id}`, updatedData);
+        message.success(`Supplier "${values.SupplierName}" has been updated.`);
+        ResetTable()
+        setIsModalVisible(false);
+      } catch (error) {
+        console.error(error);
+        message.error("Update failed. Please try again.");
+      } finally {
+        setUploading(false);
       }
-      await axiosInstance.put(`/manager/manage-supplier/${currentSupplier._id}`, updatedData);
-      message.success(`Supplier "${values.SupplierName}" has been updated.`);
-      setIsModalVisible(false);
-    } catch (error) {
-      console.error(error);
-      message.error("Update failed. Please try again.");
     }
-  };
+    else {
+      try {
+        const newSupplier = { ...values };
+        if (values.SupplierImage) {
+          const imageFile = values.SupplierImage;
+          const imageRef = ref(storage, `images/${imageFile.name}`);
+          await uploadBytes(imageRef, imageFile);
+          const downloadURL = await getDownloadURL(imageRef);
+          newSupplier.SupplierImage = downloadURL;
+        }
+        await axiosInstance.post(`/manager/manage-supplier/create-new-supplier`, newSupplier);
+        message.success(`Supplier "${values.SupplierName}" has been created.`);
+        setIsModalVisible(false);
+        ResetTable()
+      } catch (error) {
+        console.error(error);
+        message.error("Create failed. Please try again.");
+      } finally {
+        setUploading(false);
+      }
+    }
+  }
   const handleFileUpload = (file) => {
     const isSupportedFormat = ["image/jpeg", "image/png"].includes(file.type);
     if (!isSupportedFormat) {
@@ -59,6 +95,7 @@ export default function SupplierTable({ data, handleActionClick, Search }) {
   const handleCancel = () => {
     setIsModalVisible(false);
     form.resetFields();
+    setCreate(false);
   };
 
   const copyToClipboard = (text) => {
@@ -202,15 +239,15 @@ export default function SupplierTable({ data, handleActionClick, Search }) {
       <Table columns={columns} dataSource={data} rowKey="_id" />
 
       <Modal
-        title={`Update Supplier: ${currentSupplier?.SupplierName}`}
+        title={`Update Supplier: ${currentSupplier?.SupplierName || ''}`}
         visible={isModalVisible}
         onCancel={handleCancel}
         footer={[
           <Button key="cancel" onClick={handleCancel}>
             Cancel
           </Button>,
-          <Button key="update" type="primary" onClick={() => form.submit()}>
-            Update
+          <Button key="update" type="primary" onClick={() => form.submit()} loading={uploading}>
+            {uploading ? "Updating..." : "Update"}
           </Button>,
         ]}
       >
@@ -239,9 +276,9 @@ export default function SupplierTable({ data, handleActionClick, Search }) {
             rules={[{ required: true, message: 'Please enter the country' }]}
           >
             <Select>
-              <Select.Option value="Japan">Japan</Select.Option>
-              <Select.Option value="USA">USA</Select.Option>
-              <Select.Option value="Germany">Germany</Select.Option>
+              <Select.Option value="Nhật Bản">Nhật bản</Select.Option>
+              <Select.Option value="Việt Nam">Việt Nam</Select.Option>
+              <Select.Option value="Trung Quốc">Trung Quốc</Select.Option>
             </Select>
           </Form.Item>
 

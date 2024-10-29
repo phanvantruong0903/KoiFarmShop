@@ -42,9 +42,9 @@ export default function ViewProfile({ actions, setactions, id }) {
         setIsSubmitting(true);
         const res = await axiosInstance.get(`manager/manage-user/user${id}`);
         console.log(res.data.result);
-        const { _id, name, email, date_of_birth, verify, bio, location, website, username, Image, cover_photo, address } = res.data.result;
+        const { _id, name, email, date_of_birth, verify, bio, location, website, username, Image, cover_photo, address, picture } = res.data.result;
         const formattedDateOfBirth = date_of_birth ? date_of_birth.split('T')[0] : '';
-        setUser({ _id, name, email, date_of_birth, verify, bio, location, website, username, Image, cover_photo, address });
+        setUser({ _id, name, email, date_of_birth, verify, bio, location, website, username, Image, cover_photo, address, picture });
         setFormData({
           name: name || '',
           address: address || '',
@@ -91,6 +91,7 @@ export default function ViewProfile({ actions, setactions, id }) {
       if (selectedAvatar) {
         const imgRef = ref(storage, `images/${selectedAvatar.name}`);
         await uploadBytes(imgRef, selectedAvatar);
+        updatedData.picture = await getDownloadURL(imgRef);
       }
 
       if (selectedAvatar) {
@@ -122,7 +123,7 @@ export default function ViewProfile({ actions, setactions, id }) {
           {previewAvatar ? (
             <Image src={previewAvatar} roundedCircle className="profile-avatar" />
           ) : (
-            <Image src={user.Image || "https://via.placeholder.com/80"} roundedCircle className="profile-avatar" />
+            <Image src={user.picture || "https://via.placeholder.com/80"} roundedCircle className="profile-avatar" />
           )}
           <div className="d-flex flex-column align-items-end">
             <h5>{user.name || 'Amélie Laurent'}</h5>

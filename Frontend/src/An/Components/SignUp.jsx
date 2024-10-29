@@ -4,7 +4,7 @@ import useSignUpForm from "../Hooks/useSignUpForm";
 import { useAuth } from "../../Context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-
+import { message } from "antd";
 import 'react-toastify/dist/ReactToastify.css';
 function SignUpForm() {
   const navigate = useNavigate();
@@ -35,7 +35,19 @@ function SignUpForm() {
         }
       })
       .catch((error) => {
-        console.log(error.response);
+        console.log(error.response.data);
+        const errorObj = error.response.data;
+        console.log(errorObj.errors);
+        console.log(errorObj.errors.email);
+        if (errorObj.errors.password == 'Password length must be from 8 to 50') {
+          message.error('Mật khẩu phải từ 8 đến 50 ký tự');
+        }
+        else if (errorObj.errors.password == 'Password must be at least 8 characters long and contain at least 1 lowercase letter, 1 uppercase letter, 1 number, and 1 symbol') {
+          message.error('Mật khẩu phải chứa ít nhất một số và một chữ cái viết hoa và viết thường, và ít nhất 8 ký tự');
+        }
+        else if (errorObj.errors.email === 'Email already exists') {
+          message.error('Email đã tồn tại');
+        }
       })
       .finally(() => {
         setLoading(false);
@@ -43,7 +55,9 @@ function SignUpForm() {
   };
 
   return (
+    
     <div className="form-container sign-up-container">
+        
       <form onSubmit={(e) => handleSubmit(onSubmit, e)}>
         <h1>Create Account</h1>
         <div className="social-container">
