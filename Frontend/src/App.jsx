@@ -34,7 +34,7 @@ import GioiThieuVeKoiF1 from "./Components/GioitThieuVeKoiF1";
 import OrderingIKoi from "./Components/OrderingIKoi";
 import OrderingJapanKoi from "./Components/OrderingJapanKoi";
 import changePassword from "./Components/ChangePassword";
-import ChinhSach from "./Components/Page/ChinhSach/chinhSach";
+
 const Staff = lazy(() => import("../src/An/Pages/Staff"));
 const Manager = lazy(() => import("./An/Pages/Manager/Manager"));
 // const Profiles = lazy(() => import("../src/An/Pages/Staff/Profiles"));
@@ -211,10 +211,7 @@ const router = createBrowserRouter([
     path: "/cakoinhat",
     element: <CaKoiNhat />,
   },
-  {
-    path: "/chinhsach",
-    element: <ChinhSach />,
-  },
+
   {
     path: "/NewDashboard",
     element: <AnTopBar />,
