@@ -81,8 +81,10 @@ export const useManageKoi = () => {
         const fetchData = async () => {
             try {
                 const response = await axiosInstance.get('manager/manage-koi/get-all');
+                const catagoryResponse = await axiosInstance.get('getAllKoi');
                 console.log(response.data);
-                const { result, categoryList } = response.data;
+                const { categoryList } = catagoryResponse.data;
+                const { result } = response.data;
                 setResult(result);
                 setCategoryList(categoryList);
             } catch (error) {

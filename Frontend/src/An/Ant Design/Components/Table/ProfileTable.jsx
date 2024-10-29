@@ -89,15 +89,16 @@ export default function ProfileTable({ data, handleActionClick, Search }) {
     },
     {
       title: 'Avatar',
-      dataIndex: 'Image',
-      key: 'Image',
+      dataIndex: 'picture',
+      key: 'picture',
       render: (url) => <Avatar src={url} />,
     },
     {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
-      sorter: (a, b) => a.email.localeCompare(b.email),
+      sorter: (a, b) => (a.email || '').localeCompare(b.email || ''),
+      render: (text) => text || <Tag color="red">Not Provided</Tag>,
     },
     {
       title: 'Date of Birth',
@@ -145,7 +146,7 @@ export default function ProfileTable({ data, handleActionClick, Search }) {
     },
     {
       title: 'Action',
-      key: 'action',
+      key: 'Status',
       render: (_, record) => (
         <>
           <Button
@@ -155,12 +156,23 @@ export default function ProfileTable({ data, handleActionClick, Search }) {
           >
             Update
           </Button>
-          <Button
-            danger
-            onClick={() => handleActionClick('disable', record._id)}
-          >
-            Disable
-          </Button>
+          {
+            record.Status  == 1 ? (
+              <Button
+                type="primary"
+                onClick={() => handleActionClick('disable/enable', record._id,'enable')}
+              >
+                Enable
+              </Button>
+            ) : (
+              <Button danger 
+                variant="solid"
+                onClick={() => handleActionClick('disable/enable', record._id,'disable')}
+              >
+                Disable
+              </Button>
+          )
+          }
         </>
       ),
     },

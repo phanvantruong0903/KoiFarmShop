@@ -21,7 +21,7 @@ export default function Invoices() {
     const fetchCatagory = async () => {
       try {
         Promise.all([
-          axiosInstance.get('manager/manage-koi/get-all'),
+          axiosInstance.get('getAllKoi'),
           axiosInstance.get('manager/manage-supplier/get-all'),
           axiosInstance.get("manager/manage-invoice/get-all")
         ]).then(([Catresponse, SupResponse,InReponse]) => {
@@ -195,11 +195,12 @@ export default function Invoices() {
               { type: 'number', min: 0, max: 100, message: 'Giảm giá phải nằm trong khoảng 0 đến 100!' }
             ]}
           >
-            <InputNumber min={0} max={100} placeholder="Nhập giảm giá" style={{ width: '100%' }} />
+            <InputNumber min={0} max={100} placeholder="Nhập giảm giá" style={{ width: '100%' }} suffix={'%'} />
           </Form.Item>
         </Form>
       </Modal>
 
+      <Header style={{ background: '#f5f5f5' }}></Header>
       <Header style={{ background: '#f5f5f5' }}>
         <Typography.Title style={{ textAlign: 'center' }} level={1}>Invoice Dashboard</Typography.Title>
       </Header>

@@ -2,11 +2,10 @@ import { Table, Avatar, Tag, Tooltip, message, Button, Checkbox, Modal, Input, M
 import { CopyOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import React from 'react';
 import moment from 'moment';
-// import ProfileModal from "../Modal/ProfileModal";
 
 export default function ConsignTable({ data, handleActionClick, Search }) {
     const [activeFilters, setActiveFilters] = React.useState([]);
-    const [selectedColumns, setSelectedColumns] = React.useState({});
+    const [selectedColumns, setSelectedColumns] = React.useState({ 'UserID': true, 'KoiID': true });
     const [showColumnSelector, setShowColumnSelector] = React.useState(false);
     const [searchTerm, setSearchTerm] = React.useState('');
 
@@ -14,7 +13,8 @@ export default function ConsignTable({ data, handleActionClick, Search }) {
         navigator.clipboard.writeText(text);
         message.success("ID copied to clipboard!");
     };
-
+    React.useEffect(() => { 
+    }, [activeFilters]);
     const handleTableChange = (pagination, filters, sorter) => {
         const filterNames = [];
         Object.keys(filters).forEach((key) => {
@@ -26,6 +26,13 @@ export default function ConsignTable({ data, handleActionClick, Search }) {
             }
         });
         setActiveFilters(filterNames);
+    };
+    
+    const removeFilter = (filterToRemove) => {
+        const updatedFilters = activeFilters.filter(filter =>
+            !(filter.column === filterToRemove.column && JSON.stringify(filter.value) === JSON.stringify(filterToRemove.value))
+        );
+        setActiveFilters(updatedFilters);
     };
 
     const toggleColumnVisibility = (columnKey) => {
@@ -39,12 +46,6 @@ export default function ConsignTable({ data, handleActionClick, Search }) {
         setSelectedColumns({});
     };
 
-    // const removeFilter = (filterToRemove) => {
-    //     setActiveFilters(activeFilters.filter(filter =>
-    //         !(filter.column === filterToRemove.column && JSON.stringify(filter.value) === JSON.stringify(filterToRemove.value))
-    //     ));
-    // };
-
     const searchFunction = (item) => {
         const searchFields = ['_id', 'UserID', 'UserID', 'PositionCare', 'Description'];
         return searchFields.some(field =>
@@ -54,21 +55,25 @@ export default function ConsignTable({ data, handleActionClick, Search }) {
 
     const filteredData = searchTerm ? data.filter(searchFunction) : data;
 
-    const removeFilter = (filterToRemove) => {
-        setActiveFilters(activeFilters.filter(filter =>
-            !(filter.column === filterToRemove.column && JSON.stringify(filter.value) === JSON.stringify(filterToRemove.value))
-        ));
-    };
+   
     const FilterTag = ({ filter, onRemove }) => (
         <Tag closable onClose={() => onRemove(filter)} closeIcon={<CloseCircleOutlined />}>
             {filter.column}: {filter.value.join(', ')}
         </Tag>
     );
+    
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat('vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+    }).format(value);
+  };
     const columns = [
         {
             title: 'ID',
             dataIndex: '_id',
             key: '_id',
+            sorter: (a, b) => a._id.localeCompare(b._id),
             render: (text) => (
                 <>
                     <Tag color="blue">{text}</Tag>
@@ -85,36 +90,52 @@ export default function ConsignTable({ data, handleActionClick, Search }) {
             title: 'User ID',
             dataIndex: 'UserID',
             key: 'UserID',
+            sorter: (a, b) => a.UserID.localeCompare(b.UserID),
+            visible: false,
         },
         {
             title: 'Koi ID',
             dataIndex: 'UserID',
             key: 'KoiID',
+            sorter: (a, b) => a.UserID.localeCompare(b.UserID),
+            visible: false,
         },
         {
             title: 'Shipped Date',
             dataIndex: 'ShippedDate',
             key: 'ShippedDate',
+            sorter: (a, b) => moment(a.ShippedDate) - moment(b.ShippedDate),
             render: text => text || <Tag color="red">Not Provided</Tag>, 
         },
         {
             title: 'Receipt Date',
             dataIndex: 'ReceiptDate',
             key: 'ReceiptDate',
+            sorter: (a, b) => moment(a.ReceiptDate) - moment(b.ReceiptDate),
             render: text => text || <Tag color="red">Not Provided</Tag>,
         },
         {
             title: 'Description',
             dataIndex: 'Description',
             key: 'Description',
+            sorter: (a, b) => a.Description.localeCompare(b.Description),
             render: text => text || <Tag color="red">Not Provided</Tag>,
         },
         {
             title: 'State',
             dataIndex: 'State',
             key: 'State',
+            filters: [
+                { text: 'Yêu cầu ký gửi', value: 1 },
+                { text: 'Đang kiểm tra Koi', value: 2 },
+                { text: 'Đang thương thảo hợp đồng', value: 3 },
+                { text: 'Đang tìm người mua', value: 4 },
+                { text: 'Đã bán thành công', value: 5 },
+            ],
+            filteredValue: activeFilters.find(filter => filter.column === 'State')?.value || null,
+            filterMultiple: false,
+            onFilter: (value, record) => record.State === value,
             render: state => {
-               
                 const stateMap = {
                     1: 'Yêu cầu ký gửi',
                     2: 'Đang kiểm tra Koi',
@@ -122,43 +143,41 @@ export default function ConsignTable({ data, handleActionClick, Search }) {
                     4: 'Đang tìm người mua',
                     5: 'Đã bán thành công',
                 };
-                switch (state) {
-                    case 1:
-                        return <Tag color="blue">{stateMap[state]}</Tag>;
-                    case 2:
-                        return <Tag color="green">{stateMap[state]}</Tag>;
-                    case 3:
-                        return <Tag color="orange">{stateMap[state]}</Tag>;
-                    case 4:
-                        return <Tag color="purple">{stateMap[state]}</Tag>;
-                    case 5:
-                        return <Tag color="red">{stateMap[state]}</Tag>;
-                    default:
-                        return <Tag color="red">Unknown</Tag>;
-                }
+                return <Tag color={["blue", "green", "orange", "purple", "red"][state - 1]}>{stateMap[state]}</Tag> || <Tag color="red">Unknown</Tag>;
             },
         },
         {
             title: 'Method',
             dataIndex: 'Method',
             key: 'Method',
+            filters: [
+                { text: 'Online', value: 'Online' },
+                { text: 'Offline', value: 'Offline' },
+            ],
+            filteredValue: activeFilters.find(filter => filter.column === 'Method')?.value || null,
+            filterMultiple: false,
+            onFilter: (value, record) => record.Method === value,
+            render: text => <Tag color="green">{text}</Tag>
         },
         {
             title: 'Position Care',
             dataIndex: 'PositionCare',
             key: 'PositionCare',
+            sorter: (a, b) => a.PositionCare.localeCompare(b.PositionCare),
         },
         {
-            title: 'Commission',
+            title: 'Commission Rate',
             dataIndex: 'Commission',
             key: 'Commission',
-            render: text => text || <Tag color="red">Not Provided</Tag>,
+            sorter: (a, b) => a.Commission - b.Commission,
+            render: text => text ? `${text}%` : <Tag color="red">Not Provided</Tag>,
         },
         {
             title: 'Total Price',
             dataIndex: 'TotalPrice',
             key: 'TotalPrice',
-            render: text => text ? `$${text}` : <Tag color="red">Not Provided</Tag>, 
+            sorter: (a, b) => a.TotalPrice - b.TotalPrice,
+            render: text => text ? `${formatCurrency(text)}` : <Tag color="red">Not Provided</Tag>, 
         },
         {
             title: 'Action',
@@ -170,28 +189,9 @@ export default function ConsignTable({ data, handleActionClick, Search }) {
             ),
         }
     ].map(col => ({ ...col, visible: !selectedColumns[col.key] }));
-    const columnMenu = (
-        // <Menu onClick={(e) => e.domEvent.stopPropagation()}>
-        <Menu>
-            {columns.map((col) => (
-                <Menu.Item key={col.key} style={{ padding: 0 }}>
-                    <Checkbox
-                        checked={selectedColumns[col.key]}
-                        onChange={() => toggleColumnVisibility(col.key)}
-                        style={{ padding: '8px', width: '100%' }}
-                    >
-                        {col.title}
-                    </Checkbox>
-                </Menu.Item>
-            ))}
-            <Menu.Divider />
-            <Menu.Item style={{ padding: 8, textAlign: 'center' }}>
-                <Button onClick={resetColumns} block>Reset All</Button>
-            </Menu.Item>
-        </Menu>
-    );
-    const filteredColumns = columns.filter(col => col.visible);
 
+    const filteredColumns = columns.filter(col => col.visible);
+    
     return (
         <div>
             <p>
@@ -202,15 +202,10 @@ export default function ConsignTable({ data, handleActionClick, Search }) {
                     style={{ width: 200, marginBottom: 16 }}
                 />
                 <Button onClick={() => setShowColumnSelector(true)} >Select Columns</Button>
-                {/* <Dropdown overlay={columnMenu} trigger={['click']}>
-              
-                </Dropdown> */}
             </p>
-
             {activeFilters.map((filter, index) => (
                 <FilterTag key={index} filter={filter} onRemove={removeFilter} />
-            )
-            )}
+            ))}
             <Table
                 columns={filteredColumns}
                 dataSource={filteredData}
@@ -218,19 +213,17 @@ export default function ConsignTable({ data, handleActionClick, Search }) {
                 pagination={{ pageSize: 10 }}
                 onChange={handleTableChange}
             />
-
             <Modal
                 title="Select Columns"
                 visible={showColumnSelector}
                 onCancel={() => setShowColumnSelector(false)}
                 onOk={() => setShowColumnSelector(false)}
-
             >
                 {columns.map(col => (
                     <Checkbox
                         key={col.key}
                         checked={!selectedColumns[col.key]}
-                        onChange={(e) => toggleColumnVisibility(col.key)}
+                        onChange={() => toggleColumnVisibility(col.key)}
                     >
                         {col.title}
                     </Checkbox>
