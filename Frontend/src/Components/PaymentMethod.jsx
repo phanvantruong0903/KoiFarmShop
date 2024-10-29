@@ -5,6 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer";
+import axiosInstance from "../An/Utils/axiosJS";
 
 const { Title } = Typography;
 
@@ -55,12 +56,15 @@ const PaymentMethod = () => {
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/order/detail", {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        });
+        const response = await axiosInstance.get(
+          "http://localhost:4000/order/detail",
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        );
         console.log(response);
         if (response.status === 200) {
           const { koiList, orderDT } = response.data.result;

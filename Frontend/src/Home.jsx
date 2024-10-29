@@ -6,7 +6,7 @@ import "../src/Home.css";
 import Slideshow from "./Components/Slideshow";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "./Context/AuthContext";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Carousel } from "antd";
 import { Link } from "react-router-dom";
@@ -14,14 +14,13 @@ import "./Components/Css/homeStyle.css";
 import axios from "axios";
 import { Typography } from "antd";
 import { Button, Container } from "react-bootstrap";
-const { Title, Text, Paragraph } = Typography;
+const { Paragraph } = Typography;
 import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap CSS is imported
-import { Card, Row, Col } from "react-bootstrap";
+import axiosInstance from "./An/Utils/axiosJS";
+
 export default function Home() {
-  const isAuthenticated = localStorage.getItem("accessToken");
   const location = useLocation();
   const [lastMessage, setLastMessage] = useState("");
-  const { logout } = useAuth();
   const [suppliers, setSuppliers] = useState([]);
   const [koidata, setKoiData] = useState([]);
   const navigate = useNavigate();
@@ -42,8 +41,8 @@ export default function Home() {
     const fetchData = async () => {
       try {
         const [suppliersResponse, koiResponse] = await Promise.all([
-          axios.get("http://localhost:4000/manager/manage-supplier/get-all"),
-          axios.get("http://localhost:4000/getAllKoi"),
+          axiosInstance.get("/manager/manage-supplier/get-all"),
+          axiosInstance.get("/getAllKoi"),
         ]);
         setSuppliers(suppliersResponse.data.result);
         setKoiData(koiResponse.data.result.slice(0, 12));
@@ -78,11 +77,6 @@ export default function Home() {
       });
     };
   }, []);
-
-  const formData = JSON.parse(localStorage.getItem("formData"));
-  useEffect(() => {
-    console.log("Dữ liệu đã nhận:", formData);
-  }, [formData]);
 
   // Dữ liệu cá koi
   const koiData = [
@@ -158,16 +152,18 @@ export default function Home() {
         <Slideshow />
       </div>
 
-      <h4
-        style={{
-          marginTop: "40px",
-          marginLeft: "10%",
-          marginBottom: "40px",
-          color: "#FFB6C1",
-        }}
-      >
-        Xu hướng tìm kiếm
-      </h4>
+      <div style={{ display: "flex" }}>
+        <h4
+          style={{
+            marginTop: "40px",
+            marginLeft: "10%",
+            marginBottom: "40px",
+            color: "red",
+          }}
+        >
+          Xu hướng tìm kiếm
+        </h4>
+      </div>
       <Carousel
         autoplay
         style={{ marginLeft: "50px", marginRight: "50px" }}
@@ -241,16 +237,18 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <h4
-        style={{
-          marginTop: "60px",
-          marginLeft: "10%",
-          marginBottom: "40px",
-          color: "#FFB6C1",
-        }}
-      >
-        Các nhà cung cấp hàng đầu
-      </h4>
+      <div>
+        <h4
+          style={{
+            marginTop: "60px",
+            marginLeft: "10%",
+            marginBottom: "40px",
+            color: "red",
+          }}
+        >
+          Các nhà cung cấp hàng đầu
+        </h4>
+      </div>
 
       <Carousel
         autoplay
@@ -287,16 +285,18 @@ export default function Home() {
         )}
       </Carousel>
 
-      <h4
-        style={{
-          marginTop: "60px",
-          marginLeft: "9%",
-          marginBottom: "40px",
-          color: "#FFB6C1",
-        }}
-      >
-        Các loại cá mới
-      </h4>
+      <div>
+        <h4
+          style={{
+            marginTop: "60px",
+            marginLeft: "9%",
+            marginBottom: "40px",
+            color: "red",
+          }}
+        >
+          Các loại cá mới
+        </h4>
+      </div>
 
       <Carousel
         arrows

@@ -8,6 +8,7 @@ import Footer from "./Footer.jsx";
 import "./Css/locakoiStyle.css";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import axiosInstance from "../An/Utils/axiosJS.js";
 const { Title } = Typography;
 
 export default function Locakoinhapkhau() {
@@ -16,7 +17,7 @@ export default function Locakoinhapkhau() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
+        const response = await axiosInstance.get(
           "http://localhost:4000/get-kois-groupKoiID"
         );
         if (response.status === 200) {
@@ -32,20 +33,6 @@ export default function Locakoinhapkhau() {
 
     fetchData();
   }, []);
-
-  // Log koiData whenever it updates
-  useEffect(() => {
-    console.log("koiData updated:", koiData);
-  }, [koiData]);
-
-  // This useEffect logs koiData whenever it updates
-  useEffect(() => {
-    if (koiData) {
-      console.log("koiData updated:", koiData);
-    } else {
-      console.log("koiData is still null or undefined.");
-    }
-  }, [koiData]);
 
   return (
     <>

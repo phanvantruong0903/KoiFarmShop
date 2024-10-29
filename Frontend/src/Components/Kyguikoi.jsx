@@ -34,6 +34,15 @@ const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 
 export default function Kyguikoi() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    const loggedIn = !!accessToken; // Kiểm tra nếu có accessToken
+    setIsLoggedIn(loggedIn);
+
+    // Check localStorage for toast state
+  }, [isLoggedIn]);
+
   const [formData, setFormData] = useState({
     email: "",
     name: "",
@@ -62,6 +71,13 @@ export default function Kyguikoi() {
   const [userData, setUserData] = useState(null);
   const [categoryData, setCategoryData] = useState([]);
   const navigate = useNavigate();
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    const loggedIn = !!accessToken; // Kiểm tra nếu có accessToken
+    setIsLoggedIn(loggedIn);
+
+    // Điều hướng nếu người dùng đã đăng nhập
+  }, [navigate]); // Chỉ phụ thuộc vào navigate
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -95,7 +111,6 @@ export default function Kyguikoi() {
         toast.error("Ngày gửi không được ở quá khứ hoặc sau ngày nhận!");
         return;
       }
-
       // Parse Size and Age as integers, DailyFoodAmount and FilteringRatio as floats
       const dataToSend = {
         ...values,
@@ -125,17 +140,21 @@ export default function Kyguikoi() {
       dataToSend.Image = imageUrl;
       dataToSend.Video = videoUrl;
 
-      const response = await axios.post(
-        "http://localhost:4000/ki-gui",
-        dataToSend,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      const response = await axiosInstance.post("/ki-gui", dataToSend, {
+        headers: { "Content-Type": "application/json" },
+      });
 
       if (response.status === 200) {
         toast.success(response.data.message);
-        navigate("/", { state: { message: response.data.message } });
+        setTimeout(() => {
+          if (isLoggedIn) {
+            // Nếu người dùng đã đăng nhập, điều hướng đến "/donkygui"
+            navigate("/donkygui");
+          } else {
+            // Nếu chưa đăng nhập, điều hướng đến trang chính với thông điệp
+            navigate("/");
+          }
+        }, 5000);
       } else {
         toast.error(`Có lỗi xảy ra: ${response.data.message}`);
       }
@@ -168,7 +187,9 @@ export default function Kyguikoi() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/getAllKoi");
+        const response = await axiosInstance.get(
+          "http://localhost:4000/getAllKoi"
+        );
         if (Array.isArray(response.data.result)) {
           setCategoryData(response.data.categoryList);
         }
@@ -212,7 +233,10 @@ export default function Kyguikoi() {
                       },
                     ]}
                   >
-                    <Input placeholder="Nhập địa chỉ email (name@example.com)" />
+                    <Input
+                      placeholder="Nhập địa chỉ email (name@example.com)"
+                      disabled={!!userData}
+                    />
                   </Form.Item>
                   <Form.Item
                     label="Địa chỉ (*)"
@@ -221,7 +245,7 @@ export default function Kyguikoi() {
                       { required: true, message: "Vui lòng nhập địa chỉ." },
                     ]}
                   >
-                    <Input placeholder="Nhập địa chỉ" />
+                    <Input placeholder="Nhập địa chỉ" disabled={!!userData} />
                   </Form.Item>
                 </div>
                 <div style={{ width: "48%" }}>
@@ -235,7 +259,10 @@ export default function Kyguikoi() {
                       },
                     ]}
                   >
-                    <Input placeholder="Nhập số điện thoại" />
+                    <Input
+                      placeholder="Nhập số điện thoại"
+                      disabled={!!userData}
+                    />
                   </Form.Item>
                   <Form.Item
                     label="Tên người ký gửi (*)"
@@ -244,7 +271,7 @@ export default function Kyguikoi() {
                       { required: true, message: "Vui lòng nhập họ và tên." },
                     ]}
                   >
-                    <Input placeholder="Nhập họ và tên" />
+                    <Input placeholder="Nhập họ và tên" disabled={!!userData} />
                   </Form.Item>
                 </div>
               </div>
@@ -254,7 +281,7 @@ export default function Kyguikoi() {
                 <div style={{ width: "48%" }}>
                   <Form.Item
                     label="Nơi chăm sóc koi (*)"
-                    name="Method1" // Ensure you have a name prop
+                    name="PositionCare"
                     rules={[
                       {
                         required: true,
@@ -273,7 +300,7 @@ export default function Kyguikoi() {
                   </Form.Item>
                   <Form.Item
                     label="Phương thức nhận koi (*)"
-                    name="Method2"
+                    name="Method"
                     rules={[
                       {
                         required: true,
@@ -392,7 +419,7 @@ export default function Kyguikoi() {
 
               <Form.Item
                 label="Giới Tính (*)"
-                name="Method"
+                name="Gender"
                 rules={[
                   {
                     required: true,
@@ -429,8 +456,8 @@ export default function Kyguikoi() {
               </Form.Item>
 
               <Form.Item
-                label="Trạng Thái (*)"
-                name="Method"
+                label="Xuất xứ(*)"
+                name="Breed"
                 rules={[
                   {
                     required: true,
@@ -463,6 +490,8 @@ export default function Kyguikoi() {
                   type="number"
                   placeholder="Nhập lượng thức ăn / ngày"
                   step="0.01"
+                  min={0.01}
+                  max={1}
                 />
               </Form.Item>
 
@@ -480,6 +509,8 @@ export default function Kyguikoi() {
                   type="number"
                   placeholder="Nhập tỷ lệ lọc"
                   step="0.01"
+                  min={0.01}
+                  max={1}
                 />
               </Form.Item>
 

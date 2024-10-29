@@ -52,7 +52,7 @@ export default function TrackingOrderPage() {
       console.log("Fetching orders for User ID:", userId);
 
       try {
-        const response = await axios.get(
+        const response = await axiosInstance.get(
           "http://localhost:4000/users/get-orders",
           { params: { userID: userId } } // Gửi userID qua query parameters
         );
@@ -75,11 +75,6 @@ export default function TrackingOrderPage() {
 
     fetchOrders();
   }, [userData]);
-  useEffect(() => {
-    if (message) {
-      toast.success(message); // Show the toast with the message
-    }
-  }, [message]);
 
   return (
     <>

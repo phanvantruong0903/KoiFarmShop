@@ -71,24 +71,38 @@ const OrderPage = () => {
             CategoryID: selectedItem.CategoryID,
           }
         );
-
+        //
         if (response.status === 200) {
           let maxQty;
-
-          if (selectedItem.Size >= 5 && selectedItem.Size <= 14) {
+          if (
+            selectedItem.Size >= 5 &&
+            selectedItem.Size <= 14 &&
+            selectedItem.Status !== 4
+          ) {
             maxQty = 39;
             setSelectedQuantity(39); // Default to 39
-          } else if (selectedItem.Size >= 15 && selectedItem.Size <= 17) {
+            setMaxQuantity(response.data.result.CategoryName.Quantity); // Update maxQuantity
+          } else if (
+            selectedItem.Size >= 15 &&
+            selectedItem.Size <= 17 &&
+            selectedItem.Status !== 4
+          ) {
             maxQty = 25;
             setSelectedQuantity(25); // Default to 25
-          } else if (selectedItem.Size >= 18 && selectedItem.Size <= 20) {
+            setMaxQuantity(response.data.result.CategoryName.Quantity); // Update maxQuantity
+          } else if (
+            selectedItem.Size >= 18 &&
+            selectedItem.Size <= 20 &&
+            selectedItem.Status !== 4
+          ) {
             maxQty = 12; // Default to 12, with an extra 3
             setSelectedQuantity(12);
+            setMaxQuantity(response.data.result.CategoryName.Quantity); // Update maxQuantity
           } else {
             maxQty = response.data.result.CategoryName.Quantity; // Fallback for other sizes
             setSelectedQuantity(1); // Default to 1 for other sizes
+            setMaxQuantity(maxQty); // Update maxQuantity
           }
-          setMaxQuantity(maxQty); // Update maxQuantity
         }
       } catch (error) {
         console.error("Error sending order details:", error);
@@ -96,7 +110,58 @@ const OrderPage = () => {
     };
     sendOrderDetails();
   }, [selectedItem]);
+  //   useEffect(()=> {
+  //  const handleAddToCart = async () => {
+  //     if (!selectedItem || loading) return;
 
+  //     const totalQuantity = quantityInCart + selectedQuantity;
+
+  //     // Prevent adding if total exceeds maxQuantity
+  //     if (totalQuantity > maxQuantity) {
+  //       toast.error("Số lượng vượt quá giới hạn cho phép.");
+  //       return;
+  //     }
+
+  //     setLoading(true);
+  //     try {
+  //       const response = await axios.post(
+  //         "http://localhost:4000/order/detail/makes",
+  //         {
+  //           Size: parseInt(selectedItem.Size),
+  //           Breed: selectedItem.Breed,
+  //           CategoryID: selectedItem.CategoryID,
+  //           Quantity: parseInt(selectedQuantity),
+  //         },
+  //         {
+  //           withCredentials: true,
+  //         }
+  //       );
+
+  //       if (response.status === 200) {
+  //         const { result } = response.data; // Lấy thuộc tính 'result' từ phản hồi
+  //         console.log(result);
+  //         if (
+  //           typeof result === "string" &&
+  //           result.includes("available in stock")
+  //         ) {
+  //           setError(result); // Hiển thị thông điệp từ phản hồi
+  //           return;
+  //         }
+  //         console.log("Add to cart successful: " + response.data.message);
+  //         setOrderId(response.data.result.orderDT._id);
+  //       }
+  //       if (totalQuantity === maxQuantity) {
+  //         setIsAddedToCart(true);
+  //       }
+  //       toast.success("Đã thêm vào giỏ hàng!");
+  //     } catch (error) {
+  //       console.log(error);
+  //       toast.error("Có lỗi xảy ra! " + (error.response?.data?.message || ""));
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   },[])
   const handleAddToCart = async () => {
     if (!selectedItem || loading) return;
 
@@ -134,11 +199,8 @@ const OrderPage = () => {
           return;
         }
         console.log("Add to cart successful: " + response.data.message);
-        setOrderId(response.data.result.orderDT._id);
       }
-      if (totalQuantity === maxQuantity) {
-        setIsAddedToCart(true);
-      }
+
       toast.success("Đã thêm vào giỏ hàng!");
     } catch (error) {
       console.log(error);
@@ -147,21 +209,11 @@ const OrderPage = () => {
       setLoading(false);
     }
   };
-  const handleOrderPlacement = async () => {
+  const handleOrderNow = async () => {
     if (!selectedItem || loading) return;
-
-    const totalQuantity = quantityInCart + selectedQuantity;
-
-    // Prevent adding if total exceeds maxQuantity
-    if (totalQuantity > maxQuantity) {
-      toast.error("Số lượng vượt quá giới hạn cho phép.");
-      return;
-    }
 
     setLoading(true);
     try {
-      const price = 500000; // Fixed price for all combinations
-
       const response = await axios.post(
         "http://localhost:4000/order/detail/makes",
         {
@@ -176,28 +228,18 @@ const OrderPage = () => {
       );
 
       if (response.status === 200) {
+        const { result } = response.data; // Lấy thuộc tính 'result' từ phản hồi
+        console.log(result);
+        if (
+          typeof result === "string" &&
+          result.includes("available in stock")
+        ) {
+          setError(result); // Hiển thị thông điệp từ phản hồi
+          return;
+        }
         console.log("Add to cart successful: " + response.data.message);
-        setOrderId(response.data.result.orderDT._id);
       }
 
-      const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
-      const existingItem = existingCart.find(
-        (item) => item.itemId === selectedItem._id
-      );
-
-      if (existingItem) {
-        existingItem.quantity += parseInt(selectedQuantity);
-      } else {
-        existingCart.push({
-          itemId: selectedItem._id,
-          message: "Hàng đã vào giỏ hàng của bạn",
-          quantity: parseInt(selectedQuantity),
-          koi: selectedItem,
-          price: price, // Store fixed price in the cart
-        });
-      }
-
-      navigate("/formfillinformation");
       toast.success("Đã thêm vào giỏ hàng!");
     } catch (error) {
       console.log(error);
@@ -233,15 +275,6 @@ const OrderPage = () => {
 
     fetchData();
   }, []);
-  useEffect(() => {
-    const card = categoryData.find(
-      (card) => card._id === selectedItem.CategoryID
-    );
-    if (card) {
-      setCategoryName(card.CategoryName);
-      console.log("Categoryname" + categoryName);
-    }
-  }, [categoryData]); // Run this effect when categoryData changes
 
   if (loading) return <div>Loading...</div>;
 
@@ -280,17 +313,19 @@ const OrderPage = () => {
                     src={selectedItem.Image}
                     alt={selectedItem.KoiName}
                     style={{
-                      height: "400px",
                       width: "100%",
-                      objectFit: "cover",
+                      objectFit: "container",
                       borderRadius: "8px",
+                      maxHeight: "400px",
                     }}
                   />
                   <video
                     controls
                     style={{
                       width: "100%",
+                      objectFit: "cover",
                       marginTop: "10px",
+                      maxHeight: "300px",
                       borderRadius: "8px",
                     }}
                   >
@@ -380,7 +415,6 @@ const OrderPage = () => {
                         color: "red",
                       }}
                     >
-                      {error && <p style={{ color: "red" }}>{error}</p>}
                       {selectedItem.Size > 20 && (
                         <label>
                           <strong>Quantity: </strong>
@@ -428,83 +462,98 @@ const OrderPage = () => {
                         color: "red",
                       }}
                     >
-                      {selectedItem.Size >= 15 && selectedItem.Size <= 17 && (
-                        <Paragraph
-                          style={{
-                            fontSize: "20px",
-                            textAlign: "left",
-                            color: "red",
-                          }}
-                        >
-                          <strong>Combo: </strong>
-                          <input
-                            type="number"
+                      {selectedItem.Size >= 15 &&
+                        selectedItem.Size <= 17 &&
+                        selectedItem.Status !== 4 && (
+                          <Paragraph
                             style={{
-                              fontSize: "14px",
+                              fontSize: "20px",
+                              textAlign: "left",
                               color: "red",
-                              width: "48%",
                             }}
-                            value={comboQuantity}
-                            onChange={(e) => {
-                              const value = Math.max(e.target.value, 1);
-                              setComboQuantity(value);
-                              setSelectedQuantity(value * 25);
-                            }}
-                            min="1"
-                          />
-                        </Paragraph>
-                      )}
-                      {selectedItem.Size >= 5 && selectedItem.Size <= 14 && (
-                        <Paragraph
-                          style={{
-                            fontSize: "20px",
-                            textAlign: "left",
-                            color: "red",
-                          }}
-                        >
-                          <strong>Combo: </strong>
-                          <input
-                            type="number"
+                          >
+                            <strong>Combo: </strong>
+                            <input
+                              type="number"
+                              style={{
+                                fontSize: "14px",
+                                color: "red",
+                                width: "48%",
+                              }}
+                              value={comboQuantity}
+                              onChange={(e) => {
+                                const value = Math.max(e.target.value, 1);
+                                setComboQuantity(value);
+                                setSelectedQuantity(value * 25);
+                              }}
+                              min="1"
+                            />
+                          </Paragraph>
+                        )}
+                      {selectedItem.Size >= 5 &&
+                        selectedItem.Size <= 14 &&
+                        selectedItem.Status !== 4 && (
+                          <Paragraph
                             style={{
-                              fontSize: "14px",
+                              fontSize: "20px",
+                              textAlign: "left",
                               color: "red",
-                              width: "48%",
                             }}
-                            value={comboQuantity}
-                            onChange={(e) => {
-                              const value = Math.max(e.target.value, 1);
-                              setComboQuantity(value);
-                              setSelectedQuantity(value * 39);
-                            }}
-                            min="1"
-                          />
-                        </Paragraph>
-                      )}
-                      {selectedItem.Size >= 18 && selectedItem.Size <= 20 && (
-                        <Paragraph
-                          style={{
-                            fontSize: "20px",
-                            textAlign: "left",
-                            color: "red",
-                          }}
-                        >
-                          <strong>Combo: </strong>
-                          <input
-                            type="number"
-                            style={{
-                              fontSize: "14px",
-                              color: "red",
-                              width: "48%",
-                            }}
-                            value={comboQuantity}
-                            onChange={(e) => {
-                              const value = Math.max(e.target.value, 1);
-                              setComboQuantity(value);
-                              setSelectedQuantity(value * 12);
-                            }}
-                            min="1"
-                          />
-                        </Paragraph>
+                          >
+                            <strong>Combo: </strong>
+                            <input
+                              type="number"
+                              style={{
+                                fontSize: "14px",
+                                color: "red",
+                                width: "48%",
+                              }}
+                              value={comboQuantity}
+                              onChange={(e) => {
+                                const value = Math.max(e.target.value, 1);
+                                setComboQuantity(value);
+                                setSelectedQuantity(value * 39);
+                              }}
+                              min="1"
+                            />
+                          </Paragraph>
+                        )}
+                      {selectedItem.Size >= 18 &&
+                        selectedItem.Size <= 20 &&
+                        selectedItem.Status !== 4 && (
+                          <div>
+                            <Paragraph
+                              style={{
+                                fontSize: "20px",
+                                textAlign: "left",
+                                color: "red",
+                              }}
+                            >
+                              <strong>Combo: </strong>
+                              <input
+                                type="number"
+                                style={{
+                                  fontSize: "14px",
+                                  color: "red",
+                                  width: "48%",
+                                }}
+                                value={comboQuantity}
+                                onChange={(e) => {
+                                  const value = Math.max(e.target.value, 1);
+                                  setComboQuantity(value);
+                                  setSelectedQuantity(value * 12);
+                                }}
+                                min="1"
+                              />
+                            </Paragraph>
+                          </div>
+                        )}
+                      {maxQuantity < selectedQuantity && (
+                        <div>
+                          <span style={{ color: "red" }}>
+                            Cá trong kho không đủ
+                          </span>
+                        </div>
                       )}
                     </div>
                   </Paragraph>
@@ -527,8 +576,8 @@ const OrderPage = () => {
                         type="primary"
                         danger
                         size="large"
-                        onClick={handleOrderPlacement}
-                        disabled={isAddedToCart || !!error} // Disable if there's an error
+                        onClick={handleOrderNow}
+                        disabled={!!error} // Disable if there's an error
                         style={{
                           flex: "0 1 40%", // Adjust width
                           padding: "10px", // Reduce padding
@@ -576,11 +625,7 @@ const OrderPage = () => {
                         onClick={handleAddToCart}
                         loading={loading}
                         size="large"
-                        disabled={
-                          isAddedToCart ||
-                          quantityInCart + selectedQuantity > maxQuantity ||
-                          !!error
-                        } // Disable if there's an error
+                        disabled={!!error} // Disable if there's an error
                         onMouseEnter={(e) => {
                           if (
                             !(
@@ -611,19 +656,9 @@ const OrderPage = () => {
                         <FaCartPlus style={{ marginRight: "8px" }} />
                         {isAddedToCart ? "Đã Thêm" : "Thêm Vào Giỏ Hàng"}
                       </Button>
+                      {}
                     </div>
                   </Paragraph>
-                  {isAddedToCart && (
-                    <Paragraph
-                      style={{
-                        color: "green",
-                        fontWeight: "bold",
-                        marginTop: "10px",
-                      }}
-                    >
-                      Hàng đã vào giỏ hàng của bạn!
-                    </Paragraph>
-                  )}
                 </>
               )}
             </div>
@@ -716,6 +751,37 @@ const OrderPage = () => {
                     Certificate ID:{" "}
                   </span>
                   {selectedItem.CertificateID}
+                </li>
+                <li
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: "20px",
+                    marginBottom: "8px",
+                  }}
+                >
+                  <span style={{ fontWeight: "normal", fontSize: "20px" }}>
+                    Status:{" "}
+                  </span>
+                  {selectedItem.Status === 4 && (
+                    <span style={{ fontWeight: "normal", fontSize: "20px" }}>
+                      Status: Ký Gửi
+                    </span>
+                  )}
+                  {selectedItem.Status === 1 && (
+                    <span style={{ fontWeight: "normal", fontSize: "20px" }}>
+                      Status: Nhập Nhập Khẩu
+                    </span>
+                  )}
+                  {selectedItem.Status === 2 && (
+                    <span style={{ fontWeight: "normal", fontSize: "20px" }}>
+                      Status: F1
+                    </span>
+                  )}
+                  {selectedItem.Status === 3 && (
+                    <span style={{ fontWeight: "normal", fontSize: "20px" }}>
+                      Status: Việt
+                    </span>
+                  )}
                 </li>
               </ul>
             </Paragraph>

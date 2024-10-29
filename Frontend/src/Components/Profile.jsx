@@ -170,26 +170,25 @@ export default function Profile() {
     }
   };
 
-  const fetchUserData = async () => {
-    setLoading(true);
-    try {
-      const response = await axiosInstance.get("users/me");
-      if (response.data) {
-        setUserData(response.data.result);
-        setOriginalUserData(response.data.result); // Lưu trữ dữ liệu gốc
-      } else {
-        console.error("Dữ liệu không hợp lệ:", response.data);
-      }
-    } catch (error) {
-      console.error("Có lỗi xảy ra khi lấy thông tin người dùng:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchUserData = async () => {
+      setLoading(true);
+      try {
+        const response = await axiosInstance.get("users/me");
+        if (response.data) {
+          setUserData(response.data.result);
+          setOriginalUserData(response.data.result); // Lưu trữ dữ liệu gốc
+        } else {
+          console.error("Dữ liệu không hợp lệ:", response.data);
+        }
+      } catch (error) {
+        console.error("Có lỗi xảy ra khi lấy thông tin người dùng:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchUserData();
-  }, []);
+  }, [userData]);
 
   const maskedEmail =
     userData && userData.email ? maskEmail(userData.email) : "";

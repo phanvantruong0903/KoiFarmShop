@@ -6,6 +6,7 @@ import axios from "axios";
 import "./Css/supplierStyle.css";
 
 import { Layout, Typography } from "antd";
+import axiosInstance from "../An/Utils/axiosJS";
 const { Title, Text, Paragraph } = Typography;
 
 export default function NguonGocCuaIKoi() {
@@ -15,7 +16,7 @@ export default function NguonGocCuaIKoi() {
   useEffect(() => {
     const fetchSupplierData = async () => {
       try {
-        const response = await axios.get(
+        const response = await axiosInstance.get(
           "http://localhost:4000/manager/manage-supplier/get-all"
         );
         if (response.status === 200) {

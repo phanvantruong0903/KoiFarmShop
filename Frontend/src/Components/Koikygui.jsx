@@ -5,6 +5,7 @@ import Footer from "./Footer";
 import CardGrid from "./Cardgrid";
 import axios from "axios";
 import "./Koikygui.css";
+import axiosInstance from "../An/Utils/axiosJS";
 import { Container } from "react-bootstrap";
 
 const { Content } = Layout;
@@ -24,7 +25,9 @@ export default function Koikygui() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/getAllKoi");
+        const response = await axiosInstance.get(
+          "http://localhost:4000/getAllKoi"
+        );
         if (Array.isArray(response.data.result)) {
           setCardData(response.data.result);
 
@@ -53,7 +56,7 @@ export default function Koikygui() {
     };
 
     fetchData();
-  }, []);
+  }, [cardData]);
 
   const handleCategoryChange = (e) => setSelectedCategory(e.target.value);
   const handleSizeChange = (value) => setSelectedSize(value);

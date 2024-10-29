@@ -6,6 +6,7 @@ import { Empty } from "antd"; // Import only Empty from Ant Design
 import Cookies from "js-cookie";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { Typography } from "antd";
+import axiosInstance from "../An/Utils/axiosJS";
 const { Text } = Typography;
 
 export default function ShoppingCart() {
@@ -39,12 +40,15 @@ export default function ShoppingCart() {
   useEffect(() => {
     const fetchOrderDetails = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/order/detail", {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        });
+        const response = await axiosInstance.get(
+          "http://localhost:4000/order/detail",
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        );
         console.log(response);
         if (response.status === 200) {
           const { koiList, orderDT } = response.data.result;
@@ -83,7 +87,7 @@ export default function ShoppingCart() {
       return;
     }
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         "http://localhost:4000/order/detail/edit",
         {
           KoiID: koiId,
@@ -128,7 +132,7 @@ export default function ShoppingCart() {
   const handleDeleteKoi = async (koiId) => {
     console.log(`Deleting Koi with ID: ${koiId}`);
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         "http://localhost:4000/order/detail/remove",
         { KoiID: koiId.toString() },
         {
