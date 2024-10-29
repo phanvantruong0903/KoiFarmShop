@@ -41,8 +41,9 @@ export default function AnTopBar({ children, name, role }) {
         { key: "5", label: <Link to="/NewDashBoard/staff/Suppliers">Quản Lý Nhà Cung Cấp</Link> },
         { key: "6", label: <Link to="/NewDashBoard/staff/Invoices">Quản Lý Hóa Đơn</Link> },
         {key: "8" , label: <Link to="/NewDashBoard/staff/Orders">Quản Lý Đơn Hàng</Link>},
+        { key: "9", label: <Link to="/NewDashBoard/staff/Kois">Quản Lý Cá Koi</Link> },
         { type: "divider" },
-        { key: "8", label: <p onClick={logout}>Đăng Xuất</p> },
+        { key: "10", label: <p onClick={logout}>Đăng Xuất</p> },
     ];
 
     const menu = <Menu items={menuItems} />;

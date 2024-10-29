@@ -58,6 +58,7 @@ import Invoices from "./An/Ant Design/Pages/Invoices";
 import Suppliers from "./An/Ant Design/Pages/Suppliers";
 import CaKoiNhat from "./Components/CaKoiNhat";
 import OrdersNext from "./An/Ant Design/Pages/Orders";
+import Kois from "./An/Ant Design/Pages/Kois";
 const router = createBrowserRouter([
   {
     path: "/login/oauth",
@@ -235,7 +236,7 @@ const router = createBrowserRouter([
       {
         path: "staff/Orders",
         element: <OrdersNext />,
-      },
+      }
     ],
   },
   {

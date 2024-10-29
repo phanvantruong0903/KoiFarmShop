@@ -5,7 +5,7 @@ import moment from 'moment';
 
 export default function ConsignTable({ data, handleActionClick, Search }) {
     const [activeFilters, setActiveFilters] = React.useState([]);
-    const [selectedColumns, setSelectedColumns] = React.useState({ 'UserID': true, 'KoiID': true });
+    const [selectedColumns, setSelectedColumns] = React.useState({ 'UserID': true, 'KoiID': true,'Description' : true });
     const [showColumnSelector, setShowColumnSelector] = React.useState(false);
     const [searchTerm, setSearchTerm] = React.useState('');
 
@@ -91,6 +91,18 @@ export default function ConsignTable({ data, handleActionClick, Search }) {
             dataIndex: 'UserID',
             key: 'UserID',
             sorter: (a, b) => a.UserID.localeCompare(b.UserID),
+            render: text => (
+                <>
+                    <Tag color="blue">{text}</Tag>
+                    <Tooltip title="Copy ID">
+                        <CopyOutlined
+                            style={{ marginLeft: 8, cursor: 'pointer', float: 'right' }}
+                            onClick={() => copyToClipboard(text)}
+                        />
+                    </Tooltip>
+
+                </>
+            ),
             visible: false,
         },
         {
@@ -99,6 +111,17 @@ export default function ConsignTable({ data, handleActionClick, Search }) {
             key: 'KoiID',
             sorter: (a, b) => a.UserID.localeCompare(b.UserID),
             visible: false,
+            render: text => (
+                <>
+                    <Tag color="blue">{text}</Tag>
+                    <Tooltip title="Copy ID">
+                        <CopyOutlined
+                            style={{ marginLeft: 8, cursor: 'pointer', float: 'right' }}
+                            onClick={() => copyToClipboard(text)}
+                        />
+                    </Tooltip>
+                </>
+            ),
         },
         {
             title: 'Shipped Date',

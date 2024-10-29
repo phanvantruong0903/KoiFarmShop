@@ -242,7 +242,7 @@ export const useManageKoi = () => {
             const newKoi = await axiosInstance.post(`manager/manage-koi/create-new-koi`, {
                 ...koiData,
                 CategoryID: categoryId,
-                Status: 1 // Assuming default status is 1 (Imported)
+                Status: 1 
             });
 
             setResult(prevResult => [...prevResult, newKoi]);
