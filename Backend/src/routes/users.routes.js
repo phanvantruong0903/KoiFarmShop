@@ -17,6 +17,7 @@ import {
   emailVerifyTokenController,
   forgotPasswordController,
   getAllConsignFromUserController,
+  getConsignFromUserController,
   getMeController,
   getOrderController,
   getProfileController,
@@ -115,5 +116,16 @@ usersRouter.get('/oauth/google', wrapAsync(oAuthController))
 usersRouter.get('/tat-ca-don-ki-gui', accessTokenValidator, wrapAsync(getAllConsignFromUserController))
 
 usersRouter.get('/get-orders/:userID', wrapAsync(getOrderController))
+
+usersRouter.get('/tat-ca-don-ki-gui/:_id', accessTokenValidator, wrapAsync(getConsignFromUserController))
+
+// usersRouter.patch(
+//   '/update-consign',
+//   accessTokenValidator,
+//   verifiedUserValidator,
+//   filterMiddleware(['name', 'address', 'phone_number', 'website', 'username', 'picture']), //lọc ra những key cần thiết để update
+//   updateMeValidator,
+//   wrapAsync(updateMeController)
+// )
 
 export default usersRouter
