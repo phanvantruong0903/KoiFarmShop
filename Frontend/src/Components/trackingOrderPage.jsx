@@ -51,6 +51,8 @@ export default function TrackingOrderPage() {
           `http://localhost:4000/users/get-orders/${userId}`
         );
 
+        console.log("API Response:", response); // Log the entire response
+
         if (response.status === 200) {
           setOrders(response.data.orderDetails || []);
         } else {
@@ -66,7 +68,13 @@ export default function TrackingOrderPage() {
 
     fetchOrders();
   }, [userData]);
-
+  if (!orders || orders.length === 0) {
+    return (
+      <div style={{ textAlign: "center", paddingTop: "100px", color: "red" }}>
+        Chưa có lịch sử mua hàng
+      </div>
+    ); // Message when there are no orders
+  }
   return (
     <Container>
       <h1>Tracking Order</h1>

@@ -69,45 +69,45 @@ export default function Profile() {
     return email;
   };
 
-  const validateField = (field) => {
-    const newErrors = {};
-    switch (field) {
-      case "username":
-        if (!isValidUsername(userData.username)) {
-          newErrors.username = "Tên đăng nhập không được có ký tự đặc biệt.";
-        }
-        break;
-      case "name":
-        if (!isValidNameOrAddress(userData.name)) {
-          newErrors.name =
-            "Tên không được có ký tự đặc biệt và khoảng cách liên tiếp.";
-        }
-        break;
-      case "address":
-        if (!isValidNameOrAddress(userData.address)) {
-          newErrors.address =
-            "Địa chỉ không được có ký tự đặc biệt và khoảng cách liên tiếp.";
-        }
-        break;
-      case "phone_number":
-        if (!isValidPhoneNumber(userData.phone_number)) {
-          newErrors.phone_number = "Số điện thoại phải từ 10 đến 11 chữ số.";
-        }
-        break;
-      case "website":
-        if (userData.website && !isValidURL(userData.website)) {
-          setWebsiteError(
-            "Website không hợp lệ. Vui lòng nhập một URL hợp lệ."
-          );
-          return;
-        }
-        setWebsiteError(""); // Reset lỗi nếu URL hợp lệ
-        break;
-      default:
-        break;
-    }
-    return newErrors;
-  };
+  // const validateField = (field) => {
+  //   const newErrors = {};
+  //   switch (field) {
+  //     case "username":
+  //       if (!isValidUsername(userData.username)) {
+  //         newErrors.username = "Tên đăng nhập không được có ký tự đặc biệt.";
+  //       }
+  //       break;
+  //     case "name":
+  //       if (!isValidNameOrAddress(userData.name)) {
+  //         newErrors.name =
+  //           "Tên không được có ký tự đặc biệt và khoảng cách liên tiếp.";
+  //       }
+  //       break;
+  //     case "address":
+  //       if (!isValidNameOrAddress(userData.address)) {
+  //         newErrors.address =
+  //           "Địa chỉ không được có ký tự đặc biệt và khoảng cách liên tiếp.";
+  //       }
+  //       break;
+  //     case "phone_number":
+  //       if (!isValidPhoneNumber(userData.phone_number)) {
+  //         newErrors.phone_number = "Số điện thoại phải từ 10 đến 11 chữ số.";
+  //       }
+  //       break;
+  //     case "website":
+  //       if (userData.website && !isValidURL(userData.website)) {
+  //         setWebsiteError(
+  //           "Website không hợp lệ. Vui lòng nhập một URL hợp lệ."
+  //         );
+  //         return;
+  //       }
+  //       setWebsiteError(""); // Reset lỗi nếu URL hợp lệ
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  //   return newErrors;
+  // };
 
   const handleUpdate = async (field) => {
     const errors = validateField(field);
@@ -145,11 +145,22 @@ export default function Profile() {
     } catch (error) {
       console.error("Error updating profile:", error);
       toast.error("Cập nhật thất bại.");
+
       if (error.response) {
         console.error("Error response data:", error.response.data);
-        toast.error(
-          `Lỗi: ${error.response.data.message || "Vui lòng thử lại."}`
-        );
+
+        // Check for specific validation errors
+        if (error.response.status === 422 && error.response.data.errors) {
+          // Loop through errors to display specific messages
+          const errorMessages = Object.values(error.response.data.errors).join(
+            ", "
+          );
+          toast.error(`Lỗi: ${errorMessages}`);
+        } else {
+          toast.error(
+            `Lỗi: ${error.response.data.message || "Vui lòng thử lại."}`
+          );
+        }
       }
     }
   };
@@ -285,7 +296,7 @@ export default function Profile() {
         updateUser(field, userData[field])
       );
       await Promise.all(updatePromises);
-      
+
       // Reload page after update
       window.location.reload();
     }

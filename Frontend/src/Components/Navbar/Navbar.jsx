@@ -309,7 +309,7 @@ export default function Navbar() {
                 <Dropdown.Item href="/profile" className="custom-dropdown-item">
                   Xem hồ sơ
                 </Dropdown.Item>
-                {/* <Dropdown.Divider />
+                <Dropdown.Divider />
                 <Dropdown.Item
                   href="/trackingorder"
                   className="custom-dropdown-item"
@@ -318,7 +318,7 @@ export default function Navbar() {
                 </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item
-                  href="/donkygui"
+                  href="/donkyguipage"
                   className="custom-dropdown-item"
                 >
                   Đơn ký gửi
@@ -336,7 +336,7 @@ export default function Navbar() {
                   className="custom-dropdown-item"
                 >
                   Đăng xuất
-                </Dropdown.Item> */}
+                </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item
                   onClick={handleLogout}

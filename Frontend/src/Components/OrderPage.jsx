@@ -252,7 +252,10 @@ const OrderPage = () => {
         console.log("Add to cart successful: " + response.data.message);
       }
 
-      toast.success("Đã thêm vào giỏ hàng!");
+      setTimeout(() => {
+        toast.success("Đã thêm vào giỏ hàng!");
+      }, 2000); // Adjust the delay time (in milliseconds) as needed
+      navigate("/cart");
     } catch (error) {
       console.log(error);
       toast.error("Có lỗi xảy ra! " + (error.response?.data?.message || ""));
@@ -789,9 +792,6 @@ const OrderPage = () => {
                     marginBottom: "8px",
                   }}
                 >
-                  <span style={{ fontWeight: "normal", fontSize: "20px" }}>
-                    Status:{" "}
-                  </span>
                   {selectedItem.Status === 4 && (
                     <span style={{ fontWeight: "normal", fontSize: "20px" }}>
                       Status: Ký Gửi

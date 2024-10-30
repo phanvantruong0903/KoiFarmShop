@@ -334,12 +334,12 @@ export default function Kyguikoi() {
                 </div>
               </div>
 
-              <Form.Item label="Chi tiết">
+              <Form.Item label="Chi tiết về đơn ký gửi ">
                 <Input.TextArea
-                  name="Description"
-                  value={formData.Description}
+                  name="Detail"
+                  value={formData.Detail}
                   onChange={handleChange}
-                  placeholder="Nhập"
+                  placeholder="Nhập chi tiết về đơn ký gửi"
                   style={{ height: "150px", resize: "none" }}
                 />
               </Form.Item>
@@ -398,7 +398,7 @@ export default function Kyguikoi() {
                   type="number"
                   placeholder="Nhập tuổi"
                   min={1}
-                  max={20}
+                  max={50}
                 />
               </Form.Item>
 
@@ -508,9 +508,8 @@ export default function Kyguikoi() {
                   onChange={handleChange}
                   type="number"
                   placeholder="Nhập tỷ lệ lọc"
-                  step="0.01"
                   min={0.01}
-                  max={1}
+                  max={100}
                 />
               </Form.Item>
 
@@ -563,6 +562,15 @@ export default function Kyguikoi() {
                 </Upload>
               </Form.Item>
             </div>
+            <Form.Item label="Chi tiết về koi">
+              <Input.TextArea
+                name="Description"
+                value={formData.Description}
+                onChange={handleChange}
+                placeholder="Nhập chi tiết về cá koi của bạn"
+                style={{ height: "150px", resize: "none" }}
+              />
+            </Form.Item>
 
             <div style={{ textAlign: "center", marginTop: "20px" }}>
               <Button

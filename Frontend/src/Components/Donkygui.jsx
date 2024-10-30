@@ -19,7 +19,7 @@ import { Container } from "react-bootstrap";
 
 const { Title, Text } = Typography;
 
-export default function DonKyGuiPage() {
+export default function DonKyGui() {
   const [consignList, setConsignList] = useState([]);
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
@@ -204,6 +204,12 @@ export default function DonKyGuiPage() {
                           <Button type="primary" style={{ marginLeft: "10px" }}>
                             Chat Ngay
                           </Button>
+                          <a
+                            href={`/details/${consign._id}`}
+                            style={{ marginLeft: "10px" }}
+                          >
+                            <Button type="default">Chi tiết</Button>
+                          </a>
                         </div>
                       </div>
 
