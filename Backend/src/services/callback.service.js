@@ -27,9 +27,6 @@ export const callback = async (req, res) => {
       const reqOrderDetails = embedData.orderDetails // Thông tin đơn hàng
       const reqOrder = embedData.order // Thông tin đơn hàng
 
-      console.log('Order details from embed_data:', reqOrderDetails)
-      console.log('Order from embed_data:', reqOrder)
-
       const koiIDsList = await Promise.all(
         reqOrderDetails.Items.map(async (item) => {
           const samePropertiesKoiList = (await orderDetailService.getSamePropertiesKoi(item.KoiID)).filter(
@@ -42,22 +39,32 @@ export const callback = async (req, res) => {
 
       const flattenedKoiIDs = koiIDsList.flat()
 
-      console.log('Flattened koiIDs:', flattenedKoiIDs)
 
       for (const koiID of flattenedKoiIDs) {
+
+        console.log(koiID)
         await databaseService.kois.findOneAndUpdate({ _id: koiID }, { $set: { Status: 0 } }, { new: true })
-      }
 
-      for (const koiID of flattenedKoiIDs) {
+        const stringKoiID = koiID.toString()
 
-        const stringKoiID = koiID.toString();
+        console.log('string koiid: ', stringKoiID)
 
-        console.log(stringKoiID)
+        try {
+          const consignkoi = await databaseService.consigns.findOne({ KoiID: stringKoiID })
+          console.log('consignkoi: ', consignkoi)
 
-        const consignkoi = await databaseService.consigns.findOne({ KoiID: stringKoiID })
-
-        if (consignkoi) {
-          await databaseService.consigns.findOneAndUpdate({ KoiID: stringKoiID }, { $set: { State: 5 } }, { new: true })
+          if (consignkoi) {
+            await databaseService.consigns.findOneAndUpdate(
+              { KoiID: stringKoiID },
+              { $set: { State: 5 } },
+              { new: true }
+            )
+            console.log(`Updated State to 5 for KoiID: ${stringKoiID}`)
+          } else {
+            console.log(`No consign found for KoiID: ${stringKoiID}`)
+          }
+        } catch (error) {
+          console.error('Error updating consign state: ', error)
         }
       }
 
@@ -76,8 +83,8 @@ export const callback = async (req, res) => {
           result.returncode = -1
           result.returnmessage = result.error
         } else {
-          res.clearCookie('order')
-          res.clearCookie('orderDT')
+          res.clearCookie('order', { path: '/' })
+          res.clearCookie('orderDT', { path: '/' })
           result.returncode = 1
           result.returnmessage = 'Payment successful.'
           return res.json({ success: true, message: 'Payment successful.' })
@@ -93,9 +100,6 @@ export const callback = async (req, res) => {
 }
 
 export const saveOrderToDatabase = async (reqOrderDetailCookie, reqOrderCookie) => {
-  // console.log("Cookies DT received:", reqOrderDTCookie);
-  console.log('Cookies received:', reqOrderCookie)
-  //check order cookie có exist
   if (!reqOrderDetailCookie || !reqOrderCookie) {
     return { error: 'No order data found in cookies' }
   }

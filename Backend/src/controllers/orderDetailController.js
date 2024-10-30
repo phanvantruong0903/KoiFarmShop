@@ -6,7 +6,6 @@ export const makeOrderDetailController = async (req, res) => {
   try {
     let reqCookie = req.cookies && req.cookies.orderDT ? JSON.parse(req.cookies.orderDT) : {}; // fix phải check có trong cookies trước
     const result = await orderDetailService.addToCart(req.body, reqCookie);
-    console.log("result.orderDT: ",result.orderDT)
       res.cookie('orderDT', JSON.stringify(result.orderDT), {
         httpOnly: true,
         maxAge: 1800000 // 30 mins
@@ -81,7 +80,6 @@ export const getOrderDetailController = async (req, res) => {
     // }
     const result = await orderDetailService.fetchOrder(reqCookie);
 
-    console.log("result: ", result)
     if(result.orderDT){
       return res.json({
         message: USERS_MESSAGES.GET_ORDER_SUCCESS,
@@ -101,7 +99,6 @@ export const removeItemsDetailController = async (req, res) => {
   try {
     const reqOrderDTCookie = req.cookies && req.cookies.orderDT ? JSON.parse(req.cookies.orderDT) : {}
     const result = await orderDetailService.removeItem(req.body,reqOrderDTCookie);
-    console.log("result: ", result)
     
     if(result.orderDT.TotalPrice>=0){
       res.cookie('orderDT', JSON.stringify(result.orderDT), {
@@ -172,7 +169,6 @@ export const updateOrderDetailController = async (req, res) => {
 export const getKoiQuantityController = async (req, res) => {
   try {
   const result = await orderDetailService.getKoiQuantity(req.body);
-    console.log("result: ", result)
     if(result){
       return res.json({
         message: USERS_MESSAGES.GET_AVAILABLE_KOI_QUANTITY,
@@ -191,7 +187,6 @@ export const getKoiQuantityController = async (req, res) => {
 export const getMinMaxPriceController = async (req, res) => {
   try {
     const result = await orderDetailService.getMinMaxPrice(req.body);
-    console.log("result: ", result)
     if(result){
       return res.json({
         message: USERS_MESSAGES.GET_MIN_MAX_PRICE,
@@ -210,7 +205,6 @@ export const getMinMaxPriceController = async (req, res) => {
 export const getKoiByPriceController = async (req, res) => {
   try {
     const result = await orderDetailService.getKoiByPrice(req.body);
-    console.log("result: ", result)
     if(result && result.koiList.length > 0){
       return res.json({
         message: USERS_MESSAGES.GET_KOI_SUCCESS,
@@ -230,7 +224,6 @@ export const getKoiByPriceController = async (req, res) => {
 export const getKoiBySizeBreedController = async (req, res) => {
   try {
     const result = await orderDetailService.getKoiByPrice(req.body);
-    console.log("result: ", result)
     if(result && result.koiList.length > 0){
       return res.json({
         message: USERS_MESSAGES.GET_KOI_SUCCESS,
@@ -250,7 +243,6 @@ export const getKoiBySizeBreedController = async (req, res) => {
 export const filterKoiController = async (req, res) => {
   try {
     const result = await orderDetailService.filterKoiId(req.body);
-    console.log("result: ", result)
     if(result && result.Quantity > 0){
       return res.json({
         message: USERS_MESSAGES.GET_KOI_SUCCESS,
