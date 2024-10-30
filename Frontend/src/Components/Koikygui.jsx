@@ -56,7 +56,7 @@ export default function Koidangban() {
     };
 
     fetchData();
-  }, [cardData]);
+  }, []);
 
   const handleCategoryChange = (e) => setSelectedCategory(e.target.value);
   const handleSizeChange = (value) => setSelectedSize(value);
