@@ -17,12 +17,14 @@ import { Button, Container } from "react-bootstrap";
 const { Paragraph } = Typography;
 import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap CSS is imported
 import axiosInstance from "./An/Utils/axiosJS";
+import Cookies from "js-cookie";
 
 export default function Home() {
   const location = useLocation();
   const [lastMessage, setLastMessage] = useState("");
   const [suppliers, setSuppliers] = useState([]);
   const [koidata, setKoiData] = useState([]);
+  const [orderDT, setOrderDT] = useState(null);
   const navigate = useNavigate();
   useEffect(() => {
     const { message } = location.state || {};
@@ -51,6 +53,18 @@ export default function Home() {
       }
     };
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    const clearData = async () => {
+      try {
+        console.log('hello')
+        await axiosInstance.post("/clear-coookies", { Credential: true }, { withCredentials: true });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    clearData();
   }, []);
 
   useEffect(() => {
