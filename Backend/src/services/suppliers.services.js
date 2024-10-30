@@ -36,14 +36,14 @@ class SuplliersService {
     const supplierUpdate = await databaseService.suppliers.updateOne({ _id: supplierObjectID }, [
       {
         $set: {
-          SupplierName: payload.SupplierName,
-          Address: payload.Address,
-          Country: payload.Country,
-          PhoneNumber: payload.PhoneNumber,
-          SupplierDescription: payload.SupplierDescription,
-          SupplierImage: payload.SupplierImage,
-          SupplierVideo: payload.SupplierVideo,
-          SupplierWebsite: payload.SupplierWebsite
+          SupplierName: payload.SupplierName || supplier.SupplierName,
+          Address: payload.Address || supplier.Address,
+          Country: payload.Country || supplier.Country,
+          PhoneNumber: payload.PhoneNumber || supplier.PhoneNumber,
+          SupplierDescription: payload.SupplierDescription || supplier.SupplierDescription,
+          SupplierImage: payload.SupplierImage || supplier.SupplierImage,
+          SupplierVideo: payload.SupplierVideo || supplier.SupplierVideo,
+          SupplierWebsite: payload.SupplierWebsite || supplier.SupplierWebsite,
         }
       }
     ])
