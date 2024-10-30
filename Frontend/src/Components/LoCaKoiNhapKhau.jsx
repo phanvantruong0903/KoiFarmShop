@@ -97,11 +97,11 @@ export default function Locakoinhapkhau() {
               ))}
             </div>
           </div>
-          <div style={{ textAlign: "center" }}>
+          <div style={{ textAlign: "center", paddingTop: "100px" }}>
             <Button
               variant="danger"
               className="btnType_1"
-              onClick={() => navigate("/koikygui", {})}
+              onClick={() => navigate("/koidangban")}
             >
               Xem thêm
             </Button>

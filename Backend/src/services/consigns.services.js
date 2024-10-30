@@ -88,7 +88,7 @@ class ConsignsService {
     )
     if (user == null) {
       throw new ErrorWithStatus({
-        message: MANAGER_MESSAGES.KOI_NOT_FOUND,
+        message: MANAGER_MESSAGES.USER_NOT_FOUND,
         status: HTTP_STATUS.NOT_FOUND
       })
     }
@@ -133,7 +133,7 @@ class ConsignsService {
         $set: {
           ShippedDate: payload.ShippedDate || consign.ShippedDate || '',
           ReceiptDate: payload.ReceiptDate || consign.ReceiptDate || '',
-          Description: payload.Description || consign.Description || '',
+          Detail: payload.Detail || consign.Detail || '',
           State: payload.State || consign.State || '',
           Method: payload.Method || consign.Method || '',
           PositionCare: payload.PositionCare || consign.PositionCare || '',
@@ -215,6 +215,66 @@ class ConsignsService {
       user: user,
       consign: consign,
       koi: koi
+    }
+  }
+
+  async userUpdateConsign(consignID, payload) {
+    //tìm consign dựa vào consignID
+    const consignObjectID = new ObjectId(consignID)
+    const consign = await databaseService.consigns.findOne({ _id: consignObjectID })
+    if (consign == null) {
+      throw new ErrorWithStatus({
+        message: MANAGER_MESSAGES.CONSIGN_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+    //tìm koi
+    const koiObjectID = new ObjectId(consign.KoiID)
+    const koi = await databaseService.kois.findOne({ _id: koiObjectID })
+    if (koi == null) {
+      throw new ErrorWithStatus({
+        message: MANAGER_MESSAGES.KOI_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+
+    //update koi
+    const koiUpdate = await databaseService.kois.updateOne({ _id: new ObjectId(koi._id) }, [
+      {
+        $set: {
+          CategoryID: payload.CategoryID || koi.CategoryID || '',
+          KoiName: payload.KoiName || koi.KoiName || '',
+          Age: payload.Age || koi.Age || '',
+          Origin: payload.Origin || koi.Origin || '',
+          Gender: payload.Gender || koi.Gender || '',
+          Size: payload.Size || koi.Size || '',
+          Breed: payload.Breed || koi.Breed || '',
+          Description: payload.Description || koi.Description || '',
+          DailyFoodAmount: payload.DailyFoodAmount || koi.DailyFoodAmount || '',
+          FilteringRatio: payload.FilteringRatio || koi.FilteringRatio || '',
+          CertificateID: payload.CertificateID || koi.CertificateID || '',
+          Image: payload.Image || koi.Image || '',
+          Video: payload.Video || koi.Video || ''
+        }
+      }
+    ])
+
+    //cập nhật lại thông tin kí gửi, nếu có thay đổi thì cập nhật cái mới, không thì giữ nguyên
+    const consignUpdate = await databaseService.consigns.updateOne({ _id: new ObjectId(consign._id) }, [
+      {
+        $set: {
+          ShippedDate: payload.ShippedDate || consign.ShippedDate || '',
+          ReceiptDate: payload.ReceiptDate || consign.ReceiptDate || '',
+          Detail: payload.Detail || consign.Detail || '',
+          Method: payload.Method || consign.Method || '',
+          PositionCare: payload.PositionCare || consign.PositionCare || ''
+        }
+      }
+    ])
+
+    return {
+      consign: consignUpdate,
+      koi: koiUpdate
     }
   }
 }

@@ -6,7 +6,7 @@ export default class ConsignSchema {
   KoiID = ''
   ShippedDate = ''
   ReceiptDate = ''
-  Description = ''
+  Detail = ''
   State = ''
   Method = ''
   PositionCare = ''
@@ -19,7 +19,7 @@ export default class ConsignSchema {
     this.KoiID = consign.KoiID || ''
     this.ShippedDate = consign.ShippedDate || ''
     this.ReceiptDate = consign.ReceiptDate || ''
-    this.Description = consign.Description || ''
+    this.Detail = consign.Detail || ''
     this.State = consign.State || 1
     this.Method = consign.Method || ''
     this.PositionCare = consign.PositionCare || ''

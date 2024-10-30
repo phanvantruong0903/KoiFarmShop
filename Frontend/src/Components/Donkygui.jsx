@@ -16,21 +16,20 @@ import {
 import { HomeOutlined, CopyOutlined } from "@ant-design/icons";
 import axiosInstance from "../An/Utils/axiosJS";
 import { Container } from "react-bootstrap";
-
+import { useNavigate } from "react-router-dom";
 const { Title, Text } = Typography;
 
-export default function DonKyGuiPage() {
+export default function DonKyGui() {
   const [consignList, setConsignList] = useState([]);
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchConsignList = async () => {
       try {
-        const response = await axiosInstance.get(
-          "http://localhost:4000/users/tat-ca-don-ki-gui"
-        );
+        const response = await axiosInstance.get("/users/tat-ca-don-ki-gui");
 
         if (response.data.result && response.data.result.data) {
           setConsignList(response.data.result.data);
@@ -72,7 +71,18 @@ export default function DonKyGuiPage() {
     message.success('ID đã được sao chép!');
   };
 
-  if (loading) return <Spin size="large" />;
+  if (loading)
+    return (
+      <Spin
+        size="large"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      />
+    );
   if (error) return <Alert message="Error" description={error} type="error" />;
 
   return (
@@ -142,8 +152,9 @@ export default function DonKyGuiPage() {
 
                               return <Text style={{ color }}>{statusText}</Text>;
                             })()}
+                            
                           </Text>
-
+                          
                           <div style={{ marginTop: "10px" }}>
                             <Text strong>
                               Ngày giao hàng:{" "}
@@ -183,10 +194,23 @@ export default function DonKyGuiPage() {
                         </div>
                         <div style={{ display: "flex", alignItems: "center" }}>
                           <Text style={{ marginLeft: "10px" }}>
-                            TotalPrice: {consign.TotalPrice || "N/A"}
+                            TotalPrice:{" "}
+                            {consign.TotalPrice || "Chờ bên shop định giá"}
                           </Text>
                           <Button type="primary" style={{ marginLeft: "10px" }}>
-                            Chat Ngay
+                            Chat ngay
+                          </Button>
+
+                          <Button
+                            style={{ marginLeft: "10px" }}
+                            type="default"
+                            onClick={() => {
+                              navigate(`/chitiet`, {
+                                state: { consign },
+                              });
+                            }}
+                          >
+                            Chi tiết
                           </Button>
                         </div>
                       </div>

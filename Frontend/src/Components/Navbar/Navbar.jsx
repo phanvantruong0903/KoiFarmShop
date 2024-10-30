@@ -309,23 +309,23 @@ export default function Navbar() {
                 <Dropdown.Item href="/profile" className="custom-dropdown-item">
                   Xem hồ sơ
                 </Dropdown.Item>
-                {/* <Dropdown.Divider />
+                <Dropdown.Divider />
                 <Dropdown.Item
-                  href="/trackingorder"
+                  href="/trackingorderpage"
                   className="custom-dropdown-item"
                 >
                   Đơn hàng
                 </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item
-                  href="/donkygui"
+                  href="/donkyguipage"
                   className="custom-dropdown-item"
                 >
                   Đơn ký gửi
                 </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item
-                  href="/changepassword"
+                  href="/changepasswordpage"
                   className="custom-dropdown-item"
                 >
                   Thay đổi mật khẩu
@@ -336,14 +336,7 @@ export default function Navbar() {
                   className="custom-dropdown-item"
                 >
                   Đăng xuất
-                </Dropdown.Item> */}
-                <Dropdown.Divider />
-                <Dropdown.Item
-                  onClick={handleLogout}
-                  className="custom-dropdown-item"
-                >
-                  Đăng xuất
-                </Dropdown.Item>{" "}
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           ) : (

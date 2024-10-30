@@ -34,7 +34,7 @@ import GioiThieuVeKoiF1 from "./Components/GioitThieuVeKoiF1";
 import OrderingIKoi from "./Components/OrderingIKoi";
 import OrderingJapanKoi from "./Components/OrderingJapanKoi";
 import changePassword from "./Components/ChangePassword";
-
+import Donkyguipage from "./Components/Page/Thongtincuauser/donkyguiPage";
 const Staff = lazy(() => import("../src/An/Pages/Staff"));
 const Manager = lazy(() => import("./An/Pages/Manager/Manager"));
 // const Profiles = lazy(() => import("../src/An/Pages/Staff/Profiles"));
@@ -59,6 +59,9 @@ import Suppliers from "./An/Ant Design/Pages/Suppliers";
 import CaKoiNhat from "./Components/CaKoiNhat";
 import OrdersNext from "./An/Ant Design/Pages/Orders";
 import Kois from "./An/Ant Design/Pages/Kois";
+import Chitietconsignpage from "./Components/Page/Thongtincuauser/chitietconsignPage";
+import Changepasswordpage from "./Components/Page/Thongtincuauser/changepasswordPage";
+import Trackingorderpage from "./Components/Page/Thongtincuauser/trackingorderPage";
 const router = createBrowserRouter([
   {
     path: "/login/oauth",
@@ -212,7 +215,23 @@ const router = createBrowserRouter([
     path: "/cakoinhat",
     element: <CaKoiNhat />,
   },
+  {
+    path: "/donkyguipage",
+    element: <Donkyguipage />,
+  },
+  {
+    path: "/changepasswordpage",
+    element: <Changepasswordpage />,
+  },
 
+  {
+    path: "/trackingorderpage",
+    element: <Trackingorderpage />,
+  },
+  {
+    path: "/chitiet",
+    element: <Chitietconsignpage />,
+  },
   {
     path: "/NewDashboard",
     element: <AnTopBar />,
@@ -236,7 +255,7 @@ const router = createBrowserRouter([
       {
         path: "staff/Orders",
         element: <OrdersNext />,
-      }
+      },
     ],
   },
   {
