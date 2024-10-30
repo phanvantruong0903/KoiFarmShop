@@ -71,8 +71,8 @@ export default function Gioithieu() {
             <div style={{ paddingTop: "100px" }}>
               <Paragraph style={{ fontSize: "20px" }}>
                 Sở hữu nguồn hàng chất lượng và ổn định, cùng dịch vụ chăm sóc
-                tận tâm, chúng tôi tin: Siêu Thị Cá Koi VN đáp ứng được yêu cầu
-                của những vị khách khó tính nhất trong làng cá Koi nước ta.
+                tận tâm, chúng tôi tin: IKoi đáp ứng được yêu cầu của những vị
+                khách khó tính nhất trong làng cá Koi nước ta.
               </Paragraph>
               <ul>
                 <li>
