@@ -19,7 +19,6 @@ import {
 import DonKyGuiPage from "./Donkygui";
 import ChangePassword from "./ChangePassword";
 import TrackingOrderPage from "./trackingOrderPage";
-import UpdateProfile from "./UpdateProfile";
 // Firebase config
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY,
@@ -47,7 +46,7 @@ const isValidURL = (urlString) => {
   }
 };
 
-export default function Profile() {
+export default function UpdateProfile() {
   const [userData, setUserData] = useState(null);
   const [activeButton, setActiveButton] = useState(null);
   const [originalUserData, setOriginalUserData] = useState(null); // Lưu trữ dữ liệu gốc
@@ -128,7 +127,6 @@ export default function Profile() {
     } else {
       await updateUser(field, userData[field]);
       // Reload page after update
-      window.location.reload();
     }
   };
 
@@ -158,7 +156,7 @@ export default function Profile() {
           const errorMessages = Object.values(error.response.data.errors).join(
             ", "
           );
-          toast.error(`Lỗi: ${errorMessages}`);
+          alert(`Lỗi: ${errorMessages}`);
         } else {
           toast.error(
             `Lỗi: ${error.response.data.message || "Vui lòng thử lại."}`
@@ -308,191 +306,236 @@ export default function Profile() {
     setCurrentComponent(componentName);
     setActiveButton(componentName);
   };
-  if (loading) {
-    return (
-      <div>
-        <Spin
-          size="large"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-          }}
-        ></Spin>
-      </div>
-    );
-  }
-
   return (
-    <>
-      <Navbar />
-      <div style={{ backgroundColor: "whitesmoke", paddingTop: "50px" }}>
-        <Row justify="center" style={{ paddingTop: "50px" }}>
-          <Col
-            span={6}
-            style={{
-              paddingLeft: "70px",
-            }}
-          >
-            <div>
-              <div
-                style={{
-                  textAlign: "center",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <div style={{ width: "40%" }}>
-                  {userData && userData.picture ? (
-                    <img
-                      src={userData.picture}
-                      alt="Profile"
-                      style={{
-                        width: "100px",
-                        height: "100px",
-                        borderRadius: "50%",
-                        objectFit: "cover",
-                        marginBottom: "10px",
-                      }}
-                    />
-                  ) : (
-                    <div
-                      style={{
-                        width: "100px",
-                        height: "100px",
-                        borderRadius: "50%",
-                        border: "2px dashed #007bff", // Màu viền
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        marginBottom: "10px",
-                      }}
-                    >
-                      <span>Chưa có ảnh</span>
-                    </div>
-                  )}
-                </div>
+    <Col
+      span={16}
+      style={{
+        backgroundColor: "white",
+        padding: "20px",
+        borderRadius: "10px",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+        paddingLeft: "5%",
+      }}
+    >
+      <div>
+        <h2
+          style={{
+            textAlign: "left",
+            fontWeight: "400",
+            fontSize: "30px",
+          }}
+        >
+          Hồ Sơ Của Tôi
+        </h2>
+        <h4
+          style={{
+            fontWeight: "360",
+            fontSize: "20px",
+            marginBottom: "30px",
+          }}
+        >
+          Quản lý thông tin hồ sơ để bảo mật tài khoản
+        </h4>
+        <hr
+          style={{
+            border: "0.1px solid rgba(0, 0, 0, 0.3)",
+            marginBottom: "25px",
+          }}
+        />
+        {userData ? (
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form layout="vertical">
+                <Form.Item label="Email">
+                  <Input disabled value={maskedEmail} />
+                </Form.Item>
+                <Form.Item label="Tên đăng nhập">
+                  <Input
+                    value={userData.username}
+                    onChange={(e) => {
+                      const updatedUserData = {
+                        ...userData,
+                        username: e.target.value,
+                      };
+                      setUserData(updatedUserData);
 
-                <div style={{ width: "50%", textAlign: "left" }}>
-                  <h4
-                    style={{
-                      margin: 0,
-                      whiteSpace: "nowrap",
-                      textOverflow: "ellipsis",
-                      width: "100px",
+                      // Kiểm tra ngay lập tức khi giá trị thay đổi
+                      const errors = validateField("username");
+                      setValidationErrors((prev) => ({
+                        ...prev,
+                        ...errors,
+                      }));
                     }}
-                  >
-                    {userData ? userData.username : "Tài khoản"}
-                  </h4>
-                  <h6
-                    style={{
-                      color: "gray",
-                      opacity: 0.6,
-                      display: "flex",
-                      alignItems: "center",
+                  />
+                  {validationErrors.username && (
+                    <p style={{ color: "red" }}>{validationErrors.username}</p>
+                  )}
+                </Form.Item>
+
+                <Form.Item label="Tên">
+                  <Input
+                    value={userData.name}
+                    onChange={(e) => {
+                      const updatedUserData = {
+                        ...userData,
+                        name: e.target.value,
+                      };
+                      setUserData(updatedUserData);
+
+                      // Kiểm tra ngay lập tức khi giá trị thay đổi
+                      const errors = validateField("name");
+                      setValidationErrors((prev) => ({
+                        ...prev,
+                        ...errors,
+                      }));
                     }}
-                  ></h6>
+                  />
+                  {validationErrors.name && (
+                    <p style={{ color: "red" }}>{validationErrors.name}</p>
+                  )}
+                </Form.Item>
+
+                <Form.Item label="Địa chỉ">
+                  <Input
+                    value={userData.address}
+                    onChange={(e) => {
+                      const updatedUserData = {
+                        ...userData,
+                        address: e.target.value,
+                      };
+                      setUserData(updatedUserData);
+
+                      // Kiểm tra ngay lập tức khi giá trị thay đổi
+                      const errors = validateField("address");
+                      setValidationErrors((prev) => ({
+                        ...prev,
+                        ...errors,
+                      }));
+                    }}
+                  />
+                  {validationErrors.address && (
+                    <p style={{ color: "red" }}>{validationErrors.address}</p>
+                  )}
+                </Form.Item>
+
+                <Form.Item label="Số điện thoại">
+                  <Input
+                    value={userData.phone_number}
+                    onChange={(e) => {
+                      const updatedUserData = {
+                        ...userData,
+                        phone_number: e.target.value,
+                      };
+                      setUserData(updatedUserData);
+
+                      // Kiểm tra ngay lập tức khi giá trị thay đổi
+                      const errors = validateField("phone_number");
+                      setValidationErrors((prev) => ({
+                        ...prev,
+                        ...errors,
+                      }));
+                    }}
+                  />
+                  {validationErrors.phone_number && (
+                    <p style={{ color: "red" }}>
+                      {validationErrors.phone_number}
+                    </p>
+                  )}
+                </Form.Item>
+
+                <Form.Item label="Website">
+                  <Input
+                    value={userData.website}
+                    onChange={(e) => {
+                      const updatedUserData = {
+                        ...userData,
+                        website: e.target.value,
+                      };
+                      setUserData(updatedUserData);
+
+                      // Kiểm tra ngay lập tức khi giá trị thay đổi
+                      const errors = validateField("website");
+                      setValidationErrors((prev) => ({
+                        ...prev,
+                        ...errors,
+                      }));
+                    }}
+                  />
+                  {websiteError && (
+                    <p style={{ color: "red" }}>{websiteError}</p>
+                  )}
+                </Form.Item>
+
+                <Form.Item>
+                  <Button type="primary" onClick={handleUpdateAll}>
+                    Cập nhật
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Col>
+            <Col
+              span={12}
+              className="d-flex justify-content-center align-items-center"
+            >
+              {userData.picture ? (
+                <img
+                  src={userData.picture}
+                  alt="Profile"
+                  onClick={() => setShowImageModal(true)}
+                  style={{
+                    width: "150px",
+                    height: "150px",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                    cursor: "pointer",
+                  }}
+                />
+              ) : (
+                <div
+                  style={{
+                    width: "150px",
+                    height: "150px",
+                    borderRadius: "50%",
+                    border: "2px dashed #007bff", // Màu viền
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setShowImageModal(true)}
+                >
+                  <span>Chưa có ảnh</span>
                 </div>
-              </div>
-              <hr
-                style={{
-                  border: "0.1px solid rgba(0, 0, 0, 0.3)",
-                  width: "60%",
-                  margin: "10px auto",
-                }}
-              />
-              <ul style={{ listStyle: "none", padding: 0 }}>
-                <li>
-                  <Button
-                    type="link"
-                    onClick={() => handleClick("profile")}
-                    style={{
-                      color: activeButton === "profile" ? "orange" : "black",
-                      marginTop: "15px",
-                    }}
-                  >
-                    <UserOutlined style={{ marginRight: "5px" }} />
-                    Hồ sơ
-                  </Button>
-                </li>
-                <li>
-                  <Button
-                    type="link"
-                    onClick={() => handleClick("changepassword")}
-                    style={{
-                      color:
-                        activeButton === "changepassword" ? "orange" : "black",
-                      marginTop: "15px",
-                    }}
-                  >
-                    <LockOutlined style={{ marginRight: "5px" }} />{" "}
-                    {/* Change to LockOutlined icon */}
-                    Đổi mật khẩu
-                  </Button>
-                </li>
-                <li>
-                  <Button
-                    type="link"
-                    onClick={() => handleClick("trackingorder")}
-                    style={{
-                      color:
-                        activeButton === "trackingorder" ? "orange" : "black",
-                      marginTop: "15px",
-                    }}
-                  >
-                    <ShoppingCartOutlined style={{ marginRight: "5px" }} />
-                    Đơn mua
-                  </Button>
-                </li>
-                <li>
-                  <Button
-                    type="link"
-                    onClick={() => handleClick("kygui")}
-                    style={{
-                      color: activeButton === "kygui" ? "orange" : "black",
-                      marginTop: "15px",
-                    }}
-                  >
-                    <ShopOutlined style={{ marginRight: "5px" }} />
-                    Đơn ký gửi
-                  </Button>
-                </li>
-                {/* Bạn có thể thêm các liên kết khác ở đây */}
-              </ul>
-            </div>
-          </Col>
-          {currentComponent === "profile" && (
-            <Col span={16}>
-              <div style={{ marginBottom: "20px" }}>
-                <UpdateProfile />
-              </div>
+              )}
             </Col>
-          )}
-          {currentComponent === "kygui" && (
-            <Col span={16}>
-              <div style={{ marginBottom: "20px" }}>
-                <DonKyGuiPage />
-              </div>
-            </Col>
-          )}
-          {currentComponent === "changepassword" && (
-            <Col span={16}>
-              <div style={{ marginBottom: "20px" }}>
-                <ChangePassword />
-              </div>
-            </Col>
-          )}
-          {currentComponent === "trackingorder" && (
-            <Col span={16}>
-              <div style={{ marginBottom: "20px" }}>
-                <TrackingOrderPage />
-              </div>
-            </Col>
-          )}
-        </Row>
+          </Row>
+        ) : (
+          <p>Không có thông tin người dùng.</p>
+        )}
+        {showImageModal && (
+          <Modal
+            title="Thay đổi ảnh đại diện"
+            visible={showImageModal}
+            onOk={handleImageChange}
+            onCancel={() => setShowImageModal(false)}
+          >
+            <input type="file" accept="image/*" onChange={handleFileChange} />
+          </Modal>
+        )}
+        {showVerificationModal && (
+          <Modal
+            title="Xác nhận"
+            visible={showVerificationModal}
+            onOk={handleResendVerification}
+            onCancel={() => setShowVerificationModal(false)}
+          >
+            <p>
+              Tài khoản của bạn chưa được xác minh. Bạn có muốn gửi lại email
+              xác minh không?
+            </p>
+          </Modal>
+        )}
       </div>
-      <Footer />
-    </>
+    </Col>
   );
 }

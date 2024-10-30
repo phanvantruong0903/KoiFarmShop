@@ -66,10 +66,10 @@ export default function ChangePassword() {
     <>
       {/* Navbar Component */}
       <Layout>
-        <div style={{ paddingTop: "100px", backgroundColor: "smokegrey" }}>
-          <Row justify="center">
+        <div style={{ backgroundColor: "smokegrey" }}>
+          <Row>
             <Col>
-              <Content style={{ padding: "50px" }}>
+              <Content>
                 <Card
                   title="Thay đổi mật khẩu"
                   bordered={false}
