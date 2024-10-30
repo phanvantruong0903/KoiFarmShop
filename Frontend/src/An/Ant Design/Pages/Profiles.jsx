@@ -2,6 +2,7 @@ import React from 'react'
 import { Typography, Card, Statistic, Row, Col, Layout, Form, Input, Space, Dropdown, Tabs, Button, message, Badge } from 'antd';
 import { ArrowUpOutlined, ArrowDownOutlined, DownOutlined, BorderBottomOutlined } from '@ant-design/icons';
 import '../Css/GeneralPurpose.css'
+import { SelfCheckContext } from '../../Ant Design/Components/ANTDTopbar';
 import useFetchProfiles from '../../Ant Design/Hooks/useFetchProfiles';
 import ProfileTable from '../Components/Table/ProfileTable';
 import { SearchOutlined } from '@ant-design/icons';
@@ -15,7 +16,22 @@ export default function Profiles() {
   const [searchTerm, setSearchTerm] = React.useState('');
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const [selectedProfile, setSelectedProfile] = React.useState(null);
-
+  const {isSelfCheck,setIsCheckingSelf} = React.useContext(SelfCheckContext);
+  React.useEffect(() => {
+    
+      async function FetchMe() {
+        if (isSelfCheck) {
+          const rep = await axiosInstance.get('users/me');
+          const {_id} = rep.data.result
+          console.log(_id)
+          setSelectedProfile(_id)
+          setIsModalVisible(true)
+          
+        }
+      }
+      FetchMe();
+    }
+, [isSelfCheck]);
   const getFilteredProfiles = () => {
     switch (activeTab) {
       case '1':
@@ -41,7 +57,7 @@ export default function Profiles() {
       label: (
         <>
           Toàn Bộ Hồ Sơ
-          <Badge count={profiles.length} style={{ marginLeft: 8 }} color='green' />
+          <Badge count={profiles.length} style={{ marginLeft: 8 }} color='green'  />
         </>
       ),
     },
@@ -77,7 +93,7 @@ export default function Profiles() {
     setSearchTerm(value.target.value);
     console.log('Search:', searchTerm);
   };
-  const handleActionClick = async (actionType, id, messageInfo) => {
+  const handleActionClick = async (actionType, id, messageInfo,SelfView) => {
     if (actionType === 'update') {
       setIsModalVisible(true);
       setSelectedProfile(id);

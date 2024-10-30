@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-
+import Spinner from "./An/Components/Spinner";
 export default function Login() {
   const [params] = useSearchParams(); //lấy ra các params trong url
   const navigate = useNavigate(); //hàm dùng để chuyển hướng trang
@@ -18,5 +18,5 @@ export default function Login() {
     localStorage.setItem("refreshToken", refreshToken); //lưu refresh_token vào localStorage
     navigate("/"); //xem xong thì bật dòng này để chuyển hướng về trang chủ
   }, [params]); //useEffect sẽ chạy lại khi params thay đổi
-  return <div>Login</div>; // vo dung vi nó đã chuyển hướng trang rồi
+  return <Spinner/>
 }
