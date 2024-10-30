@@ -158,7 +158,9 @@ export default function DonKyGuiPage() {
                                 <Text style={{ color }}>{statusText}</Text>
                               );
                             })()}
+                            
                           </Text>
+                          
                           <div style={{ marginTop: "10px" }}>
                             <Text strong>
                               Ngày giao hàng:{" "}
@@ -166,7 +168,7 @@ export default function DonKyGuiPage() {
                                 ? new Date(
                                     consign.ShippedDate
                                   ).toLocaleDateString()
-                                : "N/A"}
+                                : "Không yêu cầu"}
                             </Text>
                           </div>
                         </div>
