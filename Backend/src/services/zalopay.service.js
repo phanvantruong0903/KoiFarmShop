@@ -14,7 +14,7 @@ const zaloPayment = async (req, res) => {
   }
 
   const embed_data = {
-    redirecturl: 'http://localhost:3000/',
+    // redirecturl: 'http://localhost:3000/',
     orderDetails: reqOrderDTCookie, // Thêm thông tin đơn hàng từ cookie vào embed_data
     order: reqOrderCookie // Thêm thông tin đơn hàng từ cookie vào embed_data
   }
