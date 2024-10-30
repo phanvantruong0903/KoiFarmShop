@@ -171,6 +171,16 @@ export const updateMeController = async (req, res) => {
   })
 }
 
+export const userUpdateConsignController = async (req, res) => {
+  // const { body } = req.body //nếu để body này thì sẽ bị lỗi vì body đã được dùng rồi
+  const { _id } = req.params
+  const consign = await consignsService.userUpdateConsign(_id, req.body)
+  return res.json({
+    message: USERS_MESSAGES.UPDATE_CONSIGN_SUCCESS,
+    consign
+  })
+}
+
 export const getProfileController = async (req, res) => {
   //tìm user theo username
   const { username } = req.params
@@ -261,10 +271,6 @@ export const getConsignFromUserController = async (req, res) => {
     })
   }
 }
-
-
-
-
 
 export const getOrderController = async (req, res) => {
   try {
