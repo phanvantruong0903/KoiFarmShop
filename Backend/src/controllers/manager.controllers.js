@@ -29,7 +29,7 @@ export const getAllOrderController = async (req, res) => {
   })
 }
 
-export const getKoiAllController = async(req,res) =>{
+export const getKoiAllController = async (req, res) => {
   const result = await databaseService.kois.find().toArray()
   res.json({
     result
@@ -435,6 +435,18 @@ export const getgroupKoiController = async (req, res) => {
       message: MANAGER_MESSAGES.GET_GROUP_KOI_SUCCESS,
       result
     })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+
+export const getOrdeDetails = async (req, res) => {
+  try {
+    const { orderID } = req.params
+    const result = await databaseService.order.findOne({ _id: new ObjectId(orderID) })
+
+    const orderDetail = await databaseService.orderDetail.findOne({ _id: result.OrderDetailID })
+    res.json({ orderDetail })
   } catch (error) {
     return res.status(500).json({ error: error.message })
   }

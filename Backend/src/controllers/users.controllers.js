@@ -241,7 +241,7 @@ export const getAllConsignFromUserController = async (req, res) => {
 
 export const getOrderController = async (req, res) => {
   try {
-    const userID = req.query.userID;
+    const { userID } = req.params
 
     console.log(userID)
 
@@ -255,14 +255,6 @@ export const getOrderController = async (req, res) => {
 
     for (const order of orders) {
       let orderDetailID = order.OrderDetailID
-
-      if (typeof orderDetailID === 'object' && orderDetailID !== null) {
-        orderDetailID = orderDetailID.orderId || null // Lấy orderId nếu có
-      }
-
-      if (!orderDetailID || !ObjectId.isValid(orderDetailID)) {
-        continue
-      }
 
       const orderDetail = await databaseService.orderDetail.findOne({ _id: new ObjectId(orderDetailID) })
 

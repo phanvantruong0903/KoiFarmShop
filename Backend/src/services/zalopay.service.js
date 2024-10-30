@@ -14,7 +14,7 @@ const zaloPayment = async (req, res) => {
   }
 
   const embed_data = {
-    redirecturl: 'https://www.facebook.com/',
+    redirecturl: 'http://localhost:3000/',
     orderDetails: reqOrderDTCookie, // Thêm thông tin đơn hàng từ cookie vào embed_data
     order: reqOrderCookie // Thêm thông tin đơn hàng từ cookie vào embed_data
   }
@@ -31,7 +31,7 @@ const zaloPayment = async (req, res) => {
     amount: req.body.total,
     description: `KOI Shop - Payment for the order + ${Math.floor(100000 + Math.random() * 900000)}`,
     bank_code: '',
-    callback_url: 'https://7f88-118-69-182-144.ngrok-free.app/payment/callback'
+    callback_url: 'https://koi-farm-shop.onrender.com/payment/callback'
   }
 
   // Tạo MAC cho yêu cầu
