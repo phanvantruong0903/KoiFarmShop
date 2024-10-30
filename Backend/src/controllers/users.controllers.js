@@ -239,6 +239,33 @@ export const getAllConsignFromUserController = async (req, res) => {
   }
 }
 
+export const getConsignFromUserController = async (req, res) => {
+  try {
+    const { user_id } = req.decoded_authorization
+    const { _id } = req.params
+    const user = await databaseService.users.findOne({ _id: new ObjectId(user_id) })
+    if (user === null) {
+      throw new ErrorWithStatus({
+        message: USERS_MESSAGES.USER_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+    const result = await consignsService.getConsignFromUser(_id)
+    return res.json({
+      message: USERS_MESSAGES.GET_CONSIGNS_SUCCESS,
+      result
+    })
+  } catch (error) {
+    res.status(error.status || HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
+      message: error.message || 'Internal Server Error'
+    })
+  }
+}
+
+
+
+
+
 export const getOrderController = async (req, res) => {
   try {
     const { userID } = req.params

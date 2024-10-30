@@ -127,9 +127,9 @@ export const USERS_MESSAGES = {
   BUY_ORDER_SUCCESS: 'Buy success',
   CREATE_ORDER_SUCCESS: 'Create order success',
   ORDER_NOT_FOUND: 'Order not found',
-  REMOVE_ITEM_SUCCESS:'Remove item from order detail success',
+  REMOVE_ITEM_SUCCESS: 'Remove item from order detail success',
   //save
-  SAVE_TO_DB_SUCCESS:'Save order to database success',
+  SAVE_TO_DB_SUCCESS: 'Save order to database success',
   //check authorization
   CHECK_AUTHORIZATION_SUCCESS: 'Check authorization success',
   //get all consign
@@ -137,7 +137,11 @@ export const USERS_MESSAGES = {
   //category
   CATEGORY_NOT_FOUND: 'Category not found',
   //supplier
-  SUPPLIER_NOT_FOUND: 'Supplier not found'
+  SUPPLIER_NOT_FOUND: 'Supplier not found',
+  GET_CONSIGNS_SUCCESS: 'Get consigns success',
+  CONSIGN_NOT_FOUND: 'Consign not found',
+  KOI_NOT_FOUND: 'Koi not found',
+  USER_NOT_FOUND: 'User not found'
 }
 export const ADMINS_MESSAGES = {
   ADD_KOI_SUCCESS: 'Add Fish success',

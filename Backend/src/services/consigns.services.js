@@ -3,6 +3,7 @@ import HTTP_STATUS from '../constants/httpStatus.js'
 import { MANAGER_MESSAGES } from '../constants/managerMessage.js'
 import { ErrorWithStatus } from '../models/Errors.js'
 import databaseService from './database.service.js'
+import { USERS_MESSAGES } from '../constants/userMessages.js'
 
 class ConsignsService {
   async getAllConsign() {
@@ -45,7 +46,7 @@ class ConsignsService {
     )
     if (user == null) {
       throw new ErrorWithStatus({
-        message: MANAGER_MESSAGES.KOI_NOT_FOUND,
+        message: MANAGER_MESSAGES.USER_NOT_FOUND,
         status: HTTP_STATUS.NOT_FOUND
       })
     }
@@ -172,6 +173,48 @@ class ConsignsService {
 
     return {
       data
+    }
+  }
+
+  async getConsignFromUser(consignID) {
+    //tìm consign dựa vào consignID
+    const consignObjectID = new ObjectId(consignID)
+    const consign = await databaseService.consigns.findOne({ _id: consignObjectID })
+    if (consign == null) {
+      throw new ErrorWithStatus({
+        message: USERS_MESSAGES.CONSIGN_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+    const koiObjectID = new ObjectId(consign.KoiID)
+    const koi = await databaseService.kois.findOne({ _id: koiObjectID })
+    if (koi == null) {
+      throw new ErrorWithStatus({
+        message: USERS_MESSAGES.KOI_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+    const userObjectID = new ObjectId(consign.UserID)
+    const user = await databaseService.users.findOne(
+      { _id: userObjectID },
+      {
+        projection: {
+          password: 0,
+          email_verify_token: 0,
+          forgot_password_token: 0
+        }
+      }
+    )
+    if (user == null) {
+      throw new ErrorWithStatus({
+        message: USERS_MESSAGES.USER_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+    return {
+      user: user,
+      consign: consign,
+      koi: koi
     }
   }
 }
