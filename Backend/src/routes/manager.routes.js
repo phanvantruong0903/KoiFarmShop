@@ -2,6 +2,7 @@ import {
   createNewInvoiceGroupKoiController,
   createNewServiceController,
   getKoiAllController,
+  getOrdeDetails,
   getProfitController,
   getRevenueController,
   updateOrderStatusController,
@@ -193,6 +194,8 @@ managerRouter.get('/manage-invoice/get-all', accessTokenValidator, isAdminValida
 managerRouter.get('/manage-invoice/:_id', accessTokenValidator, isAdminValidator, wrapAsync(getInvoiceController))
 
 managerRouter.get('/manage-group-koi/:_id', accessTokenValidator, isAdminValidator, wrapAsync(getgroupKoiController))
+
+managerRouter.get('/manage-order/get-order-detail/:orderID', getOrdeDetails)
 
 
 export default managerRouter

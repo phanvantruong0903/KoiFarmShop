@@ -239,9 +239,36 @@ export const getAllConsignFromUserController = async (req, res) => {
   }
 }
 
+export const getConsignFromUserController = async (req, res) => {
+  try {
+    const { user_id } = req.decoded_authorization
+    const { _id } = req.params
+    const user = await databaseService.users.findOne({ _id: new ObjectId(user_id) })
+    if (user === null) {
+      throw new ErrorWithStatus({
+        message: USERS_MESSAGES.USER_NOT_FOUND,
+        status: HTTP_STATUS.NOT_FOUND
+      })
+    }
+    const result = await consignsService.getConsignFromUser(_id)
+    return res.json({
+      message: USERS_MESSAGES.GET_CONSIGNS_SUCCESS,
+      result
+    })
+  } catch (error) {
+    res.status(error.status || HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
+      message: error.message || 'Internal Server Error'
+    })
+  }
+}
+
+
+
+
+
 export const getOrderController = async (req, res) => {
   try {
-    const userID = req.query.userID;
+    const { userID } = req.params
 
     console.log(userID)
 
@@ -255,14 +282,6 @@ export const getOrderController = async (req, res) => {
 
     for (const order of orders) {
       let orderDetailID = order.OrderDetailID
-
-      if (typeof orderDetailID === 'object' && orderDetailID !== null) {
-        orderDetailID = orderDetailID.orderId || null // Lấy orderId nếu có
-      }
-
-      if (!orderDetailID || !ObjectId.isValid(orderDetailID)) {
-        continue
-      }
 
       const orderDetail = await databaseService.orderDetail.findOne({ _id: new ObjectId(orderDetailID) })
 

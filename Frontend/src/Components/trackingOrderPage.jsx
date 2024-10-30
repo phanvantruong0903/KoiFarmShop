@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { Container, Table } from "react-bootstrap";
+import { Empty } from "antd"; // Import Empty from Ant Design
 import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Css/trackingorderpayStyle.css";
@@ -28,10 +29,7 @@ export default function TrackingOrderPage() {
         );
         if (response.data) {
           setUserData(response.data.result);
-
-          console.log(response.data.result._id);
           setID(response.data.result._id);
-          console.log("Fetched user data:", response.data.result); // Debug log
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -43,25 +41,18 @@ export default function TrackingOrderPage() {
   }, []);
 
   useEffect(() => {
-    console.log("User Data:", userData);
-
     const fetchOrders = async () => {
       if (!userData) return;
 
       const userId = userData._id; // Assuming userData has _id property
-      console.log("Fetching orders for User ID:", userId);
 
       try {
         const response = await axiosInstance.get(
-          "http://localhost:4000/users/get-orders",
-          { params: { userID: userId } } // Gửi userID qua query parameters
+          `http://localhost:4000/users/get-orders/${userId}`
         );
 
-        console.log("API Response:", response); // Log the entire response
-
         if (response.status === 200) {
-          setOrders(response.data.orderDetails);
-          console.log("Fetched Orders:", response.data.orderDetails); // Log fetched orders
+          setOrders(response.data.orderDetails || []);
         } else {
           console.error(
             "Failed to fetch orders, status code:",
@@ -77,10 +68,12 @@ export default function TrackingOrderPage() {
   }, [userData]);
 
   return (
-    <>
-      <Container>
-        <h1>Tracking Order</h1>
-        {/* Orders Table */}
+    <Container>
+      <h1>Tracking Order</h1>
+      {/* Conditional rendering for orders */}
+      {orders.length === 0 ? (
+        <Empty description="No data" style={{paddingTop:'100px', marginBottom:'200px'}} />
+      ) : (
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -96,7 +89,6 @@ export default function TrackingOrderPage() {
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>
-                  {/* Display status directly based on the first item status */}
                   {order.Items.length > 0
                     ? order.Items[0].KoiInfo.Status
                     : "Không có trạng thái"}
@@ -116,19 +108,19 @@ export default function TrackingOrderPage() {
             ))}
           </tbody>
         </Table>
+      )}
 
-        <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
-      </Container>
-    </>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+    </Container>
   );
 }
