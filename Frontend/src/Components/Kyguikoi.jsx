@@ -17,6 +17,7 @@ import {
   Typography,
   Spin,
   Select,
+  Descriptions,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
@@ -54,6 +55,7 @@ export default function Kyguikoi() {
     shippedDate: null,
     receiptDate: null,
     Description: "",
+    Detail: "",
     CategoryID: "",
     KoiName: "",
     Age: 1,
@@ -120,6 +122,8 @@ export default function Kyguikoi() {
         Gender: formData.Gender.toString(),
         Size: parseInt(formData.Size, 10),
         Breed: formData.Breed.toString(),
+        Detail: formData.Detail.toString(),
+        Description: formData.Description.toString(),
         DailyFoodAmount: parseFloat(formData.DailyFoodAmount),
         FilteringRatio: parseFloat(formData.FilteringRatio),
         Age: parseInt(formData.Age, 10),
@@ -235,7 +239,7 @@ export default function Kyguikoi() {
                   >
                     <Input
                       placeholder="Nhập địa chỉ email (name@example.com)"
-                      disabled={!!userData}
+                      disabled={userData?.email}
                     />
                   </Form.Item>
                   <Form.Item
@@ -245,7 +249,10 @@ export default function Kyguikoi() {
                       { required: true, message: "Vui lòng nhập địa chỉ." },
                     ]}
                   >
-                    <Input placeholder="Nhập địa chỉ" disabled={!!userData} />
+                    <Input
+                      placeholder="Nhập địa chỉ"
+                      disabled={userData?.address}
+                    />
                   </Form.Item>
                 </div>
                 <div style={{ width: "48%" }}>
@@ -261,7 +268,7 @@ export default function Kyguikoi() {
                   >
                     <Input
                       placeholder="Nhập số điện thoại"
-                      disabled={!!userData}
+                      disabled={userData?.phone_number}
                     />
                   </Form.Item>
                   <Form.Item
@@ -271,7 +278,10 @@ export default function Kyguikoi() {
                       { required: true, message: "Vui lòng nhập họ và tên." },
                     ]}
                   >
-                    <Input placeholder="Nhập họ và tên" disabled={!!userData} />
+                    <Input
+                      placeholder="Nhập họ và tên"
+                      disabled={userData?.name}
+                    />
                   </Form.Item>
                 </div>
               </div>
@@ -389,7 +399,31 @@ export default function Kyguikoi() {
               <Form.Item
                 name="Age"
                 label="Tuổi (*)"
-                rules={[{ required: true, message: "Vui lòng nhập tuổi." }]}
+                rules={[
+                  { required: true, message: "Vui lòng nhập tuổi." },
+                  {
+                    type: "string",
+                    min: 1,
+                    max: 50,
+                    message: "Tuổi phải từ 1 đến 50.",
+                  },
+                  {
+                    validator: (_, value) => {
+                      const numericValue = Number(value); // Convert to a number
+                      if (numericValue < 1) {
+                        return Promise.reject(
+                          new Error("Tuổi phải lớn hơn hoặc bằng 1.")
+                        );
+                      }
+                      if (numericValue > 50) {
+                        return Promise.reject(
+                          new Error("Tuổi phải nhỏ hơn bằng 50")
+                        );
+                      }
+                      return Promise.resolve();
+                    },
+                  },
+                ]}
               >
                 <Input
                   name="Age"
@@ -397,8 +431,6 @@ export default function Kyguikoi() {
                   onChange={handleChange}
                   type="number"
                   placeholder="Nhập tuổi"
-                  min={1}
-                  max={50}
                 />
               </Form.Item>
 
@@ -442,6 +474,28 @@ export default function Kyguikoi() {
                 label="Kích Thước (*) (cm)"
                 rules={[
                   { required: true, message: "Vui lòng nhập kích thước." },
+                  {
+                    type: "string",
+                    min: 1,
+                    max: 200,
+                    message: "Kích thước phải từ 1 đến 200.",
+                  },
+                  {
+                    validator: (_, value) => {
+                      const numericValue = Number(value); // Convert to a number
+                      if (numericValue < 1) {
+                        return Promise.reject(
+                          new Error("Kích Thước phải lớn hơn hoặc bằng 1.")
+                        );
+                      }
+                      if (numericValue > 200) {
+                        return Promise.reject(
+                          new Error("Kích Thước phải nhỏ hơn bằng 200")
+                        );
+                      }
+                      return Promise.resolve();
+                    },
+                  },
                 ]}
               >
                 <Input
@@ -481,6 +535,28 @@ export default function Kyguikoi() {
                 label="Nhập lượng thức ăn / ngày(*) (đơn vị kg/ngày)"
                 rules={[
                   { required: true, message: "Vui lòng nhập lượng thức ăn." },
+                  {
+                    type: "string",
+                    min: 1,
+                    max: 100,
+                    message: "Lượng thức ăn / ngày(*) phải từ 1 đến 100.",
+                  },
+                  {
+                    validator: (_, value) => {
+                      const numericValue = Number(value); // Convert to a number
+                      if (numericValue < 1) {
+                        return Promise.reject(
+                          new Error("Lượng thức ăn phải lớn hơn hoặc bằng 1.")
+                        );
+                      }
+                      if (numericValue > 100) {
+                        return Promise.reject(
+                          new Error("lượng thức ăn phải nhỏ hơn bằng 200")
+                        );
+                      }
+                      return Promise.resolve();
+                    },
+                  },
                 ]}
               >
                 <Input
@@ -500,6 +576,24 @@ export default function Kyguikoi() {
                 label="Nhập tỷ lệ lọc(*) (%)"
                 rules={[
                   { required: true, message: "Vui lòng nhập tỷ lệ lọc." },
+                  {
+                    type: "string",
+                    min: 0, // Update min to 0.1 as per your requirement
+                    max: 100,
+                    message: "Tỷ lệ lọc phải từ 0.1 đến 100.",
+                  },
+                  {
+                    validator: (_, value) => {
+                      const numericValue = Number(value); // Convert to a number
+
+                      if (numericValue > 100) {
+                        return Promise.reject(
+                          new Error("Tỷ lệ lọc phải nhỏ hơn bằng 100")
+                        );
+                      }
+                      return Promise.resolve();
+                    },
+                  },
                 ]}
               >
                 <Input
@@ -508,8 +602,9 @@ export default function Kyguikoi() {
                   onChange={handleChange}
                   type="number"
                   placeholder="Nhập tỷ lệ lọc"
-                  min={0.01}
+                  min={0.1} // Update min to 0.1
                   max={100}
+                  step={0.1}
                 />
               </Form.Item>
 
