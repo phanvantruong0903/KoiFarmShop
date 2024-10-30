@@ -52,33 +52,34 @@ export default function AnTopBar({ children, name, role }) {
     useAuthCheck();
     return (
       <SelfCheckContext.Provider value={{ isCheckingSelf, setIsCheckingSelf }}>
-          <Layout>
-              <Header className="topbar-header" style={{ background: "#001529", padding: "0 20px" }}>
-                  <div className="logo" style={{ float: "left", color: "white", fontSize: "1.5rem" }}>
-                      IKOI
-                  </div>
-                  <Dropdown overlay={menu} trigger={['click']} className="menu-dropdown">
-                      <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()} style={{color:'white'}}>
-                          Menu Quản Lý
-                      </a>
-                  </Dropdown>
-                  <div className="topbar-right" style={{ float: "right" }}>
-                      <Typography.Text style={{ color: "white", marginRight: "10px" }}>
-                          Xin chào {name} Quản Lý {role}
-                      </Typography.Text>
-                      <Avatar 
-                          onClick={() => setIsCheckingSelf(!isCheckingSelf)}
-                          icon={<RxAvatar />} 
-                      />
-                  </div>
-              </Header>
-              <Content style={{ padding: "20px", minHeight: "100vh" }}>
-                  {children}
-                  <Outlet />
-              </Content>
-          </Layout>
+        <Layout>
+          <Header className="topbar-header" style={{ background: "#001529", padding: "0 20px" }}>
+            <div className="logo" style={{ float: "left", color: "white", fontSize: "1.5rem" }}>
+              IKOI
+            </div>
+            <Dropdown overlay={menu} trigger={['click']} className="menu-dropdown">
+              <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()} style={{color:'white'}}>
+                Menu Quản Lý
+              </a>
+            </Dropdown>
+            <div className="topbar-right" style={{ float: "right" }}>
+              <Typography.Text style={{ color: "white", marginRight: "10px" }}>
+                Xin chào {name} Quản Lý {role}
+              </Typography.Text>
+              <Link to='/profile'>
+                <Avatar 
+                  icon={<RxAvatar />} 
+                />
+              </Link>
+            </div>
+          </Header>
+          <Content style={{ padding: "20px", minHeight: "100vh" }}>
+            {children}
+            <Outlet />
+          </Content>
+        </Layout>
       </SelfCheckContext.Provider>
-  );
+    );
 }
 
 

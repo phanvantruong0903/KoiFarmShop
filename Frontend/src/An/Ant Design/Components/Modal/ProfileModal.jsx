@@ -4,11 +4,17 @@ import { HiLink } from "react-icons/hi";
 import { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import "../../../Css/Modal.css";
+import React from 'react'
+import { SelfCheckContext } from '../../../Ant Design/Components/ANTDTopbar';
 import axiosInstance from "../../../Utils/axiosJS";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { initializeApp } from "firebase/app";
 export default function ViewProfile({ actions, setactions, id }) {
-  const handleClose = () => setactions(false);
+  const setIsCheckingSelf = React.useContext(SelfCheckContext);
+  const handleClose = () => {
+    setactions(false);
+    setIsCheckingSelf(false);
+  }
   const firebaseConfig = {
     apiKey: import.meta.env.VITE_API_KEY,
     authDomain: import.meta.env.VITE_AUTH_DOMAIN,
