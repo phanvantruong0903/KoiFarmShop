@@ -49,10 +49,15 @@ export const callback = async (req, res) => {
       }
 
       for (const koiID of flattenedKoiIDs) {
-        const consignkoi = await databaseService.consigns.findOne({ _id: koiID })
+
+        const stringKoiID = koiID.toString();
+
+        console.log(stringKoiID)
+
+        const consignkoi = await databaseService.consigns.findOne({ KoiID: stringKoiID })
 
         if (consignkoi) {
-          await databaseService.consigns.findOneAndUpdate({ _id: koiID }, { $set: { State: 5 } }, { new: true })
+          await databaseService.consigns.findOneAndUpdate({ KoiID: stringKoiID }, { $set: { State: 5 } }, { new: true })
         }
       }
 
