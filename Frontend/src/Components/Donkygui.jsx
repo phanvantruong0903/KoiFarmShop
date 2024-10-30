@@ -10,10 +10,10 @@ import {
   Divider,
   Row,
   Col,
-  Breadcrumb,
   Tooltip,
+  message,
 } from "antd";
-import { HomeOutlined } from "@ant-design/icons";
+import { HomeOutlined, CopyOutlined } from "@ant-design/icons";
 import axiosInstance from "../An/Utils/axiosJS";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -53,7 +53,7 @@ export default function DonKyGui() {
       const response = await axiosInstance.get("users/me");
       if (response.data) {
         setUserData(response.data.result);
-        console.log("Fetched user data:", response.data.result); // Debug log
+        console.log("Fetched user data:", response.data.result);
       }
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -65,6 +65,11 @@ export default function DonKyGui() {
   useEffect(() => {
     fetchUserData();
   }, []);
+
+  const handleCopy = (id) => {
+    navigator.clipboard.writeText(id);
+    message.success('ID đã được sao chép!');
+  };
 
   if (loading)
     return (
@@ -81,21 +86,9 @@ export default function DonKyGui() {
   if (error) return <Alert message="Error" description={error} type="error" />;
 
   return (
-    <div
-      style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
-    >
+    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Layout style={{ backgroundColor: "whitesmoke" }}>
         <Container style={{ paddingTop: "50px", paddingBottom: "10px" }}>
-          {/* <Breadcrumb style={{ padding: "16px", marginTop: "10px" }}>
-            <Breadcrumb.Item href="/">
-              <HomeOutlined />
-              <span>Home</span>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item href="/donkygui">
-              <span>Ký Gửi</span>
-            </Breadcrumb.Item>
-          </Breadcrumb> */}
-
           <Row gutter={16}>
             <Col span={24}>
               <Title
@@ -117,11 +110,7 @@ export default function DonKyGui() {
               consignList.map((item) => {
                 const { consign, koi } = item;
                 return (
-                  <Col
-                    span={24}
-                    key={consign._id}
-                    style={{ marginBottom: "20px" }}
-                  >
+                  <Col span={24} key={consign._id} style={{ marginBottom: "20px" }}>
                     <div
                       style={{
                         padding: "20px",
@@ -155,28 +144,22 @@ export default function DonKyGui() {
                               let color;
                               if (consign.State === 1) {
                                 color = "black";
-                              } else if (
-                                consign.State >= 2 &&
-                                consign.State <= 4
-                              ) {
+                              } else if (consign.State >= 2 && consign.State <= 4) {
                                 color = "gold";
                               } else if (consign.State === 5) {
                                 color = "green";
                               }
 
-                              return (
-                                <Text style={{ color }}>{statusText}</Text>
-                              );
+                              return <Text style={{ color }}>{statusText}</Text>;
                             })()}
+                            
                           </Text>
-
+                          
                           <div style={{ marginTop: "10px" }}>
                             <Text strong>
                               Ngày giao hàng:{" "}
                               {consign.ShippedDate
-                                ? new Date(
-                                    consign.ShippedDate
-                                  ).toLocaleDateString()
+                                ? new Date(consign.ShippedDate).toLocaleDateString()
                                 : "Không yêu cầu"}
                             </Text>
                           </div>
@@ -184,28 +167,31 @@ export default function DonKyGui() {
                       </div>
 
                       <Divider />
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Tooltip title="Đây là ID cho đơn hàng của bạn, xin không cung cấp cho người khác.">
-                          <Text
-                            strong
-                            style={{
-                              display: "inline-block",
-                              maxWidth: "200px",
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                            }}
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <Tooltip title="Đây là ID cho đơn hàng của bạn, xin không cung cấp cho người khác.">
+                            <Text
+                              strong
+                              style={{
+                                display: "inline-block",
+                                maxWidth: "200px",
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                              }}
+                            >
+                              Đơn gửi: {consign._id}{" "}
+                              <span style={{ color: "#999" }}>?</span>
+                            </Text>
+                          </Tooltip>
+                          <Button
+                            type="link"
+                            onClick={() => handleCopy(consign._id)}
+                            style={{ color:'grey' }}
                           >
-                            Đơn gửi: {consign._id}{" "}
-                            <span style={{ color: "#999" }}>?</span>
-                          </Text>
-                        </Tooltip>
+                            <CopyOutlined />
+                          </Button>
+                        </div>
                         <div style={{ display: "flex", alignItems: "center" }}>
                           <Text style={{ marginLeft: "10px" }}>
                             TotalPrice:{" "}

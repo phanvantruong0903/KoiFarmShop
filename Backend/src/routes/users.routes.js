@@ -8,6 +8,7 @@ import {
   refreshTokenValidator,
   registerValidator,
   resetPasswordValidator,
+  updateConsignValidator,
   updateMeValidator,
   verifiedUserValidator,
   verifyForgotPasswordTokenValidator
@@ -29,6 +30,7 @@ import {
   resendEmailVerifyController,
   resetPasswordController,
   updateMeController,
+  userUpdateConsignController,
   verifyForgotPasswordTokenController
 } from '../controllers/users.controllers.js'
 import { wrapAsync } from '../utils/handle.js'
@@ -119,13 +121,14 @@ usersRouter.get('/get-orders/:userID', wrapAsync(getOrderController))
 
 usersRouter.get('/tat-ca-don-ki-gui/:_id', accessTokenValidator, wrapAsync(getConsignFromUserController))
 
-// usersRouter.patch(
-//   '/update-consign',
-//   accessTokenValidator,
-//   verifiedUserValidator,
-//   filterMiddleware(['name', 'address', 'phone_number', 'website', 'username', 'picture']), //lọc ra những key cần thiết để update
-//   updateMeValidator,
-//   wrapAsync(updateMeController)
-// )
+usersRouter.patch(
+  '/tat-ca-don-ki-gui/:_id',
+  accessTokenValidator,
+  filterMiddleware(['PositionCare', 'Method', 'ShippedDate', 'ReceiptDate' , 'Detail',
+    'CategoryID', 'KoiName', 'Age', 'Origin', 'Gender', 'Size', 'Breed', 'Description', 'DailyFoodAmount',
+    'FilteringRatio', 'CertificateID', 'Image', 'Video']), //lọc ra những key cần thiết để update
+  updateConsignValidator,
+  wrapAsync(userUpdateConsignController)
+)
 
 export default usersRouter
