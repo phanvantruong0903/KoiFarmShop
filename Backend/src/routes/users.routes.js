@@ -114,6 +114,6 @@ usersRouter.get('/oauth/google', wrapAsync(oAuthController))
 
 usersRouter.get('/tat-ca-don-ki-gui', accessTokenValidator, wrapAsync(getAllConsignFromUserController))
 
-usersRouter.get('/get-orders', wrapAsync(getOrderController))
+usersRouter.get('/get-orders/:userID', wrapAsync(getOrderController))
 
 export default usersRouter
