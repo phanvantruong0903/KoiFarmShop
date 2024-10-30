@@ -1,21 +1,39 @@
 import React from 'react';
-import { Typography, Card, Statistic, Row, Col, Layout, Button, Tabs, Badge, Space, Modal, Form, Input, Select, InputNumber, message } from 'antd';
+import { Typography, Card, Statistic, Row, Col, Layout, Button, Tabs, Badge, Space, Modal, Form, Input, Select, InputNumber, message, Upload } from 'antd';
+import { UploadOutlined,VideoCameraOutlined } from '@ant-design/icons';
 import InvoiceTable from '../Components/Table/InvoiceTable';
 import '../Css/GeneralPurpose.css';
 import useFetchInvoices from "../Hooks/useFetchInvoices";
 import axiosInstance from '../../Utils/axiosJS';
-
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { initializeApp } from "firebase/app";
 export default function Invoices() {
   const { Header, Content } = Layout;
   const [activeTab, setActiveTab] = React.useState('1');
-  
+
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const [form] = Form.useForm();
   const [Catagory, setCatagory] = React.useState([]);
   const [Supplier, setSupplier] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [invoices, setInvoices] = React.useState([]);
-  
+  const [imageList, setImageList] = React.useState([]);
+  const [video, setVideo] = React.useState(null);
+  const [imageUrl, setImageUrl] = React.useState('');
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [videoUrl, setVideoUrl] = React.useState('');
+  ; 
+  const firebaseConfig = {
+    apiKey: import.meta.env.VITE_API_KEY,
+    authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_APP_ID,
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const storage = getStorage(app);
   const [refreshData, setRefreshData] = React.useState(false);
   React.useEffect(() => {
     const fetchCatagory = async () => {
@@ -24,7 +42,7 @@ export default function Invoices() {
           axiosInstance.get('getAllKoi'),
           axiosInstance.get('manager/manage-supplier/get-all'),
           axiosInstance.get("manager/manage-invoice/get-all")
-        ]).then(([Catresponse, SupResponse,InReponse]) => {
+        ]).then(([Catresponse, SupResponse, InReponse]) => {
           const { categoryList } = Catresponse.data;
           const supplierList = SupResponse.data.result;
           const invoiceList = InReponse.data.invoices;
@@ -90,23 +108,101 @@ export default function Invoices() {
   function handleCancel() {
     setIsModalVisible(false);
   }
+  const handleImageUpload = async ({ file, onSuccess, onError }) => {
+    try {
+      const imageRef = ref(storage, `images/${file.name}`);
+      await uploadBytes(imageRef, file);
+      const downloadURL = await getDownloadURL(imageRef);
+      setImageUrl(downloadURL);
+      onSuccess(null, file); 
+      message.success(`${file.name} uploaded successfully`);
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      onError(error); 
+      message.error('Image upload failed');
+    }
+  };
+  
 
-  async function handleOk() {
+  const handleVideoUpload = async ({ file, onSuccess, onError }) => {
+    try {
+      const videoRef = ref(storage, `videos/${file.name}`);
+      await uploadBytes(videoRef, file);
+      const downloadURL = await getDownloadURL(videoRef);
+      setVideoUrl(downloadURL);
+      onSuccess(null, file);
+      message.success(`${file.name} uploaded successfully`);
+    } catch (error) {
+      console.error('Error uploading video:', error);
+      onError(error); 
+      message.error('Video upload failed');
+    }
+  };
+  const handleOk = async () => {
     try {
       const values = await form.validateFields();
       setLoading(true);
-      const response = await axiosInstance.post('manager/manage-invoice/create-new-invoice-group-koi', values);
+      const invoiceData = {
+        ...values,
+        GroupKoiImage: imageUrl,
+        GroupKoiVideo: videoUrl
+      };
+      const { SupplierImage, SupplierVideo, ...restValues } = values;
+      const THEREALDATA = {
+        ...restValues,
+        GroupKoiImage: imageUrl,
+        GroupKoiVideo: videoUrl
+      }
+      console.log(THEREALDATA);
+      await axiosInstance.post('manager/manage-invoice/create-new-invoice-group-koi',THEREALDATA );
       message.success('Hóa đơn đã được tạo thành công!');
       setIsModalVisible(false);
       setLoading(false);
       setRefreshData(!refreshData);
       form.resetFields();
-      await invoices.refreshData;
     } catch (error) {
       message.error('Vui lòng kiểm tra lại các trường!');
       setLoading(false);
     }
-  }
+  };
+  // async function handleOk() {
+  //   try {
+  //     const values = await form.validateFields();
+  //     setLoading(true);
+  
+  //     const updatedData = { ...values };
+  
+  //     if (values.SupplierImage && values.SupplierImage.file && values.SupplierImage.file.originFileObj) {
+  //       const imageFile = values.SupplierImage.file.originFileObj;
+  //       const imageRef = ref(storage, `images/${imageFile.name}`);
+  //       await uploadBytes(imageRef, imageFile);
+  //       const downloadURL = await getDownloadURL(imageRef);
+  //       updatedData.SupplierImage = downloadURL;  
+  //     }
+  
+      
+  //     if (values.SupplierVideo && values.SupplierVideo.file && values.SupplierVideo.file.originFileObj) {
+  //       const videoFile = values.SupplierVideo.file.originFileObj;
+  //       const videoRef = ref(storage, `videos/${videoFile.name}`);
+  //       await uploadBytes(videoRef, videoFile);
+  //       const videoURL = await getDownloadURL(videoRef);
+  //       updatedData.SupplierVideo = videoURL;  // Add Firebase video URL to form data
+  //     }
+  
+     
+  //     const response = await axiosInstance.post('manager/manage-invoice/create-new-invoice-group-koi', updatedData);
+  //     message.success('Hóa đơn đã được tạo thành công!');
+  //     setIsModalVisible(false);
+  //     setLoading(false);
+  //     setRefreshData(!refreshData);
+  //     form.resetFields();
+  //   } catch (error) {
+  //     message.error('Vui lòng kiểm tra lại các trường!');
+  //     console.error('Error:', error);
+  //     setLoading(false);
+  //   }
+  // }
+  
 
   return (
     <Layout>
@@ -196,6 +292,35 @@ export default function Invoices() {
             ]}
           >
             <InputNumber min={0} max={100} placeholder="Nhập giảm giá" style={{ width: '100%' }} suffix={'%'} />
+          </Form.Item>
+          <Form.Item
+            label="Supplier Image"
+            name="SupplierImage"
+            
+            rules={[{ required: true, message: 'Vui lòng chọn ảnh!' }]}
+          >
+            <Upload
+              customRequest={handleImageUpload}
+              listType="picture"
+            >
+              <Button type="primary" icon={<UploadOutlined />}>
+                Upload Image
+              </Button>
+            </Upload>
+          </Form.Item>
+
+          <Form.Item
+            label="Video"
+            name="SupplierVideo"
+            rules={[{ required: true, message: 'Vui lòng chọn video!' }]}
+          >
+            <Upload
+              customRequest={handleVideoUpload}
+            >
+              <Button type="primary" icon={<VideoCameraOutlined />}>
+                Upload Video
+              </Button>
+            </Upload>
           </Form.Item>
         </Form>
       </Modal>

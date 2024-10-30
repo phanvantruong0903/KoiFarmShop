@@ -9,8 +9,9 @@ export default function ConsignDetail({ consignID }) {
   const [consignData, setConsignData] = React.useState({});
   const [imageList, setImageList] = React.useState([]);
   const [video, setVideo] = React.useState(null);
+ 
+  const [isLoading, setIsLoading] = React.useState(false); 
   const [catagoryList, setCatagoryList] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(false);
   const [validFieldForUpdate, setValidFieldForUpdate] = React.useState({
     name: "",
     address: "",
@@ -32,6 +33,7 @@ export default function ConsignDetail({ consignID }) {
     Image: "",
     Video: "",
     State: 0,
+    Detail:''
 
   });
   React.useEffect(() => {
@@ -148,7 +150,9 @@ export default function ConsignDetail({ consignID }) {
         const reponse = await axiosInstance.put(`manager/manage-ki-gui/${consignID}`, updatedFields);
         console.log(reponse)
         message.success(`${file.name} uploaded successfully`);
+        setVideo(videoURL);
         setTrigger(trigger + 1);
+
       } catch (error) {
         console.error('Error uploading video:', error);
         message.error('Video upload failed');
@@ -382,7 +386,7 @@ export default function ConsignDetail({ consignID }) {
             ? new Date(consign.ShippedDate).toLocaleDateString() : <Tag color="red">Not Provided</Tag>}</Descriptions.Item>
           <Descriptions.Item label="Received Date">{consign.ReceivedDate ? new Date(consign.ReceivedDate).toLocaleDateString() : <Tag color="red">Not Provided</Tag>}</Descriptions.Item>
           {renderEditableItem("Hoa Hồng", consign.Commission, "Commission", "selectCommission")}
-
+          {renderEditableItem("Chi tiết kí gửi", consign.Detail, "Detail")}
           <Descriptions.Item label="Total Price">
             {consign.TotalPrice == 0 ? (
               <Tag color="red">Not Provided</Tag>
