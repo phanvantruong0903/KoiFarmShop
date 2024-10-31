@@ -1,12 +1,11 @@
 import Navbar from "../../Navbar/Navbar";
 import Footer from "../../Footer";
-import GioiThieuVeKoiViet from "../../GioiThieuVeKoiViet";
-
-export default function Gioithieuvekoivietpage() {
+import NguonGocCuaIKoi from "../../Nguongoccuaikoi";
+export default function NguongoccuaikoiPage() {
   return (
     <div>
       <Navbar />
-      <GioiThieuVeKoiViet />
+      <NguonGocCuaIKoi />
       <Footer />
     </div>
   );

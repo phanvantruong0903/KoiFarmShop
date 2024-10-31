@@ -66,6 +66,9 @@ import Changepasswordpage from "./Components/Page/Thongtincuauser/changepassword
 import Trackingorderpage from "./Components/Page/Thongtincuauser/trackingorderPage";
 import Gioithieupage from "./Components/Page/Gioithieu/gioithieuPage";
 import ChinhSach from "./Components/ChinhSach/chinhSach";
+import Gioithieuvekoinhatpage from "./Components/Page/Gioithieu/gioithieuvekoinhat";
+import Gioithieuvekoivietpage from "./Components/Page/Gioithieu/gioithieuvekoiviet";
+import NguongoccuaikoiPage from "./Components/Page/Gioithieu/nguongoccuaikoiPage";
 const router = createBrowserRouter([
   {
     path: "/login/oauth",
@@ -173,15 +176,15 @@ const router = createBrowserRouter([
   },
   {
     path: "/nguongocIKoi",
-    element: <NguonGocCuaIKoi />, // Home component
+    element: <NguongoccuaikoiPage />, // Home component
   },
   {
     path: "/gioithieuvekoiviet",
-    element: <GioiThieuVeKoiViet />, // Home component
+    element: <Gioithieuvekoivietpage />, // Home component
   },
   {
     path: "/gioithieuvekoinhat",
-    element: <GioiThieuVeKoiNhat />, // Home component
+    element: <Gioithieuvekoinhatpage />, // Home component
   },
   {
     path: "/gioithieuvekoif1",

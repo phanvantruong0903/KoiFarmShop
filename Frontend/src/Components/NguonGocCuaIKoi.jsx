@@ -139,14 +139,6 @@ export default function NguonGocCuaIKoi() {
             </div>
           ))}
         </div>
-        <div style={{ display: "flex" }}>
-          <div style={{ width: "30%" }}>
-            <img src="src/assets/img_4.png" alt="Image 4" />
-          </div>
-          <div style={{ width: "70%" }}>
-            <img src="src/assets/img_5.png" alt="Image 5" />
-          </div>
-        </div>
       </Container>
     </>
   );

@@ -22,6 +22,8 @@ import {
 import { UploadOutlined } from "@ant-design/icons";
 import Footer from "../../Footer";
 import Navbar from "../../Navbar/Navbar";
+import dayjs from "dayjs";
+import { CgKey } from "react-icons/cg";
 
 const { Title } = Typography;
 const firebaseConfig = {
@@ -48,7 +50,10 @@ export default function Chitietconsignpage() {
 
     // Check localStorage for toast state
   }, [isLoggedIn]);
-
+  const [initialFormData, setInitialFormData] = useState({
+    Image: null, // Hoặc giá trị ban đầu nếu có
+    Video: null, // Hoặc giá trị ban đầu nếu có
+  });
   const [formData, setFormData] = useState({
     email: "",
     name: "",
@@ -79,6 +84,7 @@ export default function Chitietconsignpage() {
   const [categoryData, setCategoryData] = useState([]);
   const [consignData, setConsignData] = useState([]);
   const [koiData, setKoiData] = useState([]);
+
   const navigate = useNavigate();
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -96,12 +102,11 @@ export default function Chitietconsignpage() {
   const handleUploadChange = (type, fileList) => {
     setFormData((prevData) => ({ ...prevData, [type]: fileList }));
   };
-
   const handleDateChange = (key, date) => {
     setFormData((prevData) => ({ ...prevData, [key]: date }));
   };
 
-  const imageFileList = koiData?.Image
+  const imageFileList1 = koiData?.Image
     ? [
         {
           uid: "-1", // Unique ID, can be any unique value
@@ -112,7 +117,7 @@ export default function Chitietconsignpage() {
       ]
     : [];
 
-  const videoFileList = koiData?.Video
+  const videoFileList1 = koiData?.Video
     ? [
         {
           uid: "-2", // Unique ID for video
@@ -179,6 +184,58 @@ export default function Chitietconsignpage() {
   const handleSubmit = async (values) => {
     console.log("Submitting form with values:", values); // Log the form values being submitted
     try {
+      const originalImageFile = koiData.Image; // Giá trị ban đầu
+      console.log(originalImageFile);
+      const originalVideoFile = koiData.Video; // Giá trị ban đầu
+      console.log(originalVideoFile);
+      // Kiểm tra và lấy tệp hình ảnh
+      let imageFile =
+        formData.Image && formData.Image.length > 0 ? formData.Image[0] : null;
+
+      if (!imageFile) {
+        console.warn("No new image file selected. Using original.");
+        imageFile = originalImageFile; // Khôi phục giá trị ban đầu
+      }
+
+      if (!imageFile) {
+        console.error("Image file is still undefined.");
+        toast.error("Vui lòng chọn một hình ảnh.");
+        return;
+      }
+
+      // Kiểm tra và lấy tệp video
+      let videoFile =
+        formData.Video && formData.Video.length > 0 ? formData.Video[0] : null;
+
+      if (!videoFile) {
+        console.warn("No new video file selected. Using original.");
+        videoFile = originalVideoFile; // Khôi phục giá trị ban đầu
+      }
+
+      if (!videoFile) {
+        console.error("Video file is still undefined.");
+        toast.error("Vui lòng chọn một video.");
+        return;
+      }
+
+      // Tạo tham chiếu đến vị trí lưu trữ
+      const imageRef = ref(storage, `koiImages/${imageFile.name}`);
+      const videoRef = ref(storage, `koiVideos/${videoFile.name}`);
+
+      let imageUrl = originalImageFile ? originalImageFile.url : null; // Giữ URL cũ nếu không có tệp mới
+      let videoUrl = originalVideoFile ? originalVideoFile.url : null; // Giữ URL cũ nếu không có tệp mới
+
+      // Tải lên ảnh nếu có tệp mới
+      if (formData.Image && formData.Image.length > 0) {
+        await uploadBytes(imageRef, imageFile.originFileObj);
+        imageUrl = await getDownloadURL(imageRef); // Nhận URL mới
+      }
+
+      // Tải lên video nếu có tệp mới
+      if (formData.Video && formData.Video.length > 0) {
+        await uploadBytes(videoRef, videoFile.originFileObj);
+        videoUrl = await getDownloadURL(videoRef); // Nhận URL mới
+      }
       const shippedDateObj = formData.shippedDate
         ? new Date(formData.shippedDate)
         : null;
@@ -195,38 +252,21 @@ export default function Chitietconsignpage() {
         toast.error("Ngày gửi không được ở quá khứ hoặc sau ngày nhận!");
         return;
       }
-      // Parse Size and Age as integers, DailyFoodAmount and FilteringRatio as floats
-      const dataToSend = {
+      // Cập nhật formData với URL
+      const updatedFormData = {
         ...values,
-        PositionCare: formData.PositionCare.toString(),
-        Method: formData.Method.toString(),
-        CategoryID: formData.CategoryID.toString(),
-        Gender: formData.Gender.toString(),
-        Size: parseInt(formData.Size, 10),
-        Breed: formData.Breed.toString(),
-        Detail: formData.Detail.toString(),
+        Image: imageUrl, // Chọn URL mới hoặc giữ URL cũ
+        Video: videoUrl, // Chọn URL mới hoặc giữ URL cũ
         Description: formData.Description.toString(),
-        DailyFoodAmount: parseFloat(formData.DailyFoodAmount),
-        FilteringRatio: parseFloat(formData.FilteringRatio),
-        Age: parseInt(formData.Age, 10),
-        shippedDate: shippedDateObj ? shippedDateObj.toISOString() : null,
-        receiptDate: receiptDateObj ? receiptDateObj.toISOString() : null,
+        ShippedDate: shippedDateObj ? shippedDateObj.toISOString() : null,
+        ReceiptDate: receiptDateObj ? receiptDateObj.toISOString() : null,
       };
-      console.log(dataToSend);
-      const imageRef = ref(storage, `koiImages/${formData.Image[0].name}`);
-      const videoRef = ref(storage, `koiVideos/${formData.Video[0].name}`);
 
-      await uploadBytes(imageRef, formData.Image[0].originFileObj);
-      const imageUrl = await getDownloadURL(imageRef);
-
-      await uploadBytes(videoRef, formData.Video[0].originFileObj);
-      const videoUrl = await getDownloadURL(videoRef);
-
-      // Update dataToSend with the URLs
-      dataToSend.Image = imageUrl;
-      dataToSend.Video = videoUrl;
+      console.log("Updated form data:", updatedFormData);
+      console.log(updatedFormData);
       // Call the API with the entire form values
-      const response = await updateConsign(dataToSend);
+      const response = await updateConsign(updatedFormData);
+      console.log(response);
       console.log("Update response from updateConsign:", response.data); // Log response from API
       toast.success("Cập nhật thành công.");
     } catch (error) {
@@ -234,58 +274,30 @@ export default function Chitietconsignpage() {
       toast.error("Cập nhật thất bại.");
     }
   };
-  const updateConsign = async (values) => {
-    console.log("Updating consign with data:", values); // Log dữ liệu được gửi đi
+  const updateConsign = async (formData) => {
+    console.log("Updating consign with data:", formData);
     try {
-      // Tải lên ảnh
-      const shippedDateObj = formData.shippedDate
-        ? new Date(formData.shippedDate)
-        : null;
-      const receiptDateObj = formData.receiptDate
-        ? new Date(formData.receiptDate)
-        : null;
-      const currentDate = new Date();
-
-      if (
-        shippedDateObj &&
-        (shippedDateObj < currentDate ||
-          (receiptDateObj && shippedDateObj > receiptDateObj))
-      ) {
-        toast.error("Ngày gửi không được ở quá khứ hoặc sau ngày nhận!");
-        return;
-      }
-      const imageRef = ref(storage, `koiImages/${formData.Image[0].name}`);
-      const videoRef = ref(storage, `koiVideos/${formData.Video[0].name}`);
-
-      await uploadBytes(imageRef, formData.Image[0].originFileObj);
-      const imageUrl = await getDownloadURL(imageRef);
-      await uploadBytes(videoRef, formData.Video[0].originFileObj);
-      const videoUrl = await getDownloadURL(videoRef);
-      // Cập nhật formData với URL
-      const updatedFormData = {
-        ...formData,
-      };
-      updatedFormData.Image = imageUrl;
-      updatedFormData.Video = videoUrl;
-      // Gọi API để cập nhật
+      console.log("Updated form data:", formData);
       const response = await axiosInstance.patch(
         `/users/tat-ca-don-ki-gui/${consign._id}`,
-        updatedFormData,
+        formData,
         {
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
-      console.log("Update response:", response.data); // Log phản hồi
-      alert(response.data.message); // Hiển thị thông báo
-      return response; // Trả về phản hồi
+      console.log("Update response:", response.data);
+      alert(response.data.message);
+      return response;
     } catch (error) {
-      console.error("Error during upload or API update:", error); // Log lỗi
+      console.error("Error during upload or API update:", error);
       toast.error("Cập nhật thất bại.");
     }
   };
+
   const initialKoiData = koiData || {}; // Ensure koiData is an object
+  //lấy data khi người dùng đã điền đưa vào Form của ant design ( phải có loading để tránh tình trạng api chưa kịp load đã render hết)
   const initialValues = {
     email: userData?.email || "",
     name: userData?.name || "",
@@ -293,9 +305,13 @@ export default function Chitietconsignpage() {
     phone_number: userData?.phone_number || "",
     PositionCare: consignData?.PositionCare || "",
     Method: consignData?.Method || "",
-    ShippedDate: consignData?.ShippedDate || "",
-    ReceiptDate: consignData?.ReceiptDate || "",
-    Detail: consignData?.Description || "",
+    ShippedDate: consignData?.ShippedDate
+      ? dayjs(consignData.ShippedDate)
+      : null,
+    ReceiptDate: consignData?.ReceiptDate
+      ? dayjs(consignData.ReceiptDate)
+      : null,
+    Detail: consignData?.Detail || "",
     CategoryID: koiData?.CategoryID || "",
     KoiName: koiData?.KoiName || "",
     Age: initialKoiData.Age ? initialKoiData.Age.toString() : "", // Use a safer check
@@ -318,7 +334,6 @@ export default function Chitietconsignpage() {
     <div>
       <Navbar />
       <div style={{ paddingTop: "100px" }}>
-        <h1 style={{ textAlign: "center" }}>Thay đổi đơn ký gửi</h1>
         <Container>
           <div>
             {loading ? (
@@ -450,17 +465,19 @@ export default function Chitietconsignpage() {
                       </Form.Item>
                     </div>
                     <div style={{ width: "48%" }}>
-                      <Form.Item label="Ngày Gửi">
+                      <Form.Item label="Ngày Gửi" name="ShippedDate">
                         <DatePicker
                           style={{ width: "100%" }}
+                          value={initialValues.ShippedDate}
                           onChange={(date) =>
                             handleDateChange("shippedDate", date)
                           }
                         />
                       </Form.Item>
-                      <Form.Item label="Ngày Nhận">
+                      <Form.Item label="Ngày Nhận" name="ReceiptDate">
                         <DatePicker
                           style={{ width: "100%" }}
+                          value={initialValues.ReceiptDate}
                           onChange={(date) =>
                             handleDateChange("receiptDate", date)
                           }
@@ -469,7 +486,7 @@ export default function Chitietconsignpage() {
                     </div>
                   </div>
 
-                  <Form.Item label="Chi tiết về đơn ký gửi ">
+                  <Form.Item label="Chi tiết về đơn ký gửi " name="Detail">
                     <Input.TextArea
                       name="Detail"
                       value={formData.Detail}
@@ -767,13 +784,14 @@ export default function Chitietconsignpage() {
                     rules={[{ required: true, message: "Vui lòng nộp ảnh." }]}
                   >
                     <Upload
-                      beforeUpload={() => false} // Ngăn không cho tự động tải lên
-                      maxCount={1} // Giới hạn 1 tệp
-                      fileList={imageFileList} // Danh sách tệp đã tải lên
+                      beforeUpload={() => false}
+                      maxCount={1}
                       onChange={({ fileList }) =>
                         handleUploadChange("Image", fileList)
-                      } // Cập nhật danh sách tệp
+                      }
+                      // Add this line to bind the value to the Upload component
                       listType="picture"
+                      fileList={imageFileList1}
                     >
                       <Button icon={<UploadOutlined />}>Upload</Button>
                     </Upload>
@@ -785,19 +803,19 @@ export default function Chitietconsignpage() {
                     rules={[{ required: true, message: "Vui lòng nộp video." }]}
                   >
                     <Upload
-                      beforeUpload={() => false} // Ngăn không cho tự động tải lên
-                      maxCount={1} // Giới hạn 1 tệp
-                      fileList={videoFileList} // Danh sách tệp đã tải lên
+                      beforeUpload={() => false}
+                      maxCount={1}
                       onChange={({ fileList }) =>
                         handleUploadChange("Video", fileList)
-                      } // Cập nhật danh sách tệp
+                      }
                       listType="text"
+                      fileList={videoFileList1} // Add this line to bind the value to the Upload component
                     >
                       <Button icon={<UploadOutlined />}>Upload</Button>
                     </Upload>
                   </Form.Item>
                 </div>
-                <Form.Item label="Chi tiết về koi">
+                <Form.Item label="Chi tiết về koi" name="Description">
                   <Input.TextArea
                     name="Description"
                     value={formData.Description}

@@ -565,7 +565,6 @@ export default function Kyguikoi() {
                   onChange={handleChange}
                   type="number"
                   placeholder="Nhập lượng thức ăn / ngày"
-                  step="1"
                   min={1}
                   max={100}
                 />
@@ -602,7 +601,6 @@ export default function Kyguikoi() {
                   onChange={handleChange}
                   type="number"
                   placeholder="Nhập tỷ lệ lọc"
-                  min={0.1} // Update min to 0.1
                   max={100}
                   step={0.1}
                 />
