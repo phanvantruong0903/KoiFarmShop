@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography, Table, Button, message, Layout, Space, Tag } from 'antd';
 import axiosInstance from '../../Utils/axiosJS';
 import { useState, useEffect } from 'react';
-import { CheckOutlined, SyncOutlined } from '@ant-design/icons';
+import { CheckOutlined, SyncOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import '../Css/GeneralPurpose.css'
 
 export default function OrdersNext() {
@@ -26,19 +26,19 @@ export default function OrdersNext() {
     }, [refreshData]);
 
 
-    const handleChangeStatus = async (orderId) => {
-        try {
-            const response = await axiosInstance.patch(`/manager/order/updateOrderStatus/${orderId}`);
-            if (response.status === 200) {
-                message.success('Status changed successfully');
-                setRefreshData(!refreshData);
-            } else {
-                message.error('Failed to change status');
-            }
-        } catch (error) {
-            message.error("Error updating status");
-        }
-    };
+    // const handleChangeStatus = async (orderId) => {
+    //     try {
+    //         const response = await axiosInstance.patch(`/manager/order/updateOrderStatus/${orderId}`);
+    //         if (response.status === 200) {
+    //             message.success('Status changed successfully');
+    //             setRefreshData(!refreshData);
+    //         } else {
+    //             message.error('Failed to change status');
+    //         }
+    //     } catch (error) {
+    //         message.error("Error updating status");
+    //     }
+    // };
 
 
     const columns = [
@@ -62,7 +62,17 @@ export default function OrdersNext() {
             title: 'Status',
             dataIndex: 'Status',
             key: 'Status',
-            render: (status) => <Tag color={status === 'Pending' ? 'red' : 'green'}>{status}</Tag>,
+            render: (status) => {
+              if (status === 1) {
+                return <Tag icon={<SyncOutlined spin />} color="success">Đang Giao</Tag>
+              }
+                if (status === 2) {
+                    return <Tag icon={< CheckOutlined  />} color="processing">Giao thành công</Tag>
+                }
+                else {
+                    return <Tag icon={< CheckOutlined  />} color="error">Đã Hủy</Tag>
+                }
+            }
         },
         {
             title: 'Actions',
@@ -70,10 +80,10 @@ export default function OrdersNext() {
             render: (_, record) => (
                 <Button
                     type="primary"
-                    icon={<SyncOutlined />}
+                    icon={<ShoppingCartOutlined />}
                     onClick={() => handleChangeStatus(record._id)}
                 >
-                    Change Status
+                    View Order Detai
                 </Button>
             ),
         },

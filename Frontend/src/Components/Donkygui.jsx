@@ -68,7 +68,7 @@ export default function DonKyGui() {
 
   const handleCopy = (id) => {
     navigator.clipboard.writeText(id);
-    message.success('ID đã được sao chép!');
+    message.success("ID đã được sao chép!");
   };
 
   if (loading)
@@ -86,7 +86,9 @@ export default function DonKyGui() {
   if (error) return <Alert message="Error" description={error} type="error" />;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+    <div
+      style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+    >
       <Layout style={{ backgroundColor: "whitesmoke" }}>
         <Container style={{ paddingTop: "50px", paddingBottom: "10px" }}>
           <Row gutter={16}>
@@ -110,7 +112,11 @@ export default function DonKyGui() {
               consignList.map((item) => {
                 const { consign, koi } = item;
                 return (
-                  <Col span={24} key={consign._id} style={{ marginBottom: "20px" }}>
+                  <Col
+                    span={24}
+                    key={consign._id}
+                    style={{ marginBottom: "20px" }}
+                  >
                     <div
                       style={{
                         padding: "20px",
@@ -142,24 +148,31 @@ export default function DonKyGui() {
                               ][consign.State - 1];
 
                               let color;
-                              if (consign.State === 1) {
-                                color = "black";
-                              } else if (consign.State >= 2 && consign.State <= 4) {
-                                color = "gold";
+                              if (
+                                consign.State === 1 ||
+                                consign.State === 2 ||
+                                consign.State === 3
+                              ) {
+                                color = "blue";
+                              } else if (consign.State === 4) {
+                                color = "";
                               } else if (consign.State === 5) {
                                 color = "green";
                               }
 
-                              return <Text style={{ color }}>{statusText}</Text>;
+                              return (
+                                <Text style={{ color }}>{statusText}</Text>
+                              );
                             })()}
-                            
                           </Text>
-                          
+
                           <div style={{ marginTop: "10px" }}>
-                            <Text strong>
+                            <Text strong style={{ color: "red" }}>
                               Ngày giao hàng:{" "}
                               {consign.ShippedDate
-                                ? new Date(consign.ShippedDate).toLocaleDateString()
+                                ? new Date(
+                                    consign.ShippedDate
+                                  ).toLocaleDateString()
                                 : "Không yêu cầu"}
                             </Text>
                           </div>
@@ -167,7 +180,13 @@ export default function DonKyGui() {
                       </div>
 
                       <Divider />
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
                         <div style={{ display: "flex", alignItems: "center" }}>
                           <Tooltip title="Đây là ID cho đơn hàng của bạn, xin không cung cấp cho người khác.">
                             <Text
@@ -187,7 +206,7 @@ export default function DonKyGui() {
                           <Button
                             type="link"
                             onClick={() => handleCopy(consign._id)}
-                            style={{ color:'grey' }}
+                            style={{ color: "grey" }}
                           >
                             <CopyOutlined />
                           </Button>

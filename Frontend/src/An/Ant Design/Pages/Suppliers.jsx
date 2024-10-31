@@ -99,7 +99,7 @@ export default function Suppliers() {
     //     }
     // };
     const handleCreate = () => {
-        setIsCreating(!isCreating);
+        setIsCreating(true);
 
     };
     return (

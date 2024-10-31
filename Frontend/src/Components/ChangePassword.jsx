@@ -1,9 +1,6 @@
-import Navbar from "./Navbar/Navbar";
-import Footer from "./Footer";
 import { Card, Layout, Row, Col, Input, Form, Button } from "antd";
 import { Content } from "antd/es/layout/layout";
 import axiosInstance from "../An/Utils/axiosJS";
-import { useState } from "react";
 
 export default function ChangePassword() {
   const [form] = Form.useForm(); // Tạo form instance

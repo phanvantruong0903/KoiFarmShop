@@ -1,25 +1,10 @@
-import React, { useEffect, useState } from "react";
-import Footer from "./Footer";
-import Navbar from "./Navbar/Navbar";
+import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
-import axios from "axios";
 import "./Css/supplierStyle.css";
-import {
-  Button,
-  Typography,
-  Spin,
-  Alert,
-  Layout,
-  Divider,
-  Row,
-  Col,
-  Breadcrumb,
-  Tooltip,
-} from "antd";
-import { HomeOutlined } from "@ant-design/icons";
+import { Typography } from "antd";
 import axiosInstance from "../An/Utils/axiosJS";
 
-const { Title, Text, Paragraph } = Typography;
+const { Paragraph } = Typography;
 
 export default function NguonGocCuaIKoi() {
   const [error, setError] = useState(null);
@@ -29,7 +14,7 @@ export default function NguonGocCuaIKoi() {
     const fetchSupplierData = async () => {
       try {
         const response = await axiosInstance.get(
-          "http://localhost:4000/manager/manage-supplier/get-all"
+          "/manager/manage-supplier/get-all"
         );
         if (response.status === 200) {
           setData(response.data.result);
@@ -37,7 +22,7 @@ export default function NguonGocCuaIKoi() {
           setError("Failed to fetch supplier details.");
         }
       } catch (error) {
-        setError("Error fetching supplier details.");
+        setError("Error fetching supplier details." + error);
       }
     };
     fetchSupplierData();
@@ -45,8 +30,6 @@ export default function NguonGocCuaIKoi() {
 
   return (
     <>
-      <Navbar />
-
       <Container style={{ padding: "20px", paddingTop: "100px" }}>
         <div>
           <div style={{ textAlign: "center" }}>
@@ -97,7 +80,9 @@ export default function NguonGocCuaIKoi() {
             Các Koi Farm Nhật Bản Chúng Tôi Tin Dùng
           </h1>
           <div>
-            <strong>Tại sao chúng tôi chọn Koi?</strong>
+            <strong style={{ fontSize: "20px" }}>
+              Tại sao chúng tôi chọn Koi?
+            </strong>
             <br />
             <Paragraph className="paragraph-Style">
               Nhật Koi Farm là đối tác của nhiều Koi Farm nổi tiếng như
@@ -113,9 +98,10 @@ export default function NguonGocCuaIKoi() {
           </div>
         </div>
         {error && <div className="error">{error}</div>}
-        <div className="supplier-list">
+        <hr />
+        <div>
           {data.map((supplier) => (
-            <div key={supplier._id} className="supplier-item">
+            <div key={supplier._id}>
               <Paragraph className="paragraph-Style">
                 <h3 style={{ color: "red" }}>{supplier.SupplierName}</h3>
                 <p className="text-Style">
@@ -142,7 +128,11 @@ export default function NguonGocCuaIKoi() {
                   <img
                     src={supplier.SupplierImage}
                     alt={supplier.SupplierName}
-                    className="supplier-image"
+                    style={{
+                      textAlign: "center",
+                      width: "100%",
+                      height: "auto",
+                    }}
                   />
                 )}
               </Paragraph>
@@ -158,17 +148,6 @@ export default function NguonGocCuaIKoi() {
           </div>
         </div>
       </Container>
-
-      <div
-        style={{
-          display: "flex",
-          backgroundImage: `url("src/assets/e.jpg")`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "100vh",
-        }}
-      ></div>
-      <Footer />
     </>
   );
 }

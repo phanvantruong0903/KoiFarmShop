@@ -47,7 +47,9 @@ export default function TrackingOrderPage() {
 
       setLoading(true);
       try {
-        const response = await axiosInstance.get(`/users/get-orders/${userId}`);
+        const response = await axiosInstance.get(
+          `http://localhost:4000/users/get-orders/${userId}`
+        );
 
         console.log("API Response:", response); // Log the entire response
 
