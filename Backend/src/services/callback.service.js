@@ -39,9 +39,7 @@ export const callback = async (req, res) => {
 
       const flattenedKoiIDs = koiIDsList.flat()
 
-
       for (const koiID of flattenedKoiIDs) {
-
         console.log(koiID)
         await databaseService.kois.findOneAndUpdate({ _id: koiID }, { $set: { Status: 0 } }, { new: true })
 
@@ -83,8 +81,8 @@ export const callback = async (req, res) => {
           result.returncode = -1
           result.returnmessage = result.error
         } else {
-          res.clearCookie('order', { path: '/' })
-          res.clearCookie('orderDT', { path: '/' })
+          res.clearCookie('order', { path: 'localhost:3000/' })
+          res.clearCookie('orderDT', { path: 'localhost:3000/' })
           result.returncode = 1
           result.returnmessage = 'Payment successful.'
           return res.json({ success: true, message: 'Payment successful.' })
@@ -105,7 +103,7 @@ export const saveOrderToDatabase = async (reqOrderDetailCookie, reqOrderCookie) 
   }
 
   const newOrderDT = {
-    _id: new ObjectId(),
+    _id: new ObjectId(reqOrderDetailCookie._id),
     Items: reqOrderDetailCookie.Items,
     TotalPrice: reqOrderDetailCookie.TotalPrice
   }

@@ -264,6 +264,10 @@ const router = createBrowserRouter([
         path: "staff/Orders",
         element: <OrdersNext />,
       },
+      {
+        path: "staff/Kois",
+        element: <Kois />,
+      },
     ],
   },
   {

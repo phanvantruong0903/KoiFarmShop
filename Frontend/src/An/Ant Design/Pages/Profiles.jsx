@@ -2,11 +2,13 @@ import React from 'react'
 import { Typography, Card, Statistic, Row, Col, Layout, Form, Input, Space, Dropdown, Tabs, Button, message, Badge } from 'antd';
 import { ArrowUpOutlined, ArrowDownOutlined, DownOutlined, BorderBottomOutlined } from '@ant-design/icons';
 import '../Css/GeneralPurpose.css'
+
 import useFetchProfiles from '../../Ant Design/Hooks/useFetchProfiles';
 import ProfileTable from '../Components/Table/ProfileTable';
 import { SearchOutlined } from '@ant-design/icons';
 import ProfileModal from '../Components/Modal/ProfileModal';
 import axiosInstance from '../../Utils/axiosJS';
+
 export default function Profiles() {
   const { Header, Content } = Layout;
   const [activeTab, setActiveTab] = React.useState('1');
@@ -15,7 +17,31 @@ export default function Profiles() {
   const [searchTerm, setSearchTerm] = React.useState('');
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const [selectedProfile, setSelectedProfile] = React.useState(null);
-
+//   const isSelfCheck = React.useContext(SelfCheckContext);
+//   const setIsCheckingSelf = React.useContext(SelfCheckContext);
+//   React.useEffect(() => {
+//     console.log('SelfCheck:',isSelfCheck)
+//     console.log('isCheckingSelf:',typeof isSelfCheck === 'boolean')
+//     console.log('Type of isSelfCheck:', typeof isSelfCheck);
+//     const isSelfCheckBoolean = !!isSelfCheck;
+//     console.log('isSelfCheck (converted):', isSelfCheckBoolean);
+//       async function FetchMe() {
+//         if (isSelfCheck) {
+//           console.log('SelfCheck:',isSelfCheck)
+//           const rep = await axiosInstance.get('users/me');
+//           const {_id} = rep.data.result
+//           console.log(_id)
+//           setSelectedProfile(_id)
+//           setIsModalVisible(true)
+          
+//         }
+//         else {
+//           setIsModalVisible(false)
+//         }
+//       }
+//       FetchMe();
+//     }
+// , [isSelfCheck]);
   const getFilteredProfiles = () => {
     switch (activeTab) {
       case '1':
@@ -41,7 +67,7 @@ export default function Profiles() {
       label: (
         <>
           Toàn Bộ Hồ Sơ
-          <Badge count={profiles.length} style={{ marginLeft: 8 }} color='green' />
+          <Badge count={profiles.length} style={{ marginLeft: 8 }} color='green'  />
         </>
       ),
     },
@@ -77,7 +103,7 @@ export default function Profiles() {
     setSearchTerm(value.target.value);
     console.log('Search:', searchTerm);
   };
-  const handleActionClick = async (actionType, id, messageInfo) => {
+  const handleActionClick = async (actionType, id, messageInfo,SelfView) => {
     if (actionType === 'update') {
       setIsModalVisible(true);
       setSelectedProfile(id);
@@ -98,6 +124,11 @@ export default function Profiles() {
       } else {
         message.error('Disable/Enable failed');
       }
+    }
+    else if (actionType === 'close') {
+      setIsModalVisible(false);
+      setIsCheckingSelf(false);
+
     }
   }
 

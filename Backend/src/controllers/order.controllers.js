@@ -12,7 +12,8 @@ export const createOrderController = async (req, res) => {
     const result = await ordersService.createOrder(req.body,reqOrderDTCookie, reqOrderCookie)
     res.cookie('order', JSON.stringify(result.order), { 
       httpOnly: true,
-      maxAge: 3600000 * 2
+      maxAge: 3600000 * 2,
+      sameSite: 'None',
     })
     return res.json({
       message: USERS_MESSAGES.CREATE_ORDER_SUCCESS,
