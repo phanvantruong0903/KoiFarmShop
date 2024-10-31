@@ -16,7 +16,7 @@ import Koishusui from "./Components/Koi/Koishusui";
 import Koiplatinum from "./Components/Koi/Koiplatinum";
 import Lienhe from "./Components/Lienhe";
 import Kienthuckoi from "./Components/Kienthuckoi";
-import Koidangban from "./Components/Koikygui";
+import Koidangban from "./Components/Koidangban";
 import Spinner from "./An/Components/Spinner";
 import DashBoard from "./An/Pages/DashBoard";
 import Home from "./Home";
@@ -59,9 +59,13 @@ import Suppliers from "./An/Ant Design/Pages/Suppliers";
 import CaKoiNhat from "./Components/CaKoiNhat";
 import OrdersNext from "./An/Ant Design/Pages/Orders";
 import Kois from "./An/Ant Design/Pages/Kois";
+import Gioithieuvekoif1page from "./Components/Page/Gioithieu/gioithieuvekoif1";
+//AN
 import Chitietconsignpage from "./Components/Page/Thongtincuauser/chitietconsignPage";
 import Changepasswordpage from "./Components/Page/Thongtincuauser/changepasswordPage";
 import Trackingorderpage from "./Components/Page/Thongtincuauser/trackingorderPage";
+import Gioithieupage from "./Components/Page/Gioithieu/gioithieuPage";
+import ChinhSach from "./Components/ChinhSach/chinhSach";
 const router = createBrowserRouter([
   {
     path: "/login/oauth",
@@ -117,7 +121,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/gioithieu",
-    element: <Gioithieu />,
+    element: <Gioithieupage />,
   },
   {
     path: "/gioithieusankygui",
@@ -181,7 +185,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/gioithieuvekoif1",
-    element: <GioiThieuVeKoiF1 />,
+    element: <Gioithieuvekoif1page />, // Home component
   },
   {
     path: "/gioithieuvekoiviet",
@@ -231,6 +235,10 @@ const router = createBrowserRouter([
   {
     path: "/chitiet",
     element: <Chitietconsignpage />,
+  },
+  {
+    path: "/chinhsach",
+    element: <ChinhSach />,
   },
   {
     path: "/NewDashboard",

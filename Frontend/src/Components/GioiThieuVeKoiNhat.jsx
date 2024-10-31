@@ -1,9 +1,6 @@
-import React from "react";
-import Footer from "./Footer";
-import Navbar from "./Navbar/Navbar";
 import { Container } from "react-bootstrap";
 import { Typography } from "antd";
-const { Title, Paragraph } = Typography;
+const { Paragraph } = Typography;
 import { Table } from "react-bootstrap";
 
 export default function GioiThieuVeKoiNhat() {
@@ -42,9 +39,6 @@ export default function GioiThieuVeKoiNhat() {
 
   return (
     <>
-      <div>
-        <Navbar />
-      </div>
       <Container style={{ padding: "20px", paddingTop: "100px" }}>
         <div style={{ textAlign: "center", color: "red" }}>
           <h1>Giới thiệu về Koi Nhật</h1>
@@ -183,7 +177,6 @@ export default function GioiThieuVeKoiNhat() {
           </div>
         </div>
       </Container>
-
       <div
         style={{
           display: "flex",
@@ -193,9 +186,6 @@ export default function GioiThieuVeKoiNhat() {
           height: "100vh",
         }}
       ></div>
-      <div>
-        <Footer />
-      </div>
     </>
   );
 }

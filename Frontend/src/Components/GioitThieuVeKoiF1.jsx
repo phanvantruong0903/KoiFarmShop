@@ -1,9 +1,6 @@
-import React from "react";
-import Footer from "./Footer";
-import Navbar from "./Navbar/Navbar";
 import { Container } from "react-bootstrap";
-import { Layout, Typography } from "antd";
-const { Title, Text, Paragraph } = Typography;
+import { Typography } from "antd";
+const { Paragraph } = Typography;
 import { Table } from "react-bootstrap";
 export default function GioiThieuVeKoiF1() {
   const data = [
@@ -40,9 +37,6 @@ export default function GioiThieuVeKoiF1() {
   ];
   return (
     <>
-      <div>
-        <Navbar />
-      </div>
       <Container
         style={{
           padding: "20px",
@@ -240,19 +234,6 @@ export default function GioiThieuVeKoiF1() {
           </div>
         </div>
       </Container>
-
-      <div
-        style={{
-          display: "flex",
-          backgroundImage: `url("src/assets/e.jpg")`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "100vh", // Đảm bảo chiều cao đủ để chiếm toàn bộ không gian
-        }}
-      ></div>
-      <div>
-        <Footer />
-      </div>
     </>
   );
 }

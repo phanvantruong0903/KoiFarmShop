@@ -153,7 +153,7 @@ export default function Kyguikoi() {
         setTimeout(() => {
           if (isLoggedIn) {
             // Nếu người dùng đã đăng nhập, điều hướng đến "/donkygui"
-            navigate("/donkygui");
+            navigate("/donkyguipage");
           } else {
             // Nếu chưa đăng nhập, điều hướng đến trang chính với thông điệp
             navigate("/");
