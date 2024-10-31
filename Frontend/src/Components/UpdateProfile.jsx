@@ -71,6 +71,46 @@ export default function UpdateProfile() {
     return email;
   };
 
+  // const validateField = (field) => {
+  //   const newErrors = {};
+  //   switch (field) {
+  //     case "username":
+  //       if (!isValidUsername(userData.username)) {
+  //         newErrors.username = "Tên đăng nhập không được có ký tự đặc biệt.";
+  //       }
+  //       break;
+  //     case "name":
+  //       if (!isValidNameOrAddress(userData.name)) {
+  //         newErrors.name =
+  //           "Tên không được có ký tự đặc biệt và khoảng cách liên tiếp.";
+  //       }
+  //       break;
+  //     case "address":
+  //       if (!isValidNameOrAddress(userData.address)) {
+  //         newErrors.address =
+  //           "Địa chỉ không được có ký tự đặc biệt và khoảng cách liên tiếp.";
+  //       }
+  //       break;
+  //     case "phone_number":
+  //       if (!isValidPhoneNumber(userData.phone_number)) {
+  //         newErrors.phone_number = "Số điện thoại phải từ 10 đến 11 chữ số.";
+  //       }
+  //       break;
+  //     case "website":
+  //       if (userData.website && !isValidURL(userData.website)) {
+  //         setWebsiteError(
+  //           "Website không hợp lệ. Vui lòng nhập một URL hợp lệ."
+  //         );
+  //         return;
+  //       }
+  //       setWebsiteError(""); // Reset lỗi nếu URL hợp lệ
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  //   return newErrors;
+  // };
+
   const handleUpdate = async (field) => {
     const errors = validateField(field);
 
@@ -87,6 +127,7 @@ export default function UpdateProfile() {
     } else {
       await updateUser(field, userData[field]);
       // Reload page after update
+      window.location.reload();
     }
   };
 
@@ -116,7 +157,7 @@ export default function UpdateProfile() {
           const errorMessages = Object.values(error.response.data.errors).join(
             ", "
           );
-          alert(`Lỗi: ${errorMessages}`);
+          toast.error(`Lỗi: ${errorMessages}`);
         } else {
           toast.error(
             `Lỗi: ${error.response.data.message || "Vui lòng thử lại."}`
@@ -157,15 +198,15 @@ export default function UpdateProfile() {
   };
 
   const handleImageChange = async () => {
-    if (userData.verify !== 1) {
-      setShowVerificationModal(true);
-      return;
-    }
     if (selectedFile) {
       const imageUrl = await handleUploadImage(selectedFile);
       setUserData({ ...userData, avatar: imageUrl });
       await updateUser("picture", imageUrl); // Cập nhật URL hình ảnh lên server
-      toast.success("Cập nhật ảnh đại diện thành công!");
+      setTimeout(
+        () => toast.success("Cập nhật ảnh đại diện thành công!"),
+        5000
+      ); // Tải lại trang sau 1 giây
+      window.location.reload();
       setShowImageModal(false); // Đóng modal sau khi tải ảnh thành công
     } else {
       toast.error("Vui lòng chọn một tệp ảnh.");
@@ -196,21 +237,33 @@ export default function UpdateProfile() {
     // Kiểm tra tên đăng nhập
     if (userData.username !== originalUserData.username) {
       if (!isValidUsername(userData.username)) {
-        newErrors.username =
-          "Tên đăng nhập không được trống , không có ký tự đặc biệt và dài từ 4-100 ký tự.";
+        newErrors.username = "Tên đăng nhập không được có ký tự đặc biệt.";
       } else {
         fieldsToUpdate.push("username");
       }
     }
+
     // Kiểm tra tên
     if (userData.name !== originalUserData.name) {
       if (!isValidNameOrAddress(userData.name)) {
         newErrors.name =
-          "Tên chủ tài khoản không được trống , không có ký tự đặc biệt và dài từ 4-100 ký tự.";
+          "Tên không được có ký tự đặc biệt và khoảng cách liên tiếp.";
       } else {
         fieldsToUpdate.push("name");
       }
     }
+
+    // Kiểm tra địa chỉ
+    if (userData.address !== originalUserData.address) {
+      if (!isValidNameOrAddress(userData.address)) {
+        newErrors.address =
+          "Địa chỉ không được có ký tự đặc biệt và khoảng cách liên tiếp.";
+      } else {
+        fieldsToUpdate.push("address");
+      }
+    }
+
+    // Kiểm tra số điện thoại
     if (userData.phone_number !== originalUserData.phone_number) {
       if (!isValidPhoneNumber(userData.phone_number)) {
         newErrors.phone_number = "Số điện thoại phải từ 10 đến 11 chữ số.";
@@ -218,6 +271,7 @@ export default function UpdateProfile() {
         fieldsToUpdate.push("phone_number");
       }
     }
+
     // Kiểm tra website chỉ nếu có giá trị và khác với giá trị gốc
     if (userData.website && userData.website !== originalUserData.website) {
       if (!isValidURL(userData.website)) {
@@ -236,18 +290,13 @@ export default function UpdateProfile() {
     // Nếu không có lỗi, thực hiện cập nhật
     setValidationErrors({}); // Reset lỗi nếu tất cả đều hợp lệ
 
-    if (userData.verify !== 1) {
-      setShowVerificationModal(true);
-      return;
-    } else {
-      const updatePromises = fieldsToUpdate.map((field) =>
-        updateUser(field, userData[field])
-      );
-      await Promise.all(updatePromises);
+    const updatePromises = fieldsToUpdate.map((field) =>
+      updateUser(field, userData[field])
+    );
+    await Promise.all(updatePromises);
 
-      // Reload page after update
-      window.location.reload();
-    }
+    // Reload page after update
+    window.location.reload();
   };
   const handleClick = (componentName) => {
     setCurrentComponent(componentName);
@@ -342,7 +391,7 @@ export default function UpdateProfile() {
                   )}
                 </Form.Item>
 
-                <Form.Item label="Địa chỉ">
+                <Form.Item label="Address">
                   <Input
                     value={userData.address}
                     onChange={(e) => {
@@ -360,8 +409,8 @@ export default function UpdateProfile() {
                       }));
                     }}
                   />
-                  {validationErrors.address && (
-                    <p style={{ color: "red" }}>{validationErrors.address}</p>
+                  {validationErrors.name && (
+                    <p style={{ color: "red" }}>{validationErrors.name}</p>
                   )}
                 </Form.Item>
 

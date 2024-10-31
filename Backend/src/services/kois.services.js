@@ -51,8 +51,7 @@ class KoisService {
         username: `user${user_id.toString()}` || userCheck.username,
         roleid: 1
       }
-      userResult = await databaseService.users.updateOne({ _id: user_id }, {$set: userPayload})
-
+      userResult = await databaseService.users.updateOne({ _id: user_id }, { $set: userPayload })
     } else {
       const userPayload = {
         _id: user_id,
@@ -140,6 +139,7 @@ class KoisService {
     const consignPayload = {
       PositionCare: payload.PositionCare,
       Method: payload.Method,
+      Detail: payload.Detail,
       UserID: userId,
       KoiID: koiID.toString(),
       _id: consignID,

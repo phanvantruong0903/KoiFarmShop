@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import Navbar from "./Navbar/Navbar";
 import Footer from "./Footer";
@@ -311,14 +311,15 @@ const OrderPage = () => {
                 marginTop: "10px",
                 backgroundColor: "#f7f7f7",
                 borderRadius: "5px",
+                transform: "translateY(16px)",
               }}
             >
-              <Breadcrumb.Item style={{ color: "#1890ff" }} href="/">
+              <Breadcrumb.Item style={{ color: "#1890ff" }}>
                 <HomeOutlined />
-                <span>Home</span>
+                <Link to={"/"}>Trang chủ</Link>
               </Breadcrumb.Item>
-              <Breadcrumb.Item style={{ color: "#1890ff" }} href="/koidangban">
-                <span>Dịch vụ</span>
+              <Breadcrumb.Item style={{ color: "#1890ff" }}>
+                <Link to={"/koidangban"}>Ký gửi</Link>
               </Breadcrumb.Item>
             </Breadcrumb>
           </div>

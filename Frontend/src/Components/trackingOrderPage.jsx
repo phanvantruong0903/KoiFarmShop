@@ -106,22 +106,27 @@ export default function TrackingOrderPage() {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-
-                <td>
-                  {order.Items.map((item, idx) => (
-                    <div key={idx}>
-                      {item.KoiInfo.KoiName} - Số lượng: {item.Quantity}
-                    </div>
-                  ))}
-                </td>
-                <td>{new Date(order.OrderDate).toLocaleString()}</td>
-                <td>{order.TotalPrice.toLocaleString()} VND</td>
-                <td style={{ color: "green" }}>Đã thanh toán</td>
-              </tr>
-            ))}
+            {orders.length > 0 ? (
+              orders.map((order, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>
+                    {order.Items.map((item, idx) => (
+                      <div key={idx}>
+                        {item.KoiInfo.KoiName} - Số lượng: {item.Quantity}
+                      </div>
+                    ))}
+                  </td>
+                  <td>{new Date(order.OrderDate).toLocaleString()}</td>
+                  <td>{order.TotalPrice.toLocaleString()} VND</td>
+                  <td style={{ color: "green" }}>Đã thanh toán</td>
+                </tr>
+              ))
+            ) : (
+              <div>
+                <h1>No consign items available.</h1>
+              </div>
+            )}
           </tbody>
         </Table>
       )}

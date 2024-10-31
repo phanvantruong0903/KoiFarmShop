@@ -96,6 +96,7 @@ export default function Kyguikoi() {
 
   const handleSubmit = async (values) => {
     setLoading(true);
+
     try {
       const shippedDateObj = formData.shippedDate
         ? new Date(formData.shippedDate)
@@ -344,9 +345,8 @@ export default function Kyguikoi() {
                 </div>
               </div>
 
-              <Form.Item label="Chi tiết về đơn ký gửi ">
+              <Form.Item label="Chi tiết về đơn ký gửi " name="Detail">
                 <Input.TextArea
-                  name="Detail"
                   value={formData.Detail}
                   onChange={handleChange}
                   placeholder="Nhập chi tiết về đơn ký gửi"
@@ -551,7 +551,7 @@ export default function Kyguikoi() {
                       }
                       if (numericValue > 100) {
                         return Promise.reject(
-                          new Error("lượng thức ăn phải nhỏ hơn bằng 200")
+                          new Error("Lượng thức ăn phải nhỏ hơn bằng 100")
                         );
                       }
                       return Promise.resolve();

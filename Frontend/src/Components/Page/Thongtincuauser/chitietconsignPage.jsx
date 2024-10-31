@@ -179,19 +179,40 @@ export default function Chitietconsignpage() {
   const handleSubmit = async (values) => {
     console.log("Submitting form with values:", values); // Log the form values being submitted
     try {
-      // Call the API with the entire form values
-      const response = await updateConsign(values);
-      console.log("Update response from updateConsign:", response.data); // Log response from API
-      toast.success("Cập nhật thành công.");
-    } catch (error) {
-      console.error("Error updating consign:", error); // Log the error object
-      toast.error("Cập nhật thất bại.");
-    }
-  };
-  const updateConsign = async (formData) => {
-    console.log("Updating consign with data:", formData); // Log dữ liệu được gửi đi
-    try {
-      // Tải lên ảnh
+      const shippedDateObj = formData.shippedDate
+        ? new Date(formData.shippedDate)
+        : null;
+      const receiptDateObj = formData.receiptDate
+        ? new Date(formData.receiptDate)
+        : null;
+      const currentDate = new Date();
+
+      if (
+        shippedDateObj &&
+        (shippedDateObj < currentDate ||
+          (receiptDateObj && shippedDateObj > receiptDateObj))
+      ) {
+        toast.error("Ngày gửi không được ở quá khứ hoặc sau ngày nhận!");
+        return;
+      }
+      // Parse Size and Age as integers, DailyFoodAmount and FilteringRatio as floats
+      const dataToSend = {
+        ...values,
+        PositionCare: formData.PositionCare.toString(),
+        Method: formData.Method.toString(),
+        CategoryID: formData.CategoryID.toString(),
+        Gender: formData.Gender.toString(),
+        Size: parseInt(formData.Size, 10),
+        Breed: formData.Breed.toString(),
+        Detail: formData.Detail.toString(),
+        Description: formData.Description.toString(),
+        DailyFoodAmount: parseFloat(formData.DailyFoodAmount),
+        FilteringRatio: parseFloat(formData.FilteringRatio),
+        Age: parseInt(formData.Age, 10),
+        shippedDate: shippedDateObj ? shippedDateObj.toISOString() : null,
+        receiptDate: receiptDateObj ? receiptDateObj.toISOString() : null,
+      };
+      console.log(dataToSend);
       const imageRef = ref(storage, `koiImages/${formData.Image[0].name}`);
       const videoRef = ref(storage, `koiVideos/${formData.Video[0].name}`);
 
@@ -200,14 +221,52 @@ export default function Chitietconsignpage() {
 
       await uploadBytes(videoRef, formData.Video[0].originFileObj);
       const videoUrl = await getDownloadURL(videoRef);
+
+      // Update dataToSend with the URLs
+      dataToSend.Image = imageUrl;
+      dataToSend.Video = videoUrl;
+      // Call the API with the entire form values
+      const response = await updateConsign(dataToSend);
+      console.log("Update response from updateConsign:", response.data); // Log response from API
+      toast.success("Cập nhật thành công.");
+    } catch (error) {
+      console.error("Error updating consign:", error); // Log the error object
+      toast.error("Cập nhật thất bại.");
+    }
+  };
+  const updateConsign = async (values) => {
+    console.log("Updating consign with data:", values); // Log dữ liệu được gửi đi
+    try {
+      // Tải lên ảnh
+      const shippedDateObj = formData.shippedDate
+        ? new Date(formData.shippedDate)
+        : null;
+      const receiptDateObj = formData.receiptDate
+        ? new Date(formData.receiptDate)
+        : null;
+      const currentDate = new Date();
+
+      if (
+        shippedDateObj &&
+        (shippedDateObj < currentDate ||
+          (receiptDateObj && shippedDateObj > receiptDateObj))
+      ) {
+        toast.error("Ngày gửi không được ở quá khứ hoặc sau ngày nhận!");
+        return;
+      }
+      const imageRef = ref(storage, `koiImages/${formData.Image[0].name}`);
+      const videoRef = ref(storage, `koiVideos/${formData.Video[0].name}`);
+
+      await uploadBytes(imageRef, formData.Image[0].originFileObj);
+      const imageUrl = await getDownloadURL(imageRef);
+      await uploadBytes(videoRef, formData.Video[0].originFileObj);
+      const videoUrl = await getDownloadURL(videoRef);
       // Cập nhật formData với URL
       const updatedFormData = {
         ...formData,
-        Image: imageUrl, // Cập nhật với URL
-        Video: videoUrl, // Cập nhật với URL
       };
-      console.log("Test" + updatedFormData.Image);
-
+      updatedFormData.Image = imageUrl;
+      updatedFormData.Video = videoUrl;
       // Gọi API để cập nhật
       const response = await axiosInstance.patch(
         `/users/tat-ca-don-ki-gui/${consign._id}`,
@@ -259,6 +318,7 @@ export default function Chitietconsignpage() {
     <div>
       <Navbar />
       <div style={{ paddingTop: "100px" }}>
+        <h1 style={{ textAlign: "center" }}>Thay đổi đơn ký gửi</h1>
         <Container>
           <div>
             {loading ? (

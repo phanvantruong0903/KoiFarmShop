@@ -81,7 +81,6 @@ usersRouter.get('/me', accessTokenValidator, wrapAsync(getMeController))
 usersRouter.patch(
   '/me',
   accessTokenValidator,
-  verifiedUserValidator,
   filterMiddleware(['name', 'address', 'phone_number', 'website', 'username', 'picture']), //lọc ra những key cần thiết để update
   updateMeValidator,
   wrapAsync(updateMeController)
@@ -124,9 +123,26 @@ usersRouter.get('/tat-ca-don-ki-gui/:_id', accessTokenValidator, wrapAsync(getCo
 usersRouter.patch(
   '/tat-ca-don-ki-gui/:_id',
   accessTokenValidator,
-  filterMiddleware(['PositionCare', 'Method', 'ShippedDate', 'ReceiptDate' , 'Detail',
-    'CategoryID', 'KoiName', 'Age', 'Origin', 'Gender', 'Size', 'Breed', 'Description', 'DailyFoodAmount',
-    'FilteringRatio', 'CertificateID', 'Image', 'Video']), //lọc ra những key cần thiết để update
+  filterMiddleware([
+    'PositionCare',
+    'Method',
+    'ShippedDate',
+    'ReceiptDate',
+    'Detail',
+    'CategoryID',
+    'KoiName',
+    'Age',
+    'Origin',
+    'Gender',
+    'Size',
+    'Breed',
+    'Description',
+    'DailyFoodAmount',
+    'FilteringRatio',
+    'CertificateID',
+    'Image',
+    'Video'
+  ]), //lọc ra những key cần thiết để update
   updateConsignValidator,
   wrapAsync(userUpdateConsignController)
 )

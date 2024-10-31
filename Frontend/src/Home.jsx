@@ -58,8 +58,12 @@ export default function Home() {
   useEffect(() => {
     const clearData = async () => {
       try {
-        console.log('hello')
-        await axiosInstance.post("/clear-coookies", { Credential: true }, { withCredentials: true });
+        console.log("hello");
+        await axiosInstance.post(
+          "/clear-coookies",
+          { Credential: true },
+          { withCredentials: true }
+        );
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -175,7 +179,7 @@ export default function Home() {
             color: "red",
           }}
         >
-          Xu hướng tìm kiếm
+          Các loài cá bên chúng tôi cung cấp:
         </h4>
       </div>
       <Carousel
