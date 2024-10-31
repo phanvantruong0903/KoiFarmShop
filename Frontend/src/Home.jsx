@@ -1,5 +1,6 @@
 import "./App.css";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "./Components/Navbar/Navbar";
 import Footer from "./Components/Footer";
 import "../src/Home.css";
@@ -21,6 +22,7 @@ export default function Home() {
   const [lastMessage, setLastMessage] = useState("");
   const [suppliers, setSuppliers] = useState([]);
   const [koidata, setKoiData] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     const { message } = location.state || {};
     const storedMessage = localStorage.getItem("toastMessage");
@@ -53,8 +55,12 @@ export default function Home() {
   useEffect(() => {
     const clearData = async () => {
       try {
-        console.log('hello')
-        await axiosInstance.post("/clear-coookies", { Credential: true }, { withCredentials: true });
+        console.log("hello");
+        await axiosInstance.post(
+          "/clear-coookies",
+          { Credential: true },
+          { withCredentials: true }
+        );
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -200,7 +206,7 @@ export default function Home() {
                   </div>
                 ))}
               </div>
-            </div>
+          </div>
           )
         )}
       </Carousel>
@@ -259,7 +265,7 @@ export default function Home() {
 
       <Carousel
         autoplay
-        autoplaySpeed={10000}
+        autoplaySpeed={6000}
         dots={false}
         style={{ marginLeft: "50px", marginRight: "50px" }}
       >
@@ -280,6 +286,7 @@ export default function Home() {
                         alt={supplier.SupplierName}
                         className="supplier-image"
                         loading="lazy"
+                        onClick={() => navigate("/nguongocIKoi")}
                       />
                       <h3 style={{ fontSize: "18px", marginTop: "15px" }}>
                         {supplier.SupplierName}

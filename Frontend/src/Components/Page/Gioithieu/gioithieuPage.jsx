@@ -16,15 +16,6 @@ export default function Gioithieupage() {
           <GioiThieuVeKoiNhat />
           <GioiThieuVeKoiF1 />
           <GioiThieuVeKoiViet />
-          <div
-            style={{
-              display: "flex",
-              backgroundImage: `url("src/assets/e.jpg")`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              height: "100vh", // Đảm bảo chiều cao đủ để chiếm toàn bộ không gian
-            }}
-          ></div>
         </div>
         <Footer />
       </div>

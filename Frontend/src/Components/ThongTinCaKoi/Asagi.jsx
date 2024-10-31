@@ -313,7 +313,10 @@ export default function Asagi() {
                   sản sinh ra toàn bộ giống Asagi).
                 </Paragraph>
                 <div style={{ textAlign: "center" }}>
-                  <img src="src/assets/Koi-Asagi/ca-koi-asagi.webp" />
+                  <img
+                    src="src/assets/Koi-Asagi/ca-koi-asagi.webp"
+                    style={{ width: "50%" }}
+                  />
                   <div style={{ textAlign: "center" }}>
                     <Text className="text-Style">Hình ảnh cá Koi Asagi</Text>
                   </div>
@@ -534,7 +537,7 @@ export default function Asagi() {
                       </Paragraph>
                     </li>
                     <li>
-                      <Paragraph>
+                      <Paragraph className="paragraph-Style">
                         Nhiệt độ nước nên ổn định từ 20 – 27 độ C trong các mùa
                         để cá có thể bơi lượn tự do.
                       </Paragraph>
@@ -705,11 +708,11 @@ export default function Asagi() {
                 <h3 style={{ color: "red" }}>6. Giá cá koi Asagi bao nhiêu?</h3>
                 <div>
                   <Paragraph className="paragraph-Style">
-                    Hiện tại Siêu thị Cá Koi Vn đang cung cấp dòng cá koi Asagi
-                    chuẩn từ cá nhật đến cá F1 với giá cá koi cực kỳ ưu đãi. Có
-                    thể nói Siêu thị Cá Koi VN là một trong những đơn vị cung
-                    cấp cá koi với giá rẻ nhất thị trường, mà chất lượng cũng
-                    rất đảm bảo. Giá cá koi nhật và f1 như sau
+                    Hiện tại IKoi đang cung cấp dòng cá koi Asagi chuẩn từ cá
+                    nhật đến cá F1 với giá cá koi cực kỳ ưu đãi. Có thể nói
+                    IKoilà một trong những đơn vị cung cấp cá koi với giá rẻ
+                    nhất thị trường, mà chất lượng cũng rất đảm bảo. Giá cá koi
+                    nhật và f1 như sau
                   </Paragraph>
                 </div>
                 <div>
@@ -745,23 +748,28 @@ export default function Asagi() {
               </div>
               <div id="7">
                 <h3 style={{ color: "red" }}>
-                  7. Tại sao nên mua cá Koi Asagi Doitsu tại Siêu thị Cá Koi VN
+                  7. Tại sao nên mua cá Koi Asagi Doitsu tại IKoi
                 </h3>
                 <div>
                   <div style={{ textAlign: "center" }}>
-                    <img src="src/assets/Koi-Asagi/ca-koi-asagi-2.webp" />
+                    <img
+                      src="src/assets/Koi-Asagi/ca-koi-asagi-2.webp"
+                      style={{ width: "50%" }}
+                    />
                   </div>
-                  <Paragraph className="paragraph-Style">
-                    Siêu thị cá Koi VN một trong những địa chỉ uy tín cung cấp
-                    cho bạn đa dạng các mẫu cá Koi chất lượng, khỏe mạnh. Trong
-                    đó, nổi bật là dòng cá Koi Asagi đẹp mắt đang được ưa chuộng
-                    hiện nay. Đến với chúng tôi bạn sẽ được tư vấn, chọn lựa và
-                    giải đáp mọi thắc mắc về dòng Koi Asagi đầy đủ nhất từ đội
-                    ngũ chuyên gia giỏi. Chưa kể, Siêu thị cá Koi VN cũng sẽ hỗ
-                    trợ bạn quá trình thiết kế hồ cá Koi đẹp, hợp phong thủy
-                    mang lại may mắn cho gia chủ. Nếu có thắc mắc hay cần hỗ trợ
-                    tư vấn mua cá Koi Asagi Doitsu hãy liên hệ ngay với siêu thị
-                    cá Koi VN để được phục vụ nhanh chóng nhất.
+                  <Paragraph
+                    className="paragraph-Style"
+                    style={{ paddingTop: "10px" }}
+                  >
+                    IKoi một trong những địa chỉ uy tín cung cấp cho bạn đa dạng
+                    các mẫu cá Koi chất lượng, khỏe mạnh. Trong đó, nổi bật là
+                    dòng cá Koi Asagi đẹp mắt đang được ưa chuộng hiện nay. Đến
+                    với chúng tôi bạn sẽ được tư vấn, chọn lựa và giải đáp mọi
+                    thắc mắc về dòng Koi Asagi đầy đủ nhất từ đội ngũ chuyên gia
+                    giỏi. Chưa kể, IKoi cũng sẽ hỗ trợ bạn quá trình thiết kế hồ
+                    cá Koi đẹp, hợp phong thủy mang lại may mắn cho gia chủ. Nếu
+                    có thắc mắc hay cần hỗ trợ tư vấn mua cá Koi Asagi Doitsu
+                    hãy liên hệ ngay với IKoi để được phục vụ nhanh chóng nhất.
                   </Paragraph>
                 </div>
               </div>

@@ -28,6 +28,74 @@ export default function CaKoiNhat() {
       });
     }
   };
+  const handleScroll11 = () => {
+    const element = document.getElementById("11");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll12 = () => {
+    const element = document.getElementById("12");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll13 = () => {
+    const element = document.getElementById("13");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll14 = () => {
+    const element = document.getElementById("14");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
   const handleScroll2 = () => {
     const element = document.getElementById("2");
 
@@ -45,8 +113,365 @@ export default function CaKoiNhat() {
       });
     }
   };
+  const handleScroll21 = () => {
+    const element = document.getElementById("21");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll22 = () => {
+    const element = document.getElementById("22");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll23 = () => {
+    const element = document.getElementById("23");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll24 = () => {
+    const element = document.getElementById("24");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll25 = () => {
+    const element = document.getElementById("25");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll26 = () => {
+    const element = document.getElementById("26");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll27 = () => {
+    const element = document.getElementById("27");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll28 = () => {
+    const element = document.getElementById("28");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll29 = () => {
+    const element = document.getElementById("29");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll210 = () => {
+    const element = document.getElementById("210");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll211 = () => {
+    const element = document.getElementById("211");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll212 = () => {
+    const element = document.getElementById("212");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll213 = () => {
+    const element = document.getElementById("213");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll214 = () => {
+    const element = document.getElementById("214");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll215 = () => {
+    const element = document.getElementById("215");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll216 = () => {
+    const element = document.getElementById("216");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll217 = () => {
+    const element = document.getElementById("217");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll218 = () => {
+    const element = document.getElementById("218");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
   const handleScroll3 = () => {
     const element = document.getElementById("3");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll31 = () => {
+    const element = document.getElementById("31");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll32 = () => {
+    const element = document.getElementById("32");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 80; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll33 = () => {
+    const element = document.getElementById("33");
 
     if (element) {
       const elementRect = element.getBoundingClientRect();
@@ -96,8 +521,144 @@ export default function CaKoiNhat() {
       });
     }
   };
+  const handleScroll51 = () => {
+    const element = document.getElementById("51");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll52 = () => {
+    const element = document.getElementById("52");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll53 = () => {
+    const element = document.getElementById("53");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll54 = () => {
+    const element = document.getElementById("54");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
   const handleScroll6 = () => {
     const element = document.getElementById("6");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll61 = () => {
+    const element = document.getElementById("61");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll62 = () => {
+    const element = document.getElementById("62");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll63 = () => {
+    const element = document.getElementById("63");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll7 = () => {
+    const element = document.getElementById("7");
 
     if (element) {
       const elementRect = element.getBoundingClientRect();
@@ -147,8 +708,9 @@ export default function CaKoiNhat() {
       });
     }
   };
-  const handleScroll7 = () => {
-    const element = document.getElementById("7");
+
+  const handleScroll73 = () => {
+    const element = document.getElementById("73");
 
     if (element) {
       const elementRect = element.getBoundingClientRect();
@@ -164,8 +726,128 @@ export default function CaKoiNhat() {
       });
     }
   };
+
   const handleScroll8 = () => {
     const element = document.getElementById("8");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll81 = () => {
+    const element = document.getElementById("81");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll82 = () => {
+    const element = document.getElementById("82");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll83 = () => {
+    const element = document.getElementById("83");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll84 = () => {
+    const element = document.getElementById("84");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll85 = () => {
+    const element = document.getElementById("85");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll9 = () => {
+    const element = document.getElementById("9");
+
+    if (element) {
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+  const handleScroll10 = () => {
+    const element = document.getElementById("10");
 
     if (element) {
       const elementRect = element.getBoundingClientRect();
@@ -230,7 +912,7 @@ export default function CaKoiNhat() {
                   <ul>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll71}
+                        onClick={handleScroll11}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -239,7 +921,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll12}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -248,7 +930,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll13}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -257,7 +939,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll14}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -277,7 +959,7 @@ export default function CaKoiNhat() {
                   <ul>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll71}
+                        onClick={handleScroll21}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -286,7 +968,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll22}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -295,7 +977,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll23}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -304,7 +986,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll24}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -313,7 +995,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll25}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -322,7 +1004,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll26}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -331,7 +1013,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll27}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -340,7 +1022,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll28}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -349,7 +1031,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll29}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -358,7 +1040,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll210}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -367,7 +1049,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll211}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -376,7 +1058,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll212}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -385,7 +1067,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll213}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -394,7 +1076,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll214}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -403,7 +1085,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll215}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -412,7 +1094,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll216}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -421,7 +1103,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll217}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -430,7 +1112,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll218}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -450,7 +1132,7 @@ export default function CaKoiNhat() {
                   <ul>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll71}
+                        onClick={handleScroll31}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -459,7 +1141,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll32}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -468,7 +1150,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll33}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -497,7 +1179,7 @@ export default function CaKoiNhat() {
                   <ul>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll71}
+                        onClick={handleScroll51}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -506,7 +1188,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll52}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -515,7 +1197,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll53}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -524,7 +1206,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll54}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -544,7 +1226,7 @@ export default function CaKoiNhat() {
                   <ul>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll71}
+                        onClick={handleScroll61}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -553,7 +1235,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll62}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -562,7 +1244,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll63}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -600,7 +1282,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll73}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -620,7 +1302,7 @@ export default function CaKoiNhat() {
                   <ul>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll71}
+                        onClick={handleScroll81}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -629,7 +1311,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll82}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -639,7 +1321,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll83}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -648,7 +1330,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll84}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -657,7 +1339,7 @@ export default function CaKoiNhat() {
                     </li>
                     <li style={{ paddingTop: "10px" }}>
                       <Text
-                        onClick={handleScroll72}
+                        onClick={handleScroll85}
                         className="contentBox"
                         style={{ cursor: "pointer" }}
                       >
@@ -667,16 +1349,16 @@ export default function CaKoiNhat() {
                   </ul>
                   <li style={{ paddingTop: "10px" }}>
                     <Text
-                      onClick={handleScroll7}
+                      onClick={handleScroll9}
                       className="contentBox"
                       style={{ cursor: "pointer" }}
                     >
-                      9. Giá cá Koi bao nhiêu tại Siêu thị Cá Koi VN
+                      9. Giá cá Koi bao nhiêu tại IKoi
                     </Text>
                   </li>
                   <li style={{ paddingTop: "10px" }}>
                     <Text
-                      onClick={handleScroll7}
+                      onClick={handleScroll10}
                       className="contentBox"
                       style={{ cursor: "pointer" }}
                     >
@@ -695,7 +1377,7 @@ export default function CaKoiNhat() {
                 </span>
                 được coi là dòng cá cảnh yêu thích nhất trên thế giới. Để tìm
                 hiểu thêm về đặc điểm và cách chăm sóc của dòng cá này, hãy đọc
-                bài viết sau của Siêu Thị Cá Koi VN.
+                bài viết sau của IKoi.
               </Paragraph>
             </div>
             <div id="1">
@@ -722,7 +1404,9 @@ export default function CaKoiNhat() {
                 </Paragraph>
 
                 <div>
-                  <span className="span-Style">1.1. Nguồn gốc của cá Koi </span>
+                  <span className="span-Style" id="11">
+                    1.1. Nguồn gốc của cá Koi{" "}
+                  </span>
                   <Paragraph className="paragraph-Style">
                     <br />
                     Cá koi ban đầu được xem là xuất xứ từ Trung Quốc, nhưng sau
@@ -748,7 +1432,7 @@ export default function CaKoiNhat() {
                 </div>
                 <div>
                   {" "}
-                  <span className="span-Style">
+                  <span className="span-Style" id="12">
                     1.2. Đặc điểm của cá koi thuần chủng
                   </span>
                   <Paragraph className="paragraph-Style">
@@ -815,7 +1499,7 @@ export default function CaKoiNhat() {
                 </div>
                 <div>
                   {" "}
-                  <span className="span-Style">
+                  <span className="span-Style" id="13">
                     1.3. Đặc tính sinh sản, sinh trưởng của cá koi
                   </span>
                   <Paragraph className="paragraph-Style">
@@ -853,7 +1537,9 @@ export default function CaKoiNhat() {
                 </div>
                 <div>
                   {" "}
-                  <span className="span-Style">1.4. Phân loại cá koi</span>
+                  <span className="span-Style" id="14">
+                    1.4. Phân loại cá koi
+                  </span>
                   <Paragraph className="paragraph-Style">
                     <br />
                     Hiện nay, trên thị trường mua bán các dòng cá chép Koi đẹp
@@ -880,7 +1566,7 @@ export default function CaKoiNhat() {
                 </div>
               </div>
               <div id="detailed-content">
-                <h3 style={{ color: "red" }}>
+                <h3 style={{ color: "red" }} id="2">
                   2. Các loại cá Koi phổ biến được ưa chuộng trên thị trường
                 </h3>
                 <Paragraph className="paragraph-Style">
@@ -1181,7 +1867,7 @@ export default function CaKoiNhat() {
                     </div>
                   </div>
                   <div>
-                    <span id="216 " className="span-Style">
+                    <span id="216" className="span-Style">
                       2.16. Cá Koi Tancho
                     </span>
                     Tancho là dòng koi có vòng tròn màu đỏ ở giữa đầu. Ba loại
@@ -1291,7 +1977,7 @@ export default function CaKoiNhat() {
                       Ngoài ra, những con chép Koi đẹp còn mang lại nhiều ý
                       nghĩa thể hiện:
                     </Paragraph>
-                    <ul>
+                    <ul className="paragraph-Style">
                       <li>Giàu sang</li>
                       <li>Phú quý</li>
                       <li>Phồn thịnh</li>
@@ -1310,21 +1996,29 @@ export default function CaKoiNhat() {
                       sắc của loài cá này đều mang lại nhiều ý nghĩa phong thủy
                       khác nhau.
                     </Paragraph>
-                    <ul>
+                    <ul className="paragraph-Style">
                       <li>
-                        <span>Cá trắng khoang đỏ:</span> có ý nghĩa thành công
-                        trong sự nghiệp.
+                        <span className="paragraph-Style">
+                          Cá trắng khoang đỏ:
+                        </span>{" "}
+                        có ý nghĩa thành công trong sự nghiệp.
                       </li>
                       <li>
-                        <span>Cá trắng khoang đen hoặc thuần đen:</span> Nhắn
-                        nhủ sự biến động và thay đổi theo chiều hướng tốt đẹp.
+                        <span className="paragraph-Style">
+                          Cá trắng khoang đen hoặc thuần đen:
+                        </span>{" "}
+                        Nhắn nhủ sự biến động và thay đổi theo chiều hướng tốt
+                        đẹp.
                       </li>
                       <li>
-                        <span>Cá thân xám bạc:</span> Hình ảnh tượng trưng cho
-                        mã đáo thành công.
+                        <span className="paragraph-Style">
+                          Cá thân xám bạc:
+                        </span>{" "}
+                        Hình ảnh tượng trưng cho mã đáo thành công.
                       </li>
                       <li>
-                        <span>Cá vàng:</span> có ý nghĩa cho tài lộc, an khang.
+                        <span className="paragraph-Style">Cá vàng:</span> có ý
+                        nghĩa cho tài lộc, an khang.
                       </li>
                     </ul>
                     <div style={{ textAlign: "center" }}>
@@ -1334,10 +2028,12 @@ export default function CaKoiNhat() {
                         thủy khác nhau
                       </Paragraph>
                     </div>
-                    Trong một hồ cá koi đẹp sẽ có thể kết hợp nuôi nhiều loại cá
-                    để mang đến nhiều điều ý nghĩa tốt lành nhất. Đàn cá nhiều
-                    màu sắc bơi lội chắc chắn sẽ khiến rất nhiều người phải trầm
-                    trồ và thích thú.
+                    <Paragraph className="paragraph-Style" z>
+                      Trong một hồ cá koi đẹp sẽ có thể kết hợp nuôi nhiều loại
+                      cá để mang đến nhiều điều ý nghĩa tốt lành nhất. Đàn cá
+                      nhiều màu sắc bơi lội chắc chắn sẽ khiến rất nhiều người
+                      phải trầm trồ và thích thú.
+                    </Paragraph>
                   </div>
                 </div>
                 <div id="4">
@@ -1441,16 +2137,18 @@ export default function CaKoiNhat() {
                       điểm nhận dạng khác nhau. Bạn cần đọc kỹ về từng giống cá
                       ở trên để không bị nhầm lẫn khi lựa chọn.
                     </Paragraph>
-                    <div>
+                    <div style={{ textAlign: "center" }}>
                       <img src="src/assets/CaKoiNhat/21.webp" />
                       <Paragraph className="paragraph-Style">
                         Dựa vào màu sắc của cá
                       </Paragraph>
                     </div>
-                    Không nên chọn những con giống có màu sắc nhợt nhạt, xỉn
-                    màu. Nó có thể là một con cá có sức khỏe kém. Hoặc nếu màu
-                    sắc không ngay ngắn thì khả năng cao đó sẽ không phải là cá
-                    thuần chủng mà chỉ là cá koi F1 hoặc cá koi Việt Nam.
+                    <Paragraph className="paragraph-Style">
+                      Không nên chọn những con giống có màu sắc nhợt nhạt, xỉn
+                      màu. Nó có thể là một con cá có sức khỏe kém. Hoặc nếu màu
+                      sắc không ngay ngắn thì khả năng cao đó sẽ không phải là
+                      cá thuần chủng mà chỉ là cá koi F1 hoặc cá koi Việt Nam.
+                    </Paragraph>
                   </div>
                   <div>
                     <span className="span-Style" id="53">
@@ -1492,15 +2190,18 @@ export default function CaKoiNhat() {
                         Dựa trên thân hình của cá
                       </Paragraph>
                     </div>
-                    Tỷ lệ thân giữa A và D là quan trọng nhất. Nếu trên thân của
-                    cá khác nhau ở hai điểm này thì sau này cá sẽ lớn, đuôi mỏng
-                    và vai rộng ra khiến chúng mất cân đối. Và nếu vai của cá ở
-                    điểm A rộng và đuôi ở điểm D dày thì khi lớn lên sẽ rất cân
-                    đối và sẽ tạo nên vẻ đẹp cân xứng khi nuôi cá trong hồ.
-                    <br />
-                    Không chọn cá có kích thước quá lớn: đối với cá gia đình nói
-                    chung, bạn nên chọn cá koi có kích thước từ 10 - 20 cm trở
-                    lên để phù hợp với bể cá của gia đình.
+                    <Paragraph className="paragraph-Style">
+                      Tỷ lệ thân giữa A và D là quan trọng nhất. Nếu trên thân
+                      của cá khác nhau ở hai điểm này thì sau này cá sẽ lớn,
+                      đuôi mỏng và vai rộng ra khiến chúng mất cân đối. Và nếu
+                      vai của cá ở điểm A rộng và đuôi ở điểm D dày thì khi lớn
+                      lên sẽ rất cân đối và sẽ tạo nên vẻ đẹp cân xứng khi nuôi
+                      cá trong hồ.
+                      <br />
+                      Không chọn cá có kích thước quá lớn: đối với cá gia đình
+                      nói chung, bạn nên chọn cá koi có kích thước từ 10 - 20 cm
+                      trở lên để phù hợp với bể cá của gia đình.
+                    </Paragraph>
                   </div>
                 </div>
                 <div id="6">
@@ -1602,7 +2303,7 @@ export default function CaKoiNhat() {
                       thì cá koi mới có môi trường sống khỏe mạnh. Hãy tham khảo
                       các thông số về nước, nhiệt độ và độ pH...sau đây
                     </Paragraph>
-                    <ul>
+                    <ul className="paragraph-Style">
                       <li>Thể tích hồ: 2m3, độ sâu 1.2 – 1.8m;</li>
                       <li>Độ pH đạt từ 6.8– 7.5;</li>
                       <li>Nhiệt độ chuẩn: 23 – 26oC;</li>
@@ -1614,7 +2315,7 @@ export default function CaKoiNhat() {
                         Hồ nuôi cá Koi
                       </Paragraph>
                     </div>
-                    <ul>
+                    <ul className="paragraph-Style">
                       <li>
                         Mật độ nuôi cá Koi trưởng thành là 1 – 3 con/ 1m3. Cá
                         koi mini thì có thể thả dày hơn.
@@ -1652,7 +2353,7 @@ export default function CaKoiNhat() {
                       Gạo, bột mì, bã đậu, tôm, giun, ốc, cám, phân xanh hay bột
                       cá.
                     </Paragraph>
-                    <ul>
+                    <ul className="paragraph-Style">
                       <li>
                         Khẩu phần ăn: Không nên cho cá koi ăn quá nhiều một lúc
                         mà nên chia thành 6 lần trong ngày, với mỗi khẩu phần ăn
@@ -1819,7 +2520,7 @@ export default function CaKoiNhat() {
                     </Paragraph>
                   </div>
                   <div>
-                    <span className="span-Style" id="83">
+                    <span className="span-Style" id="84">
                       8.4. Cá koi bị nhát người
                     </span>
                     <Paragraph className="paragraph-Style">
@@ -1845,7 +2546,7 @@ export default function CaKoiNhat() {
                     </Paragraph>
                   </div>
                   <div>
-                    <span className="span-Style" id="84">
+                    <span className="span-Style" id="85">
                       8.5. Cá Koi bị đục mắt
                     </span>
                     <Paragraph className="paragraph-Style">
@@ -1880,8 +2581,7 @@ export default function CaKoiNhat() {
                     như giống cá Koi, tuổi cá, độ độc lạ và địa chỉ bán cá. Tùy
                     vào sự lựa chọn của bạn mà mức giá cá koi sẽ có sự thay đổi.
                     <br />
-                    Sau đây là bảng giá bán các dòng cá koi tại Siêu Thị Cá Koi
-                    VN:
+                    Sau đây là bảng giá bán các dòng cá koi tại IKoi:
                   </Paragraph>
                   <Table striped bordered hover responsive>
                     <thead>
@@ -1924,7 +2624,7 @@ export default function CaKoiNhat() {
                     <br />
                     IKoi là một trong những địa chỉ bán cá Koi uy tín nhất tại
                     Việt Nam bạn có thể tham khảo. Những ưu điểm khi bạn lựa
-                    chọn mua cá tại Siêu Thị Cá Koi VN như sau:
+                    chọn mua cá tại IKoi như sau:
                   </Paragraph>
                   <Paragraph className="paragraph-Style">
                     <ul>
@@ -1937,8 +2637,8 @@ export default function CaKoiNhat() {
                         Các loại cá koi kiểng đủ size cho khách hàng lựa chọn.
                       </li>
                       <li>
-                        Các dòng cá Koi đẹp tại Siêu Thị Cá Koi VN đảm bảo mức
-                        giá cạnh tranh nhất trên thị trường.
+                        Các dòng cá Koi đẹp tại IKoi đảm bảo mức giá cạnh tranh
+                        nhất trên thị trường.
                       </li>
                       <li>
                         Tất cả các dòng cá Koi tại đây đều được tuyển chọn kỹ

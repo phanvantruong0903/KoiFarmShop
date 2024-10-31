@@ -4,7 +4,7 @@ import axios from "axios";
 import Layout from "antd/es/layout/layout";
 import { Typography } from "antd";
 import Navbar from "../components/Navbar/Navbar.jsx";
-import Footer from "./Footer.jsx";
+import CustomFooter from "./Footer.jsx";
 import "./Css/locakoiStyle.css";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -38,7 +38,7 @@ export default function Locakoinhapkhau() {
     <>
       <Layout>
         <Navbar />
-        <Container>
+        {/* <Container>
           <div style={{ paddingTop: "100px" }}>
             <h2>Lô Cá Koi Nhập Khẩu</h2>
             <div style={{ textAlign: "center" }}>
@@ -102,12 +102,15 @@ export default function Locakoinhapkhau() {
               variant="danger"
               className="btnType_1"
               onClick={() => navigate("/koidangban")}
+              style={{ marginBottom: "100px" }}
             >
               Xem thêm
             </Button>
           </div>
-        </Container>
-        <Footer />
+        </Container> */}
+        <div>
+          <CustomFooter />
+        </div>
       </Layout>
     </>
   );

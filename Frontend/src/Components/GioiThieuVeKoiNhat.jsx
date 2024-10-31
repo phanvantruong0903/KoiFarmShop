@@ -177,15 +177,6 @@ export default function GioiThieuVeKoiNhat() {
           </div>
         </div>
       </Container>
-      <div
-        style={{
-          display: "flex",
-          backgroundImage: `url("src/assets/e.jpg")`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "100vh",
-        }}
-      ></div>
     </>
   );
 }

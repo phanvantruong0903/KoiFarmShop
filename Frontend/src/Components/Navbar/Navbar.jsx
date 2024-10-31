@@ -203,7 +203,7 @@ export default function Navbar() {
             <Dropdown.Toggle
               id="dropdown-basic"
               className="nav-dropdown-toggle"
-              href="/tintuc"
+              href="/kienthuckoi"
             >
               Tin tức
             </Dropdown.Toggle>
@@ -223,7 +223,7 @@ export default function Navbar() {
                       onMouseLeave={() => setActiveItem(null)}
                       className={activeItem === `/${news}` ? "active" : ""}
                     >
-                      {news === "kienthuckoi" ? "KIẾN THỨC KOI" : "OTHER VALUE"}{" "}
+                      {news === "kienthuckoi" ? "Kiến thức Koi" : "OTHER VALUE"}{" "}
                       {/* Replace "OTHER VALUE" with desired text */}
                     </Dropdown.Item>
                     {index < 2}

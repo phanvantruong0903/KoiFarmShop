@@ -70,14 +70,34 @@ export default function Tancho() {
     const element = document.getElementById("22");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll23 = () => {
     const element = document.getElementById("23");
 
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      const elementRect = element.getBoundingClientRect();
+      const offset = 100; // Khoảng cách nhích lên từ trên cùng
+
+      // Tính toán vị trí chính xác để cuộn
+      const targetPosition = elementRect.top + window.scrollY - offset;
+
+      // Cuộn đến vị trí đã tính toán
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     }
   };
   const handleScroll3 = () => {
@@ -199,23 +219,7 @@ export default function Tancho() {
       });
     }
   };
-  const handleScroll8 = () => {
-    const element = document.getElementById("8");
 
-    if (element) {
-      const elementRect = element.getBoundingClientRect();
-      const offset = 100; // Khoảng cách nhích lên từ trên cùng
-
-      // Tính toán vị trí chính xác để cuộn
-      const targetPosition = elementRect.top + window.scrollY - offset;
-
-      // Cuộn đến vị trí đã tính toán
-      window.scrollTo({
-        top: targetPosition,
-        behavior: "smooth",
-      });
-    }
-  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -342,14 +346,10 @@ export default function Tancho() {
                       </li>
                     </ul>
                   </li>
+
                   <li style={{ paddingTop: "10px" }}>
                     <span onClick={handleScroll7} className="contentBox">
-                      7. Giá coi Koi Tancho bao nhiêu?
-                    </span>
-                  </li>
-                  <li style={{ paddingTop: "10px" }}>
-                    <span onClick={handleScroll8} className="contentBox">
-                      8. Tại sao nên mua Koi Tancho tại IKoi
+                      7. Tại sao nên mua Koi Tancho tại IKoi
                     </span>
                   </li>
                 </ul>
@@ -405,7 +405,9 @@ export default function Tancho() {
                 <div>
                   <ul>
                     <li>
-                      <span id="21">2.1 Tancho Kohaku</span>
+                      <span id="21" className="span-Style">
+                        2.1 Tancho Kohaku
+                      </span>
                       <br />
                       <Paragraph className="paragraph-Style">
                         Cá Koi Tancho Kohaku được ví như quốc kỳ của Nhật Bản,
@@ -419,7 +421,9 @@ export default function Tancho() {
                       </div>
                     </li>
                     <li>
-                      <span id="21">2.2 Tancho Sanke</span>
+                      <span id="22" className="span-Style">
+                        2.2 Tancho Sanke
+                      </span>
                       <br />
                       <Paragraph className="paragraph-Style">
                         Tancho koi Sanke ngoài có chấm đỏ trên đầu thì đặc điểm
@@ -434,7 +438,9 @@ export default function Tancho() {
                       </div>
                     </li>
                     <li>
-                      <span id="23">2.3 Tancho Showa</span>
+                      <span id="23" className="span-Style">
+                        2.3 Tancho Showa
+                      </span>
                       <br />
                       <Paragraph className="paragraph-Style">
                         Cá Koi Tancho Showa là giống cá giống ý như sankoku.
@@ -655,7 +661,9 @@ export default function Tancho() {
                 <div>
                   <ul>
                     <li>
-                      <span id="61">6.1 Giá cá koi Tancho F1</span>
+                      <span id="61" className="span-Style">
+                        6.1 Giá cá koi Tancho F1
+                      </span>
                       <br />
                       <Paragraph className="paragraph-Style">
                         Đối với những con Tancho f1 có kích thước từ 18cm –
@@ -668,7 +676,9 @@ export default function Tancho() {
                       </Paragraph>
                     </li>
                     <li>
-                      <span id="62">6.2 Giá cá koi Tancho Nhật chuẩn</span>
+                      <span id="62" className="span-Style">
+                        6.2 Giá cá koi Tancho Nhật chuẩn
+                      </span>
                       <br />
                       <Paragraph className="paragraph-Style">
                         Một con cá Koi trưởng thành Nhật Bản như Tancho koi với
@@ -690,6 +700,16 @@ export default function Tancho() {
                 </h3>
                 <div>
                   <Paragraph className="paragraph-Style">
+                    Trên thị trường hiện nay có khá nhiều nơi cung cấp cá Koi
+                    Tancho với giá thành và chất lượng khác nhau. Nhưng đối với
+                    những người mới bắt đầu chơi dòng cá này sẽ khá khó khăn khi
+                    lựa chọn địa chỉ uy tín.
+                    <br />
+                    Siêu thị Cá Koi VN được biết đến là một trong những địa chỉ
+                    uy tín để bạn có thể lựa chọn và cung cấp thiết kế hồ cá Koi
+                    độc đáo cho những dân chơi cá. Siêu thị Cá Koi VN tự hào là
+                    nơi mang đến cho bạn những dòng cá koi tancho đẹp hiện nay.
+                    Với giá thành tốt, phù hợp và cạnh tranh trên thị trường.
                     Bên cạnh đó, IKoi có đội ngũ chuyên gia nhiều kinh nghiệm sẽ
                     tư vấn và hỗ trợ cho bạn lựa chọn mua cũng như chăm sóc cá
                     Koi đúng cách. Vậy nên, nếu bạn có nhu cầu tư vấn hoặc muốn

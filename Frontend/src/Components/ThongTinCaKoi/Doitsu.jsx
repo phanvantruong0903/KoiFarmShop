@@ -233,7 +233,7 @@ export default function Doitsu() {
                   </li>
                   <li style={{ paddingTop: "10px" }}>
                     <span onClick={handleScroll7} className="contentBox">
-                      7. Tại sao nên mua Showa Koi tại siêu thị cá Koi VN:
+                      7. Tại sao nên mua Showa Koi tại IKoi:
                     </span>
                   </li>
                 </ul>
@@ -429,7 +429,10 @@ export default function Doitsu() {
                 </h3>
                 <div>
                   <div style={{ textAlign: "center" }}>
-                    <img src="src/assets/Koi-Doitsu" style={{ width: "50%" }} />
+                    <img
+                      src="src/assets/Koi-Doitsu/ca-koi-doitsu-2.webp"
+                      style={{ width: "50%" }}
+                    />
                     <p style={{ fontSize: "15px", fontWeight: "400" }}>
                       Doitsu Koi đẹp
                     </p>
@@ -560,18 +563,18 @@ export default function Doitsu() {
               </div>
               <div id="7">
                 <h3 style={{ color: "red" }}>
-                  7. Tại sao nên mua Showa Koi tại siêu thị cá Koi VN:
+                  7. Tại sao nên mua Showa Koi tại IKoi:
                 </h3>
                 <Paragraph className="paragraph-Style">
                   Tự hào là đơn vị chuyên cung cấp cá Doitsu Koi khỏe mạnh, chất
-                  lượng và uy tín hàng đầu hiện nay, siêu thị cá Koi VN sẽ bạn
-                  lựa chọn được loại cá phù hợp với không gian sống của bạn.
-                  Chúng tôi sẽ hỗ trợ tư vấn, hướng dẫn quá trình chăm sóc hồ cá
-                  Koi thủy sinh an toàn, đảm bảo chất lượng với chi phí phù hợp
-                  nhất. Đến với Siêu thị Cá Koi VN các bạn thoải mái chiêm
-                  ngưỡng vẻ đẹp của những chú cá Koi Nhật tuyệt vời nhất. Nếu có
-                  thắc mắc hay cần hỗ trợ tư vấn mua cá Koi Doitsu hãy liên hệ
-                  ngay với siêu thị cá Koi VN để được phục vụ tốt nhất.
+                  lượng và uy tín hàng đầu hiện nay, IKoi sẽ bạn lựa chọn được
+                  loại cá phù hợp với không gian sống của bạn. Chúng tôi sẽ hỗ
+                  trợ tư vấn, hướng dẫn quá trình chăm sóc hồ cá Koi thủy sinh
+                  an toàn, đảm bảo chất lượng với chi phí phù hợp nhất. Đến với
+                  IKoi các bạn thoải mái chiêm ngưỡng vẻ đẹp của những chú cá
+                  Koi Nhật tuyệt vời nhất. Nếu có thắc mắc hay cần hỗ trợ tư vấn
+                  mua cá Koi Doitsu hãy liên hệ ngay với IKoi để được phục vụ
+                  tốt nhất.
                 </Paragraph>
               </div>
             </div>
@@ -586,7 +589,11 @@ export default function Doitsu() {
           </div>
         </div>
         <div>
-          <CardGrid cardData={filteredCards} />
+          {filteredCards && filteredCards.length > 0 ? (
+            <CardGrid cardData={filteredCards} />
+          ) : (
+            <p></p> // Replace with any message or component you want to show
+          )}
         </div>
       </Layout>
     </>

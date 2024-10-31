@@ -825,12 +825,13 @@ export default function Chitietconsignpage() {
                   />
                 </Form.Item>
 
-                <div style={{ textAlign: "center", marginTop: "20px" }}>
+                <div style={{ textAlign: "center", marginTop: "50px" }}>
                   <Button
                     type="primary"
                     htmlType="submit"
                     loading={loading}
                     disabled={loading}
+                    style={{ marginBottom: "100px" }}
                   >
                     Update
                   </Button>

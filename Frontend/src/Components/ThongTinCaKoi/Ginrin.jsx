@@ -336,7 +336,7 @@ export default function Ginrin() {
                 </div>
                 <div style={{ textAlign: "center" }}>
                   <img
-                    src="Frontend/src/assets/Koi-Ginrin/ginrin-asagi.jpg"
+                  src="src/assets/Koi-Ginrin/ginrin-asagi.jpg"
                     style={{ width: "30%" }}
                   />
                   <div>
@@ -467,7 +467,7 @@ export default function Ginrin() {
               </div>
               <div id="6">
                 <h3 style={{ color: "red" }}>
-                  Tại sao nên mua cá Koi Ginrin tại IKoi
+                  6.Tại sao nên mua cá Koi Ginrin tại IKoi
                 </h3>
                 <div>
                   <Paragraph className="paragraph-Style">

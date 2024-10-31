@@ -269,8 +269,10 @@ export default function Bekko() {
                   Nội dung chi tiết
                 </h2>
                 <div>
-                  <span className="span-Style">Cá Koi Bekko</span>{" "}
                   <Paragraph className="paragraph-Style">
+                    <span className="span-Style" style={{ color: "blue" }}>
+                      Cá Koi Bekko
+                    </span>{" "}
                     là loài cá cảnh được nhiều người yếu thích và săn tìm. Tuy
                     nhiên, bên cạnh cũng vẫn có những người chưa hề biết về loài
                     cá này. Vậy nhân đây, hãy tìm hiểu về nguồn gốc của cá Koi
@@ -316,11 +318,11 @@ export default function Bekko() {
                 </Paragraph>
                 <ul style={{ fontSize: "15px", fontWeight: "400" }}>
                   <li>
-                    <span id="21" className="text-Style">
+                    <span id="21" className="span-Style">
                       2.1 Aka Bekko : {""}
                     </span>
                     <Paragraph className="paragraph-Style">
-                      là một loài cá đỏ thông thường và thường xuất hiện trong
+                      Là một loài cá đỏ thông thường và thường xuất hiện trong
                       quá trình sinh sản của loài Kohaku. Trước đây, ở Nhật Bản,
                       các con cá Akamuji thường bị đánh bại để làm cá bột. Tuy
                       nhiên, từ năm 1990, chúng trở nên phổ biến và thường được
@@ -330,7 +332,7 @@ export default function Bekko() {
                     </Paragraph>
                   </li>
                   <li>
-                    <span id="22" className="text-Style">
+                    <span id="22" className="span-Style">
                       2.2 Ki Bekko : {""}
                     </span>
                     <Paragraph className="paragraph-Style">
@@ -343,7 +345,7 @@ export default function Bekko() {
                     </Paragraph>
                   </li>
                   <li>
-                    <span id="23" className="text-Style">
+                    <span id="23" className="span-Style">
                       2.3 Shiro Bekko : {""}
                     </span>
                     <Paragraph className="paragraph-Style">
@@ -438,10 +440,10 @@ export default function Bekko() {
                 </h3>
                 <Paragraph className="paragraph-Style">
                   Siêu thị cá Koi là đơn vị cung cấp cá Koi Bekko thuần chủng
-                  chất lượng uy tín trên toàn quốc. Cá Koi Bekko tại Siêu thị cá
-                  Koi có màu sắc rõ nét vàng, đỏ hoặc trắng, các đốm sumi sậm,
-                  phân biệt hoàn toàn với màu sắc tổng thể của cá. Đặc biệt phần
-                  đầu sạch, không xuất hiện bất cứ vệt sumi nào.
+                  chất lượng uy tín trên toàn quốc. Cá Koi Bekko tại có màu
+                  sắc rõ nét vàng, đỏ hoặc trắng, các đốm sumi sậm, phân biệt
+                  hoàn toàn với màu sắc tổng thể của cá. Đặc biệt phần đầu sạch,
+                  không xuất hiện bất cứ vệt sumi nào.
                   <br />
                   Bên cạnh đó mã cá đẹp, thân hình to lớn, dáng bơi uyển chuyển,
                   cam kết cá hoàn toàn khỏe mạnh, được dưỡng kỹ lưỡng trước khi

@@ -1,15 +1,12 @@
 import { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
-import Navbar from "../Navbar/Navbar";
-import Footer from "../Footer";
 import axios from "axios";
 import CardGrid from "../Cardgrid";
 import { Layout, Typography } from "antd";
-const { Title, Text, Paragraph } = Typography;
+const { Text, Paragraph } = Typography;
 import "../Css/koiStyle.css";
 import { Spin } from "antd"; // Import the Spin component
 export default function Goshiki() {
-  const [menu, setMenu] = useState("home");
   const [cardData, setCardData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -269,18 +266,18 @@ export default function Goshiki() {
                       3. Cách chọn Goshiki Koi
                     </span>
                     <ul>
-                      <li>
+                      <li style={{ paddingTop: "10px" }}>
                         <span onClick={handleScroll31} className="contentBox">
                           3.1 Hình dáng
                         </span>
                       </li>
-                      <li>
+                      <li style={{ paddingTop: "10px" }}>
                         {" "}
                         <span onClick={handleScroll32} className="contentBox">
                           3.2 Màu sắc
                         </span>
                       </li>
-                      <li>
+                      <li style={{ paddingTop: "10px" }}>
                         {" "}
                         <span onClick={handleScroll33} className="contentBox">
                           3.3 Tiêu chí để chọn koi Goshiki nhỏ
@@ -373,17 +370,16 @@ export default function Goshiki() {
                     </li>
                   </ul>
                 </div>
+                <Paragraph className="paragraph-Style">
+                  Ginrin Goshiki được tạo ra thông qua việc phối giống giữa một
+                  con Ginrin Kohaku và một con Goishiki. Chogoroun là một nhà
+                  nhân giống nổi tiếng nhưng chỉ sản xuất được ít con lai đẹp.
+                  Loại cá này chỉ thật sự thu hút khi đến 2 tuổi. Goshiki Sanke
+                  được tạo ra thông qua việc phối giống giữa một con Asagi và
+                  một con Sanke.
+                </Paragraph>
                 <div style={{ textAlign: "center" }}>
-                  <p style={{ fontSize: "15px", fontWeight: "400" }}>
-                    <Paragraph className="paragraph-Style">
-                      Ginrin Goshiki được tạo ra thông qua việc phối giống giữa
-                      một con Ginrin Kohaku và một con Goishiki. Chogoroun là
-                      một nhà nhân giống nổi tiếng nhưng chỉ sản xuất được ít
-                      con lai đẹp. Loại cá này chỉ thật sự thu hút khi đến 2
-                      tuổi. Goshiki Sanke được tạo ra thông qua việc phối giống
-                      giữa một con Asagi và một con Sanke.
-                    </Paragraph>
-                  </p>
+                  <p style={{ fontSize: "15px", fontWeight: "400" }}></p>
                   <img
                     src="src/assets/Koi-Goshiki/ca-koi-goshiki-3 (1).webp"
                     style={{ width: "50%" }}

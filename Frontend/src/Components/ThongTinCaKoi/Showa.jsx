@@ -346,7 +346,7 @@ export default function Showa() {
                   </li>
                   <li style={{ paddingTop: "10px" }}>
                     <span onClick={handleScroll8} className="contentBox">
-                      8. Tại sao nên mua Showa Koi tại siêu thị cá Koi VN:
+                    8. Tại sao nên mua Showa Koi tại IKoi:
                     </span>
                   </li>
                 </ul>
@@ -692,7 +692,7 @@ export default function Showa() {
                   các tiêu chí sau:
                 </Paragraph>
                 <div id="41">
-                  <span className="span-Style">Dựa vào hình dáng:</span>
+                  <span className="span-Style">4.1 Dựa vào hình dáng:</span>
                   <ul>
                     <li>
                       <Paragraph className="paragraph-Style">
@@ -717,7 +717,7 @@ export default function Showa() {
                   </ul>
                 </div>
                 <div id="42">
-                  <span className="span-Style">Dựa vào màu sắc:</span>
+                  <span className="span-Style">4.2 Dựa vào màu sắc:</span>
                   <ul>
                     <li>
                       <Paragraph className="paragraph-Style">
