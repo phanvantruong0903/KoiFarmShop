@@ -41,6 +41,18 @@ class KoisService {
 
     if (userCheck) {
       user_id = userCheck._id
+
+      const userPayload = {
+        _id: user_id,
+        email: payload.email || userCheck.email,
+        name: payload.name || userCheck.name,
+        address: payload.address || userCheck.address,
+        phone_number: payload.phone_number || userCheck.phone_number,
+        username: `user${user_id.toString()}` || userCheck.username,
+        roleid: 1
+      }
+      userResult = await databaseService.users.updateOne({ _id: user_id }, {$set: userPayload})
+
     } else {
       const userPayload = {
         _id: user_id,

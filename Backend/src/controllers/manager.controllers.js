@@ -201,6 +201,16 @@ export const updateConsignDetailController = async (req, res) => {
     result: consign
   })
 }
+
+export const updateInvoiceController = async (req, res) => {
+  const { _id } = req.params
+  const result = await invoicesService.updateInvoice(_id, req.body)
+  return res.json({
+    message: MANAGER_MESSAGES.UPDATE_INVOICE_SUCCESS,
+    result: result
+  })
+}
+
 export const createNewServiceController = async (req, res) => {
   try {
     const newService = await adminService.createNewService(req.body)
