@@ -121,19 +121,13 @@ export const removeAllItemsDetailController = async (req, res) => {
   try {
     const reqOrderDTCookie = req.cookies && req.cookies.orderDT ? JSON.parse(req.cookies.orderDT) : {} // Lấy từ cookie orderDT
 
-    console.log('reqOrderDTCookie ', reqOrderDTCookie)
-
     const orderDetailID = reqOrderDTCookie._id
-
-    console.log(orderDetailID)
 
     const Order = await databaseService.order.findOne({OrderDetailID: new ObjectId(orderDetailID)})
 
-    console.log("Order", Order)
 
     if (Order) {
-      console.log('found')
-      // Xóa cookie 'orderDT'
+      res.clearCookie('order')
       res.clearCookie('orderDT')
 
       return res.json({
