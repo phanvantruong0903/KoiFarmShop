@@ -69,7 +69,6 @@ class OrderDetailService {
         if (quantity > koiList.length) {
             return `${koiList.length} available in stock`
         }
-        console.log("slice list: ", koiList.slice(0, quantity))
         const newPrice = koiList.slice(0, quantity).reduce((total, koi) => {
             return total + koi.Price
         }, 0)
@@ -91,7 +90,6 @@ class OrderDetailService {
 
     async fetchOrder(reqCookie) {
         // const result = await databaseService.orderDetail.findOne({ _id: new ObjectId(payload.orderID) })
-        console.log(reqCookie)
         let orderDT, koiList
         if (reqCookie && reqCookie.Items) {
             orderDT = reqCookie
@@ -124,11 +122,9 @@ class OrderDetailService {
             }
             const koiList = (await this.getSamePropertiesKoi(payload.KoiID)).filter(koi=> koi.Status != 0)
             const removedKoiList = koiList.slice(0, foundItem.Quantity)
-            console.log("remove koi list: ", removedKoiList)
             let removedItemPrice = removedKoiList.reduce((total, koi)=>{
                 return total + Number(koi.Price)
             }, 0)
-            console.log("removed item price: ", removedItemPrice)
             const removedOrder = orderDetail?.Items.filter(item => {
                 if (item.KoiID !== payload.KoiID) {
                     return {

@@ -28,8 +28,6 @@ import paymentRouter from './routes/payments.routes.js'
 import orderRouter from './routes/order.routes.js'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser';
-import {server, app} from './Socket/socket.js'
-import chatRouter from './routes/chat.routes.js'
 
 config()
 // const app = express()
@@ -62,7 +60,6 @@ app.get('/koi/:KoiID', wrapAsync(getKoiByIDController))
 app.use('/kois/:CategoryID', wrapAsync(getKoiByCategoryIDController))
 app.use('/getAllKoi', wrapAsync(wrapAsync(getAllKoiController)))
 app.use('/order', orderRouter)
-app.use('/chat', chatRouter)
 
 app.post('/authorization', accessTokenValidator, wrapAsync(authorizationController))
 

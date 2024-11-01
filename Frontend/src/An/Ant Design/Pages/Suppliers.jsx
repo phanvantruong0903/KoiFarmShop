@@ -1,20 +1,34 @@
 import React from 'react'
-import { Typography, Card, Statistic, Row, Col, Layout, Space, Tabs, message, Badge } from 'antd';
+import { Typography, Card, Statistic, Row, Col, Layout, Space, Tabs, message, Badge, Button } from 'antd';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import '../Css/GeneralPurpose.css'
 import useFetchProfiles from '../../Ant Design/Hooks/useFetchProfiles';
 import SupplierTable from '../Components/Table/SupplierTable';
 import useFetchSupplier from '../Hooks/useFetchSupplier';
-
+import axiosInstance from '../../Utils/axiosJS';
 export default function Suppliers() {
     const { Header, Content } = Layout;
     const [activeTab, setActiveTab] = React.useState('1');
-    const suppliers = useFetchSupplier();
-    const { profiles, UserChangesIn7DaysPercent, totalVerified, totalCustomers, totalStaff, totalManager } = useFetchProfiles();
+    const [suppliers, setSuppliers] = React.useState([]);
+    const [reset, setReset] = React.useState(false);
+    const [isCreating, setIsCreating] = React.useState(false);
     const [searchTerm, setSearchTerm] = React.useState('');
     const [isModalVisible, setIsModalVisible] = React.useState(false);
     const [selectedProfile, setSelectedProfile] = React.useState(null);
+    const reseter = () => { setReset(!reset) }
+    React.useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axiosInstance.get('/manager/manage-supplier/get-all');
+                setSuppliers(response.data.result);
+                console.log(response.data.result);
 
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+        fetchData();
+    }, [reset])
     const getFilteredSuppliers = () => {
         switch (activeTab) {
             case '1':
@@ -32,8 +46,7 @@ export default function Suppliers() {
 
     const filteredSupplier = getFilteredSuppliers();
 
-    const userChangePercent = parseFloat(UserChangesIn7DaysPercent());
-    const isPositiveChange = userChangePercent > 0;
+
     const Tab = [
         {
             key: '1',
@@ -76,14 +89,18 @@ export default function Suppliers() {
         setSearchTerm(value.target.value);
         console.log('Search:', searchTerm);
     };
-    const handleActionClick = (actionType, id) => {
-        if (actionType === 'update') {
-            setIsModalVisible(true);
-            setSelectedProfile(id);
-            message.info(`Update action triggered for ID: ${id}`);
-        } else if (actionType === 'disable') {
-            message.warning(`Disable action triggered for ID: ${id}`);
-        }
+    // const handleActionClick = (actionType, id) => {
+    //     if (actionType === 'update') {
+    //         setIsModalVisible(true);
+    //         setSelectedProfile(id);
+    //         message.info(`Update action triggered for ID: ${id}`);
+    //     } else if (actionType === 'disable') {
+    //         message.warning(`Disable action triggered for ID: ${id}`);
+    //     }
+    // };
+    const handleCreate = () => {
+        setIsCreating(true);
+
     };
     return (
         <Layout >
@@ -125,7 +142,7 @@ export default function Suppliers() {
                                 title={<Typography.Title level={4}>Toàn Bộ Nhà Cung Cấp Trung Quốc</Typography.Title>}
                                 value={suppliers.filter(supplier => supplier.Country === ' Trung Quốc').length}
                                 precision={0}
-                                
+
                             />
                         </Card>
                     </Col>
@@ -149,10 +166,11 @@ export default function Suppliers() {
                     </Col>
                 </Row>
                 <Layout style={{ background: '#f0f0f0', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 12px 8px rgba(0, 0, 0, 0.1)' }}>
-                    <Header style={{ background: '#f5f5f5', borderBottom: '1px solid #d9d9d9', padding: '20px', borderRadius: '12px 12px 0 0', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', border: '1px #bfbfbf solid ' }}>
+                    <Header style={{ background: '#f5f5f5', borderBottom: '1px solid #d9d9d9', padding: '', borderRadius: '12px 12px 0 0', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', border: '1px #bfbfbf solid ' }}>
+                        <Button onClick={handleCreate} variant='solid' style={{ backgroundColor: '#52c41a', color: 'white' }} >Tạo nhà cung cấp mới</Button>
                     </Header>
                     <Content className='fix-Table' style={{ border: '1px #bfbfbf solid ', padding: '20px', background: '#fff', borderRadius: '0 0 12px 12px' }}>
-                        <SupplierTable data={filteredSupplier} handleActionClick={handleActionClick} Search={searchTerm} />
+                        <SupplierTable data={filteredSupplier} showCreate={isCreating} setCreate={setIsCreating} ResetTable={reseter} />
                     </Content>
                 </Layout>
             </Content>

@@ -64,6 +64,7 @@ export default function Ogon() {
       });
     }
   };
+
   const handleScroll4 = () => {
     const element = document.getElementById("4");
 
@@ -328,20 +329,19 @@ export default function Ogon() {
 
               <div>
                 <h2 className="noidungchitiet">Nội dung chi tiết</h2>
-                <p style={{ fontSize: "15px", fontWeight: "400" }}>
-                  <span className="span-Style">Koi Ogon</span>{" "}
+                <div style={{ fontSize: "15px", fontWeight: "400" }}>
                   <Paragraph className="paragraph-Style">
-                    là dòng cá Koi được yêu thích nhất trên thế giới. Với vẻ
-                    ngoài lấp lánh tạo ra vẻ sang trọng cho không gian nuôi cá
-                    Koi. Hãy cùng chúng tôi tìm hiểu thông tin cụ thể về dòng cá
-                    này nhé!
+                    <span className="span-Style">Koi Ogon</span> là dòng cá Koi
+                    được yêu thích nhất trên thế giới. Với vẻ ngoài lấp lánh tạo
+                    ra vẻ sang trọng cho không gian nuôi cá Koi. Hãy cùng chúng
+                    tôi tìm hiểu thông tin cụ thể về dòng cá này nhé!
                   </Paragraph>
-                </p>
+                </div>
               </div>
               <div id="1">
                 <h3 style={{ color: "red" }}>
                   {" "}
-                  1. Giới thiệu về cá Platinum Koi
+                  1. Nguồn gốc lịch sử của giống cá Koi Ogon
                 </h3>
                 <div style={{ textAlign: "center" }}>
                   <img
@@ -423,7 +423,9 @@ export default function Ogon() {
                 </h3>
                 <ul>
                   <li>
-                    <span className="span-Style">3.1 Cá Koi Platinum Ogon</span>
+                    <span className="span-Style" id="31">
+                      3.1 Cá Koi Platinum Ogon
+                    </span>
                     <br />
                     <Paragraph className="paragraph-Style">
                       Cá Koi Platinum Ogon là một trong những dòng cá Koi Ogon
@@ -448,9 +450,7 @@ export default function Ogon() {
                         src="src/assets/Koi-Ogon-1/image14-1661495518-730-width801height889.jpg"
                         style={{ width: "30%", objectFit: "cover" }}
                       />
-                      <div style={{ textAlign: "center" }}>
-                        <Text className="text-Style ">KOI PLATINUM OGON</Text>
-                      </div>
+                      <Text className="text-Style ">KOI PLATINUM OGON</Text>
                     </div>
                   </li>
                   <li>

@@ -4,10 +4,11 @@ import axios from "axios";
 import Layout from "antd/es/layout/layout";
 import { Typography } from "antd";
 import Navbar from "../components/Navbar/Navbar.jsx";
-import Footer from "./Footer.jsx";
+import CustomFooter from "./Footer.jsx";
 import "./Css/locakoiStyle.css";
 import { Navigate, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import axiosInstance from "../An/Utils/axiosJS.js";
 const { Title } = Typography;
 
 export default function Locakoinhapkhau() {
@@ -16,7 +17,7 @@ export default function Locakoinhapkhau() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
+        const response = await axiosInstance.get(
           "http://localhost:4000/get-kois-groupKoiID"
         );
         if (response.status === 200) {
@@ -33,25 +34,11 @@ export default function Locakoinhapkhau() {
     fetchData();
   }, []);
 
-  // Log koiData whenever it updates
-  useEffect(() => {
-    console.log("koiData updated:", koiData);
-  }, [koiData]);
-
-  // This useEffect logs koiData whenever it updates
-  useEffect(() => {
-    if (koiData) {
-      console.log("koiData updated:", koiData);
-    } else {
-      console.log("koiData is still null or undefined.");
-    }
-  }, [koiData]);
-
   return (
     <>
       <Layout>
         <Navbar />
-        <Container>
+        {/* <Container>
           <div style={{ paddingTop: "100px" }}>
             <h2>Lô Cá Koi Nhập Khẩu</h2>
             <div style={{ textAlign: "center" }}>
@@ -110,17 +97,20 @@ export default function Locakoinhapkhau() {
               ))}
             </div>
           </div>
-          <div style={{ textAlign: "center" }}>
+          <div style={{ textAlign: "center", paddingTop: "100px" }}>
             <Button
               variant="danger"
               className="btnType_1"
-              onClick={() => navigate("/koikygui", {})}
+              onClick={() => navigate("/koidangban")}
+              style={{ marginBottom: "100px" }}
             >
               Xem thêm
             </Button>
           </div>
-        </Container>
-        <Footer />
+        </Container> */}
+        <div>
+          <CustomFooter />
+        </div>
       </Layout>
     </>
   );

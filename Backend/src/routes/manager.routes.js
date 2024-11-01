@@ -2,8 +2,10 @@ import {
   createNewInvoiceGroupKoiController,
   createNewServiceController,
   getKoiAllController,
+  getOrdeDetails,
   getProfitController,
   getRevenueController,
+  updateInvoiceController,
   updateOrderStatusController,
   updateServiceController
 } from '../controllers/manager.controllers.js'
@@ -193,6 +195,15 @@ managerRouter.get('/manage-invoice/get-all', accessTokenValidator, isAdminValida
 managerRouter.get('/manage-invoice/:_id', accessTokenValidator, isAdminValidator, wrapAsync(getInvoiceController))
 
 managerRouter.get('/manage-group-koi/:_id', accessTokenValidator, isAdminValidator, wrapAsync(getgroupKoiController))
+
+managerRouter.get('/manage-order/get-order-detail/:orderID', getOrdeDetails)
+
+managerRouter.put(
+  '/manage-invoice/:_id',
+  accessTokenValidator,
+  isAdminValidator,
+  wrapAsync(updateInvoiceController)
+)
 
 
 export default managerRouter

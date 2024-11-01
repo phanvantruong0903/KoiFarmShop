@@ -1,9 +1,6 @@
-import Navbar from "./Navbar/Navbar";
-import Footer from "./Footer";
 import { Card, Layout, Row, Col, Input, Form, Button } from "antd";
 import { Content } from "antd/es/layout/layout";
 import axiosInstance from "../An/Utils/axiosJS";
-import { useState } from "react";
 
 export default function ChangePassword() {
   const [form] = Form.useForm(); // Tạo form instance
@@ -66,12 +63,10 @@ export default function ChangePassword() {
     <>
       {/* Navbar Component */}
       <Layout>
-        <Navbar />
-
-        <div style={{ paddingTop: "100px", backgroundColor: "smokegrey" }}>
-          <Row justify="center">
+        <div style={{ backgroundColor: "smokegrey" }}>
+          <Row>
             <Col>
-              <Content style={{ padding: "50px" }}>
+              <Content>
                 <Card
                   title="Thay đổi mật khẩu"
                   bordered={false}
@@ -130,7 +125,6 @@ export default function ChangePassword() {
           </Row>
         </div>
         {/* Footer Component */}
-        <Footer />
       </Layout>
     </>
   );

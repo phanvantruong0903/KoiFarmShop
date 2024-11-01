@@ -10,27 +10,26 @@ import {
   Divider,
   Row,
   Col,
-  Breadcrumb,
   Tooltip,
+  message,
 } from "antd";
-import { HomeOutlined } from "@ant-design/icons";
+import { HomeOutlined, CopyOutlined } from "@ant-design/icons";
 import axiosInstance from "../An/Utils/axiosJS";
 import { Container } from "react-bootstrap";
-
+import { useNavigate } from "react-router-dom";
 const { Title, Text } = Typography;
 
-export default function DonKyGuiPage() {
+export default function DonKyGui() {
   const [consignList, setConsignList] = useState([]);
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchConsignList = async () => {
       try {
-        const response = await axiosInstance.get(
-          "http://localhost:4000/users/tat-ca-don-ki-gui"
-        );
+        const response = await axiosInstance.get("/users/tat-ca-don-ki-gui");
 
         if (response.data.result && response.data.result.data) {
           setConsignList(response.data.result.data);
@@ -54,7 +53,7 @@ export default function DonKyGuiPage() {
       const response = await axiosInstance.get("users/me");
       if (response.data) {
         setUserData(response.data.result);
-        console.log("Fetched user data:", response.data.result); // Debug log
+        console.log("Fetched user data:", response.data.result);
       }
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -67,7 +66,23 @@ export default function DonKyGuiPage() {
     fetchUserData();
   }, []);
 
-  if (loading) return <Spin size="large" />;
+  const handleCopy = (id) => {
+    navigator.clipboard.writeText(id);
+    message.success("ID đã được sao chép!");
+  };
+
+  if (loading)
+    return (
+      <Spin
+        size="large"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      />
+    );
   if (error) return <Alert message="Error" description={error} type="error" />;
 
   return (
@@ -75,18 +90,7 @@ export default function DonKyGuiPage() {
       style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
     >
       <Layout style={{ backgroundColor: "whitesmoke" }}>
-        <Navbar />
         <Container style={{ paddingTop: "50px", paddingBottom: "10px" }}>
-          <Breadcrumb style={{ padding: "16px", marginTop: "10px" }}>
-            <Breadcrumb.Item href="/">
-              <HomeOutlined />
-              <span>Home</span>
-            </Breadcrumb.Item>
-            <Breadcrumb.Item href="/donkygui">
-              <span>Ký Gửi</span>
-            </Breadcrumb.Item>
-          </Breadcrumb>
-
           <Row gutter={16}>
             <Col span={24}>
               <Title
@@ -144,13 +148,14 @@ export default function DonKyGuiPage() {
                               ][consign.State - 1];
 
                               let color;
-                              if (consign.State === 1) {
-                                color = "black";
-                              } else if (
-                                consign.State >= 2 &&
-                                consign.State <= 4
+                              if (
+                                consign.State === 1 ||
+                                consign.State === 2 ||
+                                consign.State === 3
                               ) {
-                                color = "gold";
+                                color = "blue";
+                              } else if (consign.State === 4) {
+                                color = "";
                               } else if (consign.State === 5) {
                                 color = "green";
                               }
@@ -160,14 +165,15 @@ export default function DonKyGuiPage() {
                               );
                             })()}
                           </Text>
+
                           <div style={{ marginTop: "10px" }}>
-                            <Text strong>
+                            <Text strong style={{ color: "red" }}>
                               Ngày giao hàng:{" "}
                               {consign.ShippedDate
                                 ? new Date(
                                     consign.ShippedDate
                                   ).toLocaleDateString()
-                                : "N/A"}
+                                : "Không yêu cầu"}
                             </Text>
                           </div>
                         </div>
@@ -181,27 +187,49 @@ export default function DonKyGuiPage() {
                           alignItems: "center",
                         }}
                       >
-                        <Tooltip title="Đây là ID cho đơn hàng của bạn, xin không cung cấp cho người khác.">
-                          <Text
-                            strong
-                            style={{
-                              display: "inline-block",
-                              maxWidth: "200px",
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                            }}
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <Tooltip title="Đây là ID cho đơn hàng của bạn, xin không cung cấp cho người khác.">
+                            <Text
+                              strong
+                              style={{
+                                display: "inline-block",
+                                maxWidth: "200px",
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                              }}
+                            >
+                              Đơn gửi: {consign._id}{" "}
+                              <span style={{ color: "#999" }}>?</span>
+                            </Text>
+                          </Tooltip>
+                          <Button
+                            type="link"
+                            onClick={() => handleCopy(consign._id)}
+                            style={{ color: "grey" }}
                           >
-                            Đơn gửi: {consign._id}{" "}
-                            <span style={{ color: "#999" }}>?</span>
-                          </Text>
-                        </Tooltip>
+                            <CopyOutlined />
+                          </Button>
+                        </div>
                         <div style={{ display: "flex", alignItems: "center" }}>
                           <Text style={{ marginLeft: "10px" }}>
-                            TotalPrice: {consign.TotalPrice || "N/A"}
+                            TotalPrice:{" "}
+                            {consign.TotalPrice || "Chờ bên shop định giá"}
                           </Text>
                           <Button type="primary" style={{ marginLeft: "10px" }}>
-                            Chat Ngay
+                            Chat ngay
+                          </Button>
+
+                          <Button
+                            style={{ marginLeft: "10px" }}
+                            type="default"
+                            onClick={() => {
+                              navigate(`/chitiet`, {
+                                state: { consign },
+                              });
+                            }}
+                          >
+                            Chi tiết
                           </Button>
                         </div>
                       </div>
@@ -236,7 +264,6 @@ export default function DonKyGuiPage() {
             )}
           </Row>
         </Container>
-        <Footer />
       </Layout>
     </div>
   );

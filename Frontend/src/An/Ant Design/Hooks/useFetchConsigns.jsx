@@ -6,7 +6,9 @@ export default function useFetchConsigns() {
     const fetchData = async () => {
       try {
         const res = await axiosInstance.get("manager/manage-ki-gui/get-all");
-        setConsigns(res.data.result);
+        let array = res.data.result
+        
+        setConsigns(array.reverse());
         console.log(res.data.result);
       } catch (error) {
         console.log(error);

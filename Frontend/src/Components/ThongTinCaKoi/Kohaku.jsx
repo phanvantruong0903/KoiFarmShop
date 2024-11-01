@@ -351,13 +351,25 @@ export default function Kohaku() {
               <div>
                 <h2 className="noidungchitiet">Nội dung chi tiết</h2>
                 <Paragraph style={{ fontSize: "20px", fontWeight: "400" }}>
-                  <span style={{ fontWeight: "bold", fontSize: "20px" }}>
+                  <span
+                    style={{
+                      fontWeight: "bold",
+                      fontSize: "20px",
+                      color: "blue",
+                    }}
+                  >
                     Cá Koi{" "}
                   </span>
                   là giống cá được ưa chuộng để làm cảnh, trang trí không gian
                   sống trở lên hoàn hảo cho người đam mê cá cảnh. Với đa dạng
                   giống loài, màu sắc và kích thước nổi bật trong đó là dòng{" "}
-                  <span style={{ fontWeight: "bold", fontSize: "20px" }}>
+                  <span
+                    style={{
+                      fontWeight: "bold",
+                      fontSize: "20px",
+                      color: "blue",
+                    }}
+                  >
                     Cá Koi Kohaku{" "}
                   </span>
                   đẹp mắt. Bài viết này sẽ cung cấp cho bạn chi tiết về dòng
@@ -371,11 +383,23 @@ export default function Kohaku() {
                     Kohaku hay Nishikigoi là một loài cá chép Nhật có thân hình
                     hai màu đỏ và trắng. Phần thân màu trắng được gọi là shiro,
                     các dấu đỏ được gọi là hi. Chúng là một trong big three, gồm{" "}
-                    <span style={{ fontWeight: "600", fontSize: "20px" }}>
+                    <span
+                      style={{
+                        fontWeight: "600",
+                        fontSize: "20px",
+                        color: "blue",
+                      }}
+                    >
                       Kohaku, Sanke
                     </span>{" "}
                     và{" "}
-                    <span style={{ fontWeight: "600", fontSize: "20px" }}>
+                    <span
+                      style={{
+                        fontWeight: "600",
+                        fontSize: "20px",
+                        color: "blue",
+                      }}
+                    >
                       Showa
                     </span>
                     .
@@ -401,7 +425,7 @@ export default function Kohaku() {
               </div>
 
               <div id="detailed-content">
-                <h3 style={{ color: "red" }}>
+                <h3 style={{ color: "red" }} id="2">
                   2. Các đặc điểm thường gặp trên cá Koi Kohaku
                 </h3>
 
@@ -945,7 +969,7 @@ export default function Kohaku() {
                   mà chất lượng cũng rất đảm bảo. Giá cá koi nhật và f1 như sau
                 </Paragraph>
                 <div id="71">
-                  <h4 style={{ color: "red" }}>7.1 Giá Koi Kohaku F1</h4>
+                  <span className="span-Style">7.1 Giá Koi Kohaku F1</span>
                   <Paragraph className="paragraph-Style">
                     Đối với những con Kohaku f1 có kích thước từ 18cm – 40cm,
                     giá cá koi dao động từ 150.000 – 500.000 VNĐ tùy loại. Cao
@@ -955,9 +979,9 @@ export default function Kohaku() {
                   </Paragraph>
                 </div>
                 <div id="72">
-                  <h4 style={{ color: "red" }}>
+                  <span className="span-Style">
                     7.2 Giá cá koi Kohaku Nhật chuẩn
-                  </h4>
+                  </span>
                   <Paragraph className="paragraph-Style">
                     Một con cá Koi trưởng thành Nhật Bản như Kohaku koi với kích
                     thước từ 10-15cm sẽ có giá từ 600.000 – 2.000.000VNĐ/con.

@@ -3,11 +3,13 @@ import { Layout, Menu, Avatar, Typography, Dropdown } from "antd";
 import { RxAvatar } from "react-icons/rx";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../Context/AuthContext";
-import { color } from "framer-motion";
+
 import 'antd/dist/reset.css'; 
 const { Header, Content } = Layout;
-
+ const SelfCheckContext = React.createContext();
 export default function AnTopBar({ children, name, role }) {
+    const [isCheckingSelf, setIsCheckingSelf] = React.useState(false);
+   
     const useAuthCheck = () => {
         const navigate = useNavigate();
         const { checkRole } = useAuth();
@@ -40,39 +42,45 @@ export default function AnTopBar({ children, name, role }) {
         { key: "4", label: <Link to="/DashBoard/manager/ManageKoi">Quản Lý Cá Koi</Link> },
         { key: "5", label: <Link to="/NewDashBoard/staff/Suppliers">Quản Lý Nhà Cung Cấp</Link> },
         { key: "6", label: <Link to="/NewDashBoard/staff/Invoices">Quản Lý Hóa Đơn</Link> },
+        {key: "8" , label: <Link to="/NewDashBoard/staff/Orders">Quản Lý Đơn Hàng</Link>},
+        { key: "9", label: <Link to="/NewDashBoard/staff/Kois">Quản Lý Cá Koi</Link> },
         { type: "divider" },
-        { key: "7", label: <p onClick={logout}>Đăng Xuất</p> },
+        { key: "10", label: <p onClick={logout}>Đăng Xuất</p> },
     ];
 
     const menu = <Menu items={menuItems} />;
     useAuthCheck();
     return (
-         
+      <SelfCheckContext.Provider value={{ isCheckingSelf, setIsCheckingSelf }}>
         <Layout>
-           
-            <Header className="topbar-header" style={{ background: "#001529", padding: "0 20px" }}>
-                <div className="logo" style={{ float: "left", color: "white", fontSize: "1.5rem" }}>
-                    IKOI
-                </div>
-                <Dropdown overlay={menu} trigger={['click']} className="menu-dropdown">
-                   
-                    <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()} style={{color:'white'}}>
-                        Menu Quản Lý
-                    </a>
-                </Dropdown>
-
-                <div className="topbar-right" style={{ float: "right" }}>
-                    <Typography.Text style={{ color: "white", marginRight: "10px" }}>
-                        Xin chào {name} Quản Lý {role}
-                    </Typography.Text>
-                    <Avatar icon={<RxAvatar />} />
-                </div>
-            </Header>
-
-            <Content style={{ padding: "20px", minHeight: "100vh" }}>
-                {children}
-                <Outlet />
-            </Content>
+          <Header className="topbar-header" style={{ background: "#001529", padding: "0 20px" }}>
+            <div className="logo" style={{ float: "left", color: "white", fontSize: "1.5rem" }}>
+              IKOI
+            </div>
+            <Dropdown overlay={menu} trigger={['click']} className="menu-dropdown">
+              <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()} style={{color:'white'}}>
+                Menu Quản Lý
+              </a>
+            </Dropdown>
+            <div className="topbar-right" style={{ float: "right" }}>
+              <Typography.Text style={{ color: "white", marginRight: "10px" }}>
+                Xin chào {name} Quản Lý {role}
+              </Typography.Text>
+              <Link to='/profile'>
+                <Avatar 
+                  icon={<RxAvatar />} 
+                />
+              </Link>
+            </div>
+          </Header>
+          <Content style={{ padding: "20px", minHeight: "100vh" }}>
+            {children}
+            <Outlet />
+          </Content>
         </Layout>
+      </SelfCheckContext.Provider>
     );
 }
+
+
+export { SelfCheckContext };

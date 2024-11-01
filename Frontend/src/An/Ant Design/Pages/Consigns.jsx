@@ -108,7 +108,7 @@ export default function Profiles() {
     return (
         <Layout>
             <Header style={{ background: '#f5f5f5' }}>
-                <Typography.Title style={{ textAlign: 'center' }} level={1}>Profile Dashboard</Typography.Title>
+                <Typography.Title style={{ textAlign: 'center' }} level={1}>Quản Lý Ký Gửi</Typography.Title>
             </Header>
             <Content style={{ padding: '24px' }}>
                 <Row gutter={24}>

@@ -23,16 +23,12 @@ export default function FormFillInformation() {
     console.log(dataToSend); // Kiểm tra dữ liệu
 
     try {
-      const response = await axios.post(
-        `http://localhost:4000/order/create/`,
-        dataToSend,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
+      const response = await axiosInstance.post(`order/create/`, dataToSend, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
 
       if (response.status === 200) {
         message.success(response.data.message);
@@ -50,7 +46,7 @@ export default function FormFillInformation() {
   const fetchUserData = async () => {
     setLoading(true);
     try {
-      const response = await axiosInstance.get("users/me");
+      const response = await axiosInstance.get("/users/me");
       if (response.data) {
         setUserData(response.data.result);
       } else {

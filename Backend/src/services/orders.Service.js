@@ -86,7 +86,6 @@ class OrdersService {
     async updateOrderStatus(payload, reqParams) {
         const koi = await databaseService.kois.findOne({ _id: new ObjectId(payload.KoiID) })
         const order = await databaseService.orderDetail.findOne({ _id: new ObjectId(reqParams.orderID) })
-        console.log("order: ", order)
         let result
         if (order) {
             result = await databaseService.orderDetail.findOneAndUpdate(

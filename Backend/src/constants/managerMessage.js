@@ -20,5 +20,11 @@ export const MANAGER_MESSAGES = {
   //group koi
   GET_ALL_GROUP_KOI_SUCCESS: 'Get all group koi success',
   GROUP_KOI_NOT_FOUND: 'Group koi not found',
-  GET_GROUP_KOI_SUCCESS: 'Get group koi success'
+  GET_GROUP_KOI_SUCCESS: 'Get group koi success',
+  USER_NOT_FOUND: 'User not found',
+  //update invoice
+  INVOICE_NOT_FOUND: 'Invoice not found',
+  GROUP_KOI_NOT_FOUND: 'Group koi not found',
+  KOIS_NOT_FOUND: 'Kois not found',
+  UPDATE_INVOICE_SUCCESS: 'Update invoice success'
 }

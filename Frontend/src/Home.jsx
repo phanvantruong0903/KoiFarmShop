@@ -1,27 +1,25 @@
 import "./App.css";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "./Components/Navbar/Navbar";
 import Footer from "./Components/Footer";
 import "../src/Home.css";
 import Slideshow from "./Components/Slideshow";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "./Context/AuthContext";
-import { ToastContainer, toast } from "react-toastify";
+import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Carousel } from "antd";
 import { Link } from "react-router-dom";
 import "./Components/Css/homeStyle.css";
-import axios from "axios";
 import { Typography } from "antd";
 import { Button, Container } from "react-bootstrap";
-const { Title, Text, Paragraph } = Typography;
+const { Paragraph } = Typography;
 import "bootstrap/dist/css/bootstrap.min.css"; // Ensure Bootstrap CSS is imported
-import { Card, Row, Col } from "react-bootstrap";
+import axiosInstance from "./An/Utils/axiosJS";
+
 export default function Home() {
-  const isAuthenticated = localStorage.getItem("accessToken");
   const location = useLocation();
   const [lastMessage, setLastMessage] = useState("");
-  const { logout } = useAuth();
   const [suppliers, setSuppliers] = useState([]);
   const [koidata, setKoiData] = useState([]);
   const navigate = useNavigate();
@@ -42,8 +40,8 @@ export default function Home() {
     const fetchData = async () => {
       try {
         const [suppliersResponse, koiResponse] = await Promise.all([
-          axios.get("http://localhost:4000/manager/manage-supplier/get-all"),
-          axios.get("http://localhost:4000/getAllKoi"),
+          axiosInstance.get("/manager/manage-supplier/get-all"),
+          axiosInstance.get("/getAllKoi"),
         ]);
         setSuppliers(suppliersResponse.data.result);
         setKoiData(koiResponse.data.result.slice(0, 12));
@@ -52,6 +50,22 @@ export default function Home() {
       }
     };
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    const clearData = async () => {
+      try {
+        console.log("hello");
+        await axiosInstance.post(
+          "/clear-coookies",
+          { Credential: true },
+          { withCredentials: true }
+        );
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    clearData();
   }, []);
 
   useEffect(() => {
@@ -78,11 +92,6 @@ export default function Home() {
       });
     };
   }, []);
-
-  const formData = JSON.parse(localStorage.getItem("formData"));
-  useEffect(() => {
-    console.log("Dữ liệu đã nhận:", formData);
-  }, [formData]);
 
   // Dữ liệu cá koi
   const koiData = [
@@ -146,9 +155,7 @@ export default function Home() {
       name: "shusui",
     },
   ];
-  const handleShowMore = () => {
-    navigate("/koikygui");
-  };
+
   return (
     <>
       <div>
@@ -158,16 +165,18 @@ export default function Home() {
         <Slideshow />
       </div>
 
-      <h4
-        style={{
-          marginTop: "40px",
-          marginLeft: "10%",
-          marginBottom: "40px",
-          color: "#FFB6C1",
-        }}
-      >
-        Xu hướng tìm kiếm
-      </h4>
+      <div style={{ display: "flex" }}>
+        <h4
+          style={{
+            marginTop: "40px",
+            marginLeft: "10%",
+            marginBottom: "40px",
+            color: "red",
+          }}
+        >
+          Các loài cá bên chúng tôi cung cấp:
+        </h4>
+      </div>
       <Carousel
         autoplay
         style={{ marginLeft: "50px", marginRight: "50px" }}
@@ -197,7 +206,7 @@ export default function Home() {
                   </div>
                 ))}
               </div>
-            </div>
+          </div>
           )
         )}
       </Carousel>
@@ -241,20 +250,22 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <h4
-        style={{
-          marginTop: "60px",
-          marginLeft: "10%",
-          marginBottom: "40px",
-          color: "#FFB6C1",
-        }}
-      >
-        Các nhà cung cấp hàng đầu
-      </h4>
+      <div>
+        <h4
+          style={{
+            marginTop: "60px",
+            marginLeft: "10%",
+            marginBottom: "40px",
+            color: "red",
+          }}
+        >
+          Các nhà cung cấp hàng đầu
+        </h4>
+      </div>
 
       <Carousel
         autoplay
-        autoplaySpeed={10000}
+        autoplaySpeed={6000}
         dots={false}
         style={{ marginLeft: "50px", marginRight: "50px" }}
       >
@@ -275,6 +286,7 @@ export default function Home() {
                         alt={supplier.SupplierName}
                         className="supplier-image"
                         loading="lazy"
+                        onClick={() => navigate("/nguongocIKoi")}
                       />
                       <h3 style={{ fontSize: "18px", marginTop: "15px" }}>
                         {supplier.SupplierName}
@@ -287,16 +299,18 @@ export default function Home() {
         )}
       </Carousel>
 
-      <h4
-        style={{
-          marginTop: "60px",
-          marginLeft: "9%",
-          marginBottom: "40px",
-          color: "#FFB6C1",
-        }}
-      >
-        Các loại cá mới
-      </h4>
+      <div>
+        <h4
+          style={{
+            marginTop: "60px",
+            marginLeft: "9%",
+            marginBottom: "40px",
+            color: "red",
+          }}
+        >
+          Các loại cá mới
+        </h4>
+      </div>
 
       <Carousel
         arrows

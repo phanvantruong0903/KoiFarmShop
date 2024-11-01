@@ -127,9 +127,9 @@ export const USERS_MESSAGES = {
   BUY_ORDER_SUCCESS: 'Buy success',
   CREATE_ORDER_SUCCESS: 'Create order success',
   ORDER_NOT_FOUND: 'Order not found',
-  REMOVE_ITEM_SUCCESS:'Remove item from order detail success',
+  REMOVE_ITEM_SUCCESS: 'Remove item from order detail success',
   //save
-  SAVE_TO_DB_SUCCESS:'Save order to database success',
+  SAVE_TO_DB_SUCCESS: 'Save order to database success',
   //check authorization
   CHECK_AUTHORIZATION_SUCCESS: 'Check authorization success',
   //get all consign
@@ -137,7 +137,41 @@ export const USERS_MESSAGES = {
   //category
   CATEGORY_NOT_FOUND: 'Category not found',
   //supplier
-  SUPPLIER_NOT_FOUND: 'Supplier not found'
+  SUPPLIER_NOT_FOUND: 'Supplier not found',
+  GET_CONSIGNS_SUCCESS: 'Get consigns success',
+  CONSIGN_NOT_FOUND: 'Consign not found',
+  KOI_NOT_FOUND: 'Koi not found',
+  USER_NOT_FOUND: 'User not found',
+  //validate update consign
+  POSITION_CARE_IS_REQUIRED: 'Position care is required',
+  METHOD_IS_REQUIRED: 'Method is required',
+  DETAIL_IS_REQUIRED: 'Detail is required',
+  CATEGORY_ID_IS_REQUIRED: 'Category id is required',
+  KOI_NAME_IS_REQUIRED: 'Koi name is required',
+  KOI_AGE_IS_REQUIRED: 'Koi age is required',
+  KOI_AGE_MUST_BE_NUMERIC: 'Koi age must be numeric',
+  KOI_AGE_MUST_BE_BETWEEN_1_AND_50: 'Koi age must be between 1 and 50',
+  KOI_ORIGIN_IS_REQUIRED: 'Koi origin is required',
+  KOI_GENDER_IS_REQUIRED: 'Koi gender is required',
+  KOI_SIZE_IS_REQUIRED: 'Koi size is required',
+  KOI_SIZE_MUST_BE_NUMERIC: 'Koi size must be numeric',
+  KOI_SIZE_MUST_BE_LARGER_THAN_0_AND_SMALLER_OR_EQUAL_TO_200:
+    'Koi size must be larger than 0 and smaller or equal to 200',
+  KOI_BREED_IS_REQUIRED: 'Koi breed is required',
+  KOI_DESCRIPTION_IS_REQUIRED: 'Koi description is required',
+  KOI_DAILY_FOOD_AMOUNT_IS_REQUIRED: 'Koi daily food amount is required',
+  KOI_DAILY_FOOD_AMOUNT_MUST_BE_NUMERIC: 'Koi daily food amount must be numeric',
+  KOI_DAILY_FOOD_AMOUNT_MUST_BE_LARGER_THAN_0_AND_SMALLER_OR_EQUAL_TO_100:
+    'Koi daily food amount must be larger than 0 and smaller or equal to 100',
+  KOI_FILTERING_RATIO_IS_REQUIRED: 'Koi filtering ratio is required',
+  KOI_FILTERING_RATIO_MUST_BE_NUMERIC: 'Koi filtering ratio must be numeric',
+  KOI_FILTERING_RATIO_MUST_BE_LARGER_THAN_0_AND_SMALLER_OR_EQUAL_TO_100:
+    'Koi filtering ratio must be larger than 0 and smaller or equal to 100',
+  KOI_CERTIFICATE_ID_IS_REQUIRED: 'Koi certificate id is required',
+  KOI_IMAGE_IS_REQUIRED: 'Koi image is required',
+  KOI_VIDEO_IS_REQUIRED: 'Koi video is required',
+  //update consign
+  UPDATE_CONSIGN_SUCCESS: 'Update consign success'
 }
 export const ADMINS_MESSAGES = {
   ADD_KOI_SUCCESS: 'Add Fish success',

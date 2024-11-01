@@ -49,6 +49,7 @@ class AdminsService {
       }
 
       const updateKoi = await databaseService.kois.findOneAndUpdate({ _id: new ObjectId(KoiID) }, { $set: payload })
+
       if (!updateKoi) {
         return { success: false, message: 'Koi not found' }
       }

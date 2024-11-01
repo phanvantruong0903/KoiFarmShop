@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axiosInstance from '../Utils/axiosJS';
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { initializeApp } from "firebase/app";
-
+import message from 'antd/lib/message';
 /**
  * Custom hook to manage Koi data.
  *
@@ -71,7 +71,8 @@ export const useManageKoi = () => {
     const storage = getStorage(app);
     const [showCreateForm, setShowCreateForm] = useState(false);
     const [result, setResult] = useState([]);
-    const [backupResult, setBackupResult] = useState({});  // Store original data for each koi
+    const [backupResult, setBackupResult] = useState({});  
+    const [refresh, setRefresh] = useState(false);
     const [categoryList, setCategoryList] = useState([]);
     const [expandedCategories, setExpandedCategories] = useState({});
     const [isEditing, setIsEditing] = useState({});
@@ -81,8 +82,10 @@ export const useManageKoi = () => {
         const fetchData = async () => {
             try {
                 const response = await axiosInstance.get('manager/manage-koi/get-all');
+                const catagoryResponse = await axiosInstance.get('getAllKoi');
                 console.log(response.data);
-                const { result, categoryList } = response.data;
+                const { categoryList } = catagoryResponse.data;
+                const { result } = response.data;
                 setResult(result);
                 setCategoryList(categoryList);
             } catch (error) {
@@ -90,7 +93,10 @@ export const useManageKoi = () => {
             }
         };
         fetchData();
-    }, [updatedKoi]);
+    }, [updatedKoi,refresh]);
+    const Refreshing = () => {
+        setRefresh(!refresh);
+    }
 
     /**
      * Toggles the expanded state of a category by its ID.
@@ -165,7 +171,9 @@ export const useManageKoi = () => {
                 return koi;
             }));
         } catch (error) {
-            console.log('Failed to disable/enable koi:', error);
+            message.error('Failed to disable/enable koi. Please try again.'+error.response.data.message);
+            
+            console.log('Failed to disable/enable koi:', error.response.data.message);
         }
     };
 
@@ -193,11 +201,12 @@ export const useManageKoi = () => {
      *
      * @throws {Error} - Throws an error if the update fails.
      */
-    const handleUpdate = async (koiId) => {
+    const handleUpdate = async (koiId,data) => {
         const koi = result.find(koi => koi._id === koiId);
-        const { KoiName, CategoryID, Age, Origin, Gender, Size, Breed, Description, DailyFoodAmount, FilteringRatio, CertificateID, Price, Image, Video } = koi;
+        const { CategoryID } = koi;
+        const { KoiName,Age, Origin, Gender, Size, Breed, Description, DailyFoodAmount, FilteringRatio, CertificateID, Price, Image, Video } = data;
         const info = { KoiName, CategoryID, Age, Origin, Gender, Size, Breed, Description, DailyFoodAmount, FilteringRatio, CertificateID, Price, Image, Video };
-
+        console.log(info);
         try {
             // Send updated data to the backend
             await axiosInstance.put(`manager/manage-koi/updateKoi/${koiId}`, info);
@@ -240,7 +249,7 @@ export const useManageKoi = () => {
             const newKoi = await axiosInstance.post(`manager/manage-koi/create-new-koi`, {
                 ...koiData,
                 CategoryID: categoryId,
-                Status: 1 // Assuming default status is 1 (Imported)
+                Status: 1 
             });
 
             setResult(prevResult => [...prevResult, newKoi]);
@@ -268,6 +277,6 @@ export const useManageKoi = () => {
         handleCategorySelection,
         showCreateForm,
         setShowCreateForm,
-        handleNewKoiCreation
+        handleNewKoiCreation,Refreshing
     };
 };
