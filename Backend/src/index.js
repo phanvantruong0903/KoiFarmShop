@@ -28,6 +28,7 @@ import paymentRouter from './routes/payments.routes.js'
 import orderRouter from './routes/order.routes.js'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser';
+import { app, server } from './Socket/socket.js'
 
 config()
 // const app = express()
