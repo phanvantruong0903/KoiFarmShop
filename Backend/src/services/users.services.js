@@ -557,6 +557,29 @@ class UsersService {
       throw error
     }
   }
+
+  async getManagerInfoForChat() {
+    try {
+      const manager = await databaseService.users.findOne({roleid: 3})
+      return manager
+    } catch (error) {
+      console.error('Error fetching users:', error)
+      throw error
+    }
+  }
+
+  async getUserInfoForChat(reqParams) {
+    try {
+      const user = await databaseService.users.findOne({_id: new ObjectId(reqParams.userID)})
+      return user
+    } catch (error) {
+      console.error('Error fetching users:', error)
+      throw error
+    }
+  }
+
+  
+
 }
 
 const usersService = new UsersService()

@@ -13,7 +13,9 @@ import {
   guestGetAllSupplierController,
   guestGetSupplierController,
   getKoiByIDController,
-  getKoiGroupIDController
+  getKoiGroupIDController,
+  getManagerInfoForChatController,
+  getUserInfoForChatController
 } from './controllers/common.controllers.js'
 import { getKoiByCategoryIDController } from './controllers/home.controllers.js'
 
@@ -26,10 +28,10 @@ import paymentRouter from './routes/payments.routes.js'
 import orderRouter from './routes/order.routes.js'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser';
-import { removeAllItemsDetailController } from './controllers/orderDetailController.js'
+import { app, server } from './Socket/socket.js'
 
 config()
-const app = express()
+// const app = express()
 app.use(
   cors({
     origin: 'http://localhost:3000',
@@ -60,8 +62,6 @@ app.use('/kois/:CategoryID', wrapAsync(getKoiByCategoryIDController))
 app.use('/getAllKoi', wrapAsync(wrapAsync(getAllKoiController)))
 app.use('/order', orderRouter)
 
-app.post('/clear-coookies',  wrapAsync(removeAllItemsDetailController))
-
 app.post('/authorization', accessTokenValidator, wrapAsync(authorizationController))
 
 app.get('/get-all-supplier', wrapAsync(guestGetAllSupplierController))
@@ -72,8 +72,11 @@ app.get('/get-kois-groupKoiID',wrapAsync(getKoiGroupIDController))
 
 app.use('/payment', paymentRouter)
 
+app.get('/getManagerInfoForChat', wrapAsync(getManagerInfoForChatController))
+app.get('/getUserInfoForChat/:userID', wrapAsync(getUserInfoForChatController))
+
 app.use(defaultErrorHandler)
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Project này đang chạy trên port ${PORT}`)
 })

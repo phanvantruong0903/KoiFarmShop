@@ -6,6 +6,8 @@ import databaseService from '../services/database.service.js'
 import koisService from '../services/kois.services.js'
 import { ObjectId } from 'mongodb'
 import suplliersService from '../services/suppliers.services.js'
+import usersService from '../services/users.services.js'
+import chatService from '../services/chat.Service.js'
 
 export const createNewKoiKiGuiController = async (req, res) => {
   try {
@@ -121,3 +123,33 @@ export const getKoiGroupIDController = async (req, res) => {
     res.json('lỗi tại lấy koi theo groupkoiid ' + error.message)
   }
 }
+
+export const getManagerInfoForChatController = async (req, res) => {
+  try {
+    const result = await usersService.getManagerInfoForChat()
+    return res.json({
+      message: MESSAGES.GET_MANAGER_SUCCESS,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+
+export const getUserInfoForChatController = async (req, res) => {
+  try {
+    const result = await usersService.getUserInfoForChat(req.params)
+    return res.json({
+      message: MESSAGES.GET_USER_SUCCESS,
+      result
+    })
+  } catch (error) {
+    return res.status(500).json({ error: error.message })
+  }
+}
+
+
+
+
+
+

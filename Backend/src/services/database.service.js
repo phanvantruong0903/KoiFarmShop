@@ -49,6 +49,22 @@ class DatabaseService {
       throw error
     }
   }
+  get chats() {
+    try {
+      return this._db.collection('chats')
+    } catch (error) {
+      console.log(error + 'lỗi ở database service - get chats')
+      throw error
+    }
+  }
+  get messages() {
+    try {
+      return this._db.collection('messages')
+    } catch (error) {
+      console.log(error + 'lỗi ở database service - get messages')
+      throw error
+    }
+  }
   get kois() {
     try {
       return this._db.collection('kois')
