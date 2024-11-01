@@ -15,9 +15,6 @@ export default function ShoppingCart() {
   const [error, setError] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0); // Initialize to 0
   const navigate = useNavigate();
-  const handlePayment = () => {
-    navigate("/formfillinformation");
-  };
 
   // useEffect(() => {
   //   const storedKoiList = JSON.parse(localStorage.getItem("koiList")) || [];
@@ -272,20 +269,6 @@ export default function ShoppingCart() {
                 VND
               </span>
             </h3>
-            <button
-              onClick={handlePayment}
-              style={{
-                padding: "10px 20px",
-                fontSize: "16px",
-                backgroundColor: "#FF6F61", // Màu chủ đạo
-                color: "#fff",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-              }}
-            >
-              Mua Hàng
-            </button>
           </div>
         </>
       ) : (
